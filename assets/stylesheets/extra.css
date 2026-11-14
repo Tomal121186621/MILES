@@ -174,3 +174,14 @@
 .md-typeset table:not([class]) th, .md-typeset table:not([class]) td { padding: .45em .9em; }
 .md-typeset .admonition.abstract table:not([class]) { border-top: none !important; border-bottom: none !important; }
 .md-typeset .admonition.abstract table td { border-top: .5px solid var(--miles-border) !important; }
+
+/* estimation tables */
+.estfit { display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; font-size: .72rem; color: var(--miles-muted, #5d6573); margin: .2rem 0 .6rem; }
+.estfit span { white-space: nowrap; }
+.md-typeset .se { font-size: .66rem; color: var(--miles-muted, #5d6573); }
+.md-typeset .estnote { font-size: .7rem; color: var(--miles-muted, #5d6573); margin-top: -.4rem; }
+.md-typeset h3 + p { margin-top: .2rem; }
+.md-typeset .modetab table:not([class]) { font-size: .68rem; }
+.md-typeset .modetab table:not([class]) td, .md-typeset .modetab table:not([class]) th { white-space: nowrap; padding: .45em .7em; }
+.md-typeset .modetab table:not([class]) td:first-child, .md-typeset .modetab table:not([class]) th:first-child { white-space: normal; min-width: 9rem; }
+.md-typeset .modetab table:not([class]) th { white-space: normal; vertical-align: bottom; }
