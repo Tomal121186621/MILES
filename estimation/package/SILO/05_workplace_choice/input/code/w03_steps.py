@@ -10,7 +10,7 @@ import numpy as np, pandas as pd
 import wdc
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"
+V = os.environ.get("TERP_WORKSPACE", "") + ""
 TPER = ["t*female", "t*young", "t*old", "t*g1", "t*g3", "t*g4", "t*lic", "t*hhs", "t*rurh", "t*kids", "t*w2"]
 CURRENT = (["t", "lt", "t*female", "t*young", "t*old", "t*g1", "t*g3", "t*g4", "t*lic", "t*hhs", "t*rurh", "ls", "intra", "cc", "cs",
             "cs*g4", "cs*hva", "dcw", "reg_bc", "reg_mopg", "reg_dcr", "reg_nvc", "reg_nvo", "reg_mdo", "reg_oth",

@@ -1,6 +1,6 @@
 {
- "events": "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Updated MATSim/I695_pricing_runs/FIT/R6/output_events.xml.gz",
- "network": "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Updated MATSim/I695_pricing_runs/FIT/R6/output_network.xml.gz",
+ "events": "<project>/Updated MATSim/I695_pricing_runs/FIT/R6/output_events.xml.gz",
+ "network": "<project>/Updated MATSim/I695_pricing_runs/FIT/R6/output_network.xml.gz",
  "off_network_zones": 501,
  "periods": {
   "AM": {

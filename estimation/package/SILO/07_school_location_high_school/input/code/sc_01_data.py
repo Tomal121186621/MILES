@@ -22,7 +22,7 @@ Size components (work/zone_size.parquet): sc_common.COMP, enrolment (capacity co
 Outputs work/students.parquet, loc_home.parquet, loc_school.parquet, school_points.parquet; tables/counts.csv, drop_log.csv,
 location_summary.csv.   Usage: python3 -I sc_01_data.py"""
 import os, sys, glob, zipfile, numpy as np, pandas as pd, geopandas as gpd
-sys.path.insert(0, "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/2_silo/schoolchoice")
+sys.path.insert(0, os.environ.get("TERP_WORKSPACE", "") + "/2_silo/schoolchoice")
 import sc_common as C   # noqa: E402
 ROOT, V, RAW, JC, W, T, CRS = C.ROOT, C.V, C.RAW, C.JC, C.W, C.T, C.CRS
 DEFL = 240.007 / ((245.120 + 251.107) / 2)

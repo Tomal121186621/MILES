@@ -6,7 +6,7 @@ that is both in PUMS and producible by the chain.  Output: hh.parquet (small).  
 import os, zipfile, hashlib
 import numpy as np, pandas as pd
 
-ROOT = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM"
+ROOT = os.environ.get("TERP_PROJECT_ROOT", "") + ""
 V = f"{ROOT}/Validation_2026"
 HERE = os.path.dirname(os.path.abspath(__file__))
 PKG = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../.."))   # PATH (package): manual_estimation/SILO

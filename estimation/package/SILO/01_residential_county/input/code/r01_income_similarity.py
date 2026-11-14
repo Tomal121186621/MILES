@@ -11,7 +11,7 @@ log-likelihood over the full choice set on both halves (as s05_zone.py validates
 import os, sys
 import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__))
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"
+V = os.environ.get("TERP_WORKSPACE", "") + ""
 sys.argv = [sys.argv[0], os.environ.get("ACC_CAR", f"{HERE}/../../../00_shared_data/accessibility/accessibility_2016.csv"), "final"]   # PATH (package)   # ACC_CAR: car-based accessibility file
 sys.path.insert(0, HERE)   # PATH (package): copies of the 2_silo/resloc modules are in this folder
 import s05_zone as Z   # noqa: E402

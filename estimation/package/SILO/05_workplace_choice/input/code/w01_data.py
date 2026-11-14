@@ -8,7 +8,7 @@ instead of the location mixture. Output: data.npz (small).   Usage: python3 w01_
 import os
 import numpy as np, pandas as pd
 
-ROOT = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM"
+ROOT = os.environ.get("TERP_PROJECT_ROOT", "") + ""
 V = f"{ROOT}/Validation_2026"; JC = f"{V}/2_silo/jobchoice"
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAWD = os.path.abspath(f"{HERE}/../data/raw"); SHD = os.path.abspath(f"{HERE}/../../../00_shared_data")   # PATH (package)

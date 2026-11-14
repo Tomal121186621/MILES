@@ -9,7 +9,7 @@ half is used once, for the chosen model and the current model.
 import os, sys
 import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__))
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"
+V = os.environ.get("TERP_WORKSPACE", "") + ""
 sys.path.insert(0, HERE)   # PATH (package): copies of the 2_silo/resloc modules are in this folder
 import s04_dwelling as DW   # noqa: E402
 from rc import WORK   # noqa: E402

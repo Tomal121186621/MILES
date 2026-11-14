@@ -10,7 +10,7 @@ import os, sys, pickle, json
 import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 RAWD = os.path.abspath(f"{HERE}/../data/raw"); SHD = os.path.abspath(f"{HERE}/../../../00_shared_data")   # PATH (package)
-OW = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/2_silo/resloc/work"   # PATH (package): region data of s06_region.py, not copied (see README)
+OW = os.environ.get("TERP_WORKSPACE", "") + "/2_silo/resloc/work"   # PATH (package): region data of s06_region.py, not copied (see README)
 ARGS = sys.argv[1:]   # read before r01 resets sys.argv for s05_zone
 import r01_income_similarity as R1   # noqa: E402  (s05_zone with the final inputs; own-group shares SH)
 import r06_dwelling_income as R6   # noqa: E402
@@ -18,7 +18,7 @@ DW = R6.DW
 from rc import WORK, MICRO, ZONE_IDS, INC_GROUPS   # noqa: E402
 import s06_region as RG   # noqa: E402
 
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"
+V = os.environ.get("TERP_WORKSPACE", "") + ""
 CT = ["SFD", "SFA", "MF", "MH"]
 
 

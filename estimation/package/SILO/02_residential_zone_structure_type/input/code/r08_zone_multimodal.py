@@ -13,7 +13,7 @@ import r03_sequence as R3   # noqa: E402  (zone part with the r01/r02 extensions
 Z = R3.Z
 from mnl import MNL   # noqa: E402
 
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"
+V = os.environ.get("TERP_WORKSPACE", "") + ""
 
 
 def main():

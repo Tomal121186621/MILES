@@ -25,7 +25,7 @@ import os, sys, pickle
 import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAWD = os.path.abspath(f"{HERE}/../data/raw")   # PATH (package): county_data_*.pkl of r07_county_iv.py, if rebuilt here; else the original files
-CD = RAWD if os.path.exists(f"{RAWD}/county_data_est.pkl") else "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/side_experiments/respec_2026-11/step_by_step/residential"   # PATH (package)
+CD = RAWD if os.path.exists(f"{RAWD}/county_data_est.pkl") else os.environ.get("TERP_WORKSPACE", "") + "/side_experiments/respec_2026-11/step_by_step/residential"   # PATH (package)
 RL = HERE; sys.path.insert(0, RL)   # PATH (package): copies of the 2_silo/resloc modules are in this folder
 from rc import WORK, RAW   # noqa: E402
 from mnl import MNL, lr_test   # noqa: E402
