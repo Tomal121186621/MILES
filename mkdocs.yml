@@ -1,8 +1,9 @@
 site_name: TERP
 site_description: Integrated population, land-use, activity and traffic simulation for Maryland
 site_author: Raas Sarker Tomal
-repo_url: https://github.com/Tomal121186621
-repo_name: Tomal121186621
+site_url: https://tomal121186621.github.io/TERP/
+repo_url: https://github.com/Tomal121186621/TERP
+repo_name: Tomal121186621/TERP
 copyright: Copyright &copy; 2026 Raas Sarker Tomal · Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM), University of Maryland, College Park
 
 theme:

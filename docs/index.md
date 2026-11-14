@@ -16,7 +16,7 @@ resulting traffic on the road and transit networks.</p>
 [Get started](get-started/index.md){ .md-button .md-button--primary }
 [How it works](model-design/index.md){ .md-button }
 [:material-map-marker-radius: Traffic validation map](calibration-validation/validation/map.md){ .md-button }
-[:fontawesome-brands-github: Code](https://github.com/Tomal121186621){ .md-button }
+[:fontawesome-brands-github: Code](https://github.com/Tomal121186621/TERP){ .md-button }
 
 </div>
 
