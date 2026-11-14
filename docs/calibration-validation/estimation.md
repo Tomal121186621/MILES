@@ -20,6 +20,8 @@
 
 ## All estimated models
 
+The full results of every model, coefficient by coefficient, are in [Estimated models](estimates/index.md).
+
 \(N\): observations; \(K\): parameters; LL: log-likelihood at the estimates; \(\bar\rho^2\): adjusted rho-square.
 Hold-out: \(\rho^2\) (county, zone, dwelling, cars), log-likelihood per record (workplace, schools, locations) or total
 log-likelihood (tour formation and mode) on held-out data.

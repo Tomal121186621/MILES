@@ -6,6 +6,10 @@
 
     28 choice models: sample, fit and hold-out of each.
 
+-   :material-table-large: **[Estimated models](estimates/index.md)**
+
+    The full results of all 28 models: coefficients, robust standard errors, p-values.
+
 -   :material-tune: **[Calibration](calibration.md)**
 
     The few land-use parameters that are calibrated, and on what.

@@ -111,6 +111,13 @@ nav:
   - Calibration and validation:
       - calibration-validation/index.md
       - Estimation: calibration-validation/estimation.md
+      - Estimated models:
+          - calibration-validation/estimates/index.md
+          - Land use and workplaces: calibration-validation/estimates/landuse.md
+          - School location: calibration-validation/estimates/schools.md
+          - Destinations and stops: calibration-validation/estimates/locations.md
+          - Tour formation: calibration-validation/estimates/tour-formation.md
+          - Tour and leg modes: calibration-validation/estimates/modes.md
       - Calibration: calibration-validation/calibration.md
       - Validation:
           - calibration-validation/validation/index.md
