@@ -21,9 +21,9 @@ Sources
 Not in the project: the external trip tables of the statewide model (through trips from beyond the model area, e.g. the I-95 corridor north
 of Delaware), and a count of fleet and delivery vehicles; the ranges below say where this matters.
 Usage: python3 assignment/validation/coverage_estimate.py   (env OUT, REGIONAL_DATA) -> data/coverage_estimate.csv, coverage_through_trips.csv, coverage_sources.json"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, json, zipfile, numpy as np, pandas as pd
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
 WORK = f"{V}/5_reports/validation_pdfs/work/matsim_respec"

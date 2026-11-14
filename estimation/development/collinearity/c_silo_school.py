@@ -4,9 +4,9 @@ locations/school_logsum_new.npy as in the final runs), estimation half, full cho
 Choice situation = (student, possible home zone) row of the location mixture, weighted by its home-zone weight (the rows of one
 student sum to 1), as in the estimator.  The size term ln S at the final size weights is shown with the variables (coefficient mu).
     python3 estimation/development/collinearity/c_silo_school.py [k8 hs col]   ->  school_<band>_var_corr.png, school_<band>_est_corr.png, school_<band>_pairs.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, ast
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

@@ -1,2 +1,2 @@
-terp_cli
-terp_env
+miles_cli
+miles_env

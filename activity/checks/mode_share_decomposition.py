@@ -16,14 +16,14 @@ the mode-choice estimation data, side_experiments/respec_2026-11/step_by_step/mo
 Shares per segment and mode (CD, CP, WK, BK, BUS, TRAIN), unweighted and with the RTS person weights (w); observed = choice2.
 Utilities: accessibility_new/mode_logsum_new.utilities (the Python form that the unit check matched to the engine to <= 1e-7).
     ~/.venvs/biogeme/bin/python activity/checks/mode_share_decomposition.py   -> respec_decompose.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd
 V = WORKSPACE; A3 = f"{V}/3_abit"; SBS = f"{ESTIMATION_RESULTS}"   # data
-sys.path.insert(0, f"{TERP_HOME}/estimation/development/tour_mode_choice"); sys.path.insert(0, f"{TERP_HOME}/estimation/development/accessibility"); sys.path.insert(0, f"{TERP_HOME}/activity/lib/mode_choice")
+sys.path.insert(0, f"{MILES_HOME}/estimation/development/tour_mode_choice"); sys.path.insert(0, f"{MILES_HOME}/estimation/development/accessibility"); sys.path.insert(0, f"{MILES_HOME}/activity/lib/mode_choice")
 import m07_children as K7, m10_car_availability as CA, mode_logsum_new as LN, mc_common as M   # noqa: E402
 ALTS = LN.ALTS; SEGS = ["work", "shopping", "other", "school"]; NEST = {"CD": 0, "CP": 0, "BUS": 1, "TRAIN": 1, "WK": 2, "BK": 3}
 HALF = "validation"; SEEDS = range(1, 6)

@@ -7,12 +7,12 @@ Only the paths are redirected: behavioural set coef_tasha_taz, calibrated set co
 the TAZ destination rows, export_dc_taz.py; the calibration starts from the levers of the model of record, not from --init).
 Tag tfcaltaz: runs 3_abit/run/tfcaltaz_it<K>, log 3_abit/calibration_log_tfcaltaz.csv, history coef_history/tfcaltaz_it<K>.
 Same criteria, levers, sample (5 %), seed (1) and skims (base_transit2024) as the model of record (tag tfcal)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, os, sys
 A3 = f"{WORKSPACE}/3_abit"; HERE = f"{A3}/tasha_estimation"   # data; the calibration loop runs in 3_abit
-sys.path.insert(0, f"{TERP_HOME}/activity/lib"); os.chdir(A3)
+sys.path.insert(0, f"{MILES_HOME}/activity/lib"); os.chdir(A3)
 # calibrate_abit (the calibration loop of the old working tree) is not part of the repository
 if os.path.exists(f"{A3}/calibrate_abit.py"): sys.path.append(A3)
 import coef_tools as ct          # noqa: E402

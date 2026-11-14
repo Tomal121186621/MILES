@@ -6,16 +6,16 @@ sort by income; Lee and Waddell 2010, Guevara 2010), added to the current model 
 Same estimation households, same 30-cell choice sets (one set of draws), same weights as s05_zone.py.  Fit: estimation half;
 log-likelihood over the full choice set on both halves (as s05_zone.py validates).
     python3 estimation/development/residential_location/r01_income_similarity.py   ->  r01_fit.csv, r01_coef.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/residential"   # results of this step (data); CODE = this folder
 V = f"{WORKSPACE}"
 sys.argv = [sys.argv[0], os.environ.get("ACC_CAR", f"{V}/data/accessibility_2016.csv"), "final"]   # ACC_CAR: car-based accessibility file
-sys.path.insert(0, f"{TERP_HOME}/landuse/lib/residential"); os.chdir(f"{TERP_HOME}/landuse/lib/residential")
+sys.path.insert(0, f"{MILES_HOME}/landuse/lib/residential"); os.chdir(f"{MILES_HOME}/landuse/lib/residential")
 import s05_zone as Z   # noqa: E402
 from rc import MICRO, ZONE_IDS, INC_GROUPS, inc_group   # noqa: E402
 from mnl import MNL, lr_test   # noqa: E402

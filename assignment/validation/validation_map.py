@@ -21,13 +21,13 @@ Reads the outputs of validation_diagnostics.py (data/stations_diagnostics.csv, l
 stations_direction_volumes.csv, counters_direction_detail.csv, spatial_groups.csv), data/count_stations_split.csv and the
 screenline geometry of screenlines.py.
 Usage: python3 assignment/validation/validation_map.py   (env OUT, SCREEN_DATA)"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, json, re, numpy as np, pandas as pd, geopandas as gpd, shapely
 from pyproj import Transformer
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
-sys.path.insert(0, f"{TERP_HOME}/reports"); sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f"{MILES_HOME}/reports"); sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paperstyle as ps
 import map_study_area as msa
 WORK = f"{V}/5_reports/validation_pdfs/work/matsim_respec"

@@ -8,14 +8,14 @@ car passenger, bus and train km absorbs the cost effect. Variants (same data, sa
   KG  K with one GC coefficient for all motorised modes (school only; other already generic)
 Fit on the estimation half; log-likelihood of the validation half with the estimates.
     ~/.venvs/biogeme/bin/python estimation/development/tour_mode_choice/m01_cost.py   ->  m01_fit.csv, m01_coef.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/mode_choice"   # results of this step (data); CODE = this folder
-MC = f"{TERP_HOME}/activity/lib/mode_choice"
+MC = f"{MILES_HOME}/activity/lib/mode_choice"
 sys.path.insert(0, MC)
 import estimate_gc as G, estimate_hh as H   # noqa: E402
 import biogeme.database as db, biogeme.biogeme as bio, biogeme.models as models

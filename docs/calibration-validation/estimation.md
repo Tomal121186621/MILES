@@ -36,7 +36,7 @@ log-likelihood (tour formation and mode) on held-out data.
 | K–8 (1,144 zones) | 1,509 | 9 | −2,941.0 | 0.717 | −1.983 |
 | High school (719 zones) | 668 | 5 | −1,243.3 | 0.716 | −1.853 |
 | College (141 zones) | 673 | 9 | −1,827.8 | 0.448 | −2.824 |
-| **TERP-Day: locations (1,588 zones)** | | | | | |
+| **MILES-Day: locations (1,588 zones)** | | | | | |
 | Main activity, four purposes (pooled) | 14,341 | 71 | −49,122.5 | 0.535 | −3.352 |
 | Stop: shopping | 3,979 | 23 | −9,987.8 | 0.659 | −2.527 |
 | Stop: recreation | 5,064 | 22 | −15,801.1 | 0.576 | −3.195 |
@@ -47,7 +47,7 @@ log-likelihood (tour formation and mode) on held-out data.
 | Work business: other persons | 1,259 | 19 | −6,766.7 | 0.297 | −5.588 |
 | Work trips of home workers | 366 | 6 | −1,634.6 | 0.431 | −4.375 |
 | School without record; daycare (pooled) | 846 | 11 | −3,706.8 | 0.453 | −4.280 |
-| **TERP-Day: tour formation and mode** | | | | | |
+| **MILES-Day: tour formation and mode** | | | | | |
 | Outing from the workplace (2) | 8,613 | 8 | −3,061.5 | 0.486 | −3,093.2 |
 | Mode of the outing (2) | 1,177 | 8 | −360.2 | 0.549 | −299.7 |
 | Return home (2) | 28,349 | 33 | −13,697.0 | 0.301 | −13,771.8 |
@@ -60,7 +60,7 @@ log-likelihood (tour formation and mode) on held-out data.
 | Transit leg mode (5) | 6,792 | 35 | −3,501.8 | | −3,366.7 |
 
 The synthetic population (CVAE) is not a likelihood model; its fit is reported in [validation](validation/index.md). The activity
-distributions of TERP-Day are 3,946 weighted relative frequencies of the estimation half.
+distributions of MILES-Day are 3,946 weighted relative frequencies of the estimation half.
 
 ## Linking logsums
 

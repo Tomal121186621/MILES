@@ -21,9 +21,9 @@ Variants whose settings are missing from the data are skipped with a message.
 Outputs: 5_reports/figures/fig_t3_{start,duration,chains,distance}_{verification,validation,chain}.pdf/png (copied to
 paper/figures/) and paper/sections/s3_tables/tab_s3_{verification,validation,chain}.tex (\\input by 05_results.tex).
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, os, shutil, sys
 import numpy as np
 import pandas as pd
@@ -35,7 +35,7 @@ from matplotlib.patches import Patch
 from matplotlib.ticker import MultipleLocator, MaxNLocator
 
 V = f"{WORKSPACE}"
-sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps   # noqa: E402
+sys.path.insert(0, f"{MILES_HOME}/reports"); import paperstyle as ps   # noqa: E402
 DATA = f"{V}/data"; OUT = f"{V}/5_reports/figures"; PAPERFIG = f"{V}/5_reports/paper/figures"
 TABDIR = f"{V}/5_reports/paper/sections/s3_tables"
 HOUR_ORDER = list(range(4, 24)) + list(range(0, 4))

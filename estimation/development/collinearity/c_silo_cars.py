@@ -3,9 +3,9 @@
 Variables are household attributes entering alternative-specific utilities: correlations over the household rows, unweighted as
 in the estimation (mnl.fit is unweighted).  Estimate correlations from the robust (sandwich) covariance at the final estimates.
     python3 estimation/development/collinearity/c_silo_cars.py   ->  cars_var_corr.png, cars_est_corr.png, cars_pairs.csv, cars_facts.json"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

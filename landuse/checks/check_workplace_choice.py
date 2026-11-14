@@ -7,14 +7,14 @@ accessibility file; the job-mix shares and hiearn are taken from a temporary att
 (silo.jobchoice.verify.fileShares), because in a run they are recomputed each year from the SILO job list (difference reported
 separately).  Runs SILO up to the first prepareYear (data loading, ~3 min, 20 GB).
     python3 landuse/checks/check_workplace_choice.py <dir without spaces>   ->  c03_workplace_check.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, subprocess, shutil, re
 import numpy as np, pandas as pd
 V = f"{WORKSPACE}"; S = f"{V}/2_silo"; RUN = f"{S}/run"
 HERE = f"{V}/side_experiments/respec_2026-11/engine_check"; W = f"{ESTIMATION_RESULTS}/workplace"   # outputs (workspace); W: estimation results
-sys.path.insert(0, f"{TERP_HOME}/estimation/development/workplace_choice"); import wdc   # noqa: E402
+sys.path.insert(0, f"{MILES_HOME}/estimation/development/workplace_choice"); import wdc   # noqa: E402
 TMP = f"{RUN}/verify_respec"; NAME = "verify_respec_wp"
 # files of the verification hook: a directory without spaces (run_silo.sh splits SILO_JAVA_OPTS on spaces)
 VF = sys.argv[1] if len(sys.argv) > 1 else "/tmp"
@@ -41,12 +41,12 @@ def main():
     # engine run up to the verification
     out = f"{VF}/engine_V.csv"
     if not os.path.exists(out):
-        subprocess.run(["python3", f"{TERP_HOME}/landuse/run/write_properties.py", NAME, "2016", "2017", "-1", "1", "respec"], check=True, capture_output=True)
+        subprocess.run(["python3", f"{MILES_HOME}/landuse/run/write_properties.py", NAME, "2016", "2017", "-1", "1", "respec"], check=True, capture_output=True)
         p = f"{RUN}/{NAME}.properties"; t = open(p).read()
         t = re.sub(r"^job.choice.zone.attributes.file\s*=.*$", "job.choice.zone.attributes.file = ../verify_respec/zone_attrs_est.csv", t, flags=re.M)
         open(p, "w").write(t)
-        env = dict(os.environ, TERP_WORKSPACE=WORKSPACE, SILO_JAVA_OPTS=f"-Dsilo.jobchoice.verify={VF}/workers.csv;{VF}/zone_jobs.csv;{out} -Dsilo.jobchoice.verify.fileShares=true")
-        rc = subprocess.run(["bash", f"{TERP_HOME}/landuse/run/run_silo.sh", p, "20g"], env=env).returncode
+        env = dict(os.environ, MILES_WORKSPACE=WORKSPACE, SILO_JAVA_OPTS=f"-Dsilo.jobchoice.verify={VF}/workers.csv;{VF}/zone_jobs.csv;{out} -Dsilo.jobchoice.verify.fileShares=true")
+        rc = subprocess.run(["bash", f"{MILES_HOME}/landuse/run/run_silo.sh", p, "20g"], env=env).returncode
         print("engine exit", rc, flush=True)
     j = pd.read_csv(out); m = py.merge(j, on=["test_id", "zone"]); assert len(m) == len(py) == len(j), (len(m), len(py), len(j))
     d = (m.V_py - m.V).abs()

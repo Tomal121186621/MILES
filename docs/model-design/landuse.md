@@ -4,7 +4,7 @@
 
     | | |
     |---|---|
-    | **Engine** | SILO (Simple Integrated Land Use Orchestrator), Java, with TERP's estimated models |
+    | **Engine** | SILO (Simple Integrated Land Use Orchestrator), Java, with MILES's estimated models |
     | **Code** | `landuse/` (inputs, engine changes, calibration, runs) |
     | **Time step** | One year, 2016 → 2024 |
     | **Agents** | Households, persons, dwellings, jobs |
@@ -13,7 +13,7 @@
 
 
 The land-use stage runs on **SILO** (Simple Integrated Land Use Orchestrator), an open-source agent-based land-use
-model. It advances households, persons, dwellings and jobs in **annual steps from 2016 to 2024**. TERP keeps the
+model. It advances households, persons, dwellings and jobs in **annual steps from 2016 to 2024**. MILES keeps the
 SILO engine and replaces its behavioural models with models estimated for this region.
 
 ## What happens in a simulated year

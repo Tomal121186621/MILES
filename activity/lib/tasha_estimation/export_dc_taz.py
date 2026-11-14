@@ -9,9 +9,9 @@ is the model-of-record copy, including the pooled-anchor <PURPOSE>_stop segments
 work / education location segments and the calibration files.  coef_tasha and coef_tasha_cal are not touched.  Each variable
 name is checked against the parsing rules of MarylandDestinationChoice.loadMnl (an unknown name stops an ABIT run).
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import json, os, shutil, sys, hashlib
 import pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

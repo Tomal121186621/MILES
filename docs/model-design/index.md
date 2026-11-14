@@ -1,6 +1,6 @@
 # Model design
 
-TERP is a chain of five components. Each component's output is the next one's input; each has its own page:
+MILES is a chain of five components. Each component's output is the next one's input; each has its own page:
 [Synthetic population](population.md), [Land use](landuse.md), [School location](schools.md),
 [Activities](activity.md) and [Traffic assignment](assignment.md).
 
@@ -9,7 +9,7 @@ TERP is a chain of five components. Each component's output is the next one's in
 
 <figure markdown>
   ![](../assets/img/fw_platform.png)
-  <figcaption>The TERP chain. Blue: models; grey: input data; dashed: validation data. The skims are fixed: the assignment does not feed travel times back to the land-use and activity models.</figcaption>
+  <figcaption>The MILES chain. Blue: models; grey: input data; dashed: validation data. The skims are fixed: the assignment does not feed travel times back to the land-use and activity models.</figcaption>
 </figure>
 
 | Step | Model | Input from the previous step | Output to the next step |
@@ -17,7 +17,7 @@ TERP is a chain of five components. Each component's output is the next one's in
 | 1 | Synthetic population (CVAE) | Census microdata | Households, persons, dwellings, jobs and workplaces of 2016 |
 | 2 | Land use (SILO) | The 2016 base | Persons, households, dwellings and jobs of every year to 2024 |
 | 3 | School location | Students of each year | The school of every student |
-| 4 | Activities (TERP-Day) | Population, jobs and schools of 2024 | One weekday plan per person: activities, locations, times, tour modes |
+| 4 | Activities (MILES-Day) | Population, jobs and schools of 2024 | One weekday plan per person: activities, locations, times, tour modes |
 | 5 | Traffic assignment (MATSim) | Weekday plans | Routes, departure times, link volumes, travel times |
 
 ## Time line

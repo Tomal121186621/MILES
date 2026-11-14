@@ -13,11 +13,11 @@ collection exists (the EDGE SABS page lists 2013-14 and 2015-16 only; checked 20
   cov_hb = share of the zone's housing units inside any boundary of the band whose school is in the inventory.
 Outputs tables/sabs_coverage_by_district.csv, sabs_coverage_summary.csv; work/sabs_home_school.parquet (home zone, band, school id,
 school zone, a), work/sabs_zone_cov.parquet.   Usage: python3 -I landuse/schools/attendance_boundaries.py"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, glob, zipfile, numpy as np, pandas as pd, geopandas as gpd, pyogrio
-sys.path.insert(0, f"{TERP_HOME}/landuse/schools")
+sys.path.insert(0, f"{MILES_HOME}/landuse/schools")
 import school_common as C   # noqa: E402
 RAW, W, T, CRS = C.RAW, C.W, C.T, C.CRS
 SAB = glob.glob(f"{RAW}/sabs/ex/**/SABS_1516_*.shp", recursive=True)

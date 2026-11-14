@@ -6,9 +6,9 @@ mean; acres per dwelling of the engine: 1 unit 0.25 (SFD), 2-4 units 0.07, 5+ un
 needed land get their zones' developable acres scaled up proportionally to 1.5 times the need (infill and redevelopment, which
 the vacant-land inventory does not contain). In 2026 this concerns only Baltimore City (313 acres against 777 needed); every
 other county has at least 2.4 times its need. Output: input/development_2026.csv, data/silo_development_capacity_check.csv."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd
 V = f"{WORKSPACE}"; S = f"{V}/2_silo"
 dev = pd.read_csv(f"{S}/input/development_mstm.csv"); z = pd.read_csv(f"{S}/input/zoneSystem.csv").set_index("ZoneId")

@@ -2,9 +2,9 @@
 """Zone table for the rebuilt SILO: the 1,588-zone MSTM system with ONE REGION PER MARYLAND COUNTY (region id = county FIPS);
 the other states keep the original MSTM region groupings (ids unchanged).  Output: WORKSPACE/2_silo/input/zoneSystem.csv
 plus regions.csv (region id, name, state, counties) used by every control and calibration file."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, os
 ROOT = f"{PROJECT_ROOT}"; OUT = f"{WORKSPACE}/2_silo/input"; os.makedirs(OUT, exist_ok=True)
 z = pd.read_csv(f"{ROOT}/inputs/zoneSystem.csv")

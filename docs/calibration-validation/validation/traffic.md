@@ -5,7 +5,7 @@ seven screenlines and the MDOT SHA mileage. The model carries **residents only**
 traffic are not simulated, so ratios below 1 are expected, most of all off-peak and on roads with much freight.
 Model: mean of five seeds.
 
-<div class="terp-numbers">
+<div class="miles-numbers">
 <div><b>0.81</b><span>model ÷ count, passenger vehicles, 2,308 mainline stations</span></div>
 <div><b>0.91</b><span>on I-695, passenger vehicles</span></div>
 <div><b>R² 0.90</b><span>across stations, passenger vehicles</span></div>

@@ -2,9 +2,9 @@
 """Download the public observed datasets listed in ../data_sources.md into WORKSPACE/data/raw/<dataset>/.
 Files are never edited; a manifest (manifest.csv: file, url, bytes, sha256, downloaded) records every download.
 Re-running skips files already present.  Usage: python3 landuse/calibration/fetch_data.py [dataset ...]   (default: all)"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, csv, hashlib, time, urllib.request
 ROOT = f"{WORKSPACE}/data/raw"
 MD_COUNTIES = ["24003", "24005", "24013", "24025", "24027", "24510", "24001", "24009", "24011", "24015", "24017", "24019", "24021", "24023",

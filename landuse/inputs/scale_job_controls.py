@@ -18,9 +18,9 @@ after 2024 keep the 2024 share and rate with the population target of the year. 
 non-Maryland zones too (no ACS of those states here; the employment model uses the Maryland rates there as well).
 Input:  2_silo/input/assumptions/jobControlTotals_lodes.csv (copy of the LODES-based file, made on the first run)
 Output: 2_silo/input/assumptions/jobControlTotals.csv; data/silo_target_job_totals.csv (year, s, v, persons 16+, jobs, factor)"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import json, os, shutil, zipfile
 import numpy as np, pandas as pd
 

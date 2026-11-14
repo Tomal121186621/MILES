@@ -1,10 +1,10 @@
-# Activities (TERP-Day)
+# Activities (MILES-Day)
 
 !!! abstract "At a glance"
 
     | | |
     |---|---|
-    | **Engine** | TERP-Day on the ABIT engine, Java |
+    | **Engine** | MILES-Day on the ABIT engine, Java |
     | **Code** | `activity/` (coefficients, run scripts, Java source) |
     | **Estimated on** | 2017/18 Regional Travel Survey, estimation half |
     | **Models** | 3,946 survey distributions, 13 location and tour-formation logits, 7 mode-choice models |
@@ -12,19 +12,19 @@
     | **Produces** | One weekday plan per person: activities, locations, times, modes |
 
 
-**TERP-Day** generates, schedules and locates the activity episodes of every person for one weekday and assigns
+**MILES-Day** generates, schedules and locates the activity episodes of every person for one weekday and assigns
 their tour modes. Work and school episodes go to the job and school the person holds in the land-use model; every
 other episode is located by an estimated model. All distributions and parameters come from the estimation half of
 the travel survey, and **no calibration factor is applied**.
 
 <figure markdown>
   ![](../assets/img/activity_flow.png)
-  <figcaption>How the estimated parts of TERP-Day work together. Yellow: survey distributions; blue: estimated logit models; green: household rules; grey: inputs; red: output.</figcaption>
+  <figcaption>How the estimated parts of MILES-Day work together. Yellow: survey distributions; blue: estimated logit models; green: household rules; grey: inputs; red: output.</figcaption>
 </figure>
 
 ## Lineage
 
-TERP-Day runs on the engine of the ABIT activity-based model of the Maryland set-up and adopts the scheduling idea of
+MILES-Day runs on the engine of the ABIT activity-based model of the Maryland set-up and adopts the scheduling idea of
 TASHA. Against the original set-up it changes the following:
 
 | Part | What it does |

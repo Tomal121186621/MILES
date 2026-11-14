@@ -5,7 +5,7 @@ import os, zipfile, gzip
 import numpy as np
 import pandas as pd
 
-ROOT = os.environ.get("TERP_PROJECT_ROOT", "") + ""
+ROOT = os.environ.get("MILES_PROJECT_ROOT", "") + ""
 V = f"{ROOT}/Validation_2026"
 PKG = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../.."))   # PATH (package): manual_estimation/SILO
 SH = f"{PKG}/00_shared_data"   # PATH (package)

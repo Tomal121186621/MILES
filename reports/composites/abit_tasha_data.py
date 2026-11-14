@@ -13,13 +13,13 @@ Columns: setting, figure (duration | distance), type, hour (clock hour 0-23), mo
 roorda_validation), model_sd (s.d. of the per-replication hourly means, ddof = 1), n_rep (replications with a value in the hour),
 observed, n_obs (observed activities in the hour), D_hourly, P_hourly (Roorda's KS on the hourly values, constant per panel).
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 V = f"{WORKSPACE}"
-sys.path.insert(0, f"{TERP_HOME}/activity/validation")
+sys.path.insert(0, f"{MILES_HOME}/activity/validation")
 import validate_survey as RV   # noqa: E402
 
 OUT = f"{V}/data/abit_tasha_curves.parquet"

@@ -2,7 +2,7 @@
 
 The 2016 synthetic population against the ACS PUMS 2014–2018 of Maryland, the held-out PUMS test split, county estimates, LODES jobs and the reported commutes of the travel survey.
 
-<div class="terp-numbers">
+<div class="miles-numbers">
 <div><b>≤ 5.3 pp</b><span>TVD of every attribute, Maryland</span></div>
 <div><b>97 %</b><span>of held-out person combinations generated</span></div>
 <div><b>96.5 %</b><span>of PUMA × class cells within ±5 pp</span></div>

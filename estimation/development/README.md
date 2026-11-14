@@ -2,7 +2,7 @@
 
 RESPEC_PROTOCOL.md: rules (one specification rule per model family, hold-out checks). Run order per family, scripts numbered inside each folder.
 
-The scripts live here; their inputs and results stay in the estimation results folder (`ESTIMATION_RESULTS` in terp.toml), one
+The scripts live here; their inputs and results stay in the estimation results folder (`ESTIMATION_RESULTS` in miles.toml), one
 subfolder per family under its original name (shown in brackets). Run a script from the repository root, for example
 `python3 estimation/development/car_ownership/s01_data.py`; it reads and writes `ESTIMATION_RESULTS/car_ownership`.
 

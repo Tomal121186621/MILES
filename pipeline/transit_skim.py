@@ -18,13 +18,13 @@ network year, routed with MATSim's SwissRailRaptor (pipeline/TransitSkim.java on
      raptor table <out_dir>/raptor_pairs.csv.gz.
 Usage: python pipeline/transit_skim.py <network_pt.xml.gz> <schedule.xml.gz> <vehicles.xml.gz> <out_dir> [--peak 7 9] [--step 15] [--radius 4000]
        [--extension 2000] [--threads 4] [--xmx 6g] [--prior-silo DIR] [--prior-abit DIR]"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, os, re, gzip, json, time, argparse, subprocess, numpy as np, pandas as pd, geopandas as gpd
 from scipy.spatial import cKDTree
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
-JAR = f"{MATSIM_HOME}/code/matsim-run/target/baltimore-matsim-1.0.jar"; CLASSES = f"{V}/pipeline/java/classes"; JAVA_SRC = f"{TERP_HOME}/pipeline/TransitSkim.java"   # compiled into WORKSPACE/pipeline/java/classes
+JAR = f"{MATSIM_HOME}/code/matsim-run/target/baltimore-matsim-1.0.jar"; CLASSES = f"{V}/pipeline/java/classes"; JAVA_SRC = f"{MILES_HOME}/pipeline/TransitSkim.java"   # compiled into WORKSPACE/pipeline/java/classes
 SHP = f"{ABIT_HOME}/input/mito_los/Zonal/SMZ_RMZ_02152011inMSTM_EPSG26918.shp"; ZONES_CSV = f"{V}/2_silo/input/zoneSystem.csv"
 UNREACH, INTRA = 1000.0, 5.0
 

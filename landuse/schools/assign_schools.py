@@ -37,9 +37,9 @@ Usage: python3 landuse/schools/assign_schools.py --pp PP --hh HH --dd DD --schoo
 --coefficients FILE (default WORKSPACE/2_silo/schoolchoice/apply/school_choice_coefficients.csv; the re-estimated models:
 apply/school_choice_coefficients_respec.csv, written by landuse/coefficients/write_school_location.py); --dump-utilities FILE writes V_hkj = mu ln S_hkj + sum_m b_m x_m (no shadow prices) for the
 students' (type, home zone) and every school zone of the band, then exits without assigning (verification)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, argparse, time, numpy as np, pandas as pd
 import scipy.sparse as sps
 S_ = f"{WORKSPACE}/2_silo"; AP = f"{S_}/schoolchoice/apply"   # school-choice application files (data, workspace)

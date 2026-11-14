@@ -8,16 +8,16 @@ respec/abit/zone_extras.csv.
 Specification object:  Spec(lin=[...utility columns...], base=<size base component>, comps=[...other size components...])
 Parameter vector: beta (lin) + theta (comps, size weight exp(theta) relative to the base) + mu (ln size).
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, time
 import numpy as np
 import pandas as pd
 os.environ.setdefault("TAZ_THREADS", "5")
 V = f"{WORKSPACE}"
 TE = f"{V}/3_abit/tasha_estimation"; RESPEC = f"{V}/side_experiments/respec_2026-11/abit"
-sys.path.insert(0, f"{TERP_HOME}/activity/lib/tasha_estimation"); sys.path.insert(0, f"{TERP_HOME}/activity/lib")   # code (TE: data)
+sys.path.insert(0, f"{MILES_HOME}/activity/lib/tasha_estimation"); sys.path.insert(0, f"{MILES_HOME}/activity/lib")   # code (TE: data)
 import estimate_dc_taz as Z          # noqa: E402  (threads, wraps dc_model with the location mixture)
 import dc_taz_engine as X            # noqa: E402
 import dc_model as M                 # noqa: E402

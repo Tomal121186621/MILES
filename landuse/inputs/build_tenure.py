@@ -8,9 +8,9 @@ uniformly within it, for every base-year household.
 Output 2 (printed, data/silo_tenure_hazard.csv): the hazard of moving by years in the dwelling implied by the stock distribution
 under stationarity (density per year of duration within each band ~ survival; hazard between band midpoints), and the slope
 gamma of logit(hazard) on ln(1 + years), the duration coefficient resloc.move.duration of the move-or-not decision."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import zipfile, numpy as np, pandas as pd
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
 def rd(f, cols):

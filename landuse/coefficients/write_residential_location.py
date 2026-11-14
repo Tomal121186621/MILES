@@ -9,14 +9,14 @@ dwelling form).  New files only (never overwrites an existing file):
   data/accessibility_multimodal_respec_2016.csv       copy of accessibility_new/accessibility_2016_new_multimodal.csv (the file the
                                                       final zone model and county inclusive values were estimated with)
     python3 landuse/coefficients/write_residential_location.py   (COEF_ONLY=1: the two coefficient files only)"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, shutil
 import numpy as np, pandas as pd
 V = f"{WORKSPACE}"
 SBS = f"{ESTIMATION_RESULTS}"; R = f"{SBS}/residential"; INP = f"{V}/2_silo/input"
-sys.path.insert(0, f"{TERP_HOME}/landuse/lib/residential"); sys.path.insert(0, f"{TERP_HOME}/estimation/development/residential_location"); sys.argv = [sys.argv[0]]   # estimation code; R holds its results
+sys.path.insert(0, f"{MILES_HOME}/landuse/lib/residential"); sys.path.insert(0, f"{MILES_HOME}/estimation/development/residential_location"); sys.argv = [sys.argv[0]]   # estimation code; R holds its results
 import r05_region_sequence as R5   # noqa: E402  (adjacency, region frame, growth)
 
 

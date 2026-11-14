@@ -13,9 +13,9 @@ for comparison, the current model.
      dummy: collinear with the DC workplace term W8, collinearity/silo_notes.md)
   W10 workplace composition (high-earning jobs, office / retail / industrial shares) x person
     python3 estimation/development/workplace_choice/w04_sequence.py   ->  w04_fit.csv, w04_coef.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os
 import numpy as np, pandas as pd
 from scipy.stats import chi2

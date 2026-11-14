@@ -3,9 +3,9 @@
   units_2016(zone) = units_2010(zone) + 0.6 x (units_2020(zone) - units_2010(zone))
 2010: PL 94-171 Maryland block counts (H1 occupied), blocks located by the TIGER 2010 internal point; 2020: from zone_weights_2020.py.
 Output: 1_vae/output/zone_weights_2016.csv (zone_id, county_fips, occupied_units_2010, _2020, _2016)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, geopandas as gpd, os
 from shapely import points
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; RAW = f"{V}/data/raw/census2010"; OUT = f"{V}/1_vae/output"

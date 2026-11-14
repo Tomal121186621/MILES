@@ -29,14 +29,14 @@ gateways, external-external fills or copied background), not fewer chain persons
 kept (intra, inflow, outflow; external-external persons dropped as before), the gateways and the count-derived inflow cap are off, and
 activities outside the BMR keep their ABIT coordinates (MATSim attaches them to the nearest network link, i.e. at the network edge).
 Prints the cut statistics (tours by flow, persons kept, legs, attribute coverage, POI placement levels)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, csv, gzip, math, collections, sys, os, pickle, random
 import numpy as np
 ROOT = f"{PROJECT_ROOT}"
 ABIT = f"{ABIT_HOME}"; MAT = f"{MATSIM_HOME}"
-sys.path.insert(0, f"{TERP_HOME}/activity/lib"); from representative_day import single_day_legs, hhmmss   # noqa: E402
+sys.path.insert(0, f"{MILES_HOME}/activity/lib"); from representative_day import single_day_legs, hhmmss   # noqa: E402
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--activities", required=True); ap.add_argument("--legs", required=True)

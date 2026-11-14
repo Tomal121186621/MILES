@@ -1,16 +1,16 @@
-# TERP configuration. Copy to terp.toml and set the paths of your machine.
+# MILES configuration. Copy to miles.toml and set the paths of your machine.
 
 [paths]
 # folder with the data and the runs (inputs, microdata, skims, run outputs)
-workspace = "~/terp-workspace"
+workspace = "~/miles-workspace"
 # where the estimation scripts write their results (default: <workspace>/side_experiments/respec_2026-11/step_by_step)
-# estimation_results = "~/terp-workspace/estimation_results"
+# estimation_results = "~/miles-workspace/estimation_results"
 # checkout of the ABIT engine with its input resources (input/maryland)
-abit_home = "~/terp-external/ABIT"
+abit_home = "~/miles-external/ABIT"
 # MATSim runner build and network inputs
-matsim_home = "~/terp-external/MATSim"
+matsim_home = "~/miles-external/MATSim"
 # population-synthesis working folder (raw ACS PUMS, trained models)
-vae_home = "~/terp-external/VAE"
+vae_home = "~/miles-external/VAE"
 
 [java]
 home = ""            # empty: /usr/libexec/java_home -v 21

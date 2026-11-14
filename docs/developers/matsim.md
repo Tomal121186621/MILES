@@ -19,7 +19,7 @@ java -Xmx32g -Dseed=1 -Dthreads=12 -Dincome.vot.form=usdot -cp baltimore-matsim-
 |---|---|
 | Simulation | QSim 0–36 h, car as main mode, stuck time 120 s |
 | Replanning | re-route 0.15, departure-time mutation 0.10 (±30 min), plan selection the rest; plan memory 5 |
-| Modes | fixed from TERP-Day; ride routed on the car network; walk and bike teleported (beeline × 1.3) |
+| Modes | fixed from MILES-Day; ride routed on the car network; walk and bike teleported (beeline × 1.3) |
 | Transit | SwissRailRaptor; search radius 4,000 m |
 | Scoring | performing 0.78 utils/h; per-person marginal utility of money = 0.78 / value of time |
 | Value of time | `usdot`: 0.5 × household income / 2,080 h, income at least \$5,000 |

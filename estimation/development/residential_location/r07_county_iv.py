@@ -4,9 +4,9 @@ and dwelling (r06_dwelling_income.py, final model; its terms from the 'spec' col
 validation movers, same rows and other variables) and writes county_data_{est,val}.pkl for r05_region_sequence.py.
 Check first: the current inclusive values are recomputed from the current coefficients and must match the stored ones.
     python3 estimation/development/residential_location/r07_county_iv.py [est val oot]   ->  county_data_<tag>.pkl  (oot: movers 2019-2021 with the 2019-2021 dwelling pool)"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle, json
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, CODE)

@@ -6,9 +6,9 @@ Writes: est/est_mc_<segment>.tex (one estimation table per segment, the standard
 tab_mc_fit.tex (structures and tests), tab_mc_vot.tex (VOT rule by income and the sensitivity of the fit),
 tab_mc_elast.tex (aggregate elasticities against the literature), tab_mc_tasha.tex (TASHA mode-choice features followed),
 tab_mc_val.tex (tour mode shares, observed-tour validation and chain test)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

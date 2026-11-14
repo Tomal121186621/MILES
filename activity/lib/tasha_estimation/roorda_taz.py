@@ -9,14 +9,14 @@ Settings (survey population, seeds 1-10): verification_* (estimation half) and v
   behavnow / calnow   coef_tasha / coef_tasha_cal as they are now (control: the tour-mode files changed on 2026-10-27, after the
                       runs of record svy_*_behav / svy_*_cal of 2026-10-26, which are read from data/abit_roorda_tables.csv)
 The shared outputs of validate_survey.py (data/abit_roorda_*.csv, roorda_tables.md, figures) are not written."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np
 import pandas as pd
 A3 = f"{WORKSPACE}/3_abit"
-sys.path.insert(0, f"{TERP_HOME}/activity/validation"); sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f"{MILES_HOME}/activity/validation"); sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import validate_survey as RV                     # noqa: E402
 from compare_dc_taz import num, table, TAB         # noqa: E402
 V = RV.V; TAGS = ["behavnow", "behavtaz", "calnow", "caltaz", "behavtaz2", "rec1029"]

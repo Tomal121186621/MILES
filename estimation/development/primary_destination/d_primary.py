@@ -41,9 +41,9 @@ Final check: a kept linear term whose sign reversed after later blocks and that 
 is dropped (weakest first, one step each, LR of dropping it reported).  No other backward elimination.
     TAZ_THREADS=4 python3 estimation/development/primary_destination/d_primary.py d_shop [d_rec ...]
 Outputs <name>_fit.csv, <name>_coef.csv, <name>.log in ESTIMATION_RESULTS/dest_primary."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, time
 sys.dont_write_bytecode = True
 os.environ.setdefault("TAZ_THREADS", "4")
@@ -53,7 +53,7 @@ from scipy.stats import chi2
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/dest_primary"   # results of this step (data); CODE = this folder
 TE = f"{WORKSPACE}/3_abit/tasha_estimation"                     # data (work/, results/)
-sys.path.insert(0, f"{TERP_HOME}/activity/lib/tasha_estimation")
+sys.path.insert(0, f"{MILES_HOME}/activity/lib/tasha_estimation")
 import estimate_fullset_taz as FS       # noqa: E402  (chunked full-set mixture likelihood, records, current specification)
 import dc_taz_engine as X               # noqa: E402
 import dc_model as M                    # noqa: E402

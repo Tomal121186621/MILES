@@ -25,9 +25,9 @@ Sources (downloaded 2026-10-21 into WORKSPACE/data/raw/crime/, see data_sources.
       (violent + serious property) offense rate per 1,000 from Crime in Delaware 2012-2016 (Delaware SAC), tables 1, 4, 7, 10.
   Fallback for any other county: the state rate from FBI CIUS 2016 Table 3 (flagged in data/crime_index_sources.csv).
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import re, os, warnings
 import pandas as pd, pypdf
 warnings.filterwarnings("ignore")

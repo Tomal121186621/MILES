@@ -17,12 +17,12 @@ Standards: FDOT 2008 %RMSE by volume group and volume/count by facility (Tenness
           by volume (Tennessee Table 6); UK TAG M3.1: GEH < 5 for > 85 % of hourly flows.
 Seeds   : every statistic per seed, then mean, s.d. and the range over the seeds (smallest to largest; the *_p5 / *_p95 columns hold the min and max).
 Run     : python3 validate_counts.py   (env RUN_ROOT, IT, SEEDS for tests) -> data/*.csv, data/tables.json, figures/*.pdf|png"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, json, glob, gzip, warnings, numpy as np, pandas as pd; warnings.filterwarnings("ignore")
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
-sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps
+sys.path.insert(0, f"{MILES_HOME}/reports"); import paperstyle as ps
 RUN_ROOT = os.environ.get("RUN_ROOT", f"{V}/pipeline/runs/matsim"); IT = int(os.environ.get("IT", "100"))
 LH = os.environ.get("LINK_HOURS", f"{H}/data/link_hours"); OUTB = os.environ.get("OUT", H); DATA = f"{OUTB}/data"; FIG = f"{OUTB}/figures"; os.makedirs(DATA, exist_ok=True); os.makedirs(FIG, exist_ok=True)
 SEEDS = [int(s) for s in os.environ["SEEDS"].split(",")] if os.environ.get("SEEDS") else sorted({int(m.group(1)) for f in glob.glob(f"{LH}/link_hours_s*.csv.gz") if (m := re.search(r"link_hours_s(\d+)\.csv\.gz$", f))})

@@ -3,9 +3,9 @@
 est_stop_<P>_stop.tex (same \\label, grouped rows, article wording).  Helpers of ../tables/t_new_tables.py (imported).
 Writes est_stop_<P>_stop_new.tex and the compile check check.tex in ESTIMATION_RESULTS/dest_stop.
     python3 estimation/development/stop_location/s_tables.py"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 sys.dont_write_bytecode = True
 import pandas as pd

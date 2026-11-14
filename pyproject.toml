@@ -3,9 +3,9 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "terp"
+name = "miles"
 version = "0.1.0"
-description = "TERP: population, land use, activities and traffic for Maryland (CVAE, SILO, TERP-Day, MATSim)"
+description = "MILES (Maryland Integrated Land-use and Everyday-travel Simulator): population, land use, activities and traffic for Maryland (CVAE, SILO, MILES-Day, MATSim)"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "Raas Sarker Tomal", email = "rtomal@umd.edu" }]
@@ -18,7 +18,7 @@ estimation = ["biogeme==3.3.5", "ipykernel", "nbformat"]
 docs = ["mkdocs-material"]
 
 [project.scripts]
-terp = "terp_cli:main"
+miles = "miles_cli:main"
 
 [tool.setuptools]
-py-modules = ["terp_cli", "terp_env"]
+py-modules = ["miles_cli", "miles_env"]

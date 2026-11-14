@@ -40,9 +40,9 @@ ENGINE  separate models: Biogeme 3.3.5 (as m08 / m09).  Pooled models: the same 
         ratio of standard errors about 1.1); the other purposes (w = 1) agree to 4 digits.
 STEP 4  final pooled model; validation half used once: LL per purpose (work WESML weighted), compared with m08 / m09 final.
     ~/.venvs/biogeme/bin/python estimation/development/tour_mode_choice_pooled/mp_pooled.py   ->  mp_fit.csv, mp_coef.csv, mp.log"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys
 sys.dont_write_bytecode = True
 import os, json

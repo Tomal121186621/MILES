@@ -19,9 +19,9 @@ Inputs by setting
 After a run the two CSV outputs are reduced to output/legs.parquet and output/persons.parquet (person, household, home zone)
 and the CSVs are deleted (2 GB per run).
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, csv, hashlib, os, re, shutil, subprocess, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import pandas as pd
@@ -44,7 +44,7 @@ def snapshot():
     if os.path.exists(f"{FROZEN}/MANIFEST.csv"): print("snapshot exists:", FROZEN); return
     os.makedirs(FROZEN, exist_ok=True)
     shutil.copytree(SRC_COEF, f"{FROZEN}/coef"); shutil.copytree(f"{C.A3}/classes", f"{FROZEN}/classes")
-    shutil.copytree(f"{C.A3}/survey_overlay/classes", f"{FROZEN}/overlay_classes"); shutil.copy(f"{TERP_HOME}/activity/abit_classpath.txt", f"{FROZEN}/abit_classpath.txt")
+    shutil.copytree(f"{C.A3}/survey_overlay/classes", f"{FROZEN}/overlay_classes"); shutil.copy(f"{MILES_HOME}/activity/abit_classpath.txt", f"{FROZEN}/abit_classpath.txt")
     rp = f"{FROZEN}/coef/run_params.csv"   # the tour mode choice reads its coefficient file from the frozen copy
     if os.path.exists(rp):
         txt = open(rp).read(); open(rp, "w").write(txt.replace(f"{SRC_COEF}/tour_mode_choice.csv", f"{FROZEN}/coef/tour_mode_choice.csv"))
@@ -117,7 +117,7 @@ def run(setting, seed, half=None, force=False):
         args = [name, "base", "2016", "1.0", SK24 if C.MODEL in ("final", "mc") else SKB]   # the final model was estimated and verified with base_transit2024
     else:
         env["SILO_SCEN_DIR"] = SCEN_DIR; args = [name, SILO_SCEN, "2024", "1.0" if setting == "acs2024" else "0.05", SK24]
-    r = subprocess.run([sys.executable, f"{TERP_HOME}/activity/write_properties.py"] + args, capture_output=True, text=True, env=env)
+    r = subprocess.run([sys.executable, f"{MILES_HOME}/activity/write_properties.py"] + args, capture_output=True, text=True, env=env)
     if r.returncode != 0: raise SystemExit(f"write_properties failed: {r.stdout}{r.stderr}")
     props = f"{RUNROOT}/{name}.properties"; t = open(props).read()
     rep = {"number.of.threads": "6"}; extra = ""

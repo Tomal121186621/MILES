@@ -3,9 +3,9 @@
 All models on the estimation half; fit compared by BIC on the sampled choice sets and by the full-set log-likelihood per worker
 on the estimation half (all 1,587 zones; comparable with the original SILO rule, which has no estimated coefficients).
 The validation half is not used here (step 6).   Outputs: w03_fit.csv, w03_coef.csv.   Usage: python3 estimation/development/workplace_choice/w03_steps.py"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os
 import numpy as np, pandas as pd
 import wdc

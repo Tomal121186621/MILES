@@ -13,9 +13,9 @@ Estimation half only.  Same method as the other checks (abit_notes.md):
   (d)-(e) flags |r| >= 0.7 (variables, per purpose), VIF >= 10 (per purpose and pooled), |r| >= 0.8 (estimates); STRUCTURAL vs
       SUBSTANTIVE; refit of the pooled model without each member of a substantive pair (its global parameter held at 0: for a
       shared parameter in every purpose that shares it), LR and BIC against the final pooled model (BIC with the pooled N)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, time, pickle
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

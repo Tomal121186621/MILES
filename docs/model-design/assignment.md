@@ -11,7 +11,7 @@
     | **Produces** | Routes, departure times, link volumes by hour, travel times, transit boardings |
 
 
-The weekday plans of TERP-Day are assigned to the 2024 road and transit networks with **MATSim** (Multi-Agent
+The weekday plans of MILES-Day are assigned to the 2024 road and transit networks with **MATSim** (Multi-Agent
 Transport Simulation). Each agent executes its plan, and over the iterations agents re-route and shift departure
 times until the network loads settle.
 
@@ -28,7 +28,7 @@ to fall below traffic counts, most of all off-peak and on roads with much freigh
 | Sample | 10 % of households |
 | Iterations | 100 |
 | Replanning | Re-routing; departure-time mutation (shifts of up to 30 minutes) |
-| Modes | Fixed from TERP-Day |
+| Modes | Fixed from MILES-Day |
 | Runs | 5 seeds |
 | Value of time | Half the hourly household income (the larger of household income and \$5,000 a year, over 2,080 hours), per person |
 | Tolls | Harbour tunnel tolls of 2024 |

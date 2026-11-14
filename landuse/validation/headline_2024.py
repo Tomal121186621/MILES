@@ -2,9 +2,9 @@
 """Headline out-of-sample numbers, Maryland 2024 (dwellings: 2021-2024 sums), per seed and as mean with the 90 % band across seeds
 (mean +- 1.645 s.d.). Households from the seed microdata (occupied dwellings in Maryland zones) against ACS PUMS 2020-24 5-year.
 Output data/silo_headline_2024.csv.  Usage: python3 landuse/validation/headline_2024.py [n_seeds=5] [suffix='']"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, sys, zipfile
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; S = f"{V}/2_silo"
 n = int(sys.argv[1]) if len(sys.argv) > 1 else 5; sfx = sys.argv[2] if len(sys.argv) > 2 else ""

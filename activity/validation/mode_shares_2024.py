@@ -5,13 +5,13 @@ chains of the legs; main activity = work, else school, else the discretionary ac
 hierarchy of the survey tours (activity/lib/mode_choice/prep_tours.py: transit, car driver, car passenger, bike, walk); RTS: tours of both halves
 (mode_choice/work/tours_*.parquet), Maryland residents 5+, person weights.
     python3 activity/validation/mode_shares_2024.py   -> run_respec/mode_shares_vs_rts.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, glob
 import numpy as np, pandas as pd
 A3 = f"{WORKSPACE}/3_abit"; HERE = f"{A3}/final_2024"   # data
-sys.path.insert(0, f"{TERP_HOME}/activity")
+sys.path.insert(0, f"{MILES_HOME}/activity")
 import run_replications as R
 SEG = {"WORK": "work", "EDUCATION": "school", "SHOPPING": "shopping"}; GRP = {"CAR_DRIVER": "car driver", "CAR_PASSENGER": "car passenger", "WALK": "walk", "BIKE": "bike", "BUS": "transit", "TRAIN": "transit"}
 HIER = ["transit", "car driver", "car passenger", "bike", "walk"]
@@ -39,7 +39,7 @@ def main():
     runs = sorted(os.path.basename(d) for d in glob.glob(f"{R.RUN}/fin24_s??"))
     res = [tours(r, P) for r in runs]
     # RTS
-    sys.path.insert(0, f"{TERP_HOME}/activity/lib/reporting_2024"); T24 = f"{A3}/temporal_2024"
+    sys.path.insert(0, f"{MILES_HOME}/activity/lib/reporting_2024"); T24 = f"{A3}/temporal_2024"
     rk = pd.read_parquet(f"{T24}/data/rts_persons.parquet"); ra = pd.read_parquet(f"{T24}/data/rts_acts.parquet")
     rp = rk[(rk.age >= 5) & (rk.county // 1000 == 24)]; w = dict(zip(rp.person_id, rp.w)); rs = ra[ra.pid.isin(rp.person_id)].assign(w=lambda x: x.pid.map(w))
     MM = {"Car, driver": "car driver", "Car, passenger": "car passenger", "Walk": "walk", "Bicycle": "bike", "Bus": "transit", "Rail": "transit", "Other": "other"}

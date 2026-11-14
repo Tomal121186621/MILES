@@ -17,7 +17,7 @@ autoregressive decoder, no Set Transformer, no multi-head income model.
   reset to student, an under-62 "retiree" to other), so the exported structural-zero count is 0. This is a
   deterministic post-processing patch, **not** an unreachable-by-construction decoder mask — see the
   limitations note below on why the informative number is the *pre-patch* illegal-combo rate.
-- **Self-contained data folder**: all 2016 inputs are under `VAE_HOME/inputs/` (`vae_home` in `terp.toml`).
+- **Self-contained data folder**: all 2016 inputs are under `VAE_HOME/inputs/` (`vae_home` in `miles.toml`).
 
 ## Layout
 ```

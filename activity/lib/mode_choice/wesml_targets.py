@@ -21,9 +21,9 @@ stratum (the geographic stratification of the survey is exogenous and keeps its 
 stratum equal the ACS shares.  A mode the survey does not observe in a stratum cannot be represented; Q is renormalised over the
 observed modes of the stratum and the mass that is lost is reported (results/wesml_targets.csv, column q_unobserved).
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, zipfile
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

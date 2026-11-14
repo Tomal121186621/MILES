@@ -17,9 +17,9 @@ Inputs: out/blocks2020.parquet, out/blocks2010.parquet, out/lodes_block_zone.par
         (abit_extract.py); data/raw/acs_tract (ACS tract tables); data/raw/lodes_wac, lodes_od, bps.
 Outputs: out/*.csv (unit-level comparisons + metrics_summary.csv); figures by tract_figures.py.
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, json, glob, os, networkx as nx
 V = f"{WORKSPACE}"
 D0 = f"{V}/5_reports/validation_tracts/out"; RAW = f"{V}/data/raw"

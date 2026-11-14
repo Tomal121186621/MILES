@@ -1,6 +1,6 @@
 # Data
 
-TERP is built from public data, with two exceptions marked † (released by the agency on request). The tables list
+MILES is built from public data, with two exceptions marked † (released by the agency on request). The tables list
 the data by the stage that uses them; bracketed numbers refer to the sources at the end of the page. The role of a
 dataset is *estimation* (a model is estimated on it), *input* (used as given), *target* (a calibrated parameter is
 matched to it) or *test* (used only for validation).
@@ -67,7 +67,7 @@ package lists the exact files and variables.
 | Vehicle-miles by county and road class | MDOT State Highway Administration [26] | 2024 | Test |
 | National Transit Database, boardings by mode | Federal Transit Administration [27] | 2017/18, 2024 | Test |
 
-† Released by the agency on request; not redistributed with TERP.
+† Released by the agency on request; not redistributed with MILES.
 
 ## Geography
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 # Workplace and school location re-estimated with the mode-choice logsums of the re-estimated mode models, after the logsum files
 # are written (workplace_choice/w05_logsum.py, other_locations/l08_school_logsum.py); then the coefficient and development tables.
-# The scripts are in this folder; results are read from and written to ESTIMATION_RESULTS (terp.toml).
+# The scripts are in this folder; results are read from and written to ESTIMATION_RESULTS (miles.toml).
 set -e
-DEV="$(cd "$(dirname "$0")" && pwd)"; TERP_HOME="$(cd "$DEV/../.." && pwd)"
-ER="$(cd "$TERP_HOME" && python3 -c 'from terp_env import ESTIMATION_RESULTS; print(ESTIMATION_RESULTS)')"
+DEV="$(cd "$(dirname "$0")" && pwd)"; MILES_HOME="$(cd "$DEV/../.." && pwd)"
+ER="$(cd "$MILES_HOME" && python3 -c 'from miles_env import ESTIMATION_RESULTS; print(ESTIMATION_RESULTS)')"
 cd "$ER"
 until [ -f workplace/logsum_new.npy ] && [ -f locations/school_logsum_new.npy ]; do sleep 60; done
 for f in workplace/w04_fit.csv workplace/w04_coef.csv workplace/w04.log; do cp "$f" "${f%.*}_pre1108s.${f##*.}"; done

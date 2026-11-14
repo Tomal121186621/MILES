@@ -13,7 +13,7 @@ In the engine lnddens, lnjden, lnretden and mix are recomputed every year from S
     python3 r11_zone_landuse.py   ->  zone_landuse_2016.csv"""
 import os, sys
 import numpy as np, pandas as pd
-V = os.environ.get("TERP_WORKSPACE", "") + ""; HERE = os.path.dirname(os.path.abspath(__file__))
+V = os.environ.get("MILES_WORKSPACE", "") + ""; HERE = os.path.dirname(os.path.abspath(__file__))
 MD = f"{V}/2_silo/input/microData"
 
 

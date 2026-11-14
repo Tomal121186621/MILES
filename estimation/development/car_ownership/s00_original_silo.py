@@ -8,9 +8,9 @@ rounded), 10 job-density classes (thresholds 0, .143, .437, .865, 1.324, 1.8778,
 SILO divides jobs by square miles; the thresholds look like jobs per acre, so both are computed.
 PUMS has no zone: the probability of a household is the mean over the zones of its PUMA, weighted by housing units.
 Outputs: s00_original.csv.   Usage: python3 estimation/development/car_ownership/s00_original_silo.py"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os
 import numpy as np, pandas as pd
 from mnl import fit

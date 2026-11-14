@@ -1,6 +1,6 @@
-# Applying TERP
+# Applying MILES
 
-TERP answers "what if" questions by changing an input of one stage and running the chain from that stage on.
+MILES answers "what if" questions by changing an input of one stage and running the chain from that stage on.
 
 | To test… | Change | Run from |
 |---|---|---|

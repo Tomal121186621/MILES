@@ -3,13 +3,13 @@
 geometries of motorway, trunk and primary roads, Maryland extract), the screenlines S1-S7 and the closed Key Bridge.  No count
 stations, no minor roads.  Called by screenlines.py (draw); standalone it reads the screenline geometry written by screenlines.py.
 Usage: python3 assignment/validation/map_study_area.py [screenlines_definition.geojson] [out_without_ext]"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, json, numpy as np, pandas as pd, geopandas as gpd, shapely
 from shapely.geometry import shape, LineString
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
-sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps   # noqa: E402
+sys.path.insert(0, f"{MILES_HOME}/reports"); import paperstyle as ps   # noqa: E402
 CRS = 26985
 PBF = f"{ROOT}/inputs/osm/maryland-latest.osm.pbf"
 ROADS = f"{H}/data/osm_major_roads.gpkg"

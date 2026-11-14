@@ -19,11 +19,11 @@ School locations: BMC TAZ10 (1..1387) -> BMC; else valid TPB TAZ -> TPB; else BM
 Size components (work/zone_size.parquet): school_common.COMP, enrolment (capacity column) of input/schools_2016.csv by zone and band.
 Outputs work/students.parquet, loc_home.parquet, loc_school.parquet, school_points.parquet; tables/counts.csv, drop_log.csv,
 location_summary.csv.   Usage: python3 -I landuse/schools/school_data.py"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, glob, zipfile, numpy as np, pandas as pd, geopandas as gpd
-sys.path.insert(0, f"{TERP_HOME}/landuse/schools")
+sys.path.insert(0, f"{MILES_HOME}/landuse/schools")
 import school_common as C   # noqa: E402
 ROOT, V, RAW, JC, W, T, CRS = C.ROOT, C.V, C.RAW, C.JC, C.W, C.T, C.CRS
 DEFL = 240.007 / ((245.120 + 251.107) / 2)

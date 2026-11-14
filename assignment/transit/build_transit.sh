@@ -1,17 +1,17 @@
 #!/bin/sh
-: "${TERP_HOME:=$(cd "$(dirname "$0")/../.." && pwd)}"
-: "${TERP_WORKSPACE:?run through the terp command, or set TERP_WORKSPACE}"
+: "${MILES_HOME:=$(cd "$(dirname "$0")/../.." && pwd)}"
+: "${MILES_WORKSPACE:?run through the miles command, or set MILES_WORKSPACE}"
 # Build the MATSim transit input of the integrated loop (WORKSPACE/4_matsim/transit/TRANSIT_BUILD.md): all GTFS feeds of the network
 # area -> one weekday -> pt2matsim schedule -> shape-guided mapping onto network_2024 and network_2026 -> loop/U-turn cleaning ->
 # vehicles -> checks.  Every Java process <= 9 GB, one at a time.  Usage: sh assignment/transit/build_transit.sh
 # Code: C = assignment/transit (scripts), assignment/engine/transit-mapping (MapWithShapes.java); data and outputs: T = WORKSPACE/4_matsim/transit.
 set -e
-C="$TERP_HOME/assignment/transit"; V="$TERP_WORKSPACE"; T="$V/4_matsim/transit"; JH=$(/usr/libexec/java_home -v 21); J="$JH/bin/java"
-PT2="${TERP_MATSIM_HOME:-${TERP_PROJECT_ROOT:-$V/..}/Updated MATSim}/tools/pt2matsim/target/pt2matsim-24.4-shaded.jar"
+C="$MILES_HOME/assignment/transit"; V="$MILES_WORKSPACE"; T="$V/4_matsim/transit"; JH=$(/usr/libexec/java_home -v 21); J="$JH/bin/java"
+PT2="${MILES_MATSIM_HOME:-${MILES_PROJECT_ROOT:-$V/..}/Updated MATSim}/tools/pt2matsim/target/pt2matsim-24.4-shaded.jar"
 mkdir -p "$T/logs" "$T/work"
 python3 -I "$C/merge_gtfs.py" "$V/data/raw" "$V/4_matsim/network/network_2024.xml.gz" "$T/gtfs_merged" > "$T/logs/merge_gtfs.log" 2>&1
 "$J" -Xmx8g -cp "$PT2" org.matsim.pt2matsim.run.Gtfs2TransitSchedule "$T/gtfs_merged/" 20261021 EPSG:26985 "$T/work/schedule_unmapped.xml.gz" "$T/work/transitVehicles_gtfs.xml.gz" > "$T/logs/gtfs2matsim.log" 2>&1
-"$JH/bin/javac" -nowarn -d "$T/java/classes" -cp "$PT2" "$TERP_HOME/assignment/engine/transit-mapping/MapWithShapes.java"
+"$JH/bin/javac" -nowarn -d "$T/java/classes" -cp "$PT2" "$MILES_HOME/assignment/engine/transit-mapping/MapWithShapes.java"
 for Y in 2024 2026; do
   python3 -I "$C/clean_network.py" "$V/4_matsim/network/network_$Y.xml.gz" "$T/work/network_${Y}_clean.xml.gz" > "$T/logs/clean_network_$Y.log"
   python3 -I "$C/make_ptmapper_config.py" "$T/ptmapper_config_$Y.xml" "$T/work/network_${Y}_clean.xml.gz" "$T/work/schedule_unmapped.xml.gz" "$T/network_${Y}_pt.xml.gz" "$T/work/transitSchedule_${Y}_mapped.xml.gz" \

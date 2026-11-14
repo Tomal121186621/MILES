@@ -10,9 +10,9 @@ Skims 3_abit/skims/base_transit2024 (the chain's 'base' ABIT skims), sample 10 %
     python3 activity/lib/replications.py run --jobs 2
 After a run, legs and activities are kept as parquet (all columns as text: legs_full / activities_full, rewritable to the ABIT CSV)
 plus persons.parquet; the CSVs and mc_tours.csv are deleted (13 GB free disk: one run at a time)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, csv, hashlib, os, re, shutil, subprocess, sys, time
 from concurrent.futures import ThreadPoolExecutor
 import pyarrow.csv as pc, pyarrow.parquet as pq, pyarrow as pa
@@ -35,7 +35,7 @@ def sha(p):
 def snapshot():
     if os.path.exists(f"{FROZEN}/MANIFEST.csv"): print("snapshot exists"); return
     os.makedirs(FROZEN, exist_ok=True); src = f"{A3}/coef_tasha"
-    shutil.copytree(src, f"{FROZEN}/coef"); shutil.copytree(f"{A3}/classes", f"{FROZEN}/classes"); shutil.copy(f"{TERP_HOME}/activity/abit_classpath.txt", FROZEN)
+    shutil.copytree(src, f"{FROZEN}/coef"); shutil.copytree(f"{A3}/classes", f"{FROZEN}/classes"); shutil.copy(f"{MILES_HOME}/activity/abit_classpath.txt", FROZEN)
     rp = f"{FROZEN}/coef/run_params.csv"; t = open(rp).read(); open(rp, "w").write(t.replace(f"{src}/tour_mode_choice.csv", f"{FROZEN}/coef/tour_mode_choice.csv"))
     rows = []
     for d in ["coef", "classes"]:
@@ -76,7 +76,7 @@ def run(form, seed):
     if os.path.exists(f"{d}/output/legs_full.parquet"): print(f"{name}: done, skipped", flush=True); return
     os.makedirs(d, exist_ok=True); rc = f"{d}/coef"; shutil.rmtree(rc, ignore_errors=True); shutil.copytree(f"{FROZEN}/coef", rc)
     env = dict(os.environ) | {"ABIT_RUN_ROOT": RUN, "ABIT_COEF_DIR": rc, "SILO_SCEN_DIR": SCEN_DIR}
-    r = subprocess.run([sys.executable, f"{TERP_HOME}/activity/write_properties.py", name, f"oos_s{SILO_SEED}", "2024", SAMPLE, SK], capture_output=True, text=True, env=env)
+    r = subprocess.run([sys.executable, f"{MILES_HOME}/activity/write_properties.py", name, f"oos_s{SILO_SEED}", "2024", SAMPLE, SK], capture_output=True, text=True, env=env)
     if r.returncode: raise SystemExit(f"write_properties failed: {r.stdout}{r.stderr}")
     props = f"{RUN}/{name}.properties"; t = open(props).read()
     for k, v in {"persons.file": f"{SCH}/pp_2024.csv", "schools.file": f"{SCH}/schools_2024.csv", "number.of.threads": THREADS, "modechoice.dir": rc}.items():

@@ -3,9 +3,9 @@
 columns TravelTime (1..200 minutes, 1-minute steps), frequency, Utility = relative frequency scaled to a maximum of 1), from the
 2023 household travel survey: reported travel time of home-work car-driver trips, trip weights, smoothed with a Gaussian
 kernel (sd 3 min) because single-minute reports cluster on multiples of 5.  Replaces the legacy MSTM curve."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
 r = pd.read_csv(f"{ABIT_HOME}/input/rts/rts_trips_clean.csv", low_memory=False, usecols=["o_activity", "d_activity", "travel_mode", "reported_travel_time", "wttrdfin"])

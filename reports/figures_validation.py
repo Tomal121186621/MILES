@@ -21,9 +21,9 @@ Labels are plain words with units; data-source names, acronyms and statistics ar
     stage 4  fig_v4_inputs (network and transit inputs), appendix fig_v4_a (class matrix); fig_v4_main pending (assignment runs)
 Outputs: 5_reports/figures/fig_v*.pdf/png (copied to paper/figures/), 5_reports/FIGURE_CATALOGUE.md.
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, glob, json, os, re, shutil, sys
 import numpy as np
 import pandas as pd
@@ -37,7 +37,7 @@ from matplotlib.colors import ListedColormap, BoundaryNorm, LogNorm
 from matplotlib.ticker import FuncFormatter, FixedLocator, NullFormatter, NullLocator, MaxNLocator
 
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
-sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps   # noqa: E402
+sys.path.insert(0, f"{MILES_HOME}/reports"); import paperstyle as ps   # noqa: E402
 DATA = f"{V}/data"; OUT = f"{V}/5_reports/figures"; PAPERFIG = f"{V}/5_reports/paper/figures"; os.makedirs(OUT, exist_ok=True)
 CAT_ROWS = []
 DIST_LABELS = ["0-1", "1-2", "2-3", "3-5", "5-7.5", "7.5-10", "10-15", "15-20", "20-30", "30-50", "50+"]     # data keys

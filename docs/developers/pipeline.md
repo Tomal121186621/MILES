@@ -3,7 +3,7 @@
 | File | Role |
 |---|---|
 | `run_chain.py` | orchestrator: land-use step, activities, MATSim plans, MATSim, skims, loop |
-| `activities_to_matsim.py` | TERP-Day output + land-use persons → MATSim plans |
+| `activities_to_matsim.py` | MILES-Day output + land-use persons → MATSim plans |
 | `snap_to_network.py` | moves activities off car links outside the connected network |
 | `skims_from_matsim.py` | AM-peak car skims from MATSim events |
 | `transit_skim.py`, `TransitSkim.java` | transit skims with SwissRailRaptor |

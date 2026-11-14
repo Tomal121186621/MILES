@@ -17,9 +17,9 @@ log-likelihoods rescaled to the number of households (sum of w log P x N / sum o
 --engine-consistent (2026-11-04): the variables as CarOwnershipModelMd applies them -- workers = employed persons of the household
 (person file, ESR 1, 2, 4, 5; not capped), where WIF counts workers in the family only (NA, i.e. 0, for nonfamily households), and
 the income classes on income in 2016 $ (CPI 240.007/251.107), where the default uses 2018 $."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import zipfile, pandas as pd, numpy as np, os, sys
 import statsmodels.api as sm
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"

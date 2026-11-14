@@ -24,14 +24,14 @@ Money (2017 dollars):
   toll      the toll hook adds a per-half-tour amount (MarylandTourNestedModeChoice.setToll) to the car-driver cost
 Income: household income as ABIT sums it (12 x sum of persons' int(annual/12), USD/yr).
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{WORKSPACE}/3_abit/mode_choice"; A3 = os.path.dirname(HERE)
-sys.path.insert(0, f"{TERP_HOME}/activity/lib/destination_choice"); sys.path.insert(0, f"{TERP_HOME}/activity/lib")
+sys.path.insert(0, f"{MILES_HOME}/activity/lib/destination_choice"); sys.path.insert(0, f"{MILES_HOME}/activity/lib")
 import dc_common as C   # noqa: E402
 
 WORK = f"{HERE}/work"; RES = f"{HERE}/results"; SK = f"{WORK}/skims"

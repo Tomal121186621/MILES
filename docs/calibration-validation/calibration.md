@@ -39,7 +39,7 @@ not a test of the model.
 
 ## Not calibrated
 
-- TERP-Day is applied without frequency factors or constant adjustments.
+- MILES-Day is applied without frequency factors or constant adjustments.
 - None of the other choice models is calibrated.
 - The choice-based weights of the work tour mode choice are part of its estimator.
 - The road network is not calibrated to counts.

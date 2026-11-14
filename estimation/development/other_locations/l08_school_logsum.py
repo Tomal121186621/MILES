@@ -6,9 +6,9 @@ students, sex and licence averaging and time-of-day weights of 2_silo/schoolchoi
 model: children under 16 in the household = share of students of the cell younger than 16 (the student counts), fewer cars than
 drivers = car class 1.
     python3 estimation/development/other_locations/l08_school_logsum.py   ->  school_logsum_new.npy, school_logsum_new_segments.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd
@@ -16,7 +16,7 @@ CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/locations"   # results of this step (data); CODE = this folder
 sys.path.insert(0, f"{os.path.dirname(CODE)}/accessibility")
 import mode_logsum_new as L   # noqa: E402
-SC = f"{TERP_HOME}/landuse/schools"   # school-choice code
+SC = f"{MILES_HOME}/landuse/schools"   # school-choice code
 sys.path.insert(0, SC)
 import school_common as C   # noqa: E402
 MC = f"{C.V}/3_abit/mode_choice"

@@ -4,9 +4,9 @@ vacant-job buffer SILO's labour market needs (every synthetic job is filled, 1:1
 take a job). The buffer is the observed BLS JOLTS job-openings rate (1_vae/vacancy_rate.json), not the 27 % of the old MSTM file.  Vacant jobs (personId = -1) are added per
 zone and job type in proportion to the filled jobs there, so that vacancies = VACANCY_SHARE of all jobs; filled-job ids are
 unchanged so pp.workplace links survive.  Output: 2_silo/input/microData/{hh,pp,dd,jj}_2016.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, os, shutil
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
 SRC = f"{V}/1_vae/vae_outputs/06_silo_input"; OUT = f"{V}/2_silo/input/microData"; os.makedirs(OUT, exist_ok=True)

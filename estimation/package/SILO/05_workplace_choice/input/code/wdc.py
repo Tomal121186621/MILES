@@ -15,7 +15,7 @@ from scipy.optimize import minimize
 HERE = os.path.dirname(os.path.abspath(__file__))
 RAWD = os.path.abspath(f"{HERE}/../data/raw"); SHD = os.path.abspath(f"{HERE}/../../../00_shared_data")   # PATH (package)
 D = dict(np.load(f"{RAWD}/data.npz"))
-LS = np.load(os.environ.get("WDC_LOGSUM", os.environ.get("TERP_WORKSPACE", "") + "/2_silo/jobchoice/work_rts/logsum.npy"), mmap_mode="r")   # WDC_LOGSUM: work-tour mode-choice logsums
+LS = np.load(os.environ.get("WDC_LOGSUM", os.environ.get("MILES_WORKSPACE", "") + "/2_silo/jobchoice/work_rts/logsum.npy"), mmap_mode="r")   # WDC_LOGSUM: work-tour mode-choice logsums
 JOBS = np.column_stack([D["jobs_RET"], D["jobs_OFF"], D["jobs_IND"], D["jobs_OTH"]])
 AZ = np.where(JOBS.sum(1) > 0)[0]
 TT = D["tt"].astype(float)

@@ -20,23 +20,23 @@ Checks (Python side):
   outings       a01 (estimate_subtours.data definitions: work span, arrival, secondary work, ln(1 + home-work km), workplace CBD)
         and a02 (ln(1 + km workplace-first stop), CBD, cars, more than one stop, mode of the work tour) from the debug lines
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re, shutil, subprocess, sys
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd
 
 V = WORKSPACE; A3 = f"{V}/3_abit"                    # data
-SBS = f"{ESTIMATION_RESULTS}"; TE = f"{TERP_HOME}/activity/lib/tasha_estimation"   # code
-COEF = f"{TERP_HOME}/activity/parameters"; SK = f"{A3}/skims/base_transit2024"
+SBS = f"{ESTIMATION_RESULTS}"; TE = f"{MILES_HOME}/activity/lib/tasha_estimation"   # code
+COEF = f"{MILES_HOME}/activity/parameters"; SK = f"{A3}/skims/base_transit2024"
 NAME = "svy_est_respecchk_s01"; RUN = f"{A3}/run_survey/{NAME}"
 SCR = f"{RUN}_debug"   # coefficient copy with the debug switches and the debug files
 OUT = f"{A3}/respec_unit_check.csv"
 
 
 def run():
-    sys.path.insert(0, f"{TERP_HOME}/activity/survey"); import survey_population as S
+    sys.path.insert(0, f"{MILES_HOME}/activity/survey"); import survey_population as S
     os.makedirs(SCR, exist_ok=True); c = f"{SCR}/coef"; shutil.rmtree(c, ignore_errors=True); shutil.copytree(COEF, c)
     for f in ("dest_debug.csv", "tasha_debug.csv"):
         if os.path.exists(f"{SCR}/{f}"): os.remove(f"{SCR}/{f}")
@@ -49,8 +49,8 @@ def run():
 
 # ------------------------------------------------------------------------------------------------ destinations
 def check_dest(rows):
-    sys.path.insert(0, TE); sys.path.insert(0, f"{TERP_HOME}/activity/lib/destination_choice")
-    sys.path.insert(0, f"{TERP_HOME}/estimation/development/primary_destination"); sys.path.insert(0, f"{TERP_HOME}/estimation/development/stop_location"); sys.path.insert(0, f"{TERP_HOME}/estimation/development/accessibility")
+    sys.path.insert(0, TE); sys.path.insert(0, f"{MILES_HOME}/activity/lib/destination_choice")
+    sys.path.insert(0, f"{MILES_HOME}/estimation/development/primary_destination"); sys.path.insert(0, f"{MILES_HOME}/estimation/development/stop_location"); sys.path.insert(0, f"{MILES_HOME}/estimation/development/accessibility")
     import d_primary   # noqa: F401  (ln distance x male / one-person household)
     import s_stops_newls   # noqa: F401  (chooser flags, 'ls' of the re-specified tour models)
     import torch, dc_model as M, dc_common as C, prep_dc_data as PD
@@ -87,7 +87,7 @@ def check_dest(rows):
 
 # ------------------------------------------------------------------------------------------------ tour mode choice
 def check_mode(rows):
-    sys.path.insert(0, f"{TERP_HOME}/estimation/development/accessibility"); sys.path.insert(0, f"{TERP_HOME}/activity/lib/destination_choice")
+    sys.path.insert(0, f"{MILES_HOME}/estimation/development/accessibility"); sys.path.insert(0, f"{MILES_HOME}/activity/lib/destination_choice")
     import mode_logsum_new as LN, prep_dc_data as PD, dc_common as C
     t = pd.read_csv(f"{RUN}/output/mc_tours.csv"); m = C.id2idx()
     pm = pd.read_csv(f"{A3}/survey_pop/estimation/persons_map.csv").set_index("id"); P = PD.people("estimation")
@@ -127,7 +127,7 @@ def check_mode(rows):
 
 # ------------------------------------------------------------------------------------------------ activity models
 def check_activity(rows):
-    sys.path.insert(0, TE); sys.path.insert(0, f"{TERP_HOME}/estimation/development/tour_formation"); sys.path.insert(0, f"{TERP_HOME}/activity/lib")
+    sys.path.insert(0, TE); sys.path.insert(0, f"{MILES_HOME}/estimation/development/tour_formation"); sys.path.insert(0, f"{MILES_HOME}/activity/lib")
     import estimate_return_home as ER, dc_common as C
     from activity_metrics import dist_matrix
     dm = dist_matrix(); m = C.id2idx(); z = C.zones(); d = C.skims()["d"]

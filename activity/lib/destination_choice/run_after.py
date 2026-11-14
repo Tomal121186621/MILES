@@ -3,12 +3,12 @@
     python3 activity/lib/destination_choice/run_after.py   -> run_survey/svy_est_mnl_s01..10, svy_val_mnl_s01..10, run/val_mnl_s01..10
 Coefficient set destination_choice/coef_mnl_run (coef_calibrated + dest_choice_mnl.csv + dest.choice.model = mnl); skims
 3_abit/skims/base_transit2024 (base car time and distance, 2024 door-to-door transit: the skims of estimation)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, subprocess, sys, time
 A3 = f"{WORKSPACE}/3_abit"; HERE = f"{A3}/destination_choice"   # data
-sys.path.insert(0, f"{TERP_HOME}/activity/survey"); sys.path.insert(0, f"{TERP_HOME}/activity")
+sys.path.insert(0, f"{MILES_HOME}/activity/survey"); sys.path.insert(0, f"{MILES_HOME}/activity")
 import survey_population as S, run_activity_model as R
 COEF = f"{HERE}/coef_mnl_run"; SK = f"{A3}/skims/base_transit2024"
 def wait():

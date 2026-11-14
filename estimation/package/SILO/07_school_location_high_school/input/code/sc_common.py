@@ -11,7 +11,7 @@ Size components by zone and band (work/zone_size.parquet, sc_01_data.py):
   K-12: pub (CCD), priv (PSS) enrolment of the band;
   college: pub4 (IPEDS SECTOR 1, public 4-year), priv4 (SECTOR 2-3, private 4-year), cc (SECTOR 4-9: 2-year and less-than-2-year)."""
 import os, numpy as np, pandas as pd
-ROOT = os.environ.get("TERP_PROJECT_ROOT", "") + ""; V = f"{ROOT}/Validation_2026"; S = f"{V}/2_silo"; RAW = f"{V}/data/raw"
+ROOT = os.environ.get("MILES_PROJECT_ROOT", "") + ""; V = f"{ROOT}/Validation_2026"; S = f"{V}/2_silo"; RAW = f"{V}/data/raw"
 SC = f"{S}/schoolchoice"; JC = f"{S}/jobchoice"
 SHD = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../../00_shared_data"))   # PATH (package)
 W = f"{SHD}/school_choice_work"; T = W; FIG = W   # PATH (package): data of sc_00 / sc_01 (copied); tables / figures of the original scripts not used

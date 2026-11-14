@@ -19,14 +19,14 @@ rate rather than the mean level, since mean achievement mainly reflects the soci
   A  final model + county constants (calibration only; county-wide terms dropped)
     python3 estimation/development/residential_location/r05_region_sequence.py [newiv]   ->  r05_fit.csv, r05_coef.csv
   newiv: inclusive values of the re-specified zone and dwelling parts (county_data_*.pkl of r07_county_iv.py)"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/residential"   # results of this step (data); CODE = this folder
-RL = f"{TERP_HOME}/landuse/lib/residential"; sys.path.insert(0, RL)   # residential-location code
+RL = f"{MILES_HOME}/landuse/lib/residential"; sys.path.insert(0, RL)   # residential-location code
 RL_DATA = f"{WORKSPACE}/2_silo/resloc"                                   # its data folder (tables/)
 from rc import WORK, RAW   # noqa: E402
 from mnl import MNL, lr_test   # noqa: E402

@@ -2,7 +2,7 @@
 
 Students assigned to schools in every simulated year, against the survey students of the same counties and the ACS enrolment.
 
-<div class="terp-numbers">
+<div class="miles-numbers">
 <div><b>2 %</b><span>students by age, error against the ACS</span></div>
 <div><b>1–4 min</b><span>assigned schools farther than surveyed</span></div>
 <div><b>420×</b><span>weight of an in-boundary K–8 seat</span></div>

@@ -5,12 +5,12 @@ ACS PUMS 2014-2018 5-year file of each state, households (TYPE 1, NP > 0) and pe
 In the five PUMAs that the zone system covers only in part, the synthetic households stand for the covered part; shares are compared.
 Outputs: data/stage1_composition_puma96.csv (state, puma, table, bin, model, observed, diff_pp) and
 5_reports/article/figures/fig_val_pop_puma.{pdf,png} (rows: PUMAs grouped by state, largest first; columns: attribute bins)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, zipfile, numpy as np, pandas as pd
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; MD = f"{V}/2_silo/input/microData"
-sys.path.insert(0, f"{TERP_HOME}/reports")
+sys.path.insert(0, f"{MILES_HOME}/reports")
 import paperstyle as ps, figures_validation as fv
 import matplotlib.pyplot as plt
 ST = {24: ("md", "Maryland"), 11: ("dc", "District of Columbia"), 10: ("de", "Delaware"), 42: ("pa", "Pennsylvania"), 51: ("va", "Virginia"), 54: ("wv", "West Virginia")}

@@ -13,7 +13,7 @@ import r03_sequence as R3   # noqa: E402  (zone part with the r01/r02 extensions
 Z = R3.Z
 from mnl import MNL   # noqa: E402
 
-V = os.environ.get("TERP_WORKSPACE", "") + ""
+V = os.environ.get("MILES_WORKSPACE", "") + ""
 
 
 def main():

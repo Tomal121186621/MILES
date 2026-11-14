@@ -17,9 +17,9 @@ The earlier two-form build stays reachable:  --two-forms --run-dir 3_abit/final_
               names of the survey-based settings in data/abit_roorda_*.csv (survey households of the estimation half, of the held-out half,
               and the synthetic 2016 population)
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, glob, os, pickle, re, shutil, sys
 import numpy as np, pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -46,7 +46,7 @@ if a.runs_base is None: a.runs_base = list(a.runs) if a.single_form else [f"fin2
 if not a.survey_runs: a.survey_runs = None
 WORK = os.path.abspath(a.work); FIG = f"{WORK}/fig"; MDIR = f"{WORK}/measures"; TABD = f"{WORK}/tables"
 for d in (FIG, MDIR, TABD, f"{WORK}/data", f"{FIG}/_copy"): os.makedirs(d, exist_ok=True)
-sys.path.insert(0, f"{TERP_HOME}/activity/validation"); sys.path.insert(0, f"{TERP_HOME}/activity/lib/reporting_2024")
+sys.path.insert(0, f"{MILES_HOME}/activity/validation"); sys.path.insert(0, f"{MILES_HOME}/activity/lib/reporting_2024")
 import paperstyle as ps
 import report_2024 as fr
 import tasha_stage3 as ts
@@ -85,7 +85,7 @@ if a.single_form:
     TOT = pd.concat([TOT, TOT.assign(form="fin24_tw")], ignore_index=True); TOT.to_csv(f"{WORK}/data/run_totals.csv", index=False)
     fr.SINGLE = True; fr.POP_LABEL = a.pop_label; fr.ROORDA = (a.verification, a.validation, a.chain)
     if a.survey_runs:
-        sys.path.insert(0, f"{TERP_HOME}/activity/lib/reporting_2024"); import measures as TM
+        sys.path.insert(0, f"{MILES_HOME}/activity/lib/reporting_2024"); import measures as TM
         PB = TM.persons("rts")
         for s_ in range(1, 11):
             pk = f"{MDIR}/mcb_s{s_:02d}.pkl"

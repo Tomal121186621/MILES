@@ -2,10 +2,10 @@
 # Residential location re-estimated in dependency order with the accessibility of the re-estimated destination and mode models:
 #   zone sequence (steps 1-10, car-based accessibility) -> accessibility form (car-based vs multimodal) -> 5-fold CV of the form
 #   -> county inclusive values (estimation, validation, out-of-time movers) -> county sequence -> out-of-time test -> tables.
-# The scripts are in this folder; logs and results are written to ESTIMATION_RESULTS/residential (terp.toml).
+# The scripts are in this folder; logs and results are written to ESTIMATION_RESULTS/residential (miles.toml).
 set -e
-CODE="$(cd "$(dirname "$0")" && pwd)"; DEV="$(dirname "$CODE")"; TERP_HOME="$(cd "$DEV/../.." && pwd)"
-ER="$(cd "$TERP_HOME" && python3 -c 'from terp_env import ESTIMATION_RESULTS; print(ESTIMATION_RESULTS)')"
+CODE="$(cd "$(dirname "$0")" && pwd)"; DEV="$(dirname "$CODE")"; MILES_HOME="$(cd "$DEV/../.." && pwd)"
+ER="$(cd "$MILES_HOME" && python3 -c 'from miles_env import ESTIMATION_RESULTS; print(ESTIMATION_RESULTS)')"
 cd "$ER/residential"
 A="$ER/accessibility_new"
 export ACC_CAR="$A/accessibility_2016_new.csv" ACC_MM="$A/accessibility_2016_new_multimodal.csv"

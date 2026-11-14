@@ -6,14 +6,14 @@
                                    5_reports/estimation_manual/abit/figures/dc_taz_collin_<segment>.png;
                                    tasha_estimation/results/dc_taz_coef_compare.csv, dc_taz_collin_flags.csv
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import json, os, pickle, sys
 import numpy as np
 import pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
-HERE = f"{WORKSPACE}/3_abit/tasha_estimation"; A3 = os.path.dirname(HERE); sys.path.insert(0, f"{TERP_HOME}/activity/lib/destination_choice")
+HERE = f"{WORKSPACE}/3_abit/tasha_estimation"; A3 = os.path.dirname(HERE); sys.path.insert(0, f"{MILES_HOME}/activity/lib/destination_choice")
 from export_dc import lab as ulab       # noqa: E402
 RES = f"{HERE}/results"; WORK = f"{HERE}/work"
 MAN = f"{os.path.dirname(A3)}/5_reports/estimation_manual/abit"; TAB = f"{MAN}/tables"; FIG = f"{MAN}/figures"; os.makedirs(FIG, exist_ok=True)

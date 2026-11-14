@@ -10,9 +10,9 @@ Common blocks (RESPEC_PROTOCOL.md):  1 constant; 2 impedance (distance terms of 
 7 person and household: the SAME eight terms in all three models (age < 30, age 55+, female, household income < $50k, >= $100k,
 no car, fewer cars than licensed drivers, child under 16 in the household); return home adds the person types of the model of record.
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle
 import numpy as np
 import pandas as pd
@@ -20,7 +20,7 @@ import statsmodels.api as sm
 from scipy.stats import chi2
 V = f"{WORKSPACE}"
 TE = f"{V}/3_abit/tasha_estimation"; A3 = f"{V}/3_abit"; HERE = f"{WORKSPACE}/side_experiments/respec_2026-11/abit/tour_formation"   # data
-TE_CODE = f"{TERP_HOME}/activity/lib/tasha_estimation"
+TE_CODE = f"{MILES_HOME}/activity/lib/tasha_estimation"
 sys.path.insert(0, TE_CODE)
 import te_common as T            # noqa: E402
 import dc_common as C            # noqa: E402

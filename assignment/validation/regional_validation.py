@@ -21,14 +21,14 @@ Checks (observed sources: see SOURCES in this file and REPORT.md):
 Usage: python3 assignment/validation/regional_validation.py [RUNS_ROOT] [OUT_DIR] [--seeds 1,2] [--force] [--figures-only]
 Per-seed intermediate results are cached in OUT_DIR/data/seeds/s<N>/ (small CSVs); --force recomputes them.
 Memory: the plans file is streamed line by line; trips/legs are read column-selected (< 4 GB)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, json, glob, gzip, argparse, time, zipfile, warnings, collections
 import numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
-sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps  # noqa: E402
+sys.path.insert(0, f"{MILES_HOME}/reports"); import paperstyle as ps  # noqa: E402
 ps.RATIO_COLORS = ["#104281", "#4a7fc4", "#a9cbf2", "#e8e7e1", "#f0a09f", "#e34948", "#9c1d1c"]   # map classes kept distinct from the model blue of the bars
 
 EXP = 10

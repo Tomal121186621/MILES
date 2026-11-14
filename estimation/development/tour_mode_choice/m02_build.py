@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Tour mode choice, other and school tours: GC coefficient as the blocks of the model of record are added one at a time
 (MNL, generic GC, estimation half).   ~/.venvs/biogeme/bin/python estimation/development/tour_mode_choice/m02_build.py  ->  m02_build.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/mode_choice"   # results of this step (data); CODE = this folder
-sys.path.insert(0, f"{TERP_HOME}/activity/lib/mode_choice")
+sys.path.insert(0, f"{MILES_HOME}/activity/lib/mode_choice")
 import estimate_gc as G, estimate_hh as H   # noqa: E402
 import biogeme.database as db, biogeme.biogeme as bio, biogeme.models as models
 from biogeme.expressions import Beta, Variable as X

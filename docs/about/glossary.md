@@ -56,7 +56,7 @@ SRMSE
 : Standardised root-mean-square error between two contingency tables.
 
 TASHA
-: Travel Activity Scheduler for Household Agents, whose scheduling approach TERP-Day adopts.
+: Travel Activity Scheduler for Household Agents, whose scheduling approach MILES-Day adopts.
 
 TVD
 : Total variation distance between two distributions, in percentage points.

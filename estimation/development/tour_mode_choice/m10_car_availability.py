@@ -11,14 +11,14 @@ jgid of the main episode) count as one unit (window = their union); the tour's o
 car driver keeps car driver available (data conflict, e.g. a car from outside the household): counted and reported.
     blocked(half) -> boolean array over the rows of work/tours_<half>.parquet (True = car driver not available)
     python3 estimation/development/tour_mode_choice/m10_car_availability.py   -> m10_car_availability.csv (per half and segment)"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/mode_choice"   # results of this step (data); CODE = this folder
-MC = f"{TERP_HOME}/activity/lib/mode_choice"
+MC = f"{MILES_HOME}/activity/lib/mode_choice"
 sys.path.insert(0, MC); sys.path.insert(0, f"{os.path.dirname(MC)}/tasha_estimation")
 _cache = {}
 

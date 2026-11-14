@@ -3,13 +3,13 @@
 each segment (search_<segment>.pkl, F).  Same sampled choice sets as the search (40 alternatives, seed 2026); the validation
 half with its own sampled sets (seed 2027).  A term is kept when the likelihood-ratio test is significant at 5 % and BIC falls.
     python3 estimation/development/destination_checks/d01_gender_hhsize.py   ->  d01_fit.csv, d01_coef.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle
 import numpy as np, pandas as pd
 from scipy.stats import chi2
-DCD = f"{TERP_HOME}/activity/lib/destination_choice"
+DCD = f"{MILES_HOME}/activity/lib/destination_choice"
 HERE = f"{ESTIMATION_RESULTS}/destination"   # results of this check (data)
 sys.path.insert(0, DCD)
 import dc_common as C, dc_model as M, estimate_dc as E   # noqa: E402

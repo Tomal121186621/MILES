@@ -6,15 +6,15 @@ for 60 students per segment of the estimation half, every (student, possible hom
 of the same type (car availability, income group, sex, band) at that home zone; assign_schools.py --dump-utilities writes V_hkj = mu ln S_hkj +
 sum b x over all school zones of the band (no shadow prices), compared with V_hj of the estimation code (mu ln S + X b).
     python3 landuse/checks/check_school_location.py <scratch dir>   ->  c04_school_check.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, subprocess
 import numpy as np, pandas as pd
 V = f"{WORKSPACE}"; SCD = f"{V}/2_silo/schoolchoice"   # school-choice data (apply/, work/)
 HERE = f"{V}/side_experiments/respec_2026-11/engine_check"; SCR = sys.argv[1] if len(sys.argv) > 1 else HERE   # outputs (workspace)
 L = f"{ESTIMATION_RESULTS}/locations"
-sys.path.insert(0, f"{TERP_HOME}/landuse/schools"); import school_likelihood as G; import school_stepwise as S4   # noqa: E402
+sys.path.insert(0, f"{MILES_HOME}/landuse/schools"); import school_likelihood as G; import school_stepwise as S4   # noqa: E402
 SEGB = {"k8": "k8", "hs": "hs", "col": "college"}; AGE = {"elementary": 8, "middle": 12, "high": 15, "postsec": 20}; INC = {1: 20000, 2: 57500, 3: 100000, 4: 200000}
 
 
@@ -82,7 +82,7 @@ def main():
             pp.append(dict(id=pid, hhID=h, age=40, gender=1, occupation=1, driversLicense="True", income=INC[r.g] / drivers)); pid += 1
     for n, x in (("pp", pp), ("hh", hh), ("dd", dd)): pd.DataFrame(x).to_csv(f"{SCR}/c04_{n}.csv", index=False)
     out = f"{SCR}/c04_dump.csv"
-    r = subprocess.run(["python3", f"{TERP_HOME}/landuse/schools/assign_schools.py", "--pp", f"{SCR}/c04_pp.csv", "--hh", f"{SCR}/c04_hh.csv", "--dd", f"{SCR}/c04_dd.csv",
+    r = subprocess.run(["python3", f"{MILES_HOME}/landuse/schools/assign_schools.py", "--pp", f"{SCR}/c04_pp.csv", "--hh", f"{SCR}/c04_hh.csv", "--dd", f"{SCR}/c04_dd.csv",
                         "--schools", f"{V}/2_silo/input/schools_2016.csv", "--year", "2016", "--out", f"{SCR}/c04_out", "--align", "0",
                         "--coefficients", f"{SCD}/apply/school_choice_coefficients_respec.csv", "--dump-utilities", out], capture_output=True, text=True)
     if r.returncode: raise SystemExit(r.stdout[-3000:] + r.stderr[-3000:])

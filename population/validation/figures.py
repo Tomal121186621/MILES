@@ -5,11 +5,11 @@
   fig_s1_commute     commute-time distribution, model vs 2023 survey
   fig_s1_jobs        filled jobs by county, model vs LODES 2016 (scatter, equality line)
 Data: data/stage1_validation.parquet, data/stage1_workplace_check.csv, data/raw/pep, PUMS.  Output: 1_vae/figures/ and a row each in 5_reports/figure_list.md"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, sys, os, json
-ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps
+ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; sys.path.insert(0, f"{MILES_HOME}/reports"); import paperstyle as ps
 import matplotlib.pyplot as plt
 FIG = f"{V}/1_vae/figures"; os.makedirs(FIG, exist_ok=True); R = pd.read_parquet(f"{V}/data/stage1_validation.parquet")
 names = pd.read_csv(f"{ROOT}/inputs/zoneSystem.csv").drop_duplicates("COUNTYFIPS").set_index("COUNTYFIPS").JUR_NAME.str.replace(", MD", "", regex=False)

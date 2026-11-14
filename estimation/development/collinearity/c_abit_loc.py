@@ -15,9 +15,9 @@ by the pooled model lp_edu (other_locations/lp_pooled.py, adopted): checked as p
     POOL_THREADS=3 python3 estimation/development/collinearity/c_abit_loc.py lp_edu  ->  lp_edu_nonstud|daycare_var_corr.png/.csv, lp_edu_var_corr.png (side by side),
     lp_edu_est_corr.png/.csv, lp_edu_pairs.csv, lp_edu_facts.json, loc_lp_edu.log
 (the 2026-11-08 outputs of l01 / l02 separate are left as they were)."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, ast, time
 sys.dont_write_bytecode = True
 os.environ.setdefault("TAZ_THREADS", "6")

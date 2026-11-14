@@ -2,11 +2,11 @@
 """Synthetic share against ACS share by PUMA (96 PUMAs, six states) for six attribute classes, with the equality line and the
 least-squares slope of synthetic on ACS (slope below 1: PUMAs drawn toward the mean of all PUMAs).  Reads
 data/stage1_composition_puma96.csv (validate_by_puma.py).  Output: 5_reports/article/figures/fig_val_pop_puma.{pdf,png}."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, numpy as np, pandas as pd
-V = f"{WORKSPACE}"; sys.path.insert(0, f"{TERP_HOME}/reports")
+V = f"{WORKSPACE}"; sys.path.insert(0, f"{MILES_HOME}/reports")
 import paperstyle as ps
 from matplotlib.lines import Line2D
 R = pd.read_csv(f"{V}/data/stage1_composition_puma96.csv"); R["bin"] = R["bin"].astype(str)

@@ -4,23 +4,23 @@ hide:
   - toc
 ---
 
-<div class="terp-hero" markdown>
+<div class="miles-hero" markdown>
 
-<div class="eyebrow">TERP · Travel, Employment, Residence and Population</div>
+<div class="eyebrow">MILES · Maryland Integrated Land-use and Everyday-travel Simulator</div>
 
 # From census records to <span>cars on the road</span>
 
-<p class="lead"><b>TERP</b> (<b>T</b>ravel, <b>E</b>mployment, <b>R</b>esidence and <b>P</b>opulation) is an agent-based modelling platform for Maryland. It synthesises every household of the region, moves it through the housing and job markets year by year, plans each person's weekday, and simulates the
+<p class="lead"><b>MILES</b> (<b>M</b>aryland <b>I</b>ntegrated <b>L</b>and-use and <b>E</b>veryday-travel <b>S</b>imulator) is an agent-based modelling platform for Maryland. It synthesises every household of the region, moves it through the housing and job markets year by year, plans each person's weekday, and simulates the
 resulting traffic on the road and transit networks.</p>
 
 [Get started](get-started/index.md){ .md-button .md-button--primary }
 [How it works](model-design/index.md){ .md-button }
 [:material-map-marker-radius: Traffic validation map](calibration-validation/validation/map.md){ .md-button }
-[:fontawesome-brands-github: Code](https://github.com/Tomal121186621/TERP){ .md-button }
+[:fontawesome-brands-github: Code](https://github.com/Tomal121186621/MILES){ .md-button }
 
 </div>
 
-<div class="terp-numbers">
+<div class="miles-numbers">
 <div><b>12.5 M</b><span>synthetic persons</span></div>
 <div><b>1,588</b><span>zones, six states</span></div>
 <div><b>28</b><span>estimated choice models</span></div>
@@ -28,7 +28,7 @@ resulting traffic on the road and transit networks.</p>
 <div><b>2,308</b><span>mainline count stations tested</span></div>
 </div>
 
-## Why TERP
+## Why MILES
 
 <div class="grid cards" markdown>
 
@@ -57,7 +57,7 @@ resulting traffic on the road and transit networks.</p>
 
     ---
 
-    TERP-Day draws activities from survey distributions, schedules them, locates them with estimated logit models
+    MILES-Day draws activities from survey distributions, schedules them, locates them with estimated logit models
     and chooses tour modes with household car allocation and joint tours.
 
 -   :material-road-variant:{ .lg .middle } **Dynamic traffic**
@@ -81,7 +81,7 @@ resulting traffic on the road and transit networks.</p>
 Each stage hands its output to the next. Land use runs year by year; activities and traffic are simulated for a
 weekday of 2024. [Full model design](model-design/index.md)
 
-<div class="terp-flow">
+<div class="miles-flow">
 <div><span class="in">ACS microdata · Census blocks</span><b>Population</b><span class="out">4.7 M households, 2016</span></div>
 <div><span class="in">Population estimates · jobs · permits</span><b>Land use</b><span class="out">households, jobs, dwellings 2017–2024</span></div>
 <div><span class="in">School directories · boundaries</span><b>Schools</b><span class="out">a school for every student</span></div>
@@ -91,7 +91,7 @@ weekday of 2024. [Full model design](model-design/index.md)
 
 ## What you can do with it
 
-<div class="grid cards terp-four" markdown>
+<div class="grid cards miles-four" markdown>
 
 -   :material-cash-multiple: **Road pricing**
 
@@ -114,7 +114,7 @@ weekday of 2024. [Full model design](model-design/index.md)
 
 ## Start here
 
-<div class="grid cards terp-four" markdown>
+<div class="grid cards miles-four" markdown>
 
 -   :material-download: **[Install](get-started/installation.md)**
 
@@ -138,7 +138,7 @@ weekday of 2024. [Full model design](model-design/index.md)
 
 </div>
 
-<div class="terp-credit" markdown>
+<div class="miles-credit" markdown>
 <img class="logo" src="assets/img/cmmm-logo.png" alt="Center for MultiModal Mobility in Urban, Rural and Tribal Areas">
 <span class="faces"><img src="assets/img/team/raas-sarker-tomal.jpg" alt="Raas Sarker Tomal"><img src="assets/img/team/cinzia-cirillo.jpg" alt="Dr. Cinzia Cirillo"></span>
 <p>Developed at the <b>Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM)</b>, University of Maryland,

@@ -2,7 +2,7 @@
 
 Engine changes and build notes: `engine/README.md`. Coefficients of the final models: `parameters/` (built by `build_parameters.py`).
 Scripts are run from the repository root (for example `python3 activity/run_activity_model.py ...`); inputs, runs and outputs stay
-in the workspace (`<workspace>/3_abit/...`, set in terp.toml). `abit_classpath.txt` lists the engine's jar dependencies; `$HOME`
+in the workspace (`<workspace>/3_abit/...`, set in miles.toml). `abit_classpath.txt` lists the engine's jar dependencies; `$HOME`
 in it is expanded when it is read.
 
 Order:

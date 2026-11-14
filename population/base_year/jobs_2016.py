@@ -4,9 +4,9 @@ the four SILO types) placed in MSTM zones, for all Maryland zones; the other sta
 file for them here).  Replaces inputs/employmentForecast_ron_orig.csv as the 2016 inventory (same columns, so the step runs
 unchanged).  Vacancies: the inventory is filled jobs / (1 - JOLTS job-openings rate), the rate read from vacancy_rate.json
 (Maryland, BLS JOLTS Table 12; see 2_silo/data_sources.md).  Output: 1_vae/output/employment_2016_lodes.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, geopandas as gpd, json, os
 from shapely import points
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; RAW = f"{V}/data/raw"

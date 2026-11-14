@@ -15,9 +15,9 @@
   F mover flows: share of moving households staying in their region and correlation of the region-to-region flows with the ACS
     county-to-county flows 2016-20 aggregated to regions (siloResults/relocation; data/silo_target_region_flows_acs.csv)
 Usage: python3 landuse/validation/validate_landuse.py <scenario_name> [first_year last_year]   -> data/silo_validation_<scenario>.parquet (long table) and a summary"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, zipfile, os, sys, re
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; S = f"{V}/2_silo"
 scen = sys.argv[1]; OUT = f"{S}/run/base/scenOutput/{scen}/microData"; y0 = int(sys.argv[2]) if len(sys.argv) > 2 else 2016; y1 = int(sys.argv[3]) if len(sys.argv) > 3 else 2026

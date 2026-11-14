@@ -5,16 +5,16 @@
 Drawn at its printed size (\\textwidth = 5.313 in); paperstyle.finish() refuses overlapping or cropped text and fonts below 7.5 pt.
 The former fig_net_class_matrix and fig_net_speed_osm_mdot are replaced by fig_v4_inputs and fig_v4_a (reports/figures_validation.py).
 Data: data/network_audit_links.parquet, data/count_stations_split.csv, data/count_stations_matched.csv, MATSIM_HOME/data/bmr_counties.gpkg."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, shutil
 import numpy as np, pandas as pd
 from matplotlib.collections import LineCollection
 from matplotlib.lines import Line2D
 import matplotlib.patheffects as pe
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from netio import ROOT, DATA, study_area
-sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps
+sys.path.insert(0, f"{MILES_HOME}/reports"); import paperstyle as ps
 
 FIG = f"{WORKSPACE}/4_matsim/figures"; os.makedirs(FIG, exist_ok=True)
 PAPERFIG = f"{WORKSPACE}/5_reports/paper/figures"

@@ -1,9 +1,9 @@
-site_name: TERP
-site_description: TERP (Travel, Employment, Residence and Population), an agent-based platform of population, land use, activities and traffic for Maryland
+site_name: MILES
+site_description: MILES (Maryland Integrated Land-use and Everyday-travel Simulator), an agent-based platform of population, land use, activities and traffic for Maryland
 site_author: Raas Sarker Tomal
-site_url: https://tomal121186621.github.io/TERP/
-repo_url: https://github.com/Tomal121186621/TERP
-repo_name: Tomal121186621/TERP
+site_url: https://tomal121186621.github.io/MILES/
+repo_url: https://github.com/Tomal121186621/MILES
+repo_name: Tomal121186621/MILES
 copyright: Copyright &copy; 2026 Raas Sarker Tomal · Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM), University of Maryland, College Park
 
 theme:
@@ -96,7 +96,7 @@ nav:
       - Synthetic population: model-design/population.md
       - Land use: model-design/landuse.md
       - School location: model-design/schools.md
-      - Activities (TERP-Day): model-design/activity.md
+      - Activities (MILES-Day): model-design/activity.md
       - Traffic assignment: model-design/assignment.md
   - Inputs and outputs:
       - inputs-outputs/index.md
@@ -104,7 +104,7 @@ nav:
       - Zone system and networks: inputs-outputs/zones-networks.md
       - Configuration: inputs-outputs/configuration.md
       - Outputs: inputs-outputs/outputs.md
-  - Applying TERP:
+  - Applying MILES:
       - applying/index.md
       - Scenarios: applying/scenarios.md
       - Case study, I-695 pricing: applying/i695.md
@@ -127,7 +127,7 @@ nav:
       - developers/index.md
       - Population code: developers/population.md
       - SILO engine changes: developers/silo.md
-      - TERP-Day engine: developers/activity.md
+      - MILES-Day engine: developers/activity.md
       - MATSim runner: developers/matsim.md
       - Pipeline: developers/pipeline.md
       - Estimation package: developers/estimation-package.md

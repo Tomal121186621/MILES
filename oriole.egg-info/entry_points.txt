@@ -1,2 +1,2 @@
 [console_scripts]
-terp = terp_cli:main
+miles = miles_cli:main

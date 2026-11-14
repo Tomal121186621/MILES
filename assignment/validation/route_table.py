@@ -8,9 +8,9 @@ the rest pooled as "Other"), 4-6 minor arterials, major collectors, minor collec
 under the facility class of its stations, so a route can appear in two tiers (e.g. I-895 stations coded as other freeway).
 Usage: python3 assignment/validation/route_table.py [data_dir] [tex_out]   (defaults: WORKSPACE/4_matsim/validation/data/, WORKSPACE/5_reports/article/sections/supp/tab_net_routes.tex)
 Writes data_dir/route_table.csv and the LaTeX table."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, numpy as np, pandas as pd
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"   # H: validation data and outputs (workspace)
 DATA = sys.argv[1] if len(sys.argv) > 1 else f"{H}/data"

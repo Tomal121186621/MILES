@@ -8,9 +8,9 @@ estimation utilities X beta of the final models, on choice situations of the est
             shares, against the stored IV_B (r07)
   iva       200 movers: IV_A recomputed by the engine function from the r07 pool draws (seed 44), against the stored IV_A
 Writes WORKSPACE/side_experiments/respec_2026-11/engine_check/c01_resloc_check.csv (max |difference| per part).   python3 check_residential_location.py <scratch dir>"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle, json, subprocess
 import numpy as np, pandas as pd
 V = f"{WORKSPACE}"
@@ -20,7 +20,7 @@ JAVA = subprocess.run(["/usr/libexec/java_home", "-v", "21"], capture_output=Tru
 CP = f"{V}/2_silo/engine/useCases/maryland/target/classes"
 COEF_Z = f"{INP}/residential_zone_dwelling_coefficients.csv"; COEF_R = f"{INP}/residential_county_coefficients.csv"
 ACC = f"{V}/data/accessibility_multimodal_respec_2016.csv"
-sys.path.insert(0, f"{TERP_HOME}/landuse/lib/residential"); sys.path.insert(0, f"{TERP_HOME}/estimation/development/residential_location"); sys.argv = [sys.argv[0]]
+sys.path.insert(0, f"{MILES_HOME}/landuse/lib/residential"); sys.path.insert(0, f"{MILES_HOME}/estimation/development/residential_location"); sys.argv = [sys.argv[0]]
 import r03_sequence as R3   # noqa: E402  (zone part with the r01/r02 extensions; sets cwd to 2_silo/resloc)
 import r06_dwelling_income as R6   # noqa: E402
 import r07_county_iv as R7   # noqa: E402

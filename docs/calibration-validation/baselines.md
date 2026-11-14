@@ -20,7 +20,7 @@ The CVAE's gain is variety beyond the sample, not closer fit to it.
 
 Both models are calibrated with the same procedure and tested on 2021–2024.
 
-| Measure | Original | TERP |
+| Measure | Original | MILES |
 |---|---:|---:|
 | Out-of-sample cells within 5 pp | 86.8 % | **94.5 %** |
 | Mover flows between counties, correlation with ACS | 0.625 | **0.946** |
@@ -32,7 +32,7 @@ and income.
 
 ## Activities: against the original set-up and a standard tour-based model
 
-- TERP-Day beats both baselines on 58–73 % of the error measures and loses on 2–21 %, in all three survey settings;
+- MILES-Day beats both baselines on 58–73 % of the error measures and loses on 2–21 %, in all three survey settings;
   its mean normalised error is less than half of theirs.
 - The gain comes mainly from the TASHA-type scheduler (durations, start times, school and work activity) and from the
   return-home and workplace-outing models: adding TASHA-type generation cuts the mean normalised error from 9.9 to
@@ -41,7 +41,7 @@ and income.
 
 ## Assignment: against the original activity demand
 
-| Measure | Original demand | TERP |
+| Measure | Original demand | MILES |
 |---|---:|---:|
 | %RMSE, all count stations | 86.5 | **58.5** |
 | Model / count | 0.617 | **0.813** |

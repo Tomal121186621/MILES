@@ -17,7 +17,7 @@ Outputs tables/sabs_coverage_by_district.csv, sabs_coverage_summary.csv; work/sa
 school zone, a), work/sabs_zone_cov.parquet.   Usage: python3 -I sc_00_sabs.py"""
 import os
 import sys, glob, zipfile, numpy as np, pandas as pd, geopandas as gpd, pyogrio
-sys.path.insert(0, os.environ.get("TERP_WORKSPACE", "") + "/2_silo/schoolchoice")
+sys.path.insert(0, os.environ.get("MILES_WORKSPACE", "") + "/2_silo/schoolchoice")
 import sc_common as C   # noqa: E402
 RAW, W, T, CRS = C.RAW, C.W, C.T, C.CRS
 SAB = glob.glob(f"{RAW}/sabs/ex/**/SABS_1516_*.shp", recursive=True)

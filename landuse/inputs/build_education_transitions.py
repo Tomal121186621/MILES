@@ -5,9 +5,9 @@ the calibration window): for EducationModelMd (file demographics.education.trans
   retireProbEmployed[a]  = 1 - employed(a+1)/employed(a)   for ages 55-85 (ESR in {1,2,4,5}), weighted; clipped to [0, 1]
   retireProbUnemployed[a]= 1 - inLabourForce(a+1)/inLabourForce(a) among non-employed ... approximated as 1.5 x employed hazard (stated)
 Output: WORKSPACE/2_silo/input/education_transitions.csv; the observed shares by age are saved to data/ for validation."""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import zipfile, io, pandas as pd, numpy as np, os, sys
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
 VINTAGE = sys.argv[1] if len(sys.argv) > 1 else "2018"      # 5-year file 2014-2018, centred on 2016

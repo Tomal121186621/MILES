@@ -1,11 +1,11 @@
 #!/bin/sh
-: "${TERP_WORKSPACE:?run through the terp command, or set TERP_WORKSPACE}"
+: "${MILES_WORKSPACE:?run through the miles command, or set MILES_WORKSPACE}"
 # Usage: sh assignment/transit/fetch_gtfs_regional.sh
 # Download the GTFS feeds of the regional operators (TRANSIT_BUILD.md, coverage table) into WORKSPACE/data/raw/<agency>/, one
 # folder per agency, with a download log (agency, try, HTTP code, bytes, effective URL, sha256).  For every agency the official URL
 # (Mobility Database catalog feeds_v2.csv, data/raw/mobilitydatabase/) is tried first, then the Mobility Database mirror
 # (files.mobilitydatabase.org/<id>/latest.zip, the copy the catalog keeps of the official feed).  The files are not opened here.
-R="$TERP_WORKSPACE/data/raw"; DAY=$(date +%Y-%m-%d)
+R="$MILES_WORKSPACE/data/raw"; DAY=$(date +%Y-%m-%d)
 get() {  # agency  url...
   a="$1"; shift; mkdir -p "$R/$a"; i=0
   for u in "$@"; do

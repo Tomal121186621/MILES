@@ -31,16 +31,16 @@ ones (sc_04_stepwise.K12 / COL: '+' / '-'; '?' = no prior, not checked; the logs
 among those that pass, the lower BIC is "chosen".  Final check: a kept term whose sign reversed after later blocks and that is no
 longer significant (|robust t| < 1.96) is dropped (one step each, LR of dropping it reported).  No other backward elimination.
     python3 estimation/development/other_locations/l07_school.py [k8 hs col]   ->  l07_school_<band>_fit.csv, _coef.csv, .log (band k8, hs, college)"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, json, time
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd
 from scipy.stats import chi2
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/locations"   # results of this step (data); CODE = this folder
-SCD = f"{TERP_HOME}/landuse/schools"   # school-choice code (data: school_common.W)
+SCD = f"{MILES_HOME}/landuse/schools"   # school-choice code (data: school_common.W)
 sys.path.insert(0, SCD)
 import school_likelihood as G      # noqa: E402
 if os.environ.get("SCHOOL_LOGSUM"):   # school-tour mode-choice logsums of another mode model (same layout)

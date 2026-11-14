@@ -2,9 +2,9 @@
 """Collinearity of the final county model (residential_location/r05_region_sequence.py run as 'final newiv', final step Ja after the 2026-11-09 re-run;
 county_data_est.pkl of r07_county_iv.py), estimation half, all 44 counties, household weights of the estimation (D['w']).
     python3 estimation/development/collinearity/c_silo_county.py   ->  county_var_corr.png, county_est_corr.png, county_pairs.csv, county_facts.json"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

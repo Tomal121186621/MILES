@@ -10,16 +10,16 @@ seed 2026, same D0 and correction c = ln(k / R q)), shared by all configurations
 With one configuration of weight 1 this is dc_model.ll_obs exactly.  The optimiser, the Hessian and the robust covariance are
 those of dc_model.estimate (the module-level ll_obs is wrapped, nothing else changes).
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np
 import pandas as pd
 import torch
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{WORKSPACE}/3_abit/tasha_estimation"; A3 = os.path.dirname(HERE)
-sys.path.insert(0, CODE); sys.path.insert(0, f"{TERP_HOME}/activity/lib"); sys.path.insert(0, f"{TERP_HOME}/activity/lib/destination_choice")
+sys.path.insert(0, CODE); sys.path.insert(0, f"{MILES_HOME}/activity/lib"); sys.path.insert(0, f"{MILES_HOME}/activity/lib/destination_choice")
 import dc_common as C     # noqa: E402
 import dc_model as M      # noqa: E402
 

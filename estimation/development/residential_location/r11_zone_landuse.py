@@ -9,9 +9,9 @@
             DC CBD, rest of DC, other CBD zones, elsewhere), fixed
 In the engine lnddens, lnjden, lnretden and mix are recomputed every year from SILO's current dwellings and jobs; park is fixed.
     python3 estimation/development/residential_location/r11_zone_landuse.py   ->  zone_landuse_2016.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 V = f"{WORKSPACE}"; CODE = os.path.dirname(os.path.abspath(__file__))
@@ -30,8 +30,8 @@ def landuse(dd_zone, jj_zone_type, zs, park):
 
 
 def park_by_zone():
-    sys.path.insert(0, f"{TERP_HOME}/activity/lib/mode_choice"); import mc_common as M   # noqa: E402  (read only)
-    z = M.C.zones(); sh = pd.read_csv(f"{TERP_HOME}/activity/parameters/parking_paid_share.csv").set_index("park_area").share
+    sys.path.insert(0, f"{MILES_HOME}/activity/lib/mode_choice"); import mc_common as M   # noqa: E402  (read only)
+    z = M.C.zones(); sh = pd.read_csv(f"{MILES_HOME}/activity/parameters/parking_paid_share.csv").set_index("park_area").share
     cls = np.select([(z.bc == 1) & (z.cbd == 1), z.bc == 1, (z.dcz == 1) & (z.cbd == 1), z.dcz == 1, z.cbd == 1], [0, 1, 2, 3, 4], 5)
     return pd.Series(sh.reindex(cls).values, index=z.id.values)
 

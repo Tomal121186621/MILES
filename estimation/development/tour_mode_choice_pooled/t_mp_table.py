@@ -4,9 +4,9 @@ Rows = variables grouped (level of service, person, household, tour, main-activi
 Car passenger, Bus, Train (reference: car driver).  One panel for the coefficients shared by all purposes, one per subset
 of purposes sharing a coefficient (if any), one per purpose for its own coefficients and its scale.
     ~/.venvs/biogeme/bin/python estimation/development/tour_mode_choice_pooled/t_mp_table.py   (then compile-check with check_tex.sh)"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys
 sys.dont_write_bytecode = True
 import os

@@ -1,7 +1,7 @@
 # Developers
 
-TERP combines Python stages with three Java engines. This section documents the code: which classes and scripts
-TERP adds or changes, how they are wired, and how to extend them.
+MILES combines Python stages with three Java engines. This section documents the code: which classes and scripts
+MILES adds or changes, how they are wired, and how to extend them.
 
 <div class="grid cards" markdown>
 
@@ -13,7 +13,7 @@ TERP adds or changes, how they are wired, and how to extend them.
 
     Residential location, car ownership and workplace choice in the engine.
 
--   :material-language-java: **[TERP-Day engine](activity.md)**
+-   :material-language-java: **[MILES-Day engine](activity.md)**
 
     The `abm.models.maryland` package: generation, destinations, mode choice.
 

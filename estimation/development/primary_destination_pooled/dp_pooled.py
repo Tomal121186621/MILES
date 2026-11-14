@@ -68,9 +68,9 @@ Outputs: dp_fit.csv, dp_coef.csv, dp.log (+ dp_sep_<P>.log, dp_sep_<P>.pkl per p
     TAZ_THREADS=16 python3 estimation/development/primary_destination_pooled/dp_pooled.py pool
     POOL_THREADS=3 python3 estimation/development/primary_destination_pooled/dp_pooled.py revise           (4 workers x 3 threads)
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle, time
 sys.dont_write_bytecode = True
 os.environ.setdefault("TAZ_THREADS", "4")

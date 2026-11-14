@@ -12,7 +12,7 @@
 
 -   :material-cog: **[Configuration](configuration.md)**
 
-    Properties files and the keys that switch on TERP's models.
+    Properties files and the keys that switch on MILES's models.
 
 -   :material-database-export: **[Outputs](outputs.md)**
 

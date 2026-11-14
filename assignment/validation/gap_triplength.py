@@ -1,10 +1,10 @@
 # Like-for-like car trip length (straight line between tract internal points), model population vs RTS 2017/18 (2026-11-04).
 # Usage: python3 assignment/validation/gap_triplength.py <population.xml.gz> <second population.xml.gz> <out.csv>   (results: WORKSPACE/4_matsim/validation/previews/gap/tract_l4l.csv)
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import gzip, re, sys, numpy as np, pandas as pd, geopandas as gpd
-sys.path.insert(0, f"{TERP_HOME}/activity/survey")
+sys.path.insert(0, f"{MILES_HOME}/activity/survey")
 from survey_population import tract_zone, geoid
 V=f"{WORKSPACE}"; ROOT=f"{PROJECT_ROOT}"
 CO={"24003","24005","24013","24025","24027","24510"}

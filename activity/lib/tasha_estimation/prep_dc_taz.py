@@ -26,15 +26,15 @@ Anchors: primary  origin = home (household home TAZ, housing-unit weights);
 Likelihood (estimate_dc_taz.py): L_n = sum_k w_nk sum_z b_nz P(z | anchors k) -- the location mixture of the workplace model.
 Gender: survey_pop pp.csv carries the SILO code (1 male, 2 female) since its rebuild of 2026-10-27; male = (gender == 1).
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np
 import pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{WORKSPACE}/3_abit/tasha_estimation"; A3 = os.path.dirname(HERE)
-sys.path.insert(0, CODE); sys.path.insert(0, f"{TERP_HOME}/activity/lib"); sys.path.insert(0, f"{TERP_HOME}/activity/lib/destination_choice"); sys.path.insert(0, f"{TERP_HOME}/activity/survey")
+sys.path.insert(0, CODE); sys.path.insert(0, f"{MILES_HOME}/activity/lib"); sys.path.insert(0, f"{MILES_HOME}/activity/lib/destination_choice"); sys.path.insert(0, f"{MILES_HOME}/activity/survey")
 import dc_common as C                                              # noqa: E402
 from rts_common import RTS, V, ACT_PURPOSE, MI_KM, load_split, load_tours   # noqa: E402
 from survey_population import tract_zone, geoid                    # noqa: E402

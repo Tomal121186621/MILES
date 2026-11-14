@@ -15,9 +15,9 @@ _coef.csv, _n.csv, .log; the previous outputs are kept as *_oldls.*).
     TAZ_THREADS=4 python3 estimation/development/stop_location/s_stops_newls.py s_shop [s_rec ...]
     TAZ_THREADS=6 python3 estimation/development/stop_location/s_stops_newls.py revise s_shop [s_rec ...]   # final stage of 2026-11-09 only (s_stops.Run.revise)
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd

@@ -10,9 +10,9 @@ m03-m05 (work: generalised cost; shopping and other: time + cost; school: car ti
 A block is kept when the likelihood-ratio test is significant at 5 %, BIC falls and the sign is the expected one.
 Estimation half; log-likelihood of the validation half (work: WESML-weighted).
     ~/.venvs/biogeme/bin/python estimation/development/tour_mode_choice/m06_literature.py   ->  m06_fit.csv, m06_coef.csv"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 from scipy.stats import chi2

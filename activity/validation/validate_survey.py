@@ -45,14 +45,14 @@ distributions of the individual start times (minutes, day from 4:00) or duration
 Outputs: data/abit_roorda_tables.csv (Table 1/2 rows), data/abit_roorda_ks.csv, data/abit_roorda_extra.csv (area, person
 type, chains), data/abit_roorda_curves.parquet (figure data), 3_abit/roorda_tables.md, figures 3_abit/figures/fig_s3r_*.
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, os, sys, time
 import numpy as np
 import pandas as pd
 from scipy.special import kolmogorov
-sys.path.insert(0, f"{TERP_HOME}/activity/lib"); sys.path.insert(0, f"{TERP_HOME}/activity/survey")
+sys.path.insert(0, f"{MILES_HOME}/activity/lib"); sys.path.insert(0, f"{MILES_HOME}/activity/survey")
 from rts_common import V, ROOT, RTS, ACT_PURPOSE, MI_KM, DIST_CAP_KM, ks_stat, kish_n, load_split
 from activity_metrics import dist_matrix, zone_county, persons_2016
 from survey_population import tract_zone, geoid, OUTD, RUNROOT
@@ -441,7 +441,7 @@ def md_tables(T, K, E):
 def figures(C, K):
     """Figures R2-R5 per setting, paperstyle strict rules (no statistics inside plots: the KS values are in Tables R5-R7;
     fonts >= 7.5 pt; height <= 0.85 textheight).  Revised 2026-10-22."""
-    sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps; import matplotlib.pyplot as plt
+    sys.path.insert(0, f"{MILES_HOME}/reports"); import paperstyle as ps; import matplotlib.pyplot as plt
     ps.use(); out = []
     hl = [f"{h}" for h in HOUR_ORDER]; x = np.arange(24); tk = x[::4]
     for s in [x_ for x_ in MAIN if x_ in set(C.setting)]:

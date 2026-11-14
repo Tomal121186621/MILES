@@ -15,17 +15,17 @@ TVD = 1/2 sum_k |m_k - o_k| in percentage points; all other panels (rates, means
 independent shares) -> mean absolute percentage error MAPE = mean_k |m_k - o_k| / o_k over the bars with o_k > 0.
 Data: saved validation outputs (see validation_inventory.md); stage-1 Maryland shares from val_data/build_stage1_shares.py.
 Nothing is calibrated or adjusted here.   Usage: python3 reports/article/make_stage_validation.py"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, glob, pickle
 import numpy as np, pandas as pd
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
 HERE = f"{V}/5_reports/article/figures"; VD = f"{HERE}/val_data"   # article figures and their data (workspace)
-sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps          # noqa: E402
+sys.path.insert(0, f"{MILES_HOME}/reports"); import paperstyle as ps          # noqa: E402
 import matplotlib.pyplot as plt                                          # noqa: E402
 from matplotlib.patches import Patch                                     # noqa: E402
-T24 = f"{TERP_HOME}/activity/lib/reporting_2024"; F24 = f"{V}/3_abit/final_2024"
+T24 = f"{MILES_HOME}/activity/lib/reporting_2024"; F24 = f"{V}/3_abit/final_2024"
 sys.path.insert(0, T24); import t24common as C                           # noqa: E402
 
 COL = dict(model=ps.MODEL, model2="#86b6ef", obs=ps.OBSERVED, obs2="#b5b3ab")

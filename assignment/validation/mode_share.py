@@ -8,12 +8,12 @@ Survey trips are linked across change-mode activities (activity 17), main mode t
 (as in 3_abit/tasha_estimation); transit = bus + rail.  Boardings per linked survey transit trip counts only transfers recorded
 as a change-mode stop, so it is a lower bound.
 Usage: python3 assignment/validation/mode_share.py [runs_root] [out_dir]   -> out_dir/data/mode_share*.csv, out_dir/figures/fig_mode_share.pdf|png"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, glob, numpy as np, pandas as pd
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
-sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps   # noqa: E402
+sys.path.insert(0, f"{MILES_HOME}/reports"); import paperstyle as ps   # noqa: E402
 RUNS = sys.argv[1] if len(sys.argv) > 1 else f"{V}/pipeline/runs/matsim"
 OUT = sys.argv[2] if len(sys.argv) > 2 else f"{H}/previews/mode_share"
 os.makedirs(f"{OUT}/data", exist_ok=True); os.makedirs(f"{OUT}/figures", exist_ok=True)

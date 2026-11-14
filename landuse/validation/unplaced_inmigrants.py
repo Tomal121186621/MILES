@@ -2,9 +2,9 @@
 """Unplaced in-migrant households by target region and year, parsed from the engine log of each seed (InOutMigrationImpl WARN line,
 engine 3066ca9).  Writes data/silo_final_unplaced_inmigrants.csv (seed, year, region, n) and prints the seed mean by year (MD / other).
 Usage: python3 landuse/validation/unplaced_inmigrants.py [n_seeds=5]"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import re, sys, pandas as pd
 V = f"{WORKSPACE}"; S = f"{V}/2_silo"; n = int(sys.argv[1]) if len(sys.argv) > 1 else 5
 rows = []

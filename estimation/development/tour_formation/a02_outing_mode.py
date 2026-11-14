@@ -21,15 +21,15 @@ Expected signs (point estimate): distance -, workplace density +, no car in the 
 passenger) -.  Age, gender, licence, cars < drivers, income, number of stops and departure time are not sign-checked.
     ~/.venvs/biogeme/bin/python estimation/development/tour_formation/a02_outing_mode.py   -> a02_outing_mode_fit.csv, a02_outing_mode_coef.csv, a02_outing_mode.log
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np
 import pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/activity"   # results of this step (data); CODE = this folder
-TE = f"{TERP_HOME}/activity/lib/tasha_estimation"; sys.path.insert(0, TE); sys.path.insert(0, CODE)   # estimation code
+TE = f"{MILES_HOME}/activity/lib/tasha_estimation"; sys.path.insert(0, TE); sys.path.insert(0, CODE)   # estimation code
 import estimate_subtours as ES   # noqa: E402
 import stepwise as S             # noqa: E402
 import a01_outing as A1          # noqa: E402

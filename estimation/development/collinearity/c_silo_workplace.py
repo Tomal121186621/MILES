@@ -3,9 +3,9 @@
 the final run), estimation half, chosen + 99 sampled zones (wdc.Model draws, seed 20261106), unweighted as in the estimation.
 The size term ln S at the final size weights is shown with the variables (its coefficient is mu).
     python3 estimation/development/collinearity/c_silo_workplace.py   ->  workplace_var_corr.png, workplace_est_corr.png, workplace_pairs.csv, workplace_facts.json"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

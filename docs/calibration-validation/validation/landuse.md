@@ -2,7 +2,7 @@
 
 The land-use model is calibrated on 2017–2020 and tested **out of sample on 2021–2024** against the ACS, the Census population estimates and components of change, JOLTS, building permits and the ACS county-to-county flows. Model: mean of five seeds.
 
-<div class="terp-numbers">
+<div class="miles-numbers">
 <div><b>0.995</b><span>county commute flows, correlation with the ACS</span></div>
 <div><b>≤ 2.1 pp</b><span>household size, cars, age, income in 2024</span></div>
 <div><b>≤ 6 %</b><span>births, marriages, divorces out of sample</span></div>

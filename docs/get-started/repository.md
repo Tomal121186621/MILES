@@ -1,13 +1,13 @@
 # Repository layout
 
 Code, coefficients and parameters live in the repository. Data and run outputs live in a **workspace** folder that you
-set in `terp.toml`.
+set in `miles.toml`.
 
 ```text
-TERP/
-├── terp_cli.py            the `terp` command
-├── terp_env.py            configured locations (repository, workspace, external checkouts)
-├── terp.example.toml      configuration template → copy to terp.toml
+MILES/
+├── miles_cli.py            the `miles` command
+├── miles_env.py            configured locations (repository, workspace, external checkouts)
+├── miles.example.toml      configuration template → copy to miles.toml
 ├── population/              Synthetic population
 │   ├── cvae/                generator: vaelib/ library, steps/00–09, run_all.py
 │   ├── base_year/           fit_controls, zone_weights, jobs_2016, vacancies, external_workplaces, export_base_year
@@ -23,7 +23,7 @@ TERP/
 │   ├── schools/             school inventory, school-choice estimation, assign_schools, assign_all_seeds
 │   ├── lib/                 residential-location and workplace libraries
 │   └── validation/          validate_landuse, aggregate_seeds, final_tables
-├── activity/                Activities (TERP-Day)
+├── activity/                Activities (MILES-Day)
 │   ├── engine/ABIT/         engine source (package abm.models.maryland); abit_changes.patch
 │   ├── parameters/          coefficients and survey distributions of the current models
 │   ├── build_parameters.py  writes parameters/ from the estimation results
@@ -54,5 +54,5 @@ TERP/
 | Change a land-use coefficient | `landuse/engine_inputs/`, written by `landuse/coefficients/write_*.py` |
 | Change an activity-model coefficient | `activity/parameters/` |
 | Change the network or a toll | `assignment/network/` |
-| Re-estimate a model | `terp estimate <model>` or `estimation/package/<stage>/<model>/` |
-| Run the full chain | `terp chain …` (`pipeline/run_chain.py`) |
+| Re-estimate a model | `miles estimate <model>` or `estimation/package/<stage>/<model>/` |
+| Run the full chain | `miles chain …` (`pipeline/run_chain.py`) |

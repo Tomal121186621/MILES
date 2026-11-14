@@ -1,6 +1,6 @@
-# TERP-Day engine
+# MILES-Day engine
 
-TERP-Day runs on the ABIT engine ([msmobility/abit](https://github.com/msmobility/abit)). Its own code is the
+MILES-Day runs on the ABIT engine ([msmobility/abit](https://github.com/msmobility/abit)). Its own code is the
 package `abm.models.maryland` and the run class `abm.RunAbitMarylandLos`, in `activity/engine/ABIT/src/main/java`.
 
 ## Classes

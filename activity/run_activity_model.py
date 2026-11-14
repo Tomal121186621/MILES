@@ -9,14 +9,14 @@ under <workspace>/3_abit/run/<name>/ (abit.log, output/{activities,legs}_<name>.
 2026-10-22); the household sample is deterministic (MarylandLosDataReader, seed 20240702), so seeds change only the model draws.
 Importable: run(name, coef, seed, ...) -> run directory.
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, os, re, shutil, subprocess, sys, time
 
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; A3 = f"{V}/3_abit"; ABIT = f"{ABIT_HOME}"
 JAVA_HOME = subprocess.run(["/usr/libexec/java_home", "-v", "21"], capture_output=True, text=True).stdout.strip()
-CLASSES = f"{A3}/classes"; CP_FILE = f"{TERP_HOME}/activity/abit_classpath.txt"   # $HOME in it is expanded; MAIN = "abm.RunAbitMarylandLos"; LIB = f"{ABIT}/src/main/resources/lib/macosx64"
+CLASSES = f"{A3}/classes"; CP_FILE = f"{MILES_HOME}/activity/abit_classpath.txt"   # $HOME in it is expanded; MAIN = "abm.RunAbitMarylandLos"; LIB = f"{ABIT}/src/main/resources/lib/macosx64"
 
 
 def run(name, coef, seed=1, sample=0.1, threads=6, xmx="8g", year=2016, skims="base", run_root=f"{A3}/run", force=False):
@@ -27,7 +27,7 @@ def run(name, coef, seed=1, sample=0.1, threads=6, xmx="8g", year=2016, skims="b
     rc = f"{d}/coef"; shutil.rmtree(rc, ignore_errors=True); shutil.copytree(coef, rc)
     env = dict(os.environ) | {"ABIT_RUN_ROOT": run_root, "ABIT_COEF_DIR": rc}
     sk = skims if os.path.isabs(skims) else (f"{A3}/skims" if skims == "base" else f"{A3}/skims/{skims}")
-    r = subprocess.run([sys.executable, f"{TERP_HOME}/activity/write_properties.py", name, "base", str(year), str(sample), sk], capture_output=True, text=True, env=env)
+    r = subprocess.run([sys.executable, f"{MILES_HOME}/activity/write_properties.py", name, "base", str(year), str(sample), sk], capture_output=True, text=True, env=env)
     if r.returncode != 0: raise SystemExit(f"write_properties failed: {r.stdout}{r.stderr}")
     props = f"{run_root}/{name}.properties"; t = open(props).read()
     t = re.sub(r"^number.of.threads\s*=.*$", f"number.of.threads = {threads}", t, flags=re.M); open(props, "w").write(t)

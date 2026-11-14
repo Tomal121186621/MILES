@@ -1,6 +1,6 @@
 # SILO engine changes
 
-TERP runs on SILO ([msmobility/silo](https://github.com/msmobility/silo)), commit `3066ca9`. Its changes are
+MILES runs on SILO ([msmobility/silo](https://github.com/msmobility/silo)), commit `3066ca9`. Its changes are
 shipped as `landuse/engine/silo_changes.patch` (modified files) and `landuse/engine/src/` (new files at
 their package paths).
 

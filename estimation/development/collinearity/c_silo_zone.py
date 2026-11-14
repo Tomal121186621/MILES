@@ -3,9 +3,9 @@
 spec of r03_fit.csv 'final'), estimation half, chosen + 29 sampled cells (the draws of r08, made first with the car-based zone data),
 household weights wthhfin as in the estimation.  Env ACC_CAR / ACC_MM as in residential/run_residential_chain.sh (set here if absent).
     python3 estimation/development/collinearity/c_silo_zone.py   ->  zone_var_corr.png, zone_est_corr.png, zone_pairs.csv, zone_facts.json"""
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

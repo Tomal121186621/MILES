@@ -4,9 +4,9 @@
     python3 estimation/development/selection/make_outputs.py      -> side_experiments/respec_2026-11/article_tables/est_dc_*_primary.tex, est_stop_*_stop.tex, est_loc_*.tex, est_subtour.tex,
                                     est_return.tex, est_mc_*.tex;  side_experiments/respec_2026-11/abit/*/..._respec.csv;  side_experiments/respec_2026-11/abit/summary_*.csv
 """
-import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
+import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from miles_env import MILES_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle
 import numpy as np
 import pandas as pd
