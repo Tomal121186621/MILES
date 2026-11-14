@@ -76,7 +76,7 @@ Converter settings (`osm_convert_config.xml`):
 | `scaleMaxSpeed` | false | Posted speeds are not scaled at conversion |
 | `routableSubnetwork` | car; bus + car | Links outside the strongly connected network of these modes are removed |
 
-Default values per OSM class, used where a way has no tag of its own:
+Converter defaults per OSM class, used only where a way has no tag of its own (most motorways carry a 65 mph `maxspeed` tag and run at 105 km/h):
 
 | OSM class | Free speed (km/h) | Capacity per lane (veh/h) | Lanes | One-way |
 |---|---:|---:|---:|---|
@@ -90,7 +90,7 @@ Default values per OSM class, used where a way has no tag of its own:
 | tertiary, tertiary_link | 25 | 600 | 1 | no |
 | rail / light rail / tram | 160 / 80 / 40 | — | 1 | — |
 
-For roads, these defaults are replaced by the rules of 2.2 and 2.3.
+For roads, capacities and speeds are then replaced by the rules of 2.2 and 2.3. In the 2024 network the capacity per lane is 2,000 veh/h on motorways other than I-695, 1,500 on trunk roads and mostly 2,100 on ramps.
 
 ### 2.2 Cleaning and reconciliation with MDOT
 
@@ -98,11 +98,11 @@ For roads, these defaults are replaced by the rules of 2.2 and 2.3.
 |---|---|---|
 | Road class | Each non-freeway link is matched to the MDOT SHA functional classification (nearest segment within 20 m, direction within 30°). Where MDOT rates the road higher than OSM, the link takes the class of MDOT; links are never downgraded | MDOT SHA Roadway Functional Classification |
 | Lanes | Ramps where the MDOT count inventory records more lanes than OSM take the MDOT value (18 ramps) | MDOT SHA AADT station inventory |
-| Freeway capacity | HCM 7th edition: basic segment 2,350 pc/h/lane × heavy-vehicle factor 0.935 = 2,197 veh/h/lane; merge, diverge and lane-drop sections 2,043 veh/h/lane (queue-discharge factor 0.93); weaving sections by the HCM weaving formula | Highway Capacity Manual |
-| Ramp capacity | HCM ramp-roadway capacity by free speed: 2,200 (> 50 mph), 2,100 (40–50), 2,000 (30–40), 1,900 (20–30), 1,800 pc/h/lane (< 20 mph) | Highway Capacity Manual |
-| Exit storage | The first link of each exit ramp gets the storage of a 300 m deceleration lane, so a queue on the ramp does not block the freeway at once | HCM, off-ramp spillback |
-| Isolated links | Links outside the strongly connected car network are removed; 754 transit-only links left from an earlier mapping are dropped before transit mapping | pt2matsim, `clean_network.py` |
-| 2024 changes | Francis Scott Key Bridge closed (March 2024); I-95 northbound Express Toll Lanes extension MD 43 – MD 152 open (December 2024) | MDTA, MDOT SHA project portal |
+| I-695 capacity | All 604 mainline links of the Baltimore Beltway, by one geometric rule: basic segment 2,350 pc/h/lane × heavy-vehicle factor 0.935 = 2,197 veh/h/lane; merge, diverge and lane-drop sections 2,043 veh/h/lane (queue-discharge factor 0.93); weaving sections by the HCM weaving formula. Other motorways keep 2,000 veh/h/lane | Highway Capacity Manual |
+| Ramp capacity | Every motorway and trunk ramp, by its free speed: 2,200 (> 50 mph), 2,100 (40–50), 2,000 (30–40), 1,900 (20–30), 1,800 per lane (< 20 mph) | Highway Capacity Manual, ramp roadways |
+| Exit storage | The first link of each exit ramp gets the storage of a 300 m deceleration lane, so a queue on the ramp does not block the freeway at once | HCM 7th edition, ch. 38 (off-ramp spillback) |
+| Connectivity | The converter keeps the routable car and bus sub-networks; 7 short dead-end links (I-95 Express Toll Lanes at the network edge) remain outside the strongly connected car network (activities near them: section 1). 754 transit-only links left from an earlier mapping are dropped before transit mapping | pt2matsim, `clean_network.py` |
+| 2024 changes | Francis Scott Key Bridge removed (closed since March 2024). I-95 northbound Express Toll Lanes extension MD 43 – MD 152 removed: it opened in December 2024 and is in the 2026 network only | MDTA, MDOT SHA project portal |
 
 ### 2.3 Free speed and capacity of surface streets
 
@@ -119,8 +119,9 @@ the MDOT inventories; the audit and the speed recoding are documented in `assign
 
 ### 2.4 Tolls
 
-The 2024 tolls of the Baltimore Harbor and Fort McHenry tunnels are applied with the MATSim road-pricing module
-(`roadpricing_HARB_2024.xml`, enforcement 100 %).
+The 2024 tolls of the Baltimore Harbor and Fort McHenry tunnels, \$3.00 per passage in both directions (two-axle
+vehicle, E-ZPass Maryland), are applied on six tunnel links with the MATSim road-pricing module
+(`roadpricing_HARB_2024.xml`).
 
 ## 3. Transit network
 
@@ -164,12 +165,12 @@ PTMapper settings (`ptmapper_config_2024.xml`):
 |---|---|---|
 | `travelCostType` | travelTime | Routes between stops minimise travel time |
 | `maxLinkCandidateDistance` | 90 m | Links farther than this from a stop are not candidates |
-| `nLinkThreshold` | 6 | Number of candidate links per stop |
-| `candidateDistanceMultiplier` | 1.2 | Candidates up to 1.2 × the distance of the nearest link |
+| `nLinkThreshold` | 6 | Candidate links searched per stop |
+| `candidateDistanceMultiplier` | 1.2 | After 6 candidates, further links within 1.2 × the distance of the 6th are added |
 | `routingWithCandidateDistance` | true | The stop-to-link distance enters the routing cost |
-| `maxTravelCostFactor` | 5.0 | Paths longer than 5 × the schedule time become artificial links |
-| `scheduleFreespeedModes` | artificial, rail, subway | Free speed of these links set from the schedule |
-| Shapes | GTFS shapes, 300 m and 100 m corridors | Candidate links restricted to the shape of the route |
+| `maxTravelCostFactor` | 5.0 | If every path between two stops takes more than 5 × the scheduled time, an artificial link is created |
+| `scheduleFreespeedModes` | artificial, rail, subway | Free speed of these links set to the lowest value the schedule needs |
+| GTFS shapes | 300 m, 100 m | Routes with a shape are routed only on links within 300 m of it; a link's cost grows with its distance from the shape (scale 100 m) |
 
 Mode rules: buses run on the car network (`car,bus`); light rail on `light_rail,tram` links; Baltimore Metro on
 `subway` links; MARC and Amtrak on `rail` links; ferries and lines without a matching network (Metrorail) on artificial
@@ -193,12 +194,14 @@ sample rate (0.1) in each run.
 |---|---|---:|---:|---:|
 | Local bus | MTA, WMATA, Ride On, TheBus, RTA, county services | 38 + 32 | 12.2 m | 2.0 |
 | Commuter coach | MTA commuter bus | 57 | 13.7 m | 2.5 |
-| Light rail, 2 cars | MTA Light RailLink | 170 + 200 | 58 m | — |
-| Metro, 4 cars | MTA Metro SubwayLink | 304 + 360 | 92 m | — |
-| Metrorail, 8 cars | WMATA | 512 + 880 | 183 m | — |
-| Commuter rail | MARC | 780 | 180 m | — |
-| Intercity rail | Amtrak | 550 | 200 m | — |
-| Ferry | Harbor Connector | 50 | 15 m | — |
+| Light rail, 2 cars | MTA Light RailLink | 170 + 200 | 58 m | 5.2 |
+| Metro, 4 cars | MTA Metro SubwayLink | 304 + 360 | 92 m | 4.4 |
+| Metrorail, 8 cars | WMATA | 512 + 880 | 183 m | 4.4 |
+| Commuter rail | MARC | 780 | 180 m | 27.1 |
+| Intercity rail | Amtrak | 550 | 200 m | 27.1 |
+| Ferry | Harbor Connector | 50 | 15 m | 1.0 |
+
+Rail and ferry vehicles run on their own or artificial links, so their PCE does not affect road traffic.
 
 ## 4. Simulation set-up
 
@@ -260,7 +263,7 @@ The values below are those of the 2024 validation runs (MATSim output configurat
 | transit: travel / distance | −1.02 utils/h / −$0.50 per km | In-vehicle time; fare proxy |
 | walk: travel | −4.4 utils/h | |
 | bike: travel | −2.345 utils/h | |
-| Activity types | home 12 h, work 8 h, education 6 h, shopping 2 h, other 2 h, escort 15 min, eat 45 min, errand 30 min, social and recreation 1.5 h | Typical durations; home, work, shopping and other are split into duration classes of 10 minutes |
+| Activity types | home 12 h, work 8 h, education 6 h, shopping 2 h, other 2 h, escort 15 min, eat 45 min, errand 30 min, social and recreation 1.5 h | Typical durations. Home, work, shopping and other also have 162 duration classes of 10 minutes (10 min to 27 h), so each activity is scored against its own planned duration; work types carry the planned arrival time (5,184 types), which is what the late-arrival penalty refers to. Opening times: work 06:00–21:00, shopping 08:00–20:00 |
 
 Mode constants are present in the scoring but have no effect, because MATSim does not choose modes.
 
