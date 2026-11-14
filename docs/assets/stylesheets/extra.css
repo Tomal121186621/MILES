@@ -32,3 +32,17 @@
 
 .md-typeset h1 { color: var(--md-default-fg-color); font-weight: 700; }
 .oriole-hero h1 { color: var(--md-default-fg-color); }
+
+/* team */
+.oriole-center { text-align: center; max-width: 40rem; margin: 0 auto 1.5rem; }
+.oriole-people { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+.oriole-person { text-align: center; border: 1px solid var(--md-default-fg-color--lightest); border-radius: 8px; padding: 1.2rem 1rem; }
+.oriole-person img { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid var(--oriole-orange); }
+.oriole-person h3 { margin: .6rem 0 .3rem; }
+.oriole-person p { font-size: .78rem; }
+
+/* home credit */
+.oriole-credit { display: flex; align-items: center; gap: 1.4rem; flex-wrap: wrap; border-top: 1px solid var(--md-default-fg-color--lightest); padding-top: 1.2rem; margin-top: 1.5rem; }
+.oriole-credit img.logo { width: 110px; }
+.oriole-credit .faces img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid var(--oriole-orange); margin-right: .3rem; }
+.oriole-credit p { margin: 0; flex: 1; min-width: 16rem; }

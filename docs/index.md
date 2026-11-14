@@ -135,7 +135,10 @@ resulting traffic on the road and transit networks.</p>
 
 </div>
 
----
-
-ORIOLE is developed at the **Center for Multimodal Mobility, University of Maryland, College Park**, by
-Raas Sarker Tomal under the supervision of Dr. Cinzia Cirillo. [Team](about/team.md)
+<div class="oriole-credit" markdown>
+<img class="logo" src="assets/img/cmmm-logo.png" alt="Center for MultiModal Mobility in Urban, Rural and Tribal Areas">
+<span class="faces"><img src="assets/img/team/raas-sarker-tomal.jpg" alt="Raas Sarker Tomal"><img src="assets/img/team/cinzia-cirillo.jpg" alt="Dr. Cinzia Cirillo"></span>
+<p>Developed at the <b>Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM)</b>, University of Maryland,
+College Park, by <b>Raas Sarker Tomal</b> (<a href="mailto:rtomal@umd.edu">rtomal@umd.edu</a>) under the supervision of
+<b>Dr. Cinzia Cirillo</b>, Director of CMMM (<a href="mailto:ccirillo@umd.edu">ccirillo@umd.edu</a>). <a href="about/team/">Team</a></p>
+</div>

@@ -1,27 +1,45 @@
 # Team
 
-<div class="grid cards" markdown>
+<div class="oriole-center" markdown>
+![Center for MultiModal Mobility in Urban, Rural and Tribal Areas](../assets/img/cmmm-logo.png){ width="190" }
 
--   :material-account:{ .lg .middle } **Raas Sarker Tomal**
+ORIOLE is developed at the **Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM)**, University of
+Maryland, College Park — a U.S. Department of Transportation University Transportation Center at the Maryland
+Transportation Institute.
+</div>
 
-    ---
+<div class="oriole-people" markdown>
 
-    PhD student and Graduate Research Assistant
-    Center for Multimodal Mobility, University of Maryland, College Park
+<div class="oriole-person" markdown>
+![Raas Sarker Tomal](../assets/img/team/raas-sarker-tomal.jpg)
 
-    Developer of ORIOLE.
+### Raas Sarker Tomal
 
-    :fontawesome-solid-envelope: [rtomal@umd.edu](mailto:rtomal@umd.edu) ·
-    :fontawesome-brands-github: [Tomal121186621](https://github.com/Tomal121186621)
+PhD Student and Graduate Research Assistant<br>
+Center for MultiModal Mobility (CMMM)<br>
+Department of Civil and Environmental Engineering<br>
+University of Maryland, College Park
 
--   :material-account-tie:{ .lg .middle } **Dr. Cinzia Cirillo**
+Developer of ORIOLE
 
-    ---
+:fontawesome-solid-envelope: [rtomal@umd.edu](mailto:rtomal@umd.edu)<br>
+:fontawesome-brands-github: [Tomal121186621](https://github.com/Tomal121186621)
+</div>
 
-    Director, Center for Multimodal Mobility
-    Department of Civil and Environmental Engineering, University of Maryland, College Park
+<div class="oriole-person" markdown>
+![Dr. Cinzia Cirillo](../assets/img/team/cinzia-cirillo.jpg)
 
-    PhD supervisor.
+### Dr. Cinzia Cirillo
+
+Director, Center for MultiModal Mobility (CMMM)<br>
+Professor, Department of Civil and Environmental Engineering<br>
+University of Maryland, College Park
+
+PhD supervisor
+
+:fontawesome-solid-envelope: [ccirillo@umd.edu](mailto:ccirillo@umd.edu)<br>
+:fontawesome-solid-globe: [CMMM team](https://mti.umd.edu/cmmm-team)
+</div>
 
 </div>
 

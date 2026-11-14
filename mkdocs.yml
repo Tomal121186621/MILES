@@ -3,7 +3,7 @@ site_description: Integrated population, land-use, activity and traffic simulati
 site_author: Raas Sarker Tomal
 repo_url: https://github.com/Tomal121186621
 repo_name: Tomal121186621
-copyright: Copyright &copy; 2026 Raas Sarker Tomal, Center for Multimodal Mobility, University of Maryland
+copyright: Copyright &copy; 2026 Raas Sarker Tomal · Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM), University of Maryland, College Park
 
 theme:
   name: material

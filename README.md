@@ -49,8 +49,13 @@ mkdocs serve
 
 ## Team
 
-Raas Sarker Tomal, PhD student and Graduate Research Assistant, and Dr. Cinzia Cirillo, Director —
-Center for Multimodal Mobility, University of Maryland, College Park.
+<p><img src="docs/assets/img/cmmm-logo.png" width="110" align="right" alt="CMMM"></p>
+
+Developed at the **Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM)**, University of Maryland,
+College Park.
+
+- **Raas Sarker Tomal**, PhD Student and Graduate Research Assistant — rtomal@umd.edu
+- **Dr. Cinzia Cirillo**, Director of CMMM, Professor of Civil and Environmental Engineering — ccirillo@umd.edu
 
 ## License
 
