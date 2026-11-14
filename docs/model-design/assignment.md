@@ -4,293 +4,342 @@
 
     | | |
     |---|---|
-    | **Engine** | MATSim 2024.0 (Java 21), queue simulation (QSim) with the SwissRailRaptor transit router |
-    | **Code** | `assignment/` (network and transit builders, runner, validation) |
-    | **Road network** | OpenStreetMap, Geofabrik Maryland extract, converted with pt2matsim; 214,716 nodes, 474,037 links |
-    | **Transit** | GTFS of 18 feeds (MTA, WMATA, county services, Amtrak), one weekday, mapped with pt2matsim |
-    | **Demand** | Weekday plans of MILES-Day, 10 % sample, modes fixed |
-    | **Choices in MATSim** | Route and departure time |
-    | **Runs** | 100 iterations, five seeds |
+    | **Engine** | MATSim 2024.0, queue simulation, SwissRailRaptor transit router |
+    | **Code** | `assignment/` |
+    | **Road network** | OpenStreetMap via pt2matsim; 214,716 nodes, 474,037 links |
+    | **Transit** | 18 GTFS feeds, one weekday, mapped with pt2matsim |
+    | **Demand** | MILES-Day weekday plans, 10 % sample, modes fixed |
+    | **Choices** | Route, departure time |
+    | **Runs** | 100 iterations × 5 seeds |
 
-The weekday plans of MILES-Day are executed on the 2024 road and transit networks. In each iteration every agent
-executes one plan in a queue simulation, the plan is scored, and a share of agents changes a route or a departure
-time. After 100 iterations the network loads have settled and the link volumes are read for validation.
-
-The sections below follow the order of the build: [demand](#1-demand), [road network](#2-road-network),
-[transit network](#3-transit-network), [simulation set-up](#4-simulation-set-up) and [outputs](#5-outputs).
+Each iteration, every agent executes one plan in a queue simulation; the plan is scored, and a share of agents
+changes its route or departure time. After 100 iterations the link volumes are read for validation.
 
 ## 1. Demand
 
-| Item | Setting |
+**Table 1.** Demand passed to MATSim (2024, 10 % sample).
+
+| Item | Value |
 |---|---|
-| Source | Weekday plans of MILES-Day, 2024 |
-| Persons | Residents of the six counties and workers commuting into them: 209,401 resident and 28,151 in-commuting persons, plus 25,290 residents working outside, in the 10 % sample |
-| Sample | 10 % of households |
-| Modes | Car, car passenger (ride), transit, walk, bike, fixed by MILES-Day; MATSim does not change them |
-| Activity locations | Point locations from OpenStreetMap, inside the zone chosen by MILES-Day (see below) |
-| Not modelled | Trucks, commercial vehicles, visitors and through traffic |
+| Persons | 262,842 |
+| — residents working in the study area | 209,401 |
+| — residents working outside | 25,290 |
+| — in-commuters | 28,151 |
+| Legs | 1,032,562 |
+| Modes | car, ride, transit, walk, bike (fixed) |
+| Not modelled | trucks, commercial vehicles, visitors, through traffic |
 
-**Placing activities.** MILES-Day chooses zones; the bridge to MATSim (`pipeline/activities_to_matsim.py`) gives each
-activity a point:
+**Table 2.** Activity locations.
 
-| Activity | Point | 2024 run |
-|---|---|---|
-| Home | An OpenStreetMap residential building of the home zone, the same one for all members of a household (a residential street point where the zone has no building) | all homes |
-| Work, school, shopping, recreation, escort, other | An OpenStreetMap point of interest of the matching category inside the chosen zone, drawn at random among the zone's points of that category. Categories: work → work; school → education, else other; escort → education, else other; shopping → shopping; recreation → recreation, else other; other → other. Any POI of the zone if none of the category exists | 590,509 activities, all those inside the study area |
-| Outside the six counties | The coordinate written by MILES-Day | 82,891 activities |
+| Activity | Location | Activities |
+|---|---|---:|
+| Home | OSM residential building in the home zone<sup>a</sup> | all |
+| Other, inside the study area | OSM point of interest of the matching category in the chosen zone<sup>b</sup> | 590,509 |
+| Outside the study area | Coordinate from MILES-Day | 82,891 |
 
-MATSim then attaches each activity to its nearest car link. Seven short dead-end links (pieces of the I-95 Express Toll
-Lanes at the network edge) cannot be reached by any route; the 1,036 activities (0.08 %) whose nearest link was one of
-them are attached to the nearest connected link instead (`pipeline/snap_to_network.py`). Coordinates are not changed.
+<div class="tnote" markdown>
+
+<sup>a</sup> One building per household; a residential street point where the zone has no building.
+
+<sup>b</sup> Drawn at random. Categories: work → work; school, escort → education; shopping → shopping; recreation → recreation; other → other. Fallback: other, then any POI of the zone.
+
+</div>
+
+MATSim attaches each activity to its nearest car link. The 1,036 activities (0.08 %) nearest to one of seven
+unreachable dead-end links are attached to the nearest connected link (`pipeline/snap_to_network.py`).
 
 ## 2. Road network
 
-### 2.1 Conversion from OpenStreetMap
+### 2.1 Conversion
 
-The road network is built from the Geofabrik OpenStreetMap extract of Maryland (`maryland-latest.osm.pbf`,
-replication timestamp 2026-06-11), clipped to the network area (`bmr.osm.gz`) and converted with **pt2matsim 24.4**
-(`Osm2MultimodalNetwork`) into EPSG:26985 (Maryland State Plane, metres).
+Source: Geofabrik OpenStreetMap extract of Maryland (2026-06-11), clipped to the network area and converted with
+pt2matsim 24.4 to EPSG:26985.
 
 ```bash
-# 1. download the Maryland extract
 curl -O https://download.geofabrik.de/north-america/us/maryland-latest.osm.pbf
-
-# 2. clip the extract to the network area (file bmr.osm.gz, the osmFile of the converter configuration)
-#    and write a default converter configuration, then edit it (values below)
 java -cp pt2matsim-24.4-shaded.jar org.matsim.pt2matsim.run.CreateDefaultOsmConfig osm_convert_config.xml
-
-# 3. convert OpenStreetMap to a MATSim network
 java -Xmx8g -cp pt2matsim-24.4-shaded.jar org.matsim.pt2matsim.run.Osm2MultimodalNetwork osm_convert_config.xml
 ```
 
-Converter settings (`osm_convert_config.xml`):
+**Table 3.** Converter settings (`osm_convert_config.xml`).
 
-| Parameter | Value | Meaning |
-|---|---|---|
-| `outputCoordinateSystem` | EPSG:26985 | Maryland State Plane, metres |
-| `keepPaths` | false | Only intersections and branch points become nodes |
-| `maxLinkLength` | 500 m | Longer ways are split |
-| `keepTagsAsAttributes` | true | OSM tags (highway, lanes, maxspeed, name) are kept on each link |
-| `keepWaysWithPublicTransit` | true | Ways used by transit routes are kept |
-| `parseTurnRestrictions` | false | Turn restrictions are not modelled |
-| `scaleMaxSpeed` | false | Posted speeds are not scaled at conversion |
-| `routableSubnetwork` | car; bus + car | Links outside the strongly connected network of these modes are removed |
+| Parameter | Value |
+|---|---|
+| `outputCoordinateSystem` | EPSG:26985 |
+| `keepPaths` | false |
+| `maxLinkLength` | 500 m |
+| `keepTagsAsAttributes` | true |
+| `keepWaysWithPublicTransit` | true |
+| `parseTurnRestrictions` | false |
+| `scaleMaxSpeed` | false |
+| `routableSubnetwork` | car; car + bus |
 
-Converter defaults per OSM class, used only where a way has no tag of its own (most motorways carry a 65 mph `maxspeed` tag and run at 105 km/h):
+**Table 4.** Converter defaults for untagged ways.
 
-| OSM class | Free speed (km/h) | Capacity per lane (veh/h) | Lanes | One-way |
-|---|---:|---:|---:|---|
+| OSM class | Free speed (km/h) | Capacity (veh/h/lane) | Lanes | One-way |
+|---|---:|---:|---:|:---:|
 | motorway | 120 | 2,000 | 2 | yes |
 | motorway_link | 80 | 1,500 | 1 | yes |
 | trunk | 80 | 2,000 | 2 | no |
 | trunk_link | 50 | 1,500 | 1 | no |
 | primary | 80 | 1,500 | 1 | no |
 | primary_link | 60 | 1,500 | 1 | no |
-| secondary, secondary_link | 30 | 1,000 | 1 | no |
-| tertiary, tertiary_link | 25 | 600 | 1 | no |
-| rail / light rail / tram | 160 / 80 / 40 | — | 1 | — |
+| secondary (_link) | 30 | 1,000 | 1 | no |
+| tertiary (_link) | 25 | 600 | 1 | no |
 
-For roads, capacities and speeds are then replaced by the rules of 2.2 and 2.3. In the 2024 network the capacity per lane is 2,000 veh/h on motorways other than I-695, 1,500 on trunk roads and mostly 2,100 on ramps.
+Tagged values take precedence; most motorways carry a 65 mph tag (105 km/h). Capacities are replaced by Tables 5 and 6.
 
-### 2.2 Cleaning and reconciliation with MDOT
+### 2.2 Cleaning
+
+**Table 5.** Corrections to the converted network.
 
 | Step | Rule | Source |
 |---|---|---|
-| Road class | Each non-freeway link is matched to the MDOT SHA functional classification (nearest segment within 20 m, direction within 30°). Where MDOT rates the road higher than OSM, the link takes the class of MDOT; links are never downgraded | MDOT SHA Roadway Functional Classification |
-| Lanes | Ramps where the MDOT count inventory records more lanes than OSM take the MDOT value (18 ramps) | MDOT SHA AADT station inventory |
-| I-695 capacity | All 604 mainline links of the Baltimore Beltway, by one geometric rule: basic segment 2,350 pc/h/lane × heavy-vehicle factor 0.935 = 2,197 veh/h/lane; merge, diverge and lane-drop sections 2,043 veh/h/lane (queue-discharge factor 0.93); weaving sections by the HCM weaving formula. Other motorways keep 2,000 veh/h/lane | Highway Capacity Manual |
-| Ramp capacity | Every motorway and trunk ramp, by its free speed: 2,200 (> 50 mph), 2,100 (40–50), 2,000 (30–40), 1,900 (20–30), 1,800 per lane (< 20 mph) | Highway Capacity Manual, ramp roadways |
-| Exit storage | The first link of each exit ramp gets the storage of a 300 m deceleration lane, so a queue on the ramp does not block the freeway at once | HCM 7th edition, ch. 38 (off-ramp spillback) |
-| Connectivity | The converter keeps the routable car and bus sub-networks; 7 short dead-end links (I-95 Express Toll Lanes at the network edge) remain outside the strongly connected car network (activities near them: section 1). 754 transit-only links left from an earlier mapping are dropped before transit mapping | pt2matsim, `clean_network.py` |
-| 2024 changes | Francis Scott Key Bridge removed (closed since March 2024). I-95 northbound Express Toll Lanes extension MD 43 – MD 152 removed: it opened in December 2024 and is in the 2026 network only | MDTA, MDOT SHA project portal |
+| Road class | Upgraded to the MDOT class where MDOT rates a road higher<sup>a</sup> | MDOT SHA functional classification |
+| Ramp lanes | MDOT value where higher (18 ramps) | MDOT SHA count inventory |
+| I-695 capacity | 2,197 veh/h/lane, basic; 2,043 at merges, diverges, lane drops; HCM formula at weaves<sup>b</sup> | HCM |
+| Other motorways | 2,000 veh/h/lane | converter |
+| Trunk roads | 1,500 veh/h/lane | network audit |
+| Ramp capacity | 1,800–2,200 veh/h/lane by free speed<sup>c</sup> | HCM |
+| Exit storage | + 300 m of storage on the first exit-ramp link | HCM, ch. 38 |
+| Transit-only links | 754 removed before transit mapping | `clean_network.py` |
+| Key Bridge | removed (closed March 2024) | MDTA |
+| I-95 ETL extension | removed (opened December 2024; 2026 network only) | MDTA |
 
-### 2.3 Free speed and capacity of surface streets
+<div class="tnote" markdown>
+
+<sup>a</sup> Nearest MDOT segment within 20 m and 30°; links are never downgraded.
+
+<sup>b</sup> 2,350 pc/h/lane × heavy-vehicle factor 0.935; 0.93 queue-discharge factor at bottlenecks; all 604 mainline links.
+
+<sup>c</sup> 2,200 (> 50 mph), 2,100 (40–50), 2,000 (30–40), 1,900 (20–30), 1,800 (< 20 mph).
+
+</div>
+
+### 2.3 Surface streets
+
+**Table 6.** Free speed and capacity of primary and lower roads.
 
 | Item | Rule |
 |---|---|
-| Posted speed | First available of: OSM `maxspeed` of the way; MDOT SHA posted-speed signs on the same way; median of the same road name and class in the same 5 km cell; median of the class in the cell (at least 5 links); median of the class |
-| Free speed | Posted speed × 0.9 below 51 km/h (25 and 30 mph), × 1.0 otherwise (rule of the MATSim OSM reader) |
-| Capacity per lane | primary 1,500; secondary 800; tertiary, unclassified, residential 600; living street 300 veh/h (MATSim OSM reader) |
-| Capacity | Capacity per lane × max(lanes, 1) |
+| Posted speed | OSM `maxspeed`, else MDOT sign, else local median<sup>a</sup> |
+| Free speed | posted × 0.9 below 51 km/h; posted otherwise |
+| Capacity (veh/h/lane) | primary 1,500; secondary 800; tertiary, residential 600; living street 300 |
+| Link capacity | per-lane capacity × max(lanes, 1) |
 
-No traffic count was used to set any speed, capacity or lane value. The network was audited link by link against
-the MDOT inventories; the audit and the speed recoding are documented in `assignment/network/NETWORK_AUDIT.md` and
-`SPEED_CAPACITY.md`.
+<div class="tnote" markdown>
+
+<sup>a</sup> Median of the same road name and class in the same 5 km cell, then of the class in the cell, then of the class. Free speed and capacity rules follow the MATSim OSM reader.
+
+</div>
+
+No traffic count was used to set any speed, capacity or lane value.
 
 ### 2.4 Tolls
 
-The 2024 tolls of the Baltimore Harbor and Fort McHenry tunnels, \$3.00 per passage in both directions (two-axle
-vehicle, E-ZPass Maryland), are applied on six tunnel links with the MATSim road-pricing module
+Baltimore Harbor and Fort McHenry tunnels: \$3.00 per passage, both directions, six links
 (`roadpricing_HARB_2024.xml`).
 
 ## 3. Transit network
 
-### 3.1 Feeds and representative day
+### 3.1 Feeds
 
-Eighteen GTFS feeds are merged: MTA local bus, Light RailLink, Metro SubwayLink, MARC, commuter bus; Charm City
-Circulator, Harbor Connector, Towson Loop, RTA of Central Maryland, Anne Arundel County Transit, Annapolis Transit,
-Harford Transit LINK, Carroll Transit; WMATA Metrorail and Metrobus; Montgomery County Ride On; Prince George's
-County TheBus; Amtrak.
+**Table 7.** GTFS feeds.
 
-- **Day:** Wednesday 21 October 2026. A service runs on that day when `calendar.txt` lists it with the Wednesday flag
-  or `calendar_dates.txt` adds it, and no exception removes it. Feeds whose calendar had ended use their last
-  published Wednesday.
-- **Area:** stops more than 250 m from any node of the network are dropped (DC and Virginia ends of routes);
-  consecutive kept stops across a gap stay connected by the scheduled times.
+| Operator group | Feeds |
+|---|---|
+| MTA | local bus, Light RailLink, Metro SubwayLink, MARC, commuter bus |
+| Baltimore region | Charm City Circulator, Harbor Connector, Towson Loop, RTA, Anne Arundel County Transit, Annapolis Transit, Harford Transit LINK, Carroll Transit |
+| Washington region | WMATA Metrorail, WMATA Metrobus, Ride On, TheBus |
+| Intercity | Amtrak |
 
-### 3.2 Conversion and mapping
+Service day: Wednesday 21 October 2026 (last published Wednesday for expired feeds). Stops more than 250 m from the
+network are dropped.
+
+### 3.2 Mapping
 
 ```bash
-# 1. merge the feeds for the representative day
 python3 assignment/transit/merge_gtfs.py <raw GTFS folder> network_2024.xml.gz gtfs_merged/
-
-# 2. GTFS -> unmapped MATSim schedule and vehicles
 java -Xmx8g -cp pt2matsim-24.4-shaded.jar org.matsim.pt2matsim.run.Gtfs2TransitSchedule \
      gtfs_merged/ 20261021 EPSG:26985 schedule_unmapped.xml.gz transitVehicles_gtfs.xml.gz
-
-# 3. map the schedule onto the road and rail network (PTMapper guided by the GTFS shapes)
 java -Xmx9g -cp classes:pt2matsim-24.4-shaded.jar de.umd.transit.MapWithShapes \
      ptmapper_config_2024.xml gtfs_merged/shapes.txt EPSG:26985 300 100
-
-# 4. check the mapped schedule
 java -Xmx8g -cp pt2matsim-24.4-shaded.jar org.matsim.pt2matsim.run.CheckMappedSchedulePlausibility \
      transitSchedule_2024.xml.gz network_2024_pt.xml.gz EPSG:26985 plausibility_2024/
 ```
 
-All steps run with `miles assignment transit`.
+**Table 8.** PTMapper settings (`ptmapper_config_2024.xml`).
 
-PTMapper settings (`ptmapper_config_2024.xml`):
+| Parameter | Value |
+|---|---|
+| `travelCostType` | travelTime |
+| `maxLinkCandidateDistance` | 90 m |
+| `nLinkThreshold` | 6 |
+| `candidateDistanceMultiplier` | 1.2 |
+| `routingWithCandidateDistance` | true |
+| `maxTravelCostFactor` | 5.0 |
+| `scheduleFreespeedModes` | artificial, rail, subway |
+| Shape corridor / weight distance<sup>a</sup> | 300 m / 100 m |
 
-| Parameter | Value | Meaning |
-|---|---|---|
-| `travelCostType` | travelTime | Routes between stops minimise travel time |
-| `maxLinkCandidateDistance` | 90 m | Links farther than this from a stop are not candidates |
-| `nLinkThreshold` | 6 | Candidate links searched per stop |
-| `candidateDistanceMultiplier` | 1.2 | After 6 candidates, further links within 1.2 × the distance of the 6th are added |
-| `routingWithCandidateDistance` | true | The stop-to-link distance enters the routing cost |
-| `maxTravelCostFactor` | 5.0 | If every path between two stops takes more than 5 × the scheduled time, an artificial link is created |
-| `scheduleFreespeedModes` | artificial, rail, subway | Free speed of these links set to the lowest value the schedule needs |
-| GTFS shapes | 300 m, 100 m | Routes with a shape are routed only on links within 300 m of it; a link's cost grows with its distance from the shape (scale 100 m) |
+<div class="tnote" markdown>
 
-Mode rules: buses run on the car network (`car,bus`); light rail on `light_rail,tram` links; Baltimore Metro on
-`subway` links; MARC and Amtrak on `rail` links; ferries and lines without a matching network (Metrorail) on artificial
-links that follow the scheduled times. After mapping, loops and U-turns are removed (`clean_routes.py`).
+<sup>a</sup> Routes with a GTFS shape use only links within 300 m of it; link cost rises with distance from the shape.
 
-| Result | Value |
+</div>
+
+Buses run on the car network, light rail and Baltimore Metro on their own links, MARC and Amtrak on rail links;
+Metrorail and ferries on artificial links.
+
+**Table 9.** Mapped schedule.
+
+| Item | Value |
 |---|---:|
-| Lines / routes | 354 / 4,319 |
-| Departures on the day | 25,099 |
+| Lines | 354 |
+| Routes | 4,319 |
+| Departures | 25,099 |
 | Stop facilities | 16,687 |
-| Stops within 25 m / 50 m of their link | 91.7 % / 96.2 % |
+| Stops within 25 m of their link | 91.7 % |
+| Stops within 50 m of their link | 96.2 % |
 | Route length on artificial links | 4.6 % |
 | Car links opened to buses | 38,040 |
 
-### 3.3 Transit vehicles
+### 3.3 Vehicles
 
-One vehicle per departure, typed by agency and mode. Capacity and passenger-car equivalents are multiplied by the
-sample rate (0.1) in each run.
+**Table 10.** Transit vehicle types.
 
-| Type | Operators | Seats + standing | Length | PCE |
-|---|---|---:|---:|---:|
-| Local bus | MTA, WMATA, Ride On, TheBus, RTA, county services | 38 + 32 | 12.2 m | 2.0 |
-| Commuter coach | MTA commuter bus | 57 | 13.7 m | 2.5 |
-| Light rail, 2 cars | MTA Light RailLink | 170 + 200 | 58 m | 5.2 |
-| Metro, 4 cars | MTA Metro SubwayLink | 304 + 360 | 92 m | 4.4 |
-| Metrorail, 8 cars | WMATA | 512 + 880 | 183 m | 4.4 |
-| Commuter rail | MARC | 780 | 180 m | 27.1 |
-| Intercity rail | Amtrak | 550 | 200 m | 27.1 |
-| Ferry | Harbor Connector | 50 | 15 m | 1.0 |
+| Type | Operators | Seats | Standing | Length (m) | PCE |
+|---|---|---:|---:|---:|---:|
+| Local bus | MTA, WMATA, county services | 38 | 32 | 12.2 | 2.0 |
+| Commuter coach | MTA | 57 | 0 | 13.7 | 2.5 |
+| Light rail, 2 cars | MTA | 170 | 200 | 58 | 5.2 |
+| Metro, 4 cars | MTA | 304 | 360 | 92 | 4.4 |
+| Metrorail, 8 cars | WMATA | 512 | 880 | 183 | 4.4 |
+| Commuter rail | MARC | 780 | 0 | 180 | 27.1 |
+| Intercity rail | Amtrak | 550 | 0 | 200 | 27.1 |
+| Ferry | Harbor Connector | 50 | 0 | 15 | 1.0 |
 
-Rail and ferry vehicles run on their own or artificial links, so their PCE does not affect road traffic.
+Capacity and PCE are multiplied by the sample rate (0.1) in each run.
 
 ## 4. Simulation set-up
 
-The values below are those of the 2024 validation runs (MATSim output configuration).
+Values of the 2024 validation runs.
 
-### 4.1 Controller and simulation
+**Table 11.** Simulation.
 
-| Module · parameter | Value | Meaning |
-|---|---|---|
-| `controller.lastIteration` | 100 | Iterations per run |
-| `global.randomSeed` | 1–5 | One run per seed |
-| `global.coordinateSystem` | EPSG:26985 | Maryland State Plane |
-| `qsim.flowCapacityFactor` | 0.1 | Link flow capacity scaled to the 10 % sample |
-| `qsim.storageCapacityFactor` | 0.1778 | 0.1^0.75: storage scaled less than flow, so short links do not jam at low sample rates |
-| `qsim.trafficDynamics` / `linkDynamics` | queue / FIFO | Standard queue model |
-| `qsim.mainMode` | car | Cars are simulated as vehicles; buses run in the same simulation |
-| `qsim.stuckTime` | 120 s | Vehicles blocked longer are moved to the next link |
-| `qsim.endTime` | 36:00 | Late tours can finish |
-| `linkStats.averageLinkStatsOverIterations` | 5 | Link volumes averaged over the last five iterations |
+| Parameter | Value |
+|---|---|
+| Iterations | 100 |
+| Random seeds | 1–5 |
+| Flow capacity factor | 0.1 |
+| Storage capacity factor | 0.1778 (= 0.1<sup>0.75</sup>) |
+| Traffic dynamics | queue, FIFO |
+| Simulated mode | car (transit vehicles also simulated) |
+| Stuck time | 120 s |
+| End time | 36:00 |
+| Link volumes | mean of the last 5 iterations |
 
-### 4.2 Routing
+**Table 12.** Routing.
 
-| Module · parameter | Value | Meaning |
-|---|---|---|
-| `routing.networkModes` | car, ride | Car and car passenger routed on the road network with congested times; only cars occupy road space |
-| walk | 1.23 m/s, beeline × 1.3 | Teleported |
-| bike | 3.1 m/s, beeline × 1.3 | Teleported |
-| `routing.routingRandomness` | 3.0 | Spread of toll sensitivity in route search |
-| Transit router | SwissRailRaptor | Schedule-based routing on the mapped timetable |
-| `transitRouter.searchRadius` | 4,000 m | Radius in which stops are searched around an origin or destination |
-| `transitRouter.extensionRadius` | 2,000 m | Extra radius beyond the nearest stop |
-| `transitRouter.maxBeelineWalkConnectionDistance` | 100 m | Longest walk between stops at a transfer |
-| `swissRailRaptor.transferPenaltyBaseCost` | 0 | Cost per transfer added by the router |
-| `swissRailRaptor.useCapacityConstraints` | false | Vehicle capacity not used in routing |
+| Parameter | Value |
+|---|---|
+| Network modes | car, ride<sup>a</sup> |
+| Walk speed | 1.23 m/s (beeline × 1.3) |
+| Bike speed | 3.1 m/s (beeline × 1.3) |
+| Routing randomness | 3.0 |
+| Transit router | SwissRailRaptor |
+| Stop search radius | 4,000 m |
+| Extension radius | 2,000 m |
+| Transfer walk, max. | 100 m |
+| Transfer penalty | 0 |
+| Capacity constraints | off |
 
-### 4.3 Replanning strategies
+<div class="tnote" markdown>
 
-| Strategy | Weight | What it does |
+<sup>a</sup> Ride is routed on congested car times but does not occupy road space.
+
+</div>
+
+**Table 13.** Replanning.
+
+| Strategy | Weight | Effect |
 |---|---:|---|
-| `ReRoute` | 0.15 | A new route on the travel times of the last iteration (car and ride on the road network, transit on the timetable) |
-| `TimeAllocationMutator` | 0.10 | Shifts activity end times by up to ± 30 minutes (`mutationRange` 1,800 s) around the planned times; durations are not changed |
-| `ChangeExpBeta` | 0.75 | Chooses among the agent's stored plans with a logit on their scores (`brainExpBeta` 1.0) |
+| ReRoute | 0.15 | new route on last-iteration times |
+| TimeAllocationMutator | 0.10 | end times shifted ± 30 min |
+| ChangeExpBeta | 0.75 | logit choice among stored plans |
 
-| Parameter | Value | Meaning |
-|---|---|---|
-| `maxAgentPlanMemorySize` | 5 | Plans kept per agent |
-| `fractionOfIterationsToDisableInnovation` | 0.9 | From iteration 90 on, agents only choose among stored plans |
-| Mode choice | off | Modes are fixed by MILES-Day |
+Plans kept per agent: 5. Innovation off after iteration 90. No mode choice.
 
-### 4.4 Scoring
+**Table 14.** Scoring parameters.
 
-| Parameter | Value | Meaning |
-|---|---|---|
-| `performing` | 0.78 utils/h | Marginal utility of time at an activity; also the time cost of car travel |
-| `lateArrival` | −1.872 utils/h | Late arrival at work = −2.4 × performing (Small, 1982) |
-| `waitingPt` | −1.02 utils/h | Waiting at a stop |
-| car: travel / distance | 0 utils/h / −$0.075 per km | Car time costs the performing rate only; operating cost per km |
-| ride: travel / distance | 0 utils/h / −$0.075 per km | Passenger time valued as car time |
-| transit: travel / distance | −1.02 utils/h / −$0.50 per km | In-vehicle time; fare proxy |
-| walk: travel | −4.4 utils/h | |
-| bike: travel | −2.345 utils/h | |
-| Activity types | home 12 h, work 8 h, education 6 h, shopping 2 h, other 2 h, escort 15 min, eat 45 min, errand 30 min, social and recreation 1.5 h | Typical durations. Home, work, shopping and other also have 162 duration classes of 10 minutes (10 min to 27 h), so each activity is scored against its own planned duration; work types carry the planned arrival time (5,184 types), which is what the late-arrival penalty refers to. Opening times: work 06:00–21:00, shopping 08:00–20:00 |
+| Parameter | Value | Unit |
+|---|---:|---|
+| Performing | 0.78 | utils/h |
+| Late arrival | −1.872 | utils/h |
+| Waiting for transit | −1.02 | utils/h |
+| Marginal utility of money | 0.78 / VOT<sup>a</sup> | utils/$ |
 
-Mode constants are present in the scoring but have no effect, because MATSim does not choose modes.
+<div class="tnote" markdown>
 
-**Value of time.** Each person's marginal utility of money is 0.78 / VOT, with VOT = 0.5 × max(annual household
-income, \$5,000) / 2,080 h, the USDOT rule for local personal travel and the rule of the MILES-Day tour mode choice.
-Route search uses the value at the median household income: \$23.91 per hour.
+<sup>a</sup> VOT = 0.5 × max(household income, \$5,000) / 2,080 h, per person (USDOT rule); \$23.91/h at the median income, used in route search.
+
+</div>
+
+**Table 15.** Mode parameters.
+
+| Mode | Travel time (utils/h) | Distance cost ($/km) |
+|---|---:|---:|
+| Car | 0 | 0.075 |
+| Ride | 0 | 0.075 |
+| Transit | −1.02 | 0.50 |
+| Walk | −4.40 | — |
+| Bike | −2.345 | — |
+
+Time spent travelling also loses the performing rate (0.78 utils/h). Mode constants have no effect (no mode choice).
+
+**Table 16.** Activity types.
+
+| Activity | Typical duration |
+|---|---:|
+| Home | 12 h |
+| Work<sup>a</sup> | 8 h |
+| Education | 6 h |
+| Shopping<sup>b</sup> | 2 h |
+| Other | 2 h |
+| Social and recreation | 1.5 h |
+| Eat | 45 min |
+| Errand | 30 min |
+| Escort | 15 min |
+
+Home, work, shopping and other are split into 162 duration classes of 10 min.
+<div class="tnote" markdown>
+
+<sup>a</sup> Open 06:00–21:00; 5,184 types with a planned arrival time, used by the late-arrival penalty.
+
+<sup>b</sup> Open 08:00–20:00.
+
+</div>
 
 ## 5. Outputs
 
+**Table 17.** Outputs.
+
 | Output | Use |
 |---|---|
-| Link volumes by hour and over the day (cars, buses) | Comparison with counts, screenlines and continuous counters |
-| Executed trips and legs, with routes | Vehicle-miles, trip lengths, travel times |
-| Transit boardings by line | Comparison with National Transit Database boardings |
-| Congested travel times by period | Skims for the next land-use and activity cycle |
+| Link volumes, hourly and daily | counts, screenlines, continuous counters |
+| Trips and legs with routes | vehicle-miles, trip lengths, travel times |
+| Transit boardings by line | National Transit Database |
+| Congested travel times | analysis; not fed back (skims are fixed) |
 
-The comparison with counts, screenlines and continuous counters is in
-[Traffic validation](../calibration-validation/validation/traffic.md) and
+Validation: [Traffic](../calibration-validation/validation/traffic.md),
 [Interstates by station](../calibration-validation/validation/interstates.md).
 
 ## Running
 
 ```bash
-miles assignment network      # build the 2024 and 2026 road networks
-miles assignment transit      # merge GTFS, convert and map the schedules
-miles assignment plans        # MILES-Day plans -> MATSim population, snapped to the network
-miles assignment run          # one MATSim run (seed 1)
+miles assignment network      # road networks 2024 and 2026
+miles assignment transit      # GTFS merge, conversion, mapping
+miles assignment plans        # MILES-Day plans -> MATSim population
+miles assignment run          # one run
 miles assignment seeds        # five seeds
-miles assignment validate     # counts, screenlines, continuous counters
+miles assignment validate     # counts, screenlines, counters
 ```
