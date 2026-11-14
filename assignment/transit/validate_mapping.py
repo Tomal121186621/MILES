@@ -10,7 +10,7 @@ Per agency (feed key = id prefix) and mode:
   - plausibility warnings (pt2matsim CheckMappedSchedulePlausibility csv, if given) by class
 Overall: AM-peak (7-9) headways of the core MTA routes against data/transit_gtfs_headways_core.csv; the car links of the base network
 must be unchanged in the mapper's output.
-Usage: python3 -I validate_mapping.py <schedule.xml.gz> <network_pt.xml.gz> <network_base.xml.gz> <gtfs dir> <headways_core.csv> <out.json> [plausibility.csv]"""
+Usage: python3 -I assignment/transit/validate_mapping.py <schedule.xml.gz> <network_pt.xml.gz> <network_base.xml.gz> <gtfs dir> <headways_core.csv> <out.json> [plausibility.csv]"""
 import sys, re, gzip, json, math, collections, os
 import numpy as np, pandas as pd
 

@@ -175,7 +175,7 @@ def finish(fig, path_without_ext, panel_labels=None):
 
 
 # ---------------------------------------------------------------------------------------------------------------------------
-# Systematic validation scheme (5_reports/figures_validation.py): ratios model/observed on a LINEAR axis with a reference
+# Systematic validation scheme (reports/figures_validation.py): ratios model/observed on a LINEAR axis with a reference
 # line at 1 and the tolerance band in light grey (log axis only where ratios span more than a factor of 5); differences of
 # shares as model minus observed in percentage points on DIV, always -PP_LIM..+PP_LIM; spatial ratios in the RATIO classes.
 

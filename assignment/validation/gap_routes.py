@@ -1,4 +1,4 @@
-# Usage: python3 gap_routes.py <matsim run dir> <out dir>   (results: previews/gap/; 2026-11-04)
+# Usage: python3 assignment/validation/gap_routes.py <matsim run dir> <out dir>   (results: previews/gap/; 2026-11-04)
 """Road-class mix of the executed car routes (seed 1, selected plans) of six-county residents, by straight-line trip distance,
 and for a sample of short trips the shortest-distance path on the same network (what a distance-minimising driver would use)."""
 import gzip, re, sys, numpy as np, pandas as pd, pickle, os

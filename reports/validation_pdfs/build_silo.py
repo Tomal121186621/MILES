@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Validation of the land-use model (stage 2, SILO) against the American Community Survey and other observed data.
 
-    python3 build_silo.py [--seeds oos_respec_s1 ... oos_respec_s5] [--mean oos_respec_mean] [--calib calib_respecF_r4] [--test-window 2021-2024] [--out PDF] [--work DIR]
+    python3 reports/validation_pdfs/build_silo.py [--seeds oos_respec_s1 ... oos_respec_s5] [--mean oos_respec_mean] [--calib calib_respecF_r4] [--test-window 2021-2024] [--out PDF] [--work DIR]
 
-Each scenario name is the suffix of data/silo_validation_<name>.parquet (written by 2_silo/validation).
+Each scenario name is the suffix of data/silo_validation_<name>.parquet (written by landuse/validation/validate_landuse.py).
 --seeds    the seed scenarios (one run each), --mean the mean over the seeds with their standard deviation (out of sample),
 --calib    the calibration-window scenario (one run).  Every number in the text is computed from these files.
 Defaults: the final runs of the re-specified model.  The earlier runs stay reachable, e.g. --seeds oos_s1 ... oos_s5 --mean oos_mean --calib calib_r51.
@@ -22,8 +22,8 @@ ap.add_argument("--calib", default="calib_respecF_r4")
 ap.add_argument("--test-window", default="2021-2024")
 ap.add_argument("--seed-choice", default=f"{V}/side_experiments/respec_2026-11/engine_check/tables/p01_seed_choice.csv")
 ap.add_argument("--acs-commute", default=f"{V}/3_abit/temporal_2024/data")
-ap.add_argument("--out", default=f"{HERE}/silo_validation.pdf")
-ap.add_argument("--work", default=f"{HERE}/work/silo")
+ap.add_argument("--out", default=f"{OUTDIR}/silo_validation.pdf")
+ap.add_argument("--work", default=f"{OUTDIR}/work/silo")
 a = ap.parse_args()
 WORK = os.path.abspath(a.work); FIG = f"{WORK}/fig"; os.makedirs(FIG, exist_ok=True)
 fv = patch_fig_dirs(FIG)

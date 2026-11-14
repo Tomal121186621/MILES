@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Figures of the tour mode choice and of the network and transit inputs.  Visual system: composite.py.
 
-    python3 5_reports/composites/fig_mode_network.py [mode s_mode_purpose s_mode_cars s_net_maps s_net_checks]
+    python3 reports/composites/fig_mode_network.py [mode s_mode_purpose s_mode_cars s_net_maps s_net_checks]
 
 Article
   fig_mode          tour mode share by one-way tour distance, six modes, observed tours of the held-out half (mode choice
@@ -13,15 +13,15 @@ Supplementary Material
   fig_s_net_maps      mapped transit routes, network area and Baltimore
   fig_s_net_checks    (a) OSM road type agreeing with the MDOT SHA functional class, (b) speed tag and model free speed
                       against the posted-speed sign, (c) scheduled / published headway
-Data: 3_abit/mode_choice/results/obs_validation.csv, abit_mode_validation.csv (mc_validation.py); data/network_audit_*.csv,
-data/transit_gtfs_headways_core.csv; 4_matsim/transit/figures_transit.py (map segments).
+Data: 3_abit/mode_choice/results/obs_validation.csv, abit_mode_validation.csv (validate_mode_choice.py); data/network_audit_*.csv,
+data/transit_gtfs_headways_core.csv; assignment/transit/figures_transit.py (map segments).
 """
 import os, sys
 import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import composite as K                                   # noqa: E402
 ps = K.ps; V = K.V
-sys.path.insert(0, f"{V}/4_matsim/transit")
+sys.path.insert(0, f"{K.ORIOLE_HOME}/assignment/transit")
 import figures_transit as TR                            # noqa: E402
 from matplotlib.lines import Line2D                     # noqa: E402
 from matplotlib.patches import Patch                    # noqa: E402

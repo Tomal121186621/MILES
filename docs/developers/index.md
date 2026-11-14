@@ -37,6 +37,6 @@ ORIOLE adds or changes, how they are wired, and how to extend them.
 - **Skims:** gzipped CSV `FROM,TO,VALUE`.
 - **Coefficients** live in CSV files read by the engines; every file is written by a script from the estimation
   results, never by hand.
-- **Unit checks** compare engine utilities with Biogeme's $X\beta$ (`landuse/engine_check/c01`–`c05`,
-  `activity/respec_unit_check.py`).
+- **Unit checks** compare engine utilities with Biogeme's $X\beta$ (`landuse/checks/check_*.py`,
+  `activity/checks/check_engine_utilities.py`).
 - **Paths:** each script keeps the project root in a constant at its top (`ROOT` or `V`).

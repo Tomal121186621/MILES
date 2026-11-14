@@ -1,7 +1,7 @@
 # SILO engine changes
 
 ORIOLE runs on SILO ([msmobility/silo](https://github.com/msmobility/silo)), commit `3066ca9`. Its changes are
-shipped as `landuse/java/engine_uncommitted_changes.patch` (modified files) and `landuse/java/engine/` (new files at
+shipped as `landuse/engine/silo_changes.patch` (modified files) and `landuse/engine/src/` (new files at
 their package paths).
 
 ## Classes
@@ -33,18 +33,18 @@ bash landuse/run/run_silo.sh landuse/run/<scenario>.properties 28g
 
 | Script | Writes |
 |---|---|
-| `engine_check/e01_resloc_files.py` | `resloc_region_mnl_respec.csv`, `resloc_dwelling_mnl_respec.csv`, attributes |
-| `engine_check/e02_car_files.py` | `car_ownership_coefficients_respec.csv`, PUMA file |
-| `engine_check/e03_workplace_files.py` | `job_choice_coefficients_respec*.csv` |
-| `engine_check/e04_school_files.py` | school coefficients |
-| `engine_check/e05_zone_attributes.py` | zone attributes |
+| `coefficients/write_residential_location.py` | `residential_county_coefficients.csv`, `residential_zone_dwelling_coefficients.csv`, county and zone attributes |
+| `coefficients/write_car_ownership.py` | `car_ownership_estimated_coefficients.csv`, `car_ownership_puma_attributes.csv` |
+| `coefficients/write_workplace_choice.py` | `workplace_choice_coefficients.csv` |
+| `coefficients/write_school_location.py` | school coefficients (`landuse/schools/parameters/`) |
+| `coefficients/write_zone_attributes.py` | zone attributes |
 
-Checks: `c01`–`c05` recompute utilities in the engine and compare them with $X\beta$ from the estimation; the
+Checks: `landuse/checks/check_*.py` recompute utilities in the engine and compare them with $X\beta$ from the estimation; the
 verifiers are switched on with `-Dsilo.resloc.respec.dump` and `-Dsilo.jobchoice.verify`.
 
 ## Adding a model
 
-1. Estimate it and write its coefficients to a CSV in `landuse/input/`.
+1. Estimate it and write its coefficients to a CSV in `landuse/engine_inputs/`.
 2. Read the file in a properties class and add a switch key.
 3. Implement the utility in a pure class (as `ReslocRespecUtility`), so the engine and a verifier share it.
 4. Add a unit check that compares engine utilities with the estimation.

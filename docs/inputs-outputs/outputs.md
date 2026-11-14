@@ -41,7 +41,7 @@ SILO-format CSV files of the 2016 base:
 
 ## MATSim plans
 
-`pipeline/abit_to_matsim_pop.py` writes `population.xml.gz`: one weekday per person, homes on residential buildings,
+`pipeline/activities_to_matsim.py` writes `population.xml.gz`: one weekday per person, homes on residential buildings,
 other activities on points of interest of the matching type, and the person attributes `age, gender, occupation,
 driversLicense, hhSize, autos, hhIncome, personIncome, race, homeZone, homeCounty, workZone`. Race is carried for reporting; no choice model uses it.
 

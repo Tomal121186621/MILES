@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
-"""Paper figure of the transit build (5_reports/paperstyle.py): fig_net_transit = the mapped transit routes by mode over the 2024 road
+"""Paper figure of the transit build (reports/paperstyle.py): fig_net_transit = the mapped transit routes by mode over the 2024 road
 network, (a) the network area, (b) Baltimore.  Links used by a route are drawn once per mode (rail over bus); artificial links
 (no network link: rail without OSM track, ferry, a route between candidate links without a road path) dashed.
-Usage: python3 figures_transit.py <schedule.xml.gz> <network_pt.xml.gz> <out without extension>
-Panel functions (used by 5_reports/composites/fig_mode_network.py): load_segments() parses the two files once and caches the line
+Usage: python assignment/transit/figures_transit.py <schedule.xml.gz> <network_pt.xml.gz> <out without extension>
+Panel functions (used by reports/composites/fig_mode_network.py): load_segments() parses the two files once and caches the line
 segments in data/transit_map_segments_<stem>.pkl; draw_map(ax, S, zoom) draws one map; handles() gives the legend entries."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, gzip, re, os, collections, pickle, numpy as np
-sys.path.insert(0, "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/5_reports"); import paperstyle as ps
+sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps
 from matplotlib.collections import LineCollection
 from matplotlib.lines import Line2D
-HERE = os.path.dirname(os.path.abspath(__file__)); DATA = os.path.join(os.path.dirname(os.path.dirname(HERE)), "data")
+HERE = f"{WORKSPACE}/4_matsim/transit"; DATA = f"{WORKSPACE}/data"   # transit build files and cached segments (workspace)
 CLS = [("bus_local", "Bus (local)", ps.CAT[0], 0.35), ("bus_coach", "Commuter bus", ps.CAT[6], 0.5), ("ferry", "Ferry", ps.CAT[4], 0.9),
        ("light_rail", "Light rail", ps.CAT[2], 1.1), ("metro", "Metro (MTA, WMATA)", ps.CAT[7], 1.1), ("rail", "MARC, Amtrak", ps.CAT[1], 1.1)]
 BALTIMORE = ((418000, 446000), (168000, 196000))     # EPSG:26985

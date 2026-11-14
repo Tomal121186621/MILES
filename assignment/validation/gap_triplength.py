@@ -1,9 +1,12 @@
 # Like-for-like car trip length (straight line between tract internal points), model population vs RTS 2017/18 (2026-11-04).
-# Usage: python3 gap_triplength.py <population.xml.gz> <second population.xml.gz> <out.csv>   (results: previews/gap/tract_l4l.csv)
+# Usage: python3 assignment/validation/gap_triplength.py <population.xml.gz> <second population.xml.gz> <out.csv>   (results: WORKSPACE/4_matsim/validation/previews/gap/tract_l4l.csv)
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import gzip, re, sys, numpy as np, pandas as pd, geopandas as gpd
-sys.path.insert(0, "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/3_abit")
+sys.path.insert(0, f"{ORIOLE_HOME}/activity/survey")
 from survey_population import tract_zone, geoid
-V="/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"; ROOT=V.rsplit("/",1)[0]
+V=f"{WORKSPACE}"; ROOT=f"{PROJECT_ROOT}"
 CO={"24003","24005","24013","24025","24027","24510"}
 B=[0,1,2,5,10,20,1e9]; LAB=["0-1","1-2","2-5","5-10","10-20","20+"]
 TZ=tract_zone().set_index("geoid")[["x","y"]]       # tract internal point, EPSG:26918
@@ -30,8 +33,8 @@ def model(path):
     D["km"]=np.hypot(a[:,0]-b[:,0],a[:,1]-b[:,1])/1e3; D["w"]=1.0; D["same"]=D.ot==D.dt
     return D.dropna(subset=["km"])
 def survey():
-    H=pd.read_csv(f"{ROOT}/ABIT/input/rts/RTS_raw_flat_data.csv",low_memory=False,usecols=["tripid","household_id","home_state_county_fips","o_state_county_fips","d_state_county_fips"])
-    S=pd.read_csv(f"{ROOT}/ABIT/input/rts/rts_trips_clean.csv",low_memory=False,usecols=["tripid","travel_mode","distance","wttrdfin","o_activity","d_activity","o_tract_fips","d_tract_fips"]).merge(H,on="tripid")
+    H=pd.read_csv(f"{ABIT_HOME}/input/rts/RTS_raw_flat_data.csv",low_memory=False,usecols=["tripid","household_id","home_state_county_fips","o_state_county_fips","d_state_county_fips"])
+    S=pd.read_csv(f"{ABIT_HOME}/input/rts/rts_trips_clean.csv",low_memory=False,usecols=["tripid","travel_mode","distance","wttrdfin","o_activity","d_activity","o_tract_fips","d_tract_fips"]).merge(H,on="tripid")
     S=S[S.home_state_county_fips.astype(str).isin(CO)&S.travel_mode.isin([3,4])]
     ot=geoid(S.o_state_county_fips,S.o_tract_fips); dt=geoid(S.d_state_county_fips,S.d_tract_fips)
     a=TZ.reindex(ot).values; b=TZ.reindex(dt).values

@@ -1,0 +1,11 @@
+LICENSE
+README.md
+oriole_cli.py
+oriole_env.py
+pyproject.toml
+oriole.egg-info/PKG-INFO
+oriole.egg-info/SOURCES.txt
+oriole.egg-info/dependency_links.txt
+oriole.egg-info/entry_points.txt
+oriole.egg-info/requires.txt
+oriole.egg-info/top_level.txt

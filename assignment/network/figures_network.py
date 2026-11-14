@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
-"""Paper figure of the network step (through 5_reports/paperstyle.py), written to Validation_2026/4_matsim/figures/ and copied to
+"""Paper figure of the network step (through reports/paperstyle.py), written to WORKSPACE/4_matsim/figures/ and copied to
 5_reports/paper/figures/:
   fig_net_map   study-area road network by functional class with the MDOT count stations (held-out half marked)
 Drawn at its printed size (\\textwidth = 5.313 in); paperstyle.finish() refuses overlapping or cropped text and fonts below 7.5 pt.
-The former fig_net_class_matrix and fig_net_speed_osm_mdot are replaced by fig_v4_inputs and fig_v4_a (5_reports/figures_validation.py).
-Data: data/network_audit_links.parquet, data/count_stations_split.csv, data/count_stations_matched.csv, Updated MATSim/data/bmr_counties.gpkg."""
+The former fig_net_class_matrix and fig_net_speed_osm_mdot are replaced by fig_v4_inputs and fig_v4_a (reports/figures_validation.py).
+Data: data/network_audit_links.parquet, data/count_stations_split.csv, data/count_stations_matched.csv, MATSIM_HOME/data/bmr_counties.gpkg."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, shutil
 import numpy as np, pandas as pd
 from matplotlib.collections import LineCollection
 from matplotlib.lines import Line2D
 import matplotlib.patheffects as pe
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); from netio import ROOT, DATA, study_area
-sys.path.insert(0, f"{ROOT}/Validation_2026/5_reports"); import paperstyle as ps
+sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps
 
-FIG = f"{ROOT}/Validation_2026/4_matsim/figures"; os.makedirs(FIG, exist_ok=True)
-PAPERFIG = f"{ROOT}/Validation_2026/5_reports/paper/figures"
+FIG = f"{WORKSPACE}/4_matsim/figures"; os.makedirs(FIG, exist_ok=True)
+PAPERFIG = f"{WORKSPACE}/5_reports/paper/figures"
 A = pd.read_parquet(f"{DATA}/network_audit_links.parquet")
 counties, area = study_area()
 

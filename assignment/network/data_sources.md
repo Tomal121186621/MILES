@@ -1,6 +1,6 @@
 # Data for the network step (verified 2026-10-21)
 
-"Verified" = the URL answered on 2026-10-21 and the file was downloaded by the script named. Downloads live in `Validation_2026/data/raw/<source>/`
+"Verified" = the URL answered on 2026-10-21 and the file was downloaded by the script named. Downloads live in `WORKSPACE/data/raw/<source>/`
 (never edited by hand; each folder carries a manifest or download log); scripts that read them are kept in this folder and are run with `python3 -I`.
 
 | Dataset | Use | Date of the data | Location | Script | Status |

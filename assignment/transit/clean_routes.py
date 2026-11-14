@@ -6,7 +6,7 @@ DirectionChangeWarning or LoopWarning.  For every route, a stretch of the link s
 from-node of link j equals the from-node of an earlier link i) and contains no link referenced by a stop of the route is cut out:
 links i..j-1 are removed, the sequence stays connected (link i-1 ends where link j starts) and every stop keeps its link in order.
 Stretches that contain a stop link are kept (the bus must pass the stop) and stay in the plausibility report.
-Usage: python3 -I clean_routes.py <schedule.xml.gz> <network.xml.gz> <out schedule.xml.gz> <report.json>"""
+Usage: python3 -I assignment/transit/clean_routes.py <schedule.xml.gz> <network.xml.gz> <out schedule.xml.gz> <report.json>"""
 import sys, gzip, re, json, collections
 src, net, dst, rep = sys.argv[1:5]
 frm, to = {}, {}

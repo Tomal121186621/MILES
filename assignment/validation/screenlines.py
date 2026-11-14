@@ -38,17 +38,20 @@ model total over all crossings for context.  Criterion: maximum deviation of scr
 +-15 %, <35,000 +-20 % (Wegmann and Everett 2016, after FDOT 2008); FHWA (2010, Fig. 9.9) gives the same kind of curve.
 Seeds: model per seed (stations_by_seed.csv.gz for the counted totals; link_hours_s<seed>.csv.gz, final iteration x 10 + buses, for
 the directional and all-crossing totals), mean = validate_counts' seed mean (link_daily_volume_mean.csv.gz).
-Usage: python3 screenlines.py <validate_counts data dir> <link_hours dir> <out dir> [--article <article dir>]
+Usage: python3 assignment/validation/screenlines.py <validate_counts data dir> <link_hours dir> <out dir> [--article <article dir>]
        -> <out>/data/screenlines_definition.geojson, screenline_crossings.csv, screenline_table.csv, screenline_by_seed.csv;
           <article>/sections/tab_net_screenlines.tex, <article>/figures/fig_net_screenlines.pdf|png
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, glob, json, argparse, warnings
 import numpy as np, pandas as pd, geopandas as gpd, shapely
 from shapely.geometry import LineString, Point, Polygon
 from shapely.ops import linemerge, unary_union
 warnings.filterwarnings("ignore")
-H = os.path.dirname(os.path.abspath(__file__)); V = os.path.dirname(os.path.dirname(H)); ROOT = os.path.dirname(V)
-sys.path.insert(0, f"{V}/4_matsim/network"); sys.path.insert(0, f"{V}/5_reports")
+V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
+sys.path.insert(0, f"{ORIOLE_HOME}/assignment/network"); sys.path.insert(0, f"{ORIOLE_HOME}/reports")
 import netio, paperstyle as ps
 
 CRS = 26985; EXP = 10
@@ -85,7 +88,7 @@ def network():
 
 def node_county(nodes):
     """County FIPS of every node: inside one of the six county polygons, else the nearest county (six + neighbours of the SILO zones)."""
-    c6 = gpd.read_file(f"{ROOT}/Updated MATSim/data/bmr_counties.gpkg").to_crs(CRS); c6["fips"] = c6.GEOID.astype(int)
+    c6 = gpd.read_file(f"{MATSIM_HOME}/data/bmr_counties.gpkg").to_crs(CRS); c6["fips"] = c6.GEOID.astype(int)
     z = gpd.read_file(f"{V}/2_silo/input/zones.shp").to_crs(CRS)[["id", "geometry"]]
     zs = pd.read_csv(f"{V}/2_silo/input/zoneSystem.csv", usecols=["ZoneId", "COUNTYFIPS"])
     z = z.merge(zs, left_on="id", right_on="ZoneId"); nb = z[~z.COUNTYFIPS.isin(BMR)].dissolve("COUNTYFIPS").reset_index()
@@ -132,7 +135,7 @@ def osm_rivers():
 def river_split(line):
     """Position (m from the upstream end) of the head of the tidal river at Elkridge: the river point nearest the Howard / Baltimore
     County / Anne Arundel tripoint (downstream of it the river is the Anne Arundel line and the harbour)."""
-    c6 = gpd.read_file(f"{ROOT}/Updated MATSim/data/bmr_counties.gpkg").to_crs(CRS); c6.index = c6.GEOID.astype(int)
+    c6 = gpd.read_file(f"{MATSIM_HOME}/data/bmr_counties.gpkg").to_crs(CRS); c6.index = c6.GEOID.astype(int)
     t = c6.geometry[24027].buffer(50).intersection(c6.geometry[24005].buffer(50)).intersection(c6.geometry[24003].buffer(50))
     return line.project(t.centroid)
 

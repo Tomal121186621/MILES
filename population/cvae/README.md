@@ -1,4 +1,4 @@
-# Updated VAE — clean population-synthesis CVAE (ACS PUMS 2016 → SILO)
+# Population generator — population-synthesis CVAE (ACS PUMS 2016 → SILO)
 
 A fresh, simple **conditional VAE** that generates the SILO/MITO synthetic population
 (households + persons + dwellings + jobs) for the Baltimore–Washington MSTM region from
@@ -17,18 +17,19 @@ autoregressive decoder, no Set Transformer, no multi-head income model.
   reset to student, an under-62 "retiree" to other), so the exported structural-zero count is 0. This is a
   deterministic post-processing patch, **not** an unreachable-by-construction decoder mask — see the
   limitations note below on why the informative number is the *pre-patch* illegal-combo rate.
-- **Self-contained**: all 2016 inputs copied under `inputs/`.
+- **Self-contained data folder**: all 2016 inputs are under `VAE_HOME/inputs/` (`vae_home` in `oriole.toml`).
 
 ## Layout
 ```
-inputs/        copied raw 2016 ACS PUMS + zoneSystem + coverage + skim + forecasts
-vaelib/        importable package (config, analysis, preprocessing, model, train, …)
-steps/         numbered runnable scripts, 00 → 07 (first → last)
-outputs/       all artifacts (00_raw_analysis … 07_validation)
-run_all.py     runs steps 00 → 07 in order
+population/cvae/vaelib/     importable package (config, analysis, preprocessing, model, train, …)
+population/cvae/steps/      numbered runnable scripts, 00 → 09 (first → last)
+population/cvae/run_all.py  runs steps 00 → 07 in order
+VAE_HOME/inputs/            raw 2016 ACS PUMS + zoneSystem + coverage + skim + forecasts (data, not in the repository)
+VAE_HOME/outputs/           all artifacts (00_raw_analysis … 07_validation)
 ```
 
 ## How to run
+From `population/cvae`:
 ```bash
 pip install -r requirements.txt
 python steps/00_analyze_raw_acs.py     # stats + visualizations BEFORE preprocessing (review gate)

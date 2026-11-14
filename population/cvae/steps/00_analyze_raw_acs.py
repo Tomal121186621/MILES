@@ -12,7 +12,7 @@ This is a review GATE: eyeball the stats/visuals before running step 01.
 from __future__ import annotations
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # Updated VAE/
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # population/cvae (vaelib)
 
 import numpy as np
 import pandas as pd

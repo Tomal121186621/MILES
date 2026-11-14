@@ -1,0 +1,17 @@
+key,value
+workplace.silo,true
+tasha.generation,true
+dest.choice.model,mnl
+mode.choice.model,tour_nl
+mc.coef.file,{PARAMETERS}/tour_mode_choice.csv
+mc.los.dir,{WORKSPACE}/3_abit/mode_choice/export/los
+mc.vot.share,0.5
+mc.tours.out,true
+mc.zero.terms,joint;short
+mc.park.share.file,{PARAMETERS}/parking_paid_share.csv
+mc.apply.short,false
+mc.apply.joint,true
+mc.cd.availability,estimation
+mc.car.allocation,tasha
+mc.joint.rule,representative
+mc.joint.model,group

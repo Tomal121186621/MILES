@@ -2,7 +2,7 @@
 """Write a pt2matsim PublicTransitMapping config (TRANSIT_BUILD.md).  Mode rules: bus -> links with car or bus (the road network),
 tram (Light RailLink) -> light_rail/tram links, subway (Metro SubwayLink, WMATA Metrorail) -> subway links, rail (MARC, Amtrak) -> rail/train
 links, ferry -> no network mode (artificial links).  The other values are arguments (the tuning of step 3).
-Usage: make_ptmapper_config.py <out.xml> <network> <schedule in> <network out> <schedule out> [key=value ...]
+Usage: python3 assignment/transit/make_ptmapper_config.py <out.xml> <network> <schedule in> <network out> <schedule out> [key=value ...]
 keys: maxLinkCandidateDistance nLinkThreshold candidateDistanceMultiplier travelCostType routingWithCandidateDistance maxTravelCostFactor numOfThreads"""
 import sys
 out, net, sin, nout, sout = sys.argv[1:6]

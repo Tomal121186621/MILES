@@ -3,21 +3,24 @@
 does not hold: the replication spread of the mean duration by start hour, and the mean distance by start hour BY ACTIVITY TYPE
 (the parquet has all types only), each with the standard deviation over the ten replications.
 
-    python3 5_reports/composites/abit_tasha_data.py        -> data/abit_tasha_curves.parquet
+    python3 reports/composites/abit_tasha_data.py        -> data/abit_tasha_curves.parquet
 
 Same activities, exclusions (variant 'base': persons 5+, internal trips), weights and distance measure (zone-skim distance on both
-sides) as 3_abit/roorda_validation.py, whose functions are used unchanged.  Settings: the behavioural model of record
+sides) as activity/validation/validate_survey.py, whose functions are used unchanged.  Settings: the behavioural model of record
 (verification_behav, validation_behav, chain_behav).
 
 Columns: setting, figure (duration | distance), type, hour (clock hour 0-23), model (pooled over the replications, as in
 roorda_validation), model_sd (s.d. of the per-replication hourly means, ddof = 1), n_rep (replications with a value in the hour),
 observed, n_obs (observed activities in the hour), D_hourly, P_hourly (Roorda's KS on the hourly values, constant per panel).
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"
-sys.path.insert(0, f"{V}/3_abit")
-import roorda_validation as RV   # noqa: E402
+V = f"{WORKSPACE}"
+sys.path.insert(0, f"{ORIOLE_HOME}/activity/validation")
+import validate_survey as RV   # noqa: E402
 
 OUT = f"{V}/data/abit_tasha_curves.parquet"
 SETS = os.environ.get("ABIT_SETTINGS", "verification_behav,validation_behav,chain_behav").split(",")   # e.g. ABIT_SETTINGS=verification_respec,validation_respec,chain_respec

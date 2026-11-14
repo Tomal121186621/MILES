@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Download the public observed datasets listed in ../data_sources.md into Validation_2026/data/raw/<dataset>/.
+"""Download the public observed datasets listed in ../data_sources.md into WORKSPACE/data/raw/<dataset>/.
 Files are never edited; a manifest (manifest.csv: file, url, bytes, sha256, downloaded) records every download.
-Re-running skips files already present.  Usage: fetch_data.py [dataset ...]   (default: all)"""
+Re-running skips files already present.  Usage: python3 landuse/calibration/fetch_data.py [dataset ...]   (default: all)"""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, csv, hashlib, time, urllib.request
-ROOT = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/data/raw"
+ROOT = f"{WORKSPACE}/data/raw"
 MD_COUNTIES = ["24003", "24005", "24013", "24025", "24027", "24510", "24001", "24009", "24011", "24015", "24017", "24019", "24021", "24023",
                "24029", "24031", "24033", "24035", "24037", "24039", "24041", "24043", "24045", "24047", "11001", "10001", "10003", "10005"]
 SETS = {

@@ -3,9 +3,9 @@
 | File | Role |
 |---|---|
 | `run_chain.py` | orchestrator: land-use step, activities, MATSim plans, MATSim, skims, loop |
-| `abit_to_matsim_pop.py` | ORIOLE-Day output + land-use persons → MATSim plans |
-| `pop_scc_links.py` | moves activities off car links outside the connected network |
-| `matsim_to_skim.py` | AM-peak car skims from MATSim events |
+| `activities_to_matsim.py` | ORIOLE-Day output + land-use persons → MATSim plans |
+| `snap_to_network.py` | moves activities off car links outside the connected network |
+| `skims_from_matsim.py` | AM-peak car skims from MATSim events |
 | `transit_skim.py`, `TransitSkim.java` | transit skims with SwissRailRaptor |
 | `accessibility.py` | zone accessibility by year for the land-use models |
 
@@ -18,7 +18,7 @@ next time unless `--force` is given. Completed stages are appended to `registry.
 ## Plans converter
 
 ```bash
-python pipeline/abit_to_matsim_pop.py --activities A --legs L --pp pp_2024.csv --hh hh_2024.csv \
+python pipeline/activities_to_matsim.py --activities A --legs L --pp pp_2024.csv --hh hh_2024.csv \
        --out population.xml.gz [--expansion 10] [--residents-only] [--no-gateways] [--seed 20260707]
 ```
 

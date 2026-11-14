@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Figures of stage 1 (population synthesis, CVAE) and stage 2 (land use, SILO).  Visual system: composite.py.
 
-    python3 5_reports/composites/fig_pop_landuse.py [--silo oos_mean] [population landuse s_pop_quality s_commute]
+    python3 reports/composites/fig_pop_landuse.py [--silo oos_mean] [population landuse s_pop_quality s_commute]
 
 Article
   fig_population  synthetic population against the ACS and Census by area: (a) composition, model minus ACS share of every
@@ -14,7 +14,7 @@ Supplementary Material
   fig_s_pop_quality  generative quality on the held-out PUMS test split: (a) total-variation distance and SRMSE of every
                      marginal with the sampling floor; (b) the ten worst two-way tables
   fig_s_commute      commute of the synthetic workers against the RTS: (a) distance, (b) time
-Data and data classes: 5_reports/figures_validation.py (Stage1, Stage2).  The land-use test window reads
+Data and data classes: reports/figures_validation.py (Stage1, Stage2).  The land-use test window reads
 data/silo_validation_<--silo>.parquet; a rerun of this script with the five-seed out-of-sample file picks it up unchanged.
 """
 import argparse, os, sys

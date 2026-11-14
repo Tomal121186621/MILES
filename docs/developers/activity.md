@@ -1,7 +1,7 @@
 # ORIOLE-Day engine
 
 ORIOLE-Day runs on the ABIT engine ([msmobility/abit](https://github.com/msmobility/abit)). Its own code is the
-package `abm.models.maryland` and the run class `abm.RunAbitMarylandLos`, in `activity/java/ABIT/src/main/java`.
+package `abm.models.maryland` and the run class `abm.RunAbitMarylandLos`, in `activity/engine/ABIT/src/main/java`.
 
 ## Classes
 
@@ -36,7 +36,7 @@ flowchart TD
 Agenda order: WB, WAHB, PW, SW, RHW, SCH, JO_REC, JO_OTH, JS, IO_REC, IO_ACC, IO_OTH, IS. A conflict is resolved by
 shifting the episode (up to 30 min), then shortening it (to half), then redrawing it (up to 10 times).
 
-## Coefficient set: `activity/coef_respec/`
+## Coefficient set: `activity/parameters/`
 
 | File | Holds |
 |---|---|
@@ -52,13 +52,13 @@ shifting the episode (up to 30 min), then shortening it (to half), then redrawin
 | `tasha/tasha_params.csv` | scheduler parameters, worker-type shares, file names |
 | `TERM_MAP.csv` | every estimated term → engine file and variable |
 
-`activity/build_coef_respec.py` writes this set from the estimation outputs and records a checksum of every source in
-`RESPEC_STATE.json`.
+`activity/build_parameters.py` writes this set from the estimation outputs and records a checksum of every source in
+`build_state.json`.
 
 ## Run
 
 ```bash
-python activity/run_abit.py myrun --coef activity/coef_respec --seed 1 --sample 0.1 --threads 6 --xmx 13g --year 2024
+python activity/run_activity_model.py myrun --coef activity/parameters --seed 1 --sample 0.1 --threads 6 --xmx 13g --year 2024
 ```
 
 This copies the coefficient set into the run folder and starts

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Subset of an unmapped schedule for the mapper tuning (TRANSIT_BUILD.md, step 3): every rail/subway/tram/ferry line and every k-th
-bus line of each feed (sorted by id), all stop facilities (the mapper removes unused ones).  Usage: subset_schedule.py <in> <out> <k>"""
+bus line of each feed (sorted by id), all stop facilities (the mapper removes unused ones).  Usage: python3 assignment/transit/subset_schedule.py <in> <out> <k>"""
 import sys, gzip, re
 src, dst, k = sys.argv[1], sys.argv[2], int(sys.argv[3])
 lines = []; cur = None; buf = []; head = []; tail = []; state = "head"

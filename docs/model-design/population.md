@@ -120,4 +120,4 @@ added from the Census block counts, reduced to the share on the market.
 | Jobs (vacant) | 6,722,717 (269,581) |
 
 For Maryland residents, the county-to-county commuting flows correlate with the ACS 2016–2020 flows at 0.992. The fit
-of the population is reported in [validation](../calibration-validation/validation.md).
+of the population is reported in [validation](../calibration-validation/validation/index.md).

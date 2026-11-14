@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build the 2024 and 2026 road networks from the audited supply network (I695_pricing/data/network_v8_supply.xml.gz).
+"""Build the 2024 and 2026 road networks from the audited supply network (PRICING_HOME/data/network_v8_supply.xml.gz).
 
 The supply network is built from the Geofabrik OpenStreetMap extract of Maryland (replication timestamp 2026-06-11T20:21:44Z,
-file inputs/osm/maryland-latest.osm.pbf), converted with pt2matsim (Updated MATSim/input/network/osm_convert_config.xml,
+file inputs/osm/maryland-latest.osm.pbf), converted with pt2matsim (MATSIM_HOME/input/network/osm_convert_config.xml,
 EPSG:26985), with freeway capacities from HCM bottleneck analysis, non-freeway classes reconciled with the MDOT SHA functional
-classification and posted speeds from the OSM maxspeed tag (I695_pricing/12_corridor_fit/build_network_v8.py).  That network
+classification and posted speeds from the OSM maxspeed tag (PRICING_HOME/12_corridor_fit/build_network_v8.py).  That network
 describes the road system as OpenStreetMap had it in June 2026, except that the Francis Scott Key Bridge had been re-inserted
 for the 2023 base year (links keybridge_eb, keybridge_wb).
 
@@ -15,13 +15,16 @@ the resolved list is written to changes_2024_2026.csv (one row per change) and c
 Outputs (this folder): network_2024.xml.gz, network_2026.xml.gz, changes_2024_2026.csv, changes_2024_2026_links.csv,
 build_networks.log.
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re, gzip, json, csv, datetime, hashlib
 import numpy as np, pandas as pd
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
-SRC = f"{ROOT}/I695_pricing/data/network_v8_supply.xml.gz"
-RAW = f"{ROOT}/Validation_2026/data/raw/mdot_sha"
+HERE = f"{WORKSPACE}/4_matsim/network"   # outputs (workspace)
+ROOT = f"{PROJECT_ROOT}"
+SRC = f"{PRICING_HOME}/data/network_v8_supply.xml.gz"
+RAW = f"{WORKSPACE}/data/raw/mdot_sha"
 TODAY = datetime.date.today().isoformat()
 
 # ------------------------------------------------------------------ read the network (streaming; the file is written back line by line)

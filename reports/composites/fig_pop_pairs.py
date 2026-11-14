@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 """Generative quality of the CVAE on the held-out PUMS test split, every attribute and every pair of attributes.
-Regenerates the validation population of Updated VAE/steps/07_validate.py (150,000 households from the training split only,
-seed 1, EMA weights of the 'full' run) and scores it against the test split with the SRMSE of vaelib/validate.py.
+Regenerates the validation population of population/cvae/steps/07_validate.py (150,000 households from the training split only,
+seed 1, EMA weights of the 'full' run) and scores it against the test split with the SRMSE of population/cvae/vaelib/validate.py.
 Pairs are formed at the person level (household attributes attached to every member), so household x person pairs are included;
 household x household pairs use households.  Reference: the training split against the same test split (two samples of one population).
-Outputs: data/pop_pairs_srmse.csv, 5_reports/article/figures/fig_val_pop_quality.{pdf,png}:
+Outputs: WORKSPACE/data/pop_pairs_srmse.csv, WORKSPACE/5_reports/article/figures/fig_val_pop_quality.{pdf,png}:
   SRMSE of every pair of attributes: below the diagonal the synthetic population, above it the training split, both against the test split
   (single-attribute errors are in the CSV; the article shows the single attributes against the ACS in fig_val_stage1)."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, json, itertools, numpy as np, pandas as pd
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"; VAE = V.rsplit("/", 1)[0] + "/Updated VAE"
-sys.path.insert(0, VAE); sys.path.insert(0, f"{V}/5_reports")
+V = f"{WORKSPACE}"; VAE = f"{VAE_HOME}"   # generator data (outputs/); the generator code is population/cvae
+sys.path.insert(0, f"{ORIOLE_HOME}/population/cvae"); sys.path.insert(0, f"{ORIOLE_HOME}/reports")
 import torch
 from vaelib import config, crosswalks, validate as VV
 from vaelib.model import CVAE, CVAEConfig

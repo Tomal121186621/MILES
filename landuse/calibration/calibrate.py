@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
-"""Component calibration of SILO on the 2016-2020 window (CALIBRATION.md). Each round: run SILO 2016->2020, validate every year
-(validate_silo.py), compare each component's mean annual rate over 2017-2020 with its observed target, update the component's
+"""Component calibration of SILO on the 2016-2020 window. Each round: run SILO 2016->2020, validate every year
+(landuse/validation/validate_landuse.py), compare each component's mean annual rate over 2017-2020 with its observed target, update the component's
 parameter by the ratio target/model (damped), write the new properties, repeat. Nothing is tuned to traffic; all targets are
-observed Maryland rates (Census components of change, ACS PUMS).  Log: calibration/calibration_log.csv (round, parameter, value,
-model rate, target). Usage: calibrate.py <rounds> [start_round]
-2026-11-09: CALIB_SPEC=respec calibrates the re-specified models (make_properties.py ... respec): scenarios calib_respec_r<k>, parameters
-calibration/params_respec.json (started from params.json when absent), log calibration/calibration_log_respec.csv, car-ownership county
-constants input/car_ownership_region_constants_respec.csv; the record files (params.json, calibration_log.csv,
-car_ownership_region_constants.csv, labor_participation_adjusters.csv, construction_region_scalers.csv) are not written."""
+observed Maryland rates (Census components of change, ACS PUMS).  Log: WORKSPACE/2_silo/calibration/calibration_log.csv (round,
+parameter, value, model rate, target). Usage: python landuse/calibration/calibrate.py <rounds> [start_round]
+CALIB_SPEC=respec calibrates the re-estimated models (write_properties.py ... respec): scenarios calib_respec_r<k>, parameters
+landuse/calibration/calibrated_parameters.json (started from WORKSPACE/2_silo/calibration/params.json when absent), log
+landuse/calibration/calibration_log.csv, car-ownership county constants 2_silo/input/car_ownership_county_constants.csv; the files of
+the earlier models (params.json, calibration_log.csv, car_ownership_region_constants.csv, labor_participation_adjusters.csv,
+construction_region_scalers.csv in the workspace) are not written."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, subprocess, sys, os, re, json
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"; S = f"{V}/2_silo"; R = f"{S}/run"
+V = f"{WORKSPACE}"; S = f"{V}/2_silo"; R = f"{S}/run"
 ROUNDS = int(sys.argv[1]) if len(sys.argv) > 1 else 3; START = int(sys.argv[2]) if len(sys.argv) > 2 else 1; DAMP = 0.8
 # component -> (validation table, properties key, update exponent sign)  parameter_new = parameter_old * (target/model)^DAMP
 COMP = {"births": ("births per woman 15-50", "demographics.local.birth.rate.adjuster"),
@@ -26,10 +30,14 @@ DEFAULTS = {"demographics.labor.participation.adjuster": 1.0, "demographics.loca
             "construct.dwelling.demand.scaler": 1.0, "demographics.local.leave.parents.adjuster": 1.0, "demographics.labor.participation.adjuster": 1.0}
 SPEC = os.environ.get("CALIB_SPEC", "record"); assert SPEC in ("record", "respec"), SPEC
 RS = "_respec" if SPEC == "respec" else ""
-PFILE = f"{S}/calibration/params{RS}.json"; LOGF = f"{S}/calibration/calibration_log{RS}.csv"; CARK = f"{S}/input/car_ownership_region_constants{RS}.csv"
+if SPEC == "respec":   # calibrated parameters and log of the re-estimated models are kept in the repository
+    PFILE = f"{ORIOLE_HOME}/landuse/calibration/calibrated_parameters.json"; LOGF = f"{ORIOLE_HOME}/landuse/calibration/calibration_log.csv"
+    CARK = f"{S}/input/car_ownership_county_constants.csv"
+else:
+    PFILE = f"{S}/calibration/params.json"; LOGF = f"{S}/calibration/calibration_log.csv"; CARK = f"{S}/input/car_ownership_region_constants.csv"
 PARAMS = dict(DEFAULTS); PARAMS.update(json.load(open(PFILE if os.path.exists(PFILE) else f"{S}/calibration/params.json")) if os.path.exists(f"{S}/calibration/params.json") else {})
 def write_props(name, params):
-    subprocess.run(["python3", f"{R}/make_properties.py", name, "2016", "2020"] + (["-1", "1", "respec"] if SPEC == "respec" else []), check=True, capture_output=True)
+    subprocess.run(["python3", f"{ORIOLE_HOME}/landuse/run/write_properties.py", name, "2016", "2020"] + (["-1", "1", "respec"] if SPEC == "respec" else []), check=True, capture_output=True)
     p = f"{R}/{name}.properties"; t = open(p).read()
     for k, v in params.items(): t = re.sub(rf"^{re.escape(k)}\s*=.*$", f"{k} = {v}", t, flags=re.M)
     open(p, "w").write(t)
@@ -39,9 +47,9 @@ for rnd in range(START, START + ROUNDS):
     print(f"round {rnd}: params {PARAMS}", flush=True)
     if os.path.exists(f"{R}/base/scenOutput/{name}/microData/futureYears/pp_2020.csv"): print(f"  {name}: SILO output exists, reusing", flush=True)
     else:
-        rc = subprocess.run(["bash", f"{R}/run_silo.sh", f"{R}/{name}.properties", "24g"]).returncode   # at most 24 GB per run (51 GB machine)
+        rc = subprocess.run(["bash", f"{ORIOLE_HOME}/landuse/run/run_silo.sh", f"{R}/{name}.properties", "24g"], env=dict(os.environ, ORIOLE_WORKSPACE=WORKSPACE)).returncode   # at most 24 GB per run (51 GB machine)
         if rc != 0: print("SILO failed, see run/logs"); break
-    vr = subprocess.run(["python3", f"{S}/validation/validate_silo.py", name, "2016", "2020"], capture_output=True, text=True)
+    vr = subprocess.run(["python3", f"{ORIOLE_HOME}/landuse/validation/validate_landuse.py", name, "2016", "2020"], capture_output=True, text=True)
     if vr.returncode != 0: print(vr.stderr[-3000:]); break
     Rv = pd.read_parquet(f"{V}/data/silo_validation_{name}.parquet"); C = Rv[(Rv.section.isin(["C events", "D2 construction"])) & (Rv.year.between(2017, 2020))]
     new = dict(PARAMS)

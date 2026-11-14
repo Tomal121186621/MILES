@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Transit feedback of the integrated loop: AM-peak zone-to-zone transit travel times from the pt2matsim-mapped MTA schedule of a
-network year, routed with MATSim's SwissRailRaptor (pipeline/java/TransitSkim.java on the chain's MATSim 2024.0 jar).
+network year, routed with MATSim's SwissRailRaptor (pipeline/TransitSkim.java on the chain's MATSim 2024.0 jar).
   1. zone centroids (zone shapefile, 1,588 MSTM zones, EPSG:26985) -> centroids.csv; zones more than 4 km from a network node are
-     "off-network" (the same rule as matsim_to_skim.py: the MSTM zone system covers six states, the network the Baltimore region)
+     "off-network" (the same rule as skims_from_matsim.py: the MSTM zone system covers six states, the network the Baltimore region)
   2. TransitSkim: one raptor tree per origin and departure time (PEAK_FROM .. PEAK_TO every STEP minutes), walk access and egress
      within the search radius, in-vehicle, waiting and transfer times; a departure counts when it arrives within MAX_TT minutes, the
      pair is reachable when half of the departures count and its value is the mean over those; routed on the
@@ -16,13 +16,16 @@ network year, routed with MATSim's SwissRailRaptor (pipeline/java/TransitSkim.ja
      (the same path without the walk legs, for the comparison with the base skims' convention), <out_dir>/transit_skim_stats.json
      (counts, reachability, comparison with the base skims: correlation, mean, share unreachable on BMR-internal pairs) and the raw
      raptor table <out_dir>/raptor_pairs.csv.gz.
-Usage: transit_skim.py <network_pt.xml.gz> <schedule.xml.gz> <vehicles.xml.gz> <out_dir> [--peak 7 9] [--step 15] [--radius 4000]
+Usage: python pipeline/transit_skim.py <network_pt.xml.gz> <schedule.xml.gz> <vehicles.xml.gz> <out_dir> [--peak 7 9] [--step 15] [--radius 4000]
        [--extension 2000] [--threads 4] [--xmx 6g] [--prior-silo DIR] [--prior-abit DIR]"""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, os, re, gzip, json, time, argparse, subprocess, numpy as np, pandas as pd, geopandas as gpd
 from scipy.spatial import cKDTree
-ROOT = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM"; V = f"{ROOT}/Validation_2026"
-JAR = f"{ROOT}/Updated MATSim/code/matsim-run/target/baltimore-matsim-1.0.jar"; CLASSES = f"{V}/pipeline/java/classes"; JAVA_SRC = f"{V}/pipeline/java/TransitSkim.java"
-SHP = f"{ROOT}/ABIT/input/mito_los/Zonal/SMZ_RMZ_02152011inMSTM_EPSG26918.shp"; ZONES_CSV = f"{V}/2_silo/input/zoneSystem.csv"
+ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
+JAR = f"{MATSIM_HOME}/code/matsim-run/target/baltimore-matsim-1.0.jar"; CLASSES = f"{V}/pipeline/java/classes"; JAVA_SRC = f"{ORIOLE_HOME}/pipeline/TransitSkim.java"   # compiled into WORKSPACE/pipeline/java/classes
+SHP = f"{ABIT_HOME}/input/mito_los/Zonal/SMZ_RMZ_02152011inMSTM_EPSG26918.shp"; ZONES_CSV = f"{V}/2_silo/input/zoneSystem.csv"
 UNREACH, INTRA = 1000.0, 5.0
 
 ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -34,7 +37,7 @@ ap.add_argument("--prior-silo", default=f"{V}/2_silo/input/skims"); ap.add_argum
 a = ap.parse_args(); os.makedirs(a.out_dir, exist_ok=True); t0 = time.time()
 JAVA = subprocess.run(["/usr/libexec/java_home", "-v", "21"], capture_output=True, text=True).stdout.strip() + "/bin/java"
 
-# ---- zones, centroids, off-network flag (as matsim_to_skim.py)
+# ---- zones, centroids, off-network flag (as skims_from_matsim.py)
 Z = gpd.read_file(SHP).to_crs(26985); Z["zone"] = Z.SMZRMZ.astype(int); Z = Z.sort_values("zone").reset_index(drop=True); c = Z.geometry.representative_point()
 zones = Z.zone.values; n = len(zones); zidx = {z: i for i, z in enumerate(zones)}
 nodes = []

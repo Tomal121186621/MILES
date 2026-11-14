@@ -6,24 +6,18 @@ hide:
 
 <div class="oriole-hero" markdown>
 
-# <span>ORIOLE</span> — from census records to cars on the road
+<div class="eyebrow">Agent-based modelling platform · Maryland</div>
 
-<p class="lead">An agent-based modelling platform for Maryland. ORIOLE synthesises every household of the
-region, moves it through the housing and job markets year by year, plans each person's weekday, and simulates the
+# From census records to <span>cars on the road</span>
+
+<p class="lead">ORIOLE synthesises every household of the region, moves it through the housing and job markets year by year, plans each person's weekday, and simulates the
 resulting traffic on the road and transit networks.</p>
 
 [Get started](get-started/index.md){ .md-button .md-button--primary }
 [How it works](model-design/index.md){ .md-button }
+[:material-map-marker-radius: Traffic validation map](calibration-validation/validation/map.md){ .md-button }
 [:fontawesome-brands-github: Code](https://github.com/Tomal121186621){ .md-button }
 
-</div>
-
-<div class="oriole-stages">
-<div><b>Population</b>Conditional VAE trained on census microdata</div>
-<div><b>Land use</b>SILO: moves, jobs, cars, 2016 → 2024</div>
-<div><b>Schools</b>Every student to a school, every year</div>
-<div><b>Activities</b>ORIOLE-Day: a weekday plan per person</div>
-<div><b>Traffic</b>MATSim on the 2024 road and transit networks</div>
 </div>
 
 <div class="oriole-numbers">
@@ -84,15 +78,20 @@ resulting traffic on the road and transit networks.</p>
 
 ## How it works
 
-<figure markdown>
-  ![ORIOLE model chain](assets/img/fw_platform.png){ width="560" }
-  <figcaption>The model chain: each stage's output is the next stage's input. Land use runs in annual steps; activities and
-  traffic are simulated for a weekday of 2024.</figcaption>
-</figure>
+Each stage hands its output to the next. Land use runs year by year; activities and traffic are simulated for a
+weekday of 2024. [Full model design](model-design/index.md)
+
+<div class="oriole-flow">
+<div><span class="in">ACS microdata · Census blocks</span><b>Population</b><span class="out">4.7 M households, 2016</span></div>
+<div><span class="in">Population estimates · jobs · permits</span><b>Land use</b><span class="out">households, jobs, dwellings 2017–2024</span></div>
+<div><span class="in">School directories · boundaries</span><b>Schools</b><span class="out">a school for every student</span></div>
+<div><span class="in">Travel survey · skims</span><b>Activities</b><span class="out">a weekday plan per person</span></div>
+<div><span class="in">OpenStreetMap · GTFS</span><b>Traffic</b><span class="out">routes, link volumes, travel times</span></div>
+</div>
 
 ## What you can do with it
 
-<div class="grid cards" markdown>
+<div class="grid cards oriole-four" markdown>
 
 -   :material-cash-multiple: **Road pricing**
 
@@ -115,7 +114,7 @@ resulting traffic on the road and transit networks.</p>
 
 ## Start here
 
-<div class="grid cards" markdown>
+<div class="grid cards oriole-four" markdown>
 
 -   :material-download: **[Install](get-started/installation.md)**
 
@@ -133,7 +132,7 @@ resulting traffic on the road and transit networks.</p>
 
     Notebooks that rebuild every estimate with Biogeme.
 
--   :material-map-marker-radius: **[Validation map](calibration-validation/validation-map.md)**
+-   :material-map-marker-radius: **[Validation map](calibration-validation/validation/map.md)**
 
     Every count station against the simulated 2024 traffic.
 

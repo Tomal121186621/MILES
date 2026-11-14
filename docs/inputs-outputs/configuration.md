@@ -1,11 +1,12 @@
 # Configuration
 
 Each engine reads one properties file. The keys below are the ones that switch on ORIOLE's models; the values are
-those of the reported runs.
+those of the reported runs. In the SILO engine, the value `respec` of the `*.spec` and `job.choice.model` keys selects
+the estimated models documented on this site; `oriole landuse …` sets it for you.
 
 ## Land use (SILO)
 
-Written by `landuse/run/make_properties.py <scenario> <start> <end> [skim_years] [seed] [spec]`.
+Written by `landuse/run/write_properties.py <scenario> <start> <end> [skim_years] [seed] [spec]`.
 
 === "General"
 
@@ -25,8 +26,8 @@ Written by `landuse/run/make_properties.py <scenario> <start> <end> [skim_years]
     |---|---|
     | `resloc.model` | `mnl` |
     | `resloc.spec` | `respec` (the estimated three-level model) |
-    | `resloc.region.coefficients` | `input/resloc_region_mnl_respec.csv` |
-    | `resloc.dwelling.coefficients` | `input/resloc_dwelling_mnl_respec.csv` (zone and dwelling levels) |
+    | `resloc.region.coefficients` | `input/residential_county_coefficients.csv` |
+    | `resloc.dwelling.coefficients` | `input/residential_zone_dwelling_coefficients.csv` (zone and dwelling levels) |
     | `resloc.region.attributes`, `resloc.region.adjacency` | county attributes and adjacency |
     | `resloc.respec.zone.attributes` | zone attributes of the zone level |
     | `resloc.respec.accessibility.file` | multimodal non-work accessibility by year |
@@ -38,7 +39,7 @@ Written by `landuse/run/make_properties.py <scenario> <start> <end> [skim_years]
     | Key | Value |
     |---|---|
     | `car.ownership.spec` | `respec` |
-    | `car.ownership.coefficients.file` | `input/car_ownership_coefficients_respec.csv` |
+    | `car.ownership.coefficients.file` | `input/car_ownership_estimated_coefficients.csv` |
     | `car.ownership.region.constants.file` | calibrated county constants |
     | `car.ownership.respec.location.file` | PUMA density and accessibility gain |
 
@@ -47,7 +48,7 @@ Written by `landuse/run/make_properties.py <scenario> <start> <end> [skim_years]
     | Key | Value |
     |---|---|
     | `job.choice.model` | `respec` |
-    | `job.choice.coefficients.file` | `input/job_choice_coefficients_respec_dcacs.csv` (District term anchored to the ACS) |
+    | `job.choice.coefficients.file` | `input/workplace_choice_coefficients.csv` (District term anchored to the ACS) |
     | `job.change.rate` | 0.252 |
     | `job.control.total` | QCEW-based job controls |
     | `employment.types` | `RET,OFF,IND,OTH` |
@@ -65,12 +66,12 @@ Written by `landuse/run/make_properties.py <scenario> <start> <end> [skim_years]
     | `marriage.partner.distance.decay` | 0.0462 |
     | `population.control.total` | `region` (county controls) |
 
-    The levers are kept in `landuse/calibration/params_respec.json`.
+    The levers are kept in `landuse/calibration/calibrated_parameters.json`.
 
 ## Activities (ORIOLE-Day)
 
-Written by `activity/make_abit_properties.py <name> <silo_scenario> <year> [sample] [skims]`; the switches of the
-coefficient set (`activity/coef_respec/run_params.csv`) are appended.
+Written by `activity/write_properties.py <name> <silo_scenario> <year> [sample] [skims]`; the switches of the
+coefficient set (`activity/parameters/run_params.csv`) are appended.
 
 | Key | Value | Meaning |
 |---|---|---|

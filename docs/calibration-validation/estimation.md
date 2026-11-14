@@ -59,7 +59,7 @@ log-likelihood (tour formation and mode) on held-out data.
 | Joint recreation and other (6) | 1,296 | 25 | −450.3 | 0.710 | −459.1 |
 | Transit leg mode (5) | 6,792 | 35 | −3,501.8 | | −3,366.7 |
 
-The synthetic population (CVAE) is not a likelihood model; its fit is reported in [validation](validation.md). The activity
+The synthetic population (CVAE) is not a likelihood model; its fit is reported in [validation](validation/index.md). The activity
 distributions of ORIOLE-Day are 3,946 weighted relative frequencies of the estimation half.
 
 ## Linking logsums

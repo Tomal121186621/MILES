@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Headline out-of-sample numbers, Maryland 2024 (dwellings: 2021-2024 sums), per seed and as mean with the 90 % band across seeds
 (mean +- 1.645 s.d.). Households from the seed microdata (occupied dwellings in Maryland zones) against ACS PUMS 2020-24 5-year.
-Output data/silo_headline_2024.csv.  Usage: headline_2024.py [n_seeds=5] [suffix='']"""
+Output data/silo_headline_2024.csv.  Usage: python3 landuse/validation/headline_2024.py [n_seeds=5] [suffix='']"""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, sys, zipfile
-ROOT = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM"; V = f"{ROOT}/Validation_2026"; S = f"{V}/2_silo"
+ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; S = f"{V}/2_silo"
 n = int(sys.argv[1]) if len(sys.argv) > 1 else 5; sfx = sys.argv[2] if len(sys.argv) > 2 else ""
 Z = pd.read_csv(f"{S}/input/zoneSystem.csv", usecols=["ZoneId", "STFIPS"]).set_index("ZoneId").STFIPS
 with zipfile.ZipFile(f"{ROOT}/inputs/pums_2024_5yr/csv_hmd.zip") as zf:

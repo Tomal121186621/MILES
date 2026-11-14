@@ -1,0 +1,2 @@
+[console_scripts]
+oriole = oriole_cli:main

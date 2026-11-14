@@ -1,11 +1,14 @@
 """Shared readers for the network step: MATSim network (streaming parser), study-area polygon, MDOT layers, OSM way tags."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re, gzip, json
 import numpy as np, pandas as pd, geopandas as gpd, shapely
 from shapely import linestrings, points
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
-V26 = f"{ROOT}/Validation_2026"
+HERE = f"{WORKSPACE}/4_matsim/network"   # network files and reports (workspace data); the code is in assignment/network
+ROOT = f"{PROJECT_ROOT}"
+V26 = f"{WORKSPACE}"
 RAW = f"{V26}/data/raw/mdot_sha"
 DATA = f"{V26}/data"
 CRS = 26985
@@ -47,7 +50,7 @@ def read_network(path):
 
 def study_area():
     """Union of the six Baltimore-region counties (EPSG:26985) and the county frame."""
-    c = gpd.read_file(f"{ROOT}/Updated MATSim/data/bmr_counties.gpkg").to_crs(CRS)
+    c = gpd.read_file(f"{MATSIM_HOME}/data/bmr_counties.gpkg").to_crs(CRS)
     return c, c.geometry.union_all()
 
 def link_geoms(L):
@@ -58,7 +61,7 @@ def read_geojson(name):
     return gpd.GeoDataFrame.from_features(G["features"], crs=CRS)
 
 def osm_way_tags():
-    O = pd.read_csv(f"{ROOT}/I695_pricing/data/network_v8/osm_way_tags.csv", dtype={"way": str, "maxspeed": str, "lanes": str})
+    O = pd.read_csv(f"{PRICING_HOME}/data/network_v8/osm_way_tags.csv", dtype={"way": str, "maxspeed": str, "lanes": str})
     mph = O.maxspeed.str.extract(r"^\s*(\d+)\s*(mph)?\s*$")[0].astype(float); O["posted_mph"] = mph.where(mph.between(10, 75))
     kmh = O.maxspeed.str.extract(r"^\s*(\d+)\s*km/h\s*$")[0].astype(float); O.loc[O.posted_mph.isna() & kmh.notna(), "posted_mph"] = (kmh / 1.609).round()
     O["lanes_tag"] = pd.to_numeric(O.lanes, errors="coerce")

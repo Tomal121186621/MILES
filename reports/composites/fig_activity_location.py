@@ -5,7 +5,7 @@ NOTE (2026-10-26): fig_activity, fig_s_duration and fig_s_chains are superseded 
 fig_abit_tasha.py (start, duration, chains, distance; validation in the article, verification and chain test in the
 Supplementary Material); fig_location is now a Supplementary figure (label fig:s_location).
 
-    python3 5_reports/composites/fig_activity_location.py [activity location s_duration s_chains s_stops]
+    python3 reports/composites/fig_activity_location.py [activity location s_duration s_chains s_stops]
 
 Article
   fig_activity  start-time distribution by activity type (work, school, shopping, other, return home, all), behavioural
@@ -17,7 +17,7 @@ Supplementary Material
   fig_s_duration  mean duration by start hour, four activity types, with the hours of 90 % of the observed starts
   fig_s_chains    (a) trips per home-based chain, (b) mean trip distance by start hour
   fig_s_stops     trip-length distribution of the stops of the four discretionary purposes
-Data: data/abit_roorda_{curves,ks}.* (3_abit/roorda_validation.py, read with tasha_stage3.Data);
+Data: data/abit_roorda_{curves,ks}.* (activity/validation/validate_survey.py, read with tasha_stage3.Data);
 3_abit/destination_choice/results/heldout_tld.csv.
 """
 import os, sys
@@ -25,7 +25,7 @@ import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import composite as K                                            # noqa: E402
 ps = K.ps
-sys.path.insert(0, f"{K.V}/5_reports"); import tasha_stage3 as t3  # noqa: E402
+sys.path.insert(0, f"{K.ORIOLE_HOME}/reports"); import tasha_stage3 as t3  # noqa: E402
 from matplotlib.ticker import MaxNLocator, MultipleLocator       # noqa: E402
 import matplotlib.transforms as mtrans                           # noqa: E402
 

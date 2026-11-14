@@ -2,7 +2,7 @@
 """ABIT validation figures in the set of Roorda, Miller & Habib (2008), "Validation of TASHA", TR-A 42:360-375, Figs. 2-8,
 for the behavioural model of record (ten replications) in the three settings.  Visual system: composite.py.
 
-    python3 5_reports/composites/fig_abit_tasha.py [validation verification chain]
+    python3 reports/composites/fig_abit_tasha.py [validation verification chain]
 
 Figures (one per setting s = validation | verification | chain):
   fig_abit_start_<s>     weekday activity start time distribution (Roorda Figs. 2, 6), six types
@@ -11,7 +11,7 @@ Figures (one per setting s = validation | verification | chain):
   fig_abit_distance_<s>  average distance to activities by start hour, zone-skim distance on both sides (Figs. 5, 8), six types
 Observed: weighted survey (dark-grey steps or line); model: mean (blue) and 90 % band (mean +- 1.645 s.d.) of the ten replications.
 Each panel carries Roorda's Kolmogorov-Smirnov statistic on the hourly values (D, P).
-Data: data/abit_roorda_curves.parquet, data/abit_roorda_ks.csv (3_abit/roorda_validation.py) and data/abit_tasha_curves.parquet
+Data: data/abit_roorda_curves.parquet, data/abit_roorda_ks.csv (activity/validation/validate_survey.py) and data/abit_tasha_curves.parquet
 (abit_tasha_data.py: replication spread of the durations, distance by type).
 """
 import os, sys

@@ -6,10 +6,13 @@ and of passenger vehicles.  Reads the outputs of validate_counts.py; nothing is 
 Tiers: 1 interstates (every route), 2 other freeways and expressways and 3 principal arterials (the TOP routes by counted volume,
 the rest pooled as "Other"), 4-6 minor arterials, major collectors, minor collectors and local roads (pooled).  A route is grouped
 under the facility class of its stations, so a route can appear in two tiers (e.g. I-895 stations coded as other freeway).
-Usage: python3 route_table.py [data_dir] [tex_out]   (defaults: data/, 5_reports/article/sections/supp/tab_net_routes.tex)
+Usage: python3 assignment/validation/route_table.py [data_dir] [tex_out]   (defaults: WORKSPACE/4_matsim/validation/data/, WORKSPACE/5_reports/article/sections/supp/tab_net_routes.tex)
 Writes data_dir/route_table.csv and the LaTeX table."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, numpy as np, pandas as pd
-H = os.path.dirname(os.path.abspath(__file__)); V = os.path.dirname(os.path.dirname(H))
+V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"   # H: validation data and outputs (workspace)
 DATA = sys.argv[1] if len(sys.argv) > 1 else f"{H}/data"
 TEX = sys.argv[2] if len(sys.argv) > 2 else f"{V}/5_reports/article/sections/supp/tab_net_routes.tex"
 TOP = 8

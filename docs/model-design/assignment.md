@@ -58,4 +58,4 @@ road network; buses run on the road network.
 - Transit boardings by line and mode.
 - Congested travel times by period.
 
-The comparison with counts, screenlines and continuous counters is in [validation](../calibration-validation/validation.md).
+The comparison with counts, screenlines and continuous counters is in [validation](../calibration-validation/validation/index.md).

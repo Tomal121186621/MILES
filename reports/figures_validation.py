@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Validation figures of the TR Part A paper (Section 5 and Online Appendix), one scheme for the four stages.
 
-    python3 figures_validation.py                      # all stages
-    python3 figures_validation.py 2 --silo oos_mean    # stage 2 only, from data/silo_validation_oos_mean.parquet
-    python3 figures_validation.py 4 --matsim-runs <dir>
+    python3 reports/figures_validation.py                      # all stages
+    python3 reports/figures_validation.py 2 --silo oos_mean    # stage 2 only, from data/silo_validation_oos_mean.parquet
+    python3 reports/figures_validation.py 4 --matsim-runs <dir>
 
 Every figure is drawn at its printed size (\\textwidth = 5.313 in wide, at most 0.85 \\textheight high) and included with
 width=\\textwidth; paperstyle.finish() refuses to save a figure with text below 7.5 pt, overlapping text or anything beyond the
@@ -15,12 +15,15 @@ Labels are plain words with units; data-source names, acronyms and statistics ar
     stage 2  fig_v2_main  (a) event rates  (b) composition  (c) construction by county  (d) one-person and low-income households
              appendix     fig_v2_a events by year, fig_v2_a2 calibration rounds, fig_v2_b composition by county, fig_v2_c
                           construction map, fig_v2_d controlled totals, fig_v2_d2 attribute shares over time, fig_v2_e jobs and commute
-    stage 3  TASHA form (Roorda et al., 2008; 5_reports/tasha_stage3.py): tables tab_s3_{verification,validation,chain}.tex and
+    stage 3  TASHA form (Roorda et al., 2008; reports/tasha_stage3.py): tables tab_s3_{verification,validation,chain}.tex and
              fig_t3_{start,duration,chains,distance}_{verification,validation,chain}
              appendix     fig_v3_a tours (gate runs), fig_v3_b2 mode shares, fig_v3_c groups, fig_v3_e trip distance by purpose
     stage 4  fig_v4_inputs (network and transit inputs), appendix fig_v4_a (class matrix); fig_v4_main pending (assignment runs)
 Outputs: 5_reports/figures/fig_v*.pdf/png (copied to paper/figures/), 5_reports/FIGURE_CATALOGUE.md.
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, glob, json, os, re, shutil, sys
 import numpy as np
 import pandas as pd
@@ -33,8 +36,8 @@ from matplotlib.patches import Patch, Rectangle
 from matplotlib.colors import ListedColormap, BoundaryNorm, LogNorm
 from matplotlib.ticker import FuncFormatter, FixedLocator, NullFormatter, NullLocator, MaxNLocator
 
-ROOT = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM"; V = f"{ROOT}/Validation_2026"
-sys.path.insert(0, f"{V}/5_reports"); import paperstyle as ps   # noqa: E402
+ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
+sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps   # noqa: E402
 DATA = f"{V}/data"; OUT = f"{V}/5_reports/figures"; PAPERFIG = f"{V}/5_reports/paper/figures"; os.makedirs(OUT, exist_ok=True)
 CAT_ROWS = []
 DIST_LABELS = ["0-1", "1-2", "2-3", "3-5", "5-7.5", "7.5-10", "10-15", "15-20", "20-30", "30-50", "50+"]     # data keys
@@ -104,7 +107,7 @@ def counties():
     import geopandas as gpd
     f = f"{DATA}/zone_counties.gpkg"
     if not os.path.exists(f):
-        g = gpd.read_file(f"{ROOT}/ABIT/input/mito_los/Zonal/SMZ_RMZ_02152011inMSTM_EPSG26918.shp")[["zone_id", "geometry"]]
+        g = gpd.read_file(f"{ABIT_HOME}/input/mito_los/Zonal/SMZ_RMZ_02152011inMSTM_EPSG26918.shp")[["zone_id", "geometry"]]
         z = zonesys()[["ZoneId", "COUNTYFIPS", "STFIPS"]]
         g = g.merge(z, left_on="zone_id", right_on="ZoneId"); g["geometry"] = g.geometry.buffer(0)
         c = g.dissolve(by="COUNTYFIPS", aggfunc={"STFIPS": "first"}).reset_index()
@@ -262,7 +265,7 @@ def settings_direct_labels(ax, ys, xs, labels):
 class Stage1:
     def __init__(self):
         self.R = pd.read_parquet(f"{DATA}/stage1_validation.parquet")
-        self.J = json.load(open(f"{ROOT}/Updated VAE/outputs/07_validation/full/results.json"))
+        self.J = json.load(open(f"{VAE_HOME}/outputs/07_validation/full/results.json"))
         self.W = pd.read_csv(f"{DATA}/stage1_workplace_check.csv").rename(columns={"Unnamed: 0": "county"})
         self.C = self.commute_curves()
 
@@ -284,14 +287,14 @@ class Stage1:
         f = f"{DATA}/stage1_commute_curves.csv"
         if os.path.exists(f): return pd.read_csv(f, dtype={"bin": str})
         import h5py
-        h = h5py.File(f"{ROOT}/ABIT/input/mito_los/skims/traveltime_auto.omx", "r"); T = h["data/mat1"][:]; ids = h["lookup/destinations"][:]; idx = {int(z): i for i, z in enumerate(ids)}
-        Dk = h5py.File(f"{ROOT}/ABIT/input/mito_los/skims/distance_auto.omx", "r")["data/mat1"][:] / 1000.0
+        h = h5py.File(f"{ABIT_HOME}/input/mito_los/skims/traveltime_auto.omx", "r"); T = h["data/mat1"][:]; ids = h["lookup/destinations"][:]; idx = {int(z): i for i, z in enumerate(ids)}
+        Dk = h5py.File(f"{ABIT_HOME}/input/mito_los/skims/distance_auto.omx", "r")["data/mat1"][:] / 1000.0
         jj = pd.read_parquet(f"{V}/1_vae/vae_outputs/05_workplace/jj.parquet", columns=["personId", "zone"])
         pp = pd.read_parquet(f"{V}/1_vae/output/pp.parquet", columns=["pp_id", "hh_id"]); hh = pd.read_parquet(f"{V}/1_vae/output/hh.parquet", columns=["hh_id", "zone_id"])
         w = jj.merge(pp, left_on="personId", right_on="pp_id").merge(hh, on="hh_id"); del pp, hh, jj
         w = w[w.zone_id.isin(idx) & w.zone.isin(idx)]; i, j = w.zone_id.map(idx).values, w.zone.map(idx).values
         t, km = T[i, j], Dk[i, j]; del T, Dk
-        r = pd.read_csv(f"{ROOT}/ABIT/input/rts/rts_trips_clean.csv", low_memory=False, usecols=["o_activity", "d_activity", "travel_mode", "reported_travel_time", "distance", "wttrdfin"])
+        r = pd.read_csv(f"{ABIT_HOME}/input/rts/rts_trips_clean.csv", low_memory=False, usecols=["o_activity", "d_activity", "travel_mode", "reported_travel_time", "distance", "wttrdfin"])
         r = r[(r.travel_mode == 4) & (((r.o_activity == 1) & (r.d_activity == 2)) | ((r.o_activity == 2) & (r.d_activity == 1)))]
         rt = r[r.reported_travel_time.between(1, 180)]; rd = r[r.distance.between(0.2, 120)]
         tb = np.arange(0, 125, 5)
@@ -334,7 +337,7 @@ class Stage1:
         self.p_persons(ax["a"]); self.p_comp(ax["b"]); self.p_joint(ax["c"]); self.p_dist(ax["d"])
         fig_legend(fig, ["model", "observed", "tol", "outside"])
         p = save(fig, "fig_v1_main", ax)
-        for k, d in zip("abcd", ["stage1_validation.parquet (A counts)", "stage1_validation.parquet (B composition)", "Updated VAE/outputs/07_validation/full/results.json",
+        for k, d in zip("abcd", ["stage1_validation.parquet (A counts)", "stage1_validation.parquet (B composition)", "VAE_HOME/outputs/07_validation/full/results.json",
                                   "stage1_commute_curves.csv"]):
             record(1, {"a": "a", "b": "b", "c": "b (joint)", "d": "e"}[k], f"{p} ({k})", d, f"Stage1.main ({k})", "see paper caption")
         return p
@@ -385,7 +388,7 @@ class Stage1:
         ax2.set_yticks(y2); ax2.set_yticklabels([nm(p_, i) for i, (p_, _) in enumerate(W)]); ax2.grid(axis="y", visible=False); ax2.tick_params(axis="y", length=0)
         ax2.set_xlabel("Standardised root-mean-square error (–)")
         p = save(fig, "fig_v1_d", {"a": ax, "b": ax2})
-        record(1, "b (joint)", p, "Updated VAE/outputs/07_validation/full/results.json", "Stage1.app_d", "see paper caption")
+        record(1, "b (joint)", p, "VAE_HOME/outputs/07_validation/full/results.json", "Stage1.app_d", "see paper caption")
 
     def app_e(self):
         fig = ps.new_figure(2.5); gs = fig.add_gridspec(1, 3); a, b, c = [fig.add_subplot(gs[i]) for i in range(3)]
@@ -839,7 +842,7 @@ class Stage4:
 def write_catalogue(scen):
     f = f"{V}/5_reports/FIGURE_CATALOGUE.md"
     stage = {1: "1 population synthesis (CVAE)", 2: "2 land use (SILO)", 3: "3 activity generation (ABIT)", 4: "4 assignment (MATSim)"}
-    L = ["# Validation figure catalogue (generated by `5_reports/figures_validation.py`; do not edit by hand)", "",
+    L = ["# Validation figure catalogue (generated by `reports/figures_validation.py`; do not edit by hand)", "",
          "Every figure is drawn at its printed size: exactly \\textwidth (384 pt = 5.313 in, from main.log) wide and at most 0.85 \\textheight "
          "(6.61 in) high, included with `width=\\textwidth`; all text >= 8 pt (tick labels 7.5 pt, panel letters 9 pt bold). "
          "`paperstyle.finish()` refuses to save a figure with overlapping text, a label or legend over data markers or bars, text or artists "
@@ -849,7 +852,7 @@ def write_catalogue(scen):
          "tolerance band light grey; ratios model ÷ observed on a linear axis with a line at 1 (log axis where ratios span more than a factor "
          "of five); share differences in percentage points on one diverging scale (−10 to +10); ratio classes written out ('Within ±10 %'). "
          "Maps only where the spatial pattern carries information (else sorted dot charts). Files in `5_reports/figures/` (PDF + PNG), "
-         "copied to `paper/figures/`. Data paths relative to `Validation_2026/data/` unless stated.",
+         "copied to `paper/figures/`. Data paths relative to `WORKSPACE/data/` unless stated.",
          f"Land-use input file of this build: `data/silo_validation_{scen}.parquet`.", "",
          "Dimensions: a levels/totals, b composition (and joint structure), c spatial, d temporal, e length/interaction.", "",
          "## Matrix (stage × dimension)", "", "| stage | a levels | b composition | c spatial | d temporal | e length |", "|---|---|---|---|---|---|"]
@@ -867,7 +870,7 @@ def write_catalogue(scen):
           "## Pending", "",
           "- Land use, test window 2021–2024: the paper figures are from the calibration window (round 16, one seed), matching the text of "
           "Section 5.2. `data/silo_validation_oos_mean.parquet` (five seeds) now exists and is the default of the script when no `--silo` is "
-          "given; build the paper set with `python3 5_reports/figures_validation.py --silo calib_r16` until the land-use text and the Fig. 7 "
+          "given; build the paper set with `python3 reports/figures_validation.py --silo calib_r16` until the land-use text and the Fig. 7 "
           "caption are updated to 2021–2024 (the OOS build was tested: all stage-2 figures pass the checks).",
           "- Assignment (stage 4): fig_v4_main (four panels: model against AADT at the held-out stations by facility class; %RMSE by volume "
           "group; hourly profiles at the permanent counters; screenlines and corridor travel times) once the 2024 five-seed MATSim runs "

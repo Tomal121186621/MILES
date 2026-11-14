@@ -14,8 +14,23 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import numpy as np, pandas as pd, torch
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-sys.path.insert(0, "/Users/tomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/code")
-import trb_style; trb_style.apply()
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+sys.path.append(str(Path(PROJECT_ROOT) / "code"))   # optional shared TRB style (trb_style.py), if present
+try:
+    import trb_style
+except ImportError:                                  # fall back to matplotlib defaults
+    import types
+    def _save(fig, path, caption_text=None):
+        path = Path(path)
+        for ext in (".png", ".pdf"):
+            fig.savefig(path.with_suffix(ext), dpi=300, bbox_inches="tight")
+        plt.close(fig)
+    _cyc = plt.rcParams["axes.prop_cycle"].by_key()["color"]
+    trb_style = types.SimpleNamespace(apply=lambda: None, save=_save, OBS=_cyc[1], SIM=_cyc[0], TARGET=_cyc[2],
+                                      NEUTRAL="0.5", PALETTE=_cyc)
+trb_style.apply()
 
 from vaelib import config, crosswalks, validate as V
 from vaelib.model import CVAE, CVAEConfig

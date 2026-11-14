@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download the MDOT SHA roadway layers used by the network audit into Validation_2026/data/raw/mdot_sha/ (one file per layer,
+"""Download the MDOT SHA roadway layers used by the network audit into WORKSPACE/data/raw/mdot_sha/ (one file per layer,
 GeoJSON in EPSG:26985, paged through the ArcGIS REST API; a manifest records URL, query, record count and download date).
 Layers (ArcGIS organisation njFNhDsUCentVYJW = MDOT SHA open data):
   functional_class   Roadway Functional Classification, study-area extent (incl. EXIT_NUMBER / RAMP_NUMBER of ramps)
@@ -8,13 +8,16 @@ Layers (ArcGIS organisation njFNhDsUCentVYJW = MDOT SHA open data):
   lane_mileage       Roadway Lane Mileage (segments with mainline / auxiliary lane-miles -> through lanes)
   projects           SHA project portal, construction and completed projects in the six study-area counties
 The study-area extent is the bounding box of the six Baltimore-region counties (bmr_counties.gpkg) plus 2 km."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import json, os, sys, time, urllib.request, urllib.parse, datetime
 import geopandas as gpd
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-RAW = f"{ROOT}/Validation_2026/data/raw/mdot_sha"; os.makedirs(RAW, exist_ok=True)
+ROOT = f"{PROJECT_ROOT}"
+RAW = f"{WORKSPACE}/data/raw/mdot_sha"; os.makedirs(RAW, exist_ok=True)
 BASE = "https://services.arcgis.com/njFNhDsUCentVYJW/arcgis/rest/services"
-cty = gpd.read_file(f"{ROOT}/Updated MATSim/data/bmr_counties.gpkg").to_crs(26985)
+cty = gpd.read_file(f"{MATSIM_HOME}/data/bmr_counties.gpkg").to_crs(26985)
 x0, y0, x1, y1 = cty.total_bounds; BBOX = f"{x0-2000},{y0-2000},{x1+2000},{y1+2000}"
 COUNTIES_SHA = ["Anne Arundel", "Baltimore", "Baltimore City", "Carroll", "Harford", "Howard"]
 

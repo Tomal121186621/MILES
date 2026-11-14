@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
-"""Check the MTA Maryland GTFS feeds (downloaded into Validation_2026/data/raw/mta_gtfs/ by fetch_gtfs.sh) against the published MTA schedule:
+"""Check the MTA Maryland GTFS feeds (downloaded into WORKSPACE/data/raw/mta_gtfs/ by fetch_gtfs.sh) against the published MTA schedule:
 route counts per mode and weekday headways of the core routes (the 12 CityLink routes, Light RailLink, Metro SubwayLink), on a representative
 weekday of the feed's calendar.  Writes data/transit_gtfs_routes.csv, data/transit_gtfs_headways.csv and prints the comparison table.
 Run with: python3 -I check_transit.py   (the feeds are downloaded files; the script reads them by path only)."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, io, csv, zipfile, datetime, collections
 import numpy as np, pandas as pd
 
-HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
-RAWG = f"{ROOT}/Validation_2026/data/raw/mta_gtfs"; DATA = f"{ROOT}/Validation_2026/data"
+HERE = f"{WORKSPACE}/4_matsim/network"; ROOT = f"{PROJECT_ROOT}"   # HERE: outputs (workspace)
+RAWG = f"{WORKSPACE}/data/raw/mta_gtfs"; DATA = f"{WORKSPACE}/data"
 FEEDS = {"local-bus": "Local bus (CityLink, LocalLink, Express BusLink)", "light-rail": "Light RailLink", "metro": "Metro SubwayLink", "marc": "MARC train", "commuter-bus": "Commuter bus"}
 PERIODS = {"am_peak": (7, 9), "midday": (10, 14), "pm_peak": (16, 18), "evening": (19, 22)}
 

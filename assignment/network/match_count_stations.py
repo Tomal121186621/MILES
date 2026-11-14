@@ -17,11 +17,14 @@ matched takes the other carriageway: the nearest link within 150 m of the statio
 reverse), same MDOT route or same OSM name, non-ramp, compatible class ('second_carriageway').  One-way counts (a share of 100) keep the one link of the
 counted direction.  Column match_category: two_way_ok, oneway_ok (a), second_carriageway_added (b), other_carriageway_missing (c),
 oneway_direction_conflict (d); match_review gives the reason.  Nothing here uses volumes.  Manual overrides: data/count_station_overrides.csv.
-Inputs: I695_pricing/data/mdot_aadt_statewide_2015-2024.geojson (MDOT SHA AADT, 2015-2024), data/network_audit_links.parquet (audit_network.py).
+Inputs: PRICING_HOME/data/mdot_aadt_statewide_2015-2024.geojson (MDOT SHA AADT, 2015-2024), data/network_audit_links.parquet (audit_network.py).
 Outputs: data/count_stations_matched.csv (every station in the area, matched or not, with distances and both classes),
          data/count_stations_split.csv (matched stations with 2024 AADT: calibration_check / held_out).
 Nothing is fitted to the counts; the split exists so that the held-out half is never looked at before the final comparison.
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, json, datetime
 import numpy as np, pandas as pd, geopandas as gpd, shapely
 from shapely import points
@@ -31,7 +34,7 @@ from netio import *
 SEED = 2026
 A = pd.read_parquet(f"{DATA}/network_audit_links.parquet")
 counties, area = study_area()
-G = json.load(open(f"{ROOT}/I695_pricing/data/mdot_aadt_statewide_2015-2024.geojson"))
+G = json.load(open(f"{PRICING_HOME}/data/mdot_aadt_statewide_2015-2024.geojson"))
 S = gpd.GeoDataFrame.from_features(G["features"], crs=CRS)
 S = S[S.within(area)].reset_index(drop=True)
 S["x"] = S.geometry.x; S["y"] = S.geometry.y

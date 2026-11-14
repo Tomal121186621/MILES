@@ -2,7 +2,7 @@
 """Zone-level aggregates of the SILO land-use runs (five seeds, oos_s1..oos_s5) for the tract-level validation.  Read-only on the
 runs; streams the large files with usecols / chunks.
 
-Year convention (as 2_silo/validation/validate_silo.py: the engine writes the state at the END of simulated year Y under label Y):
+Year convention (as landuse/validation/validate_landuse.py: the engine writes the state at the END of simulated year Y under label Y):
   state 2016 = run/base/microData/*_2016.csv (input base);  state Y (Y > 2016) = file labelled Y-1
   (microData/{dd,jj,pp}_<Y-1>.csv, microData/futureYears/hh_<Y-1>.csv).  State 2024 = files labelled 2023 (identical to
   futureYears/*_2024.csv, which ABIT reads).
@@ -13,13 +13,16 @@ Output (out/cache/):
                       income histogram 2024 (2024 $ bins of 2,500), jobs total / filled by type, new dwellings 2016->2024)
   silo_flows.parquet  seed, hzone, wzone, workers    (2024 state: employed residents of the study area, home zone -> job zone)
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, os, sys, time
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"
+V = f"{WORKSPACE}"
 RUN = f"{V}/2_silo/run/base"; OUT = os.environ.get("TRACT_CACHE", f"{V}/5_reports/validation_tracts/out/cache")   # env: TRACT_CACHE, SILO_SEEDS (e.g. oos_respec_s), SILO_BASE (e.g. microData_v5respec)
 PFX = os.environ.get("SILO_SEEDS", "oos_s"); BASE = os.environ.get("SILO_BASE", "microData"); os.makedirs(OUT, exist_ok=True)
 CTY = [24003, 24005, 24013, 24025, 24027, 24510]
 ZS = pd.read_csv(f"{V}/2_silo/input/zoneSystem.csv").set_index("ZoneId"); SZ = set(ZS.index[ZS.COUNTYFIPS.isin(CTY)])
-CPI24 = 1.307                     # 2024 $ per 2016 $ (CPI-U, as validate_silo.py); SILO incomes are 2016 $
+CPI24 = 1.307                     # 2024 $ per 2016 $ (CPI-U, as validate_landuse.py); SILO incomes are 2016 $
 INC_STEP = 2500.0; INC_NB = 200   # histogram 0 .. 500k (2024 $), last bin open
 
 def f(seed, y, kind):

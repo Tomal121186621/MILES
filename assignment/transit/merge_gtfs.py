@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Merge the GTFS feeds of every public transport operator in the MATSim network area into one GTFS folder for pt2matsim
-(4_matsim/transit/TRANSIT_BUILD.md).  Successor of the earlier chain's `Updated MATSim/code/merge_gtfs.py` (2026-06-30, the five
+(WORKSPACE/4_matsim/transit/TRANSIT_BUILD.md).  Successor of the earlier chain's `Updated MATSim/code/merge_gtfs.py` (2026-06-30, the five
 MTA feeds); the first version of this file (2026-10-22 12:02, five MTA feeds, all service ids) is described in TRANSIT_BUILD.md, step 1.
 
-Per feed (FEEDS below; downloads in Validation_2026/data/raw/<folder>/, fetched by 4_matsim/network/fetch_gtfs.sh and
-4_matsim/transit/fetch_gtfs_regional.sh):
+Per feed (FEEDS below; downloads in WORKSPACE/data/raw/<folder>/, fetched by assignment/network/fetch_gtfs.sh and
+assignment/transit/fetch_gtfs_regional.sh):
   1. service day: the representative weekday DAY (Wednesday 2026-10-21) when the feed's calendar has service on it; a feed whose
      calendar has ended ("stale": the operator publishes no current feed) uses its last Wednesday with service (the "proxy day",
      recorded in the manifest).  The active service ids of that day come from calendar.txt (date range and weekday flag) and
@@ -19,7 +19,7 @@ Per feed (FEEDS below; downloads in Validation_2026/data/raw/<folder>/, fetched 
   4. ids: every identifier is prefixed with the feed key ("<key>:"), every foreign key the same way, so nothing collides.
 Outputs: <out>/{agency,stops,routes,trips,stop_times,calendar,shapes,frequencies,transfers}.txt and <out>/manifest.json (per feed:
 input file, sha256, feed version, calendar range, service day, rows before/after each step).
-Usage: python3 -I merge_gtfs.py <raw dir (Validation_2026/data/raw)> <network.xml.gz> <out dir>"""
+Usage: python3 -I assignment/transit/merge_gtfs.py <raw dir (WORKSPACE/data/raw)> <network.xml.gz> <out dir>"""
 import sys, os, io, csv, zipfile, hashlib, json, datetime, gzip, re
 import numpy as np, pandas as pd
 from scipy.spatial import cKDTree

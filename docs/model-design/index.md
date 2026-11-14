@@ -1,21 +1,8 @@
 # Model design
 
-ORIOLE is a chain of five components. Each component's output is the next one's input.
-
-<div class="grid cards" markdown>
-
-- **[Synthetic population](population.md)**  
-  Conditional VAE → households and persons of 2016
-- **[Land use](landuse.md)**  
-  SILO → moves, jobs, cars, 2016 to 2024
-- **[School location](schools.md)**  
-  Students to schools, every year
-- **[Activities](activity.md)**  
-  ORIOLE-Day → a weekday plan per person
-- **[Traffic assignment](assignment.md)**  
-  MATSim → routes and link volumes
-
-</div>
+ORIOLE is a chain of five components. Each component's output is the next one's input; each has its own page:
+[Synthetic population](population.md), [Land use](landuse.md), [School location](schools.md),
+[Activities](activity.md) and [Traffic assignment](assignment.md).
 
 
 ## Stages and what passes between them

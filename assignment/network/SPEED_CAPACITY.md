@@ -54,7 +54,7 @@ Lanes are as coded.
 | `network_2024_pre_speed.xml.gz` | the network before this step |
 | `../transit/network_2024_pt.xml.gz` | the recoded MATSim run network. The same 452,045 links are rewritten; ids, transit links and modes are unchanged |
 | `../transit/network_2024_pt_pre_speed.xml.gz` | the run network before this step |
-| `pipeline/runs/matsim_pop/2024/population_2024_scc.xml.gz` | rebuilt with `pop_scc_links.py`. It is identical to the earlier file (`*_pre_speed`) because the topology did not change |
+| `pipeline/runs/matsim_pop/2024/population_2024_scc.xml.gz` | rebuilt with `snap_to_network.py`. It is identical to the earlier file (`*_pre_speed`) because the topology did not change |
 
 `network_2026.xml.gz` and `network_2026_pt.xml.gz` are not recoded yet.
 

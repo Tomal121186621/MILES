@@ -7,10 +7,13 @@ population as executed on the network.  Nothing is fitted.
 Survey trips are linked across change-mode activities (activity 17), main mode transit > car driver > car passenger > bike > walk
 (as in 3_abit/tasha_estimation); transit = bus + rail.  Boardings per linked survey transit trip counts only transfers recorded
 as a change-mode stop, so it is a lower bound.
-Usage: python3 mode_share.py [runs_root] [out_dir]   -> out_dir/data/mode_share*.csv, out_dir/figures/fig_mode_share.pdf|png"""
+Usage: python3 assignment/validation/mode_share.py [runs_root] [out_dir]   -> out_dir/data/mode_share*.csv, out_dir/figures/fig_mode_share.pdf|png"""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, glob, numpy as np, pandas as pd
-H = os.path.dirname(os.path.abspath(__file__)); V = os.path.dirname(os.path.dirname(H)); ROOT = os.path.dirname(V)
-sys.path.insert(0, f"{V}/5_reports"); import paperstyle as ps   # noqa: E402
+V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
+sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps   # noqa: E402
 RUNS = sys.argv[1] if len(sys.argv) > 1 else f"{V}/pipeline/runs/matsim"
 OUT = sys.argv[2] if len(sys.argv) > 2 else f"{H}/previews/mode_share"
 os.makedirs(f"{OUT}/data", exist_ok=True); os.makedirs(f"{OUT}/figures", exist_ok=True)
@@ -25,7 +28,7 @@ WORK_ACT = {2}   # RTS activity 2 = work (3 = volunteer; rts_common.ACT_PURPOSE)
 
 
 def survey():
-    RTS = f"{ROOT}/ABIT/input/rts"
+    RTS = f"{ABIT_HOME}/input/rts"
     h = pd.read_csv(f"{RTS}/RTS_raw_flat_data.csv", usecols=["household_id", "home_state_county_fips"], low_memory=False).drop_duplicates("household_id")
     t = pd.read_csv(f"{RTS}/rts_trips_clean.csv", low_memory=False, usecols=["household_id", "person_id", "tripno", "o_activity", "d_activity",
                     "travel_mode", "distance", "wttrdfin", "numvehicle"]).merge(h, on="household_id")

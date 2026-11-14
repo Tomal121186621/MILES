@@ -13,7 +13,7 @@ Measured on the development machine (Apple M5 Pro, 18 cores, 48 GB memory).
 | Transit mapping (pt2matsim) | ≤ 9 GB | – | – | |
 
 !!! tip "Disk"
-    `assignment/validation/run_seeds_respec.sh` extracts hourly link volumes after each seed, deletes the events and
+    `assignment/run_seeds.sh` extracts hourly link volumes after each seed, deletes the events and
     stops when less than 7 GB of disk is free.
 
 ## Scale of a 2024 run

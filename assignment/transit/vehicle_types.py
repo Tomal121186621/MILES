@@ -14,7 +14,7 @@ Rail and ferry types run on their own (rail or artificial) links; their PCE only
 --scale F (the MATSim sample, e.g. 0.1): passenger capacity and PCE multiplied by F (capacity rounded up to >= 1), so that a bus of
 a 10 % run takes the road space of 10 % of a bus on the 10 %-capacity network and carries 10 % of a bus load (MATSim practice for
 sample runs).
-Usage: python3 -I vehicle_types.py <schedule.xml.gz> <vehicles out.xml.gz> [--scale F]"""
+Usage: python3 -I assignment/transit/vehicle_types.py <schedule.xml.gz> <vehicles out.xml.gz> [--scale F]"""
 import sys, gzip, re, math, collections
 sched, out = sys.argv[1], sys.argv[2]; F = float(sys.argv[sys.argv.index("--scale") + 1]) if "--scale" in sys.argv else 1.0
 TYPES = {"bus_local": (38, 32, 12.2, 2.0, "bus", 2.0, 1.5), "bus_coach": (57, 0, 13.7, 2.5, "bus", 3.0, 3.0), "light_rail": (170, 200, 58, 5.2, "tram", 0.5, 0.5),

@@ -6,7 +6,7 @@ For every link and hour (0-35, the 36 h simulation): vehicles entering the link,
     pt_other = other transit vehicles (rail, ferry) on their own links
 and for cars the sum of link travel times (left link - entered link, s) and the number of those passages, so that
 congested link travel times by hour remain available (e.g. for skims) after the events are gone.
-Usage: extract_link_hours.py <events.xml.gz> <transitVehicles.xml.gz> <out.csv.gz>"""
+Usage: python3 assignment/validation/extract_link_hours.py <events.xml.gz> <transitVehicles.xml.gz> <out.csv.gz>"""
 import sys, gzip, re, collections, time
 import pandas as pd
 ev, vf, out = sys.argv[1:4]; t0 = time.time()

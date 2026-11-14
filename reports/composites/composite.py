@@ -13,10 +13,13 @@ Standard (after the validation figures of Roorda, Miller & Habib 2008, TR-A 42:3
   - exactly \\textwidth wide, drawn at print size, checked by paperstyle.finish() (no text < 7.5 pt, no overlap, no cropping).
 Output: 5_reports/figures/<name>.pdf/png, copied to 5_reports/article/figures/<name>.pdf.
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, shutil, sys
 import numpy as np
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"
-sys.path.insert(0, f"{V}/5_reports")
+V = f"{WORKSPACE}"
+sys.path.insert(0, f"{ORIOLE_HOME}/reports")
 import paperstyle as ps   # noqa: E402
 from matplotlib.lines import Line2D   # noqa: E402
 from matplotlib.patches import Patch  # noqa: E402

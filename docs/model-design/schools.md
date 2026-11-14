@@ -5,7 +5,7 @@
     | | |
     |---|---|
     | **Engine** | Python, run after every SILO year |
-    | **Code** | `landuse/schoolchoice`, `landuse/schools` |
+    | **Code** | `landuse/schools` |
     | **Models** | Three multinomial logits: K–8, high school, college |
     | **Sensitive to** | Car time, attendance boundaries, enrolment and capacity |
     | **Produces** | The school of every student |

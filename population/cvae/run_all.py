@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the full Updated VAE pipeline, steps 00 → 07, in order."""
+"""Run the full population generator pipeline, steps 00 → 07, in order."""
 import subprocess, sys
 from pathlib import Path
 

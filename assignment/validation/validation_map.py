@@ -20,11 +20,14 @@ Static map (figures/validation_map.pdf and .png, article style): links by volume
 Reads the outputs of validation_diagnostics.py (data/stations_diagnostics.csv, links_map.parquet, links_seed_stats.parquet,
 stations_direction_volumes.csv, counters_direction_detail.csv, spatial_groups.csv), data/count_stations_split.csv and the
 screenline geometry of screenlines.py.
-Usage: python3 validation_map.py   (env OUT, SCREEN_DATA)"""
+Usage: python3 assignment/validation/validation_map.py   (env OUT, SCREEN_DATA)"""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, json, re, numpy as np, pandas as pd, geopandas as gpd, shapely
 from pyproj import Transformer
-H = os.path.dirname(os.path.abspath(__file__)); V = os.path.dirname(os.path.dirname(H)); ROOT = os.path.dirname(V)
-sys.path.insert(0, f"{V}/5_reports"); sys.path.insert(0, H)
+V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
+sys.path.insert(0, f"{ORIOLE_HOME}/reports"); sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paperstyle as ps
 import map_study_area as msa
 WORK = f"{V}/5_reports/validation_pdfs/work/matsim_respec"
@@ -297,7 +300,7 @@ window.addEventListener('load', function() {{
         fg.add_to(m)
     except Exception as e: print("screenlines layer:", e)
     # ---- counties and the Key Bridge area
-    c6 = gpd.read_file(f"{ROOT}/Updated MATSim/data/bmr_counties.gpkg").to_crs(CRS); c6["geometry"] = c6.geometry.simplify(60); c6 = c6.to_crs(4326)
+    c6 = gpd.read_file(f"{MATSIM_HOME}/data/bmr_counties.gpkg").to_crs(CRS); c6["geometry"] = c6.geometry.simplify(60); c6 = c6.to_crs(4326)
     folium.GeoJson(json.loads(c6[["NAME", "geometry"]].to_json()), name="County boundaries", style_function=lambda f: {"color": "#333333", "weight": 1.6, "fill": False, "dashArray": "6 4"}, tooltip=GeoJsonTooltip(fields=["NAME"], labels=False)).add_to(m)
     near = ML[ML.key_bridge_km <= 5]
     fg = FeatureGroup(name="Key Bridge area (closed since March 2024)", show=True)

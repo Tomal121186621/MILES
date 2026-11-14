@@ -5,11 +5,14 @@ alignment, local marriage market, intercensal population series; levers of calib
 Imposed by construction (consistency checks, not tests): county population (regional control), employment level (alignment to the
 yearly ACS rates), vacancy share of jobs (QCEW x JOLTS job input).  Everything else is a test.
 Reads data/silo_validation_oos_s<k>.parquet, run/logs/oos_s<k>.log and the seeds' microdata (dwelling vacancy).
-Writes data/silo_final_tables.csv and prints Markdown.   Usage: final_tables.py [n_seeds=5]
+Writes data/silo_final_tables.csv and prints Markdown.   Usage: python3 landuse/validation/final_tables.py [n_seeds=5]
 Environment: SILO_SEEDS = seed-run prefix (default oos_s; e.g. oos_respec_s), SILO_OUT_SUFFIX = suffix of the output files (default none)."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re, sys, numpy as np, pandas as pd
 PFX = os.environ.get("SILO_SEEDS", "oos_s"); SUF = os.environ.get("SILO_OUT_SUFFIX", "")
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"; S = f"{V}/2_silo"; n = int(sys.argv[1]) if len(sys.argv) > 1 else 5
+V = f"{WORKSPACE}"; S = f"{V}/2_silo"; n = int(sys.argv[1]) if len(sys.argv) > 1 else 5
 Z = pd.read_csv(f"{S}/input/zoneSystem.csv").set_index("ZoneId")
 ACS_HOMECTY = {"with WFH": 0.659, "without WFH": 0.622}   # ACS 2016-20 county-to-county commuting flows, Maryland residents (in-state workplaces)
 rows = []

@@ -1,0 +1,24 @@
+# ORIOLE configuration. Copy to oriole.toml and set the paths of your machine.
+
+[paths]
+# folder with the data and the runs (inputs, microdata, skims, run outputs)
+workspace = "~/oriole-workspace"
+# where the estimation scripts write their results (default: <workspace>/side_experiments/respec_2026-11/step_by_step)
+# estimation_results = "~/oriole-workspace/estimation_results"
+# checkout of the ABIT engine with its input resources (input/maryland)
+abit_home = "~/oriole-external/ABIT"
+# MATSim runner build and network inputs
+matsim_home = "~/oriole-external/MATSim"
+# population-synthesis working folder (raw ACS PUMS, trained models)
+vae_home = "~/oriole-external/VAE"
+
+[java]
+home = ""            # empty: /usr/libexec/java_home -v 21
+silo_heap = "28g"
+activity_heap = "13g"
+matsim_heap = "32g"
+threads = 12
+
+[python]
+# interpreter with Biogeme (estimation package)
+biogeme = "~/.venvs/biogeme/bin/python"

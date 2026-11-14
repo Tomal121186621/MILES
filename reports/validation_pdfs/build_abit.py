@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validation of the activity model (stage 3, ABIT), in the structure of Roorda, Miller and Habib's validation of TASHA.
 
-    python3 build_abit.py [--runs RUN ...] [--chosen RUN] [--run-dir DIR] [--verification SET] [--validation SET] [--chain SET]
+    python3 reports/validation_pdfs/build_abit.py [--runs RUN ...] [--chosen RUN] [--run-dir DIR] [--verification SET] [--validation SET] [--chain SET]
                           [--survey-runs PREFIX] [--two-forms --runs-base RUN ...] [--out PDF] [--work DIR]
 
 Defaults: the final runs of the re-specified model (3_abit/final_2024/run_respec, fin24_s01 ... s10, one attendance form, settings
@@ -17,6 +17,9 @@ The earlier two-form build stays reachable:  --two-forms --run-dir 3_abit/final_
               names of the survey-based settings in data/abit_roorda_*.csv (survey households of the estimation half, of the held-out half,
               and the synthetic 2016 population)
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, glob, os, pickle, re, shutil, sys
 import numpy as np, pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -36,16 +39,16 @@ ap.add_argument("--two-forms", dest="single_form", action="store_false", help="t
 ap.add_argument("--pop-label", default="the 2024 SILO population", help="population named in the table footnotes (single form)")
 ap.add_argument("--survey-runs", default="svy_respec", help="prefix of the survey-household runs of the 2017/18 comparison columns (run_survey/<prefix>_est_sNN, _val_sNN; single form); empty for none")
 ap.add_argument("--chosen-rule", default=None, help="sentence describing the rule that picked --chosen (single form)")
-ap.add_argument("--out", default=f"{HERE}/abit_validation.pdf")
-ap.add_argument("--work", default=f"{HERE}/work/abit_respec")
+ap.add_argument("--out", default=f"{OUTDIR}/abit_validation.pdf")
+ap.add_argument("--work", default=f"{OUTDIR}/work/abit_respec")
 a = ap.parse_args()
 if a.runs_base is None: a.runs_base = list(a.runs) if a.single_form else [f"fin24_s{i:02d}" for i in range(1, 11)]
 if not a.survey_runs: a.survey_runs = None
 WORK = os.path.abspath(a.work); FIG = f"{WORK}/fig"; MDIR = f"{WORK}/measures"; TABD = f"{WORK}/tables"
 for d in (FIG, MDIR, TABD, f"{WORK}/data", f"{FIG}/_copy"): os.makedirs(d, exist_ok=True)
-sys.path.insert(0, f"{V}/3_abit/final_2024"); sys.path.insert(0, f"{V}/3_abit/temporal_2024")
+sys.path.insert(0, f"{ORIOLE_HOME}/activity/validation"); sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/reporting_2024")
 import paperstyle as ps
-import fin24_report as fr
+import report_2024 as fr
 import tasha_stage3 as ts
 OLD_MD = fr.MD
 fr.RUN = os.path.abspath(a.run_dir); fr.HERE = WORK; fr.TAB = TABD; fr.FIG = FIG; fr.MD = MDIR
@@ -82,7 +85,7 @@ if a.single_form:
     TOT = pd.concat([TOT, TOT.assign(form="fin24_tw")], ignore_index=True); TOT.to_csv(f"{WORK}/data/run_totals.csv", index=False)
     fr.SINGLE = True; fr.POP_LABEL = a.pop_label; fr.ROORDA = (a.verification, a.validation, a.chain)
     if a.survey_runs:
-        sys.path.insert(0, f"{V}/3_abit/temporal_2024"); import measures as TM
+        sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/reporting_2024"); import measures as TM
         PB = TM.persons("rts")
         for s_ in range(1, 11):
             pk = f"{MDIR}/mcb_s{s_:02d}.pkl"

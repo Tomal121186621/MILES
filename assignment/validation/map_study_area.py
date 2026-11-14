@@ -2,11 +2,14 @@
 """Main-text map of the study area (2026-11-04): the six Baltimore-region counties, the major roads from OpenStreetMap (true way
 geometries of motorway, trunk and primary roads, Maryland extract), the screenlines S1-S7 and the closed Key Bridge.  No count
 stations, no minor roads.  Called by screenlines.py (draw); standalone it reads the screenline geometry written by screenlines.py.
-Usage: python3 map_study_area.py [screenlines_definition.geojson] [out_without_ext]"""
+Usage: python3 assignment/validation/map_study_area.py [screenlines_definition.geojson] [out_without_ext]"""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, json, numpy as np, pandas as pd, geopandas as gpd, shapely
 from shapely.geometry import shape, LineString
-H = os.path.dirname(os.path.abspath(__file__)); V = os.path.dirname(os.path.dirname(H)); ROOT = os.path.dirname(V)
-sys.path.insert(0, f"{V}/5_reports"); import paperstyle as ps   # noqa: E402
+V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
+sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps   # noqa: E402
 CRS = 26985
 PBF = f"{ROOT}/inputs/osm/maryland-latest.osm.pbf"
 ROADS = f"{H}/data/osm_major_roads.gpkg"
@@ -44,7 +47,7 @@ def osm_roads():
 
 def counties():
     """Six counties (BMR layer) and the surrounding counties (Census 2023 cartographic boundaries, 1:500k, shoreline-clipped), minus the six."""
-    c6 = gpd.read_file(f"{ROOT}/Updated MATSim/data/bmr_counties.gpkg").to_crs(CRS); c6["fips"] = c6.GEOID.astype(int)
+    c6 = gpd.read_file(f"{MATSIM_HOME}/data/bmr_counties.gpkg").to_crs(CRS); c6["fips"] = c6.GEOID.astype(int)
     cb = gpd.read_file(f"{V}/data/raw/tiger_cb/cb_2023_us_county_500k.shp")
     nb = cb[cb.STATEFP.isin(["24", "42", "10", "11", "51", "34"])].to_crs(CRS)
     nb = nb[~nb.GEOID.astype(int).isin(c6.fips)].assign(fips=lambda d: d.GEOID.astype(int))[["fips", "geometry"]]

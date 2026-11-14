@@ -1,9 +1,11 @@
 #!/bin/sh
-# Download the GTFS feeds of the regional operators (TRANSIT_BUILD.md, coverage table) into Validation_2026/data/raw/<agency>/, one
+: "${ORIOLE_WORKSPACE:?run through the oriole command, or set ORIOLE_WORKSPACE}"
+# Usage: sh assignment/transit/fetch_gtfs_regional.sh
+# Download the GTFS feeds of the regional operators (TRANSIT_BUILD.md, coverage table) into WORKSPACE/data/raw/<agency>/, one
 # folder per agency, with a download log (agency, try, HTTP code, bytes, effective URL, sha256).  For every agency the official URL
 # (Mobility Database catalog feeds_v2.csv, data/raw/mobilitydatabase/) is tried first, then the Mobility Database mirror
 # (files.mobilitydatabase.org/<id>/latest.zip, the copy the catalog keeps of the official feed).  The files are not opened here.
-R="$(cd "$(dirname "$0")/../../data/raw" && pwd)"; DAY=$(date +%Y-%m-%d)
+R="$ORIOLE_WORKSPACE/data/raw"; DAY=$(date +%Y-%m-%d)
 get() {  # agency  url...
   a="$1"; shift; mkdir -p "$R/$a"; i=0
   for u in "$@"; do

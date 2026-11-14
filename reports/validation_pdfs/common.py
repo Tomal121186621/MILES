@@ -1,13 +1,17 @@
 """Shared helpers of the four validation builders: paths, LaTeX writing, table and figure blocks, build and log check."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re, shutil, subprocess, sys, glob
 import numpy as np, pandas as pd
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-V = os.path.dirname(os.path.dirname(HERE))                     # Validation_2026
-ROOT = os.path.dirname(V)
-REPORTS = f"{V}/5_reports"
+HERE = os.path.dirname(os.path.abspath(__file__))              # code (preamble.tex, builders)
+V = f"{WORKSPACE}"
+ROOT = f"{PROJECT_ROOT}"
+REPORTS = f"{V}/5_reports"                                     # report data and outputs (article figures, tables)
+OUTDIR = f"{REPORTS}/validation_pdfs"                          # default output folder of the builders (PDFs, work/)
 DATA = f"{V}/data"
-for p in (REPORTS, f"{REPORTS}/composites", HERE):
+for p in (f"{ORIOLE_HOME}/reports", f"{ORIOLE_HOME}/reports/composites", HERE):
     if p not in sys.path: sys.path.insert(0, p)
 
 

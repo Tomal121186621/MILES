@@ -3,7 +3,7 @@
 mapping that network_v8_supply carried over (modes containing "artificial", e.g. "bus,artificial" and stop-facility loop links, with
 their "pt_..." nodes).  Left in, the mapper routes buses over these old artificial links (e.g. a 34.6 km straight link of a 2026-06
 commuter-bus mapping).  Every car, bus, rail, subway and light-rail link built from OpenStreetMap is kept unchanged.
-Usage: python3 -I clean_network.py <network.xml.gz> <out.xml.gz>"""
+Usage: python3 -I assignment/transit/clean_network.py <network.xml.gz> <out.xml.gz>"""
 import sys, gzip, re
 src, dst = sys.argv[1], sys.argv[2]; drop = set(); keep_nodes = set()
 with gzip.open(src, "rt") as f:

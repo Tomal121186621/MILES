@@ -1,13 +1,14 @@
-"""Runs the existing MATSim validation scripts (4_matsim/validation) on the given run folders and writes everything into a work directory.
+"""Runs the MATSim validation scripts (assignment/validation) on the given run folders and writes everything into a work directory.
 No file outside the work directory is written."""
 import glob, os, re, subprocess, sys
-from common import V, ROOT
+from common import V, ROOT, ORIOLE_HOME
 
-VAL = f"{V}/4_matsim/validation"
+VAL = f"{V}/4_matsim/validation"                    # validation data (workspace): link hours of the runs
+VALC = f"{ORIOLE_HOME}/assignment/validation"       # validation scripts (repository)
 
 
 def link_hours_for(run, seed, workdir):
-    """Hourly link volumes of a run: <run>/link_hours.csv.gz, else 4_matsim/validation/data/link_hours/link_hours_<name>.csv.gz, else extracted from the events file."""
+    """Hourly link volumes of a run: <run>/link_hours.csv.gz, else WORKSPACE/4_matsim/validation/data/link_hours/link_hours_<name>.csv.gz, else extracted from the events file."""
     lhd = "link_hours_respec" if "runs_respec" in run else "link_hours"
     cand = [f"{run}/link_hours.csv.gz", f"{VAL}/data/{lhd}/link_hours_{os.path.basename(run).replace('2024_', '')}.csv.gz"]
     for c in cand:
@@ -16,12 +17,12 @@ def link_hours_for(run, seed, workdir):
     if os.path.exists(ev):
         out = f"{workdir}/link_hours_extracted_s{seed}.csv.gz"
         if not os.path.exists(out) or os.path.getmtime(out) < os.path.getmtime(ev):
-            subprocess.run([sys.executable, f"{VAL}/extract_link_hours.py", ev, f"{run}/output_transitVehicles.xml.gz", out], check=True)
+            subprocess.run([sys.executable, f"{VALC}/extract_link_hours.py", ev, f"{run}/output_transitVehicles.xml.gz", out], check=True)
         return out
     raise SystemExit(f"no hourly link volumes for {run}")
 
 
-def sh(cmd, env=None, log=None, cwd=VAL):
+def sh(cmd, env=None, log=None, cwd=VALC):
     e = dict(os.environ); e.update(env or {})
     r = subprocess.run(cmd, cwd=cwd, env=e, capture_output=True, text=True)
     if log: open(log, "w").write(r.stdout + "\n" + r.stderr)
@@ -32,11 +33,11 @@ def sh(cmd, env=None, log=None, cwd=VAL):
 
 def exec_patched(script, replacements, argv, env=None):
     """Runs a script with some constants replaced in memory (the file itself is not touched)."""
-    src = open(f"{VAL}/{script}").read()
+    src = open(f"{VALC}/{script}").read()
     for a, b in replacements:
         assert a in src, (script, a); src = src.replace(a, b)
     tmp = os.path.join(os.environ.get("TMPDIR", "/tmp"), "_patched_" + script)
-    code = f"import sys, os\n__file__ = {VAL + '/' + script!r}\nsys.argv = {[script] + argv!r}\nsys.path.insert(0, {VAL!r})\nexec(compile(open({tmp!r}).read(), {VAL + '/' + script!r}, 'exec'), {{'__name__': '__main__', '__file__': {VAL + '/' + script!r}}})\n"
+    code = f"import sys, os\n__file__ = {VALC + '/' + script!r}\nsys.argv = {[script] + argv!r}\nsys.path.insert(0, {VALC!r})\nexec(compile(open({tmp!r}).read(), {VALC + '/' + script!r}, 'exec'), {{'__name__': '__main__', '__file__': {VALC + '/' + script!r}}})\n"
     open(tmp, "w").write(src)
     return sh([sys.executable, "-c", code], env=env)
 

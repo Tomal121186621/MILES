@@ -2,18 +2,21 @@
 """Block-based crosswalks for the tract-level validation (no model data touched).
 2020 Census blocks (PL 94-171: P1_001 population, P5_001 group-quarters population, H1_002 occupied units) for the six study
 counties are located by the LODES 8 crosswalk internal point and joined to the 1,588 MSTM zone polygons (same rule as
-1_vae/zone_weights_2020.py: point-in-polygon, nearest zone for coastline misses).  2010 blocks (PL 2010 H1 occupied) likewise
+population/base_year/zone_weights_2020.py: point-in-polygon, nearest zone for coastline misses).  2010 blocks (PL 2010 H1 occupied) likewise
 by the TIGER 2010 internal point (for 2010-tract ACS 2012-16 apportionment).
 Outputs (out/):  blocks2020.parquet  (block, tract, county, zone, pop, gq, hhpop, hu_occ)
                  blocks2010.parquet  (block10, tract10, zone, hu_occ10)
                  lodes_block_zone.parquet (every MD 2020 block: block, tract, zone)  -- for LODES WAC/OD
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, geopandas as gpd, numpy as np, os
 from shapely import points
-ROOT = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM"; V = f"{ROOT}/Validation_2026"
+ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
 RAW = f"{V}/data/raw"; OUT = f"{V}/5_reports/validation_tracts/out"; os.makedirs(OUT, exist_ok=True)
 CTY = ["24003", "24005", "24013", "24025", "24027", "24510"]
-Z = gpd.read_file(f"{ROOT}/ABIT/input/mito_los/Zonal/SMZ_RMZ_02152011inMSTM_EPSG26918.shp").to_crs(4326)[["SMZRMZ", "geometry"]].rename(columns={"SMZRMZ": "zone"})
+Z = gpd.read_file(f"{ABIT_HOME}/input/mito_los/Zonal/SMZ_RMZ_02152011inMSTM_EPSG26918.shp").to_crs(4326)[["SMZRMZ", "geometry"]].rename(columns={"SMZRMZ": "zone"})
 
 def locate(df, idcol, lon, lat):
     pts = gpd.GeoDataFrame(df[[idcol]].copy(), geometry=points(df[lon].astype(float).values, df[lat].astype(float).values), crs=4326)

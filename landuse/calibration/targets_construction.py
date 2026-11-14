@@ -3,8 +3,11 @@
 Survey, county annual files co<year>a.txt; two header rows; units by structure size 1, 2, 3-4, 5+), mapped to SILO dwelling types
 (SFD/SFA = 1-unit, MF234 = 2 to 4 units, MF5plus = 5+ units; MH not permitted through BPS). Maryland, 2016-2024.
 Output: data/silo_target_permits_by_county_year.csv (county, year, units_1, units_2_4, units_5plus, units_total)."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"; rows = []
+V = f"{WORKSPACE}"; rows = []
 for y in range(2016, 2025):
     d = pd.read_csv(f"{V}/data/raw/bps/co{y}a.txt", skiprows=2, header=None, dtype=str, encoding="latin-1")
     d = d[d[1].str.strip() == "24"]

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Link-by-link audit of the 2024 network against MDOT SHA data (the 2026 network differs only by the change list of build_networks.py).
 
-Checks and outputs (all tables in Validation_2026/data/):
+Checks and outputs (all tables in WORKSPACE/data/):
   network_audit_links.parquet         one row per link: MDOT class match, MDOT lanes, posted speeds (OSM tag, MDOT sign), capacity per lane,
                                       study-area flag, connectivity flags
   network_audit_class_crosstab.csv    OSM highway type x MDOT functional class (links and km), study area
@@ -314,12 +314,12 @@ inventory of route RP 695 (all exits, including the MDTA-maintained section, exi
 
 Table: `data/network_audit_i695_interchanges.csv`. Between exit 44 (MD 695A, Hawkins Point) and exit 1 (MD 173, Quarantine Road) the mainline
 is cut at the closed Key Bridge in both loops; the ramps of these two exits are the ends of the Beltway in the 2024 and 2026 networks. Ramp capacities and gore geometry on I-695 were set from HCM and MDOT lane
-counts in the supply network (`I695_pricing/12_corridor_fit/fix_ramps.py`); this audit checks presence, not capacity.
+counts in the supply network (`PRICING_HOME/12_corridor_fit/fix_ramps.py`); this audit checks presence, not capacity.
 
 ## 7 Open items
 
 - NPMRDS travel times (free-flow and congested speeds by segment, 2024) are not available: the RITIS portal requires an account and a data
-  request (`Updated MATSim/data/npmrds_2023/README_ACCESS.md`). The free-flow and congested speed check stays open until the extract is obtained.
+  request (`MATSIM_HOME/data/npmrds_2023/README_ACCESS.md`). The free-flow and congested speed check stays open until the extract is obtained.
 - MDOT posted speeds exist only as a sign inventory on state routes; county and city roads are checked against the OSM tag alone.
 - The 2026 network has no observed counterpart yet; its only difference from 2024 is the change list.
 """

@@ -22,18 +22,3 @@ can be driven by the pipeline.
     How long each stage takes and how much memory and disk it needs.
 
 </div>
-
-## The chain in one view
-
-```mermaid
-flowchart LR
-  A[ACS PUMS<br/>census blocks] --> P[Synthetic population<br/>CVAE, 2016]
-  P --> L[Land use<br/>SILO, 2016 → 2024]
-  L --> S[School location<br/>every year]
-  S --> D[Activities<br/>ORIOLE-Day, 2024]
-  K[(Fixed skims<br/>car, transit)] --> L
-  K --> D
-  D --> X[Plans converter]
-  X --> M[Traffic assignment<br/>MATSim, 2024]
-  M --> V[Link volumes<br/>travel times, boardings]
-```

@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 """Validation of the synthetic population (stage 1, conditional VAE).
 
-    python3 build_vae.py [--vae-run full] [--validation PARQUET] [--shares CSV] [--puma96 CSV] [--pairs CSV] [--out PDF] [--work DIR]
+    python3 reports/validation_pdfs/build_vae.py [--vae-run full] [--validation PARQUET] [--shares CSV] [--puma96 CSV] [--pairs CSV] [--out PDF] [--work DIR]
 
---vae-run   name of the held-out validation folder of the generator (Updated VAE/outputs/07_validation/<name>/results.json)
---validation  Maryland counts, composition by PUMA, joint tables, jobs   (1_vae/validate_stage1.py)
+--vae-run   name of the held-out validation folder of the generator (VAE_HOME/outputs/07_validation/<name>/results.json)
+--validation  Maryland counts, composition by PUMA, joint tables, jobs   (population/validation/validate_population.py)
 --shares    Maryland category shares, model and observed                 (default: the table used by the staged figures)
---puma96    composition of all 96 PUMAs of the six states                (1_vae/validate_stage1_puma96.py)
+--puma96    composition of all 96 PUMAs of the six states                (population/validation/validate_by_puma.py)
 --pairs     SRMSE of every attribute pair against the held-out split
 --base      base-year microdata that the land-use model starts from (jj_2016, pp_2016, hh_2016, dd_2016); jobs by county and the commute
             of the synthetic workers are computed from these files (default: the re-assigned base workplaces of the final land-use runs)
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, json, os, shutil, sys
 import numpy as np, pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -23,8 +26,8 @@ ap.add_argument("--shares", default=f"{REPORTS}/article/figures/val_data/stage1_
 ap.add_argument("--puma96", default=f"{DATA}/stage1_composition_puma96.csv")
 ap.add_argument("--pairs", default=f"{DATA}/pop_pairs_srmse.csv")
 ap.add_argument("--base", default=f"{V}/2_silo/run/base_v5_respec/microData")
-ap.add_argument("--out", default=f"{HERE}/vae_validation.pdf")
-ap.add_argument("--work", default=f"{HERE}/work/vae")
+ap.add_argument("--out", default=f"{OUTDIR}/vae_validation.pdf")
+ap.add_argument("--work", default=f"{OUTDIR}/work/vae")
 a = ap.parse_args()
 WORK = os.path.abspath(a.work); FIG = f"{WORK}/fig"; os.makedirs(FIG, exist_ok=True)
 fv = patch_fig_dirs(FIG)
@@ -51,8 +54,8 @@ def base_checks(base, work):
     hz = hh.merge(dd.rename(columns={"id": "dwelling", "zone": "hzone"}), on="dwelling")[["id", "hzone"]].rename(columns={"id": "hhID"})
     wk = jj.rename(columns={"zone": "wzone"}).merge(pp.rename(columns={"id": "personId"}), on="personId").merge(hz, on="hhID")
     wk = wk[wk.hzone.map(z.STFIPS).eq(24)]
-    h = h5py.File(f"{ROOT}/ABIT/input/mito_los/skims/traveltime_auto.omx", "r"); T = h["data/mat1"][:]; ids = h["lookup/destinations"][:]; idx = {int(q): i for i, q in enumerate(ids)}
-    Dk = h5py.File(f"{ROOT}/ABIT/input/mito_los/skims/distance_auto.omx", "r")["data/mat1"][:] / 1000.0
+    h = h5py.File(f"{ABIT_HOME}/input/mito_los/skims/traveltime_auto.omx", "r"); T = h["data/mat1"][:]; ids = h["lookup/destinations"][:]; idx = {int(q): i for i, q in enumerate(ids)}
+    Dk = h5py.File(f"{ABIT_HOME}/input/mito_los/skims/distance_auto.omx", "r")["data/mat1"][:] / 1000.0
     wk = wk[wk.hzone.isin(idx) & wk.wzone.isin(idx)]; i, j = wk.hzone.map(idx).values, wk.wzone.map(idx).values; t, km = T[i, j], Dk[i, j]; intra = float((i == j).mean()); del T, Dk
     old = pd.read_csv(f"{DATA}/stage1_commute_curves.csv", dtype={"bin": str})          # the survey side (2017/18 RTS car-driver commutes) is unchanged
     tb = np.arange(0, 125, 5); ts_ = pd.Series(1.0, index=range(len(t))).groupby((np.clip(t, 0, 119.99) // 5 * 5).astype(int)).sum(); ts_ = (ts_ / ts_.sum()).reindex(tb[:-1], fill_value=0).values
@@ -69,7 +72,7 @@ class S1(fv.Stage1):
         self.R = R; self.J = RES; self.W = None; self.C = CB
 
 
-RES = json.load(open(f"{ROOT}/Updated VAE/outputs/07_validation/{a.vae_run}/results.json"))
+RES = json.load(open(f"{VAE_HOME}/outputs/07_validation/{a.vae_run}/results.json"))
 R = pd.read_parquet(a.validation); SH = pd.read_csv(a.shares, keep_default_na=False, na_values=[""]); P96 = pd.read_csv(a.puma96); P96["bin"] = P96["bin"].astype(str)
 JB, CB = base_checks(os.path.abspath(a.base), WORK)
 R = pd.concat([R[R.section != "D jobs"], pd.DataFrame(dict(section="D jobs", geo=JB.geo.astype(str), table="filled jobs vs LODES 2016", bin="jobs", model=JB.model, observed=JB.observed,

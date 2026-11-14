@@ -2,12 +2,14 @@
 """Rows of the article's activity-model tables (tab_s3_verification.tex, tab_s3_validation.tex) from data/abit_roorda_tables.csv
 (variant 'base'), for the model runs named by the setting suffix.  Only the numeric rows are rewritten; layout and notes stay.
 
-    ABIT_SUFFIX=_respec python3 tools/s3_tables.py      # default suffix _sched
+    ABIT_SUFFIX=_respec python3 reports/article/s3_tables.py      # default suffix _sched; edits WORKSPACE/5_reports/article/sections
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re
 import pandas as pd
-HERE = os.path.dirname(os.path.abspath(__file__)); ART = os.path.dirname(HERE)
-V = os.path.dirname(os.path.dirname(ART))
+V = f"{WORKSPACE}"; ART = f"{V}/5_reports/article"   # article sources (workspace)
 SUF = os.environ.get("ABIT_SUFFIX", "_sched")
 T = pd.read_csv(f"{V}/data/abit_roorda_tables.csv"); T = T[T.variant == "base"]
 ROWS = [("Work", "WORK"), ("School", "SCHOOL"), ("Shopping", "SHOPPING"), ("Other", "OTHER"), (r"\quad recreation", "RECREATION"),

@@ -7,7 +7,7 @@ transit-only links, the Key Bridge closure, the topology and the link ids are no
 
 Rules (sources and results in SPEED_CAPACITY.md):
  1. Posted speed of the link, first available of
-    a. the OSM maxspeed tag of the link's way (Geofabrik Maryland extract 2026-06-11; I695_pricing/data/network_v8/osm_way_tags.csv);
+    a. the OSM maxspeed tag of the link's way (Geofabrik Maryland extract 2026-06-11; PRICING_HOME/data/network_v8/osm_way_tags.csv);
     b. MDOT SHA posted-speed-limit signs attached to links of the same way (data/network_audit_links.parquet, column mdot_sign_mph; median);
     c. median posted speed (a or b) of links of the same road name and class in the same 5 km cell;
     d. median posted speed (a or b) of links of the same class in the same 5 km cell (at least 5 links): local area-type proxy;
@@ -17,17 +17,20 @@ Rules (sources and results in SPEED_CAPACITY.md):
     The same rule applies to every class in scope.
  3. Capacity = capacity per lane of the class x max(lanes, 1), per-lane values of the same MATSim OSM reader (LinkProperties.create*):
     primary and primary_link 1,500; secondary and secondary_link 800; tertiary, tertiary_link, unclassified, residential 600; living_street 300.
-    The class is the MDOT-reconciled class of the supply network (I695_pricing/data/network_v8/link_changes.csv, column 'profile':
+    The class is the MDOT-reconciled class of the supply network (PRICING_HOME/data/network_v8/link_changes.csv, column 'profile':
     OSM class, or the MDOT functional class where MDOT rates the road higher).
-Usage: python3 recode_speed_capacity.py <network in> <network out> [<pt network in> <pt network out>]
+Usage: python3 assignment/network/recode_speed_capacity.py <network in> <network out> [<pt network in> <pt network out>]
 Writes link_speed_capacity_2024.csv.gz (old/new per link) and prints the summary by class.
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, gzip
 import numpy as np, pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import netio
 
-HERE = os.path.dirname(os.path.abspath(__file__)); MPH = 2.23694
+HERE = f"{WORKSPACE}/4_matsim/network"; MPH = 2.23694   # HERE: network files and outputs (workspace)
 SCOPE = ["primary", "primary_link", "secondary", "secondary_link", "tertiary", "tertiary_link", "unclassified", "residential", "living_street"]
 CPL = {"primary": 1500, "primary_link": 1500, "secondary": 800, "secondary_link": 800, "tertiary": 600, "tertiary_link": 600,
        "unclassified": 600, "residential": 600, "living_street": 300}
@@ -65,7 +68,7 @@ pk = E.posted / MPH * 3.6
 E["fs_new"] = (E.posted / MPH * np.where(pk < URBAN_KMH, URBAN_FACTOR, 1.0)).round(4)
 
 # ---- 3. capacity
-P = pd.read_csv(f"{netio.ROOT}/I695_pricing/data/network_v8/link_changes.csv", dtype={"link": str}, usecols=["link", "profile"]).set_index("link").profile
+P = pd.read_csv(f"{PRICING_HOME}/data/network_v8/link_changes.csv", dtype={"link": str}, usecols=["link", "profile"]).set_index("link").profile
 E["cls"] = pd.Series(E.index.map(P), index=E.index).fillna(E.hwy)
 E.loc[~E.cls.isin(CPL.keys()), "cls"] = E.hwy
 E["cap_new"] = (E.cls.map(CPL) * E.permlanes.clip(lower=1)).round(1)

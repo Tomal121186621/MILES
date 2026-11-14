@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """Estimation tables of the re-specified models (side experiment, 2026-11-06). Tables come from ../article_tables; a model
 whose new table is not there yet gets a 'pending' note. Compiles estimation_tables_respec.tex with tectonic.
-Usage: python3 make_pdf.py"""
+Usage: python3 estimation/development/estimation_pdf_make_pdf.py"""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re, shutil, subprocess
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+HERE = f"{WORKSPACE}/side_experiments/respec_2026-11/estimation_pdf"   # template, build/ and PDF (data)
 NEW = os.path.join(HERE, "..", "article_tables")
-ART = os.path.join(HERE, "..", "..", "..", "5_reports", "article")
+ART = os.path.join(WORKSPACE, "5_reports", "article")
 B = os.path.join(HERE, "build")
 TABLES = ["est_region", "est_zone", "est_dwelling", "est_cars", "est_jobchoice", "est_school", "est_subtour", "est_return",
           "est_dc_SHOPPING_primary", "est_dc_RECREATION_primary", "est_dc_ACCOMPANY_primary", "est_dc_OTHER_primary",

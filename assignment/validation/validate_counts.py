@@ -4,22 +4,25 @@
 Model   : residents of the Baltimore region only (ABIT 2024 replication closest to the median, BMR residents, no cordon gateways,
           no external-external, background or truck traffic), network 2024 (Key Bridge closed), harbor tunnel tolls, USDOT value
           of time, 10 % sample, 100 iterations, seeds 1-5.  Nothing is fitted to the counts.
-          Link volume (the bus fix of I695_pricing/00_research/validation_core.py): cars = (final link stats, averaged over iterations
+          Link volume (the bus fix of PRICING_HOME/00_research/validation_core.py): cars = (final link stats, averaged over iterations
           96-100, minus the transit-vehicle entries of the final iteration) x 10 (sample expansion); buses x 1 (they run at their real
           number); all vehicles = cars + buses.  Weekday hours 0-24.
 Counts  : MDOT SHA 2024 annual average weekday traffic (AAWDT), all vehicles, at the stations matched to network_2024 links by
-          4_matsim/network/match_count_stations.py (both directions summed; matched, unambiguous, with a 2024 count = the 3,412 stations of
+          assignment/network/match_count_stations.py (both directions summed; matched, unambiguous, with a 2024 count = the 3,412 stations of
           data/count_stations_split.csv).  Passenger comparison: count x (1 - truck share - bus share) against model cars; shares from the
           station's own MDOT classification, else the count-weighted mean of the classified stations of its class (validation_core rule).
-          Hourly permanent counters: FHWA TMAS 2023 weekday hourly means by direction (I695_pricing/data/corridor_fit/targets_v7.csv,
+          Hourly permanent counters: FHWA TMAS 2023 weekday hourly means by direction (PRICING_HOME/data/corridor_fit/targets_v7.csv,
           kind 'hourly'; link ids valid in network_2024), scaled to 2024 by the station's MDOT AADT 2024 / 2023; GEH on these only.
 Standards: FDOT 2008 %RMSE by volume group and volume/count by facility (Tennessee 2016, Tables 5 and 10); FHWA desirable deviation
           by volume (Tennessee Table 6); UK TAG M3.1: GEH < 5 for > 85 % of hourly flows.
 Seeds   : every statistic per seed, then mean, s.d. and the range over the seeds (smallest to largest; the *_p5 / *_p95 columns hold the min and max).
 Run     : python3 validate_counts.py   (env RUN_ROOT, IT, SEEDS for tests) -> data/*.csv, data/tables.json, figures/*.pdf|png"""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, json, glob, gzip, warnings, numpy as np, pandas as pd; warnings.filterwarnings("ignore")
-H = os.path.dirname(os.path.abspath(__file__)); V = os.path.dirname(os.path.dirname(H)); ROOT = os.path.dirname(V)
-sys.path.insert(0, f"{V}/5_reports"); import paperstyle as ps
+V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
+sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps
 RUN_ROOT = os.environ.get("RUN_ROOT", f"{V}/pipeline/runs/matsim"); IT = int(os.environ.get("IT", "100"))
 LH = os.environ.get("LINK_HOURS", f"{H}/data/link_hours"); OUTB = os.environ.get("OUT", H); DATA = f"{OUTB}/data"; FIG = f"{OUTB}/figures"; os.makedirs(DATA, exist_ok=True); os.makedirs(FIG, exist_ok=True)
 SEEDS = [int(s) for s in os.environ["SEEDS"].split(",")] if os.environ.get("SEEDS") else sorted({int(m.group(1)) for f in glob.glob(f"{LH}/link_hours_s*.csv.gz") if (m := re.search(r"link_hours_s(\d+)\.csv\.gz$", f))})
@@ -48,7 +51,7 @@ def stations():
     M = pd.read_csv(f"{V}/data/count_stations_matched.csv", dtype={"link_NE": str, "link_SW": str})
     Sp = pd.read_csv(f"{V}/data/count_stations_split.csv")[["LOCATION_ID", "split"]]
     A = M.merge(Sp, on="LOCATION_ID")                       # matched, unambiguous, with a 2024 count
-    g = json.load(open(f"{ROOT}/I695_pricing/data/mdot_aadt_statewide_2015-2024.geojson"))
+    g = json.load(open(f"{PRICING_HOME}/data/mdot_aadt_statewide_2015-2024.geojson"))
     P = pd.DataFrame([f["properties"] for f in g["features"]]).drop_duplicates("LOCATION_ID").set_index("LOCATION_ID")
     A = A.join(P[["ID_PREFIX", "ID_RTE_NO", "AADT", "BUS_AADT"]].rename(columns={"AADT": "AADT_CLS"}), on="LOCATION_ID")
     A["route"] = (A.ID_PREFIX.fillna("") + " " + A.ID_RTE_NO.astype(str)).str.replace("IS ", "I-").replace({"MD 695": "I-695"})
@@ -88,12 +91,12 @@ def stations():
     return A
 
 def audited(A0):
-    """The earlier audited station set of the I-695 study (I695_pricing/00_research/resident_validation_station_audit.csv, 1,410 stations
+    """The earlier audited station set of the I-695 study (PRICING_HOME/00_research/resident_validation_station_audit.csv, 1,410 stations
     not dropped; matched to the 2023 network, whose link ids are those of network_2024), with ITS OWN link ids (reverse links and parallel
     roadways as audited) and the MDOT 2024 AAWDT; truck and bus shares as in stations() (own classification, else the class average)."""
-    B = pd.read_csv(f"{ROOT}/I695_pricing/00_research/resident_validation_station_audit.csv", dtype={"LOCATION_ID": str})
+    B = pd.read_csv(f"{PRICING_HOME}/00_research/resident_validation_station_audit.csv", dtype={"LOCATION_ID": str})
     B = B[~B.audit.str.startswith("dropped")].copy()
-    g = json.load(open(f"{ROOT}/I695_pricing/data/mdot_aadt_statewide_2015-2024.geojson"))
+    g = json.load(open(f"{PRICING_HOME}/data/mdot_aadt_statewide_2015-2024.geojson"))
     P = pd.DataFrame([f["properties"] for f in g["features"]]).drop_duplicates("LOCATION_ID").set_index("LOCATION_ID")
     B = B.drop(columns=["ID_PREFIX", "ID_RTE_NO", "F_SYSTEM"]).join(P[["ID_PREFIX", "ID_RTE_NO", "F_SYSTEM", "AAWDT_2024", "AADT_2024", "AADT", "CAR_AADT", "SINGLE_UNIT_AADT", "COMBINATION_UNIT_AADT", "BUS_AADT"]], on="LOCATION_ID")
     B["count_all"] = B.AAWDT_2024.where(B.AAWDT_2024 > 0, B.AADT_2024); B = B[B.count_all > 0].copy()
@@ -141,7 +144,7 @@ def seed_tables(A0, B=None):
     return pd.DataFrame(rows)
 
 def counters(car, bus):
-    TG = pd.read_csv(f"{ROOT}/I695_pricing/data/corridor_fit/targets_v7.csv"); TG = TG[(TG.kind == "hourly") & (TG.hour >= 0)].copy()
+    TG = pd.read_csv(f"{PRICING_HOME}/data/corridor_fit/targets_v7.csv"); TG = TG[(TG.kind == "hourly") & (TG.hour >= 0)].copy()
     TG["lk"] = TG.links.astype(str).str.replace("|", ";").str.split(";")
     M = pd.read_csv(f"{V}/data/count_stations_matched.csv", dtype={"link_NE": str, "link_SW": str})
     l2s = {}
@@ -278,7 +281,7 @@ def figures(St, TS, Cm, CV):
     # 4. hourly counters: 24-h profiles, observed grey, model blue with 90 % band; hours with GEH >= 5 in orange
     sts = list(dict.fromkeys(Cm.sort_values(["grp", "station"]).station)); n = len(sts); nc = 4; nr = int(np.ceil(n / nc))
     fig, axs = ps.figure(min(ps.MAX_HEIGHT, 1.05 * nr + 0.5), nrows=nr, ncols=nc, sharex=True); axs = np.atleast_1d(axs).ravel()
-    names = pd.read_csv(f"{ROOT}/I695_pricing/data/corridor_fit/targets_v7.csv").drop_duplicates("station").set_index("station")
+    names = pd.read_csv(f"{PRICING_HOME}/data/corridor_fit/targets_v7.csv").drop_duplicates("station").set_index("station")
     for ax, s_ in zip(axs, sts):
         d = Cm[Cm.station == s_].sort_values("hour")
         ax.fill_between(d.hour, d.model_p5.clip(lower=0) / 1e3, d.model_p95 / 1e3, color=ps.SEED_BAND, lw=0)

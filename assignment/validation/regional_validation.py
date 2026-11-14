@@ -18,14 +18,17 @@ Checks (observed sources: see SOURCES in this file and REPORT.md):
  6 Count gap  modelled volume at the count-station links by trip purpose and hour (selected plans' routes) vs counts.
  7 OD         county-to-county commuting of resident workers vs ACS 2016-2020 county flows and LODES 2022 (JT00).
 
-Usage: python3 regional_validation.py [RUNS_ROOT] [OUT_DIR] [--seeds 1,2] [--force] [--figures-only]
+Usage: python3 assignment/validation/regional_validation.py [RUNS_ROOT] [OUT_DIR] [--seeds 1,2] [--force] [--figures-only]
 Per-seed intermediate results are cached in OUT_DIR/data/seeds/s<N>/ (small CSVs); --force recomputes them.
 Memory: the plans file is streamed line by line; trips/legs are read column-selected (< 4 GB)."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, json, glob, gzip, argparse, time, zipfile, warnings, collections
 import numpy as np, pandas as pd
 warnings.filterwarnings("ignore")
-H = os.path.dirname(os.path.abspath(__file__)); V = os.path.dirname(os.path.dirname(H)); ROOT = os.path.dirname(V)
-sys.path.insert(0, f"{V}/5_reports"); import paperstyle as ps  # noqa: E402
+V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
+sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps  # noqa: E402
 ps.RATIO_COLORS = ["#104281", "#4a7fc4", "#a9cbf2", "#e8e7e1", "#f0a09f", "#e34948", "#9c1d1c"]   # map classes kept distinct from the model blue of the bars
 
 EXP = 10
@@ -113,7 +116,7 @@ def links_static():
     if "links" in _static: return _static["links"]
     import geopandas as gpd, shapely
     A = pd.read_parquet(f"{V}/data/network_audit_links.parquet", columns=["f", "t", "length", "freespeed", "permlanes", "xm", "ym", "x0", "y0", "x1", "y1", "mdot_fc", "mdot_route", "hwy"])
-    C = gpd.read_file(f"{ROOT}/Updated MATSim/data/bmr_counties.gpkg").to_crs("EPSG:26985")
+    C = gpd.read_file(f"{MATSIM_HOME}/data/bmr_counties.gpkg").to_crs("EPSG:26985")
     A["county"] = None
     for g, geom in zip(C.GEOID, C.geometry):
         k = shapely.contains_xy(geom, A.xm.values, A.ym.values); A.loc[k, "county"] = g
@@ -164,7 +167,7 @@ def stations_static():
             want = ne if r.NE_SPLIT == 100 else sw if r.SW_SPLIT == 100 else None; ids.append([want] if want else [x for x in (ne, sw) if x])
         else: ids.append([x for x in (ne, sw) if x])
     S["ids"] = ids; S = S[S.use == "mainline"].copy()
-    TG = pd.read_csv(f"{ROOT}/I695_pricing/data/corridor_fit/targets_v7.csv"); TG = TG[(TG.kind == "hourly") & (TG.hour >= 0)]
+    TG = pd.read_csv(f"{PRICING_HOME}/data/corridor_fit/targets_v7.csv"); TG = TG[(TG.kind == "hourly") & (TG.hour >= 0)]
     CL = TG.drop_duplicates("station")[["station", "links"]].copy(); CL["ids"] = CL.links.astype(str).str.replace("|", ";").str.split(";")
     CH = pd.read_csv(f"{H}/previews/seed1_final/data/counters_hourly.csv", dtype={"mdot_station": str})
     _static["st"] = (S, CL, CH); return S, CL, CH
@@ -410,8 +413,8 @@ def obs_transit():
     return pd.DataFrame(rows)
 
 def obs_triplength():
-    R = pd.read_csv(f"{ROOT}/ABIT/input/rts/rts_trips_clean.csv", usecols=["tripid", "household_id", "travel_mode", "distance", "reported_travel_time", "wttrdfin"])
-    HC = pd.read_csv(f"{ROOT}/ABIT/input/rts/RTS_raw_flat_data.csv", usecols=["tripid", "home_state_county_fips"]).drop_duplicates("tripid")
+    R = pd.read_csv(f"{ABIT_HOME}/input/rts/rts_trips_clean.csv", usecols=["tripid", "household_id", "travel_mode", "distance", "reported_travel_time", "wttrdfin"])
+    HC = pd.read_csv(f"{ABIT_HOME}/input/rts/RTS_raw_flat_data.csv", usecols=["tripid", "home_state_county_fips"]).drop_duplicates("tripid")
     R = R.merge(HC, on="tripid", how="left"); R["hc"] = R.home_state_county_fips.astype("Int64").astype(str).str.zfill(5)
     R = R[R.travel_mode.isin([3, 4]) & R.hc.isin(CO) & (R.wttrdfin > 0)]
     rd = R[R.distance > 0]; rt = R[R.reported_travel_time > 0]
@@ -623,7 +626,7 @@ def parse_fc_table(tag):
 def obs_sections(fac):
     """MDOT SHA 2024 traffic-count sections of the six counties (station points with their section limits, in miles): weekday passenger
     VMT = AAWDT 2024 x section length x (1 - truck share - bus share); shares from the station's classification, else the class mean."""
-    g = json.load(open(f"{ROOT}/I695_pricing/data/mdot_aadt_statewide_2015-2024.geojson"))
+    g = json.load(open(f"{PRICING_HOME}/data/mdot_aadt_statewide_2015-2024.geojson"))
     P = pd.DataFrame([f["properties"] for f in g["features"]]); P = P[P.COUNTY_DESC.isin(CNAME_MDOT)].copy()
     P["county"] = P.COUNTY_DESC.map(CNAME_MDOT); P["len_mi"] = (P.END_SECTION - P.BEGIN_SECTION).clip(lower=0)
     P["route"] = (P.ID_PREFIX.fillna("") + " " + P.ID_RTE_NO.astype("Int64").astype(str)).replace({"MD 695": "IS 695"})
@@ -645,8 +648,8 @@ def population():
 
 def rts_resident_vmt():
     """RTS 2017/18 weighted car-driver miles per weekday by household home county (distance = routed miles between reported addresses)."""
-    R = pd.read_csv(f"{ROOT}/ABIT/input/rts/rts_trips_clean.csv", usecols=["tripid", "travel_mode", "distance", "wttrdfin"])
-    HC = pd.read_csv(f"{ROOT}/ABIT/input/rts/RTS_raw_flat_data.csv", usecols=["tripid", "home_state_county_fips"]).drop_duplicates("tripid")
+    R = pd.read_csv(f"{ABIT_HOME}/input/rts/rts_trips_clean.csv", usecols=["tripid", "travel_mode", "distance", "wttrdfin"])
+    HC = pd.read_csv(f"{ABIT_HOME}/input/rts/RTS_raw_flat_data.csv", usecols=["tripid", "home_state_county_fips"]).drop_duplicates("tripid")
     R = R.merge(HC, on="tripid"); R["hc"] = R.home_state_county_fips.astype("Int64").astype(str).str.zfill(5)
     R = R[R.travel_mode.isin([3, 4]) & R.hc.isin(CO) & (R.distance > 0) & (R.wttrdfin > 0)]
     return (R.distance * R.wttrdfin).groupby(R.hc).sum().reindex(CO)
@@ -762,7 +765,7 @@ def figures(out, R):
         if rot: ax.set_xticklabels(cats, rotation=45, ha="right", rotation_mode="anchor")
         else: ax.set_xticklabels(cats)
     hM = Patch(color=ps.MODEL, label="Model"); hO = Patch(color=ps.OBSERVED, label="Observed"); hE = Line2D([], [], color=ps.INK, lw=0.6, marker="_", ms=4, label="Range of the runs")
-    C = gpd.read_file(f"{ROOT}/Updated MATSim/data/bmr_counties.gpkg").to_crs("EPSG:26985"); C["GEOID"] = C.GEOID.astype(str); C = C.set_index("GEOID")
+    C = gpd.read_file(f"{MATSIM_HOME}/data/bmr_counties.gpkg").to_crs("EPSG:26985"); C["GEOID"] = C.GEOID.astype(str); C = C.set_index("GEOID")
     figs = []
 
     # ---------------- 1 VMT
@@ -1123,7 +1126,7 @@ def combine_vmt_hex(D, seeds, R):
     Observed = passenger count (AAWDT 2024, else AADT 2024, x (1 - truck - bus share)) x section length; model = car volume on the station's
     matched links (seed mean; link statistics as in validate_counts) x the same length. Sections are summed by hexagon of the station point."""
     S, _, _ = stations_static()
-    g = json.load(open(f"{ROOT}/I695_pricing/data/mdot_aadt_statewide_2015-2024.geojson"))
+    g = json.load(open(f"{PRICING_HOME}/data/mdot_aadt_statewide_2015-2024.geojson"))
     P = pd.DataFrame([dict(LOCATION_ID=f["properties"]["LOCATION_ID"], BEGIN=f["properties"]["BEGIN_SECTION"], END=f["properties"]["END_SECTION"],
                            gx=f["geometry"]["coordinates"][0], gy=f["geometry"]["coordinates"][1]) for f in g["features"]]).drop_duplicates("LOCATION_ID").set_index("LOCATION_ID")
     lk = pd.concat([pd.read_csv(f"{D}/seeds/s{s}/stations_linkstats.csv", dtype={"LOCATION_ID": str}).assign(seed=s) for s in seeds])
@@ -1157,7 +1160,7 @@ def figure_vmt_heatmap(out, R):
     D = f"{out}/data"; FG = f"{out}/figures"; halo = [pe.withStroke(linewidth=2.2, foreground="white")]
     Hx = pd.read_csv(f"{D}/c1_vmt_hex.csv"); Hx["geometry"] = [hex_poly(q, r) for q, r in zip(Hx.q, Hx.r)]
     G = gpd.GeoDataFrame(Hx, geometry="geometry", crs="EPSG:26985")
-    C = gpd.read_file(f"{ROOT}/Updated MATSim/data/bmr_counties.gpkg").to_crs("EPSG:26985"); C["GEOID"] = C.GEOID.astype(str)
+    C = gpd.read_file(f"{MATSIM_HOME}/data/bmr_counties.gpkg").to_crs("EPSG:26985"); C["GEOID"] = C.GEOID.astype(str)
     A = links_static(); main = [("IS 695", "I-695"), ("IS 95", "I-95"), ("IS 83", "I-83"), ("IS 97", "I-97"), ("IS 70", "I-70"), ("MD 295", "MD 295")]
     fig = ps.new_figure(6.4); gs = fig.add_gridspec(2, 1, height_ratios=[2.25, 1.0])
     ax = fig.add_subplot(gs[0]); ax.set_aspect("equal"); ax.set_axis_off()
@@ -1285,7 +1288,7 @@ def latex(out, R):
     hx = v["hex"]
     caps = {"fig_reg_vmt_heatmap": (f"Weekday passenger-vehicle miles, model ÷ observed: (a) by hexagon ({hx['cell_km2']:.0f}\\,km$^2$) on the {hx['n_sections']:,} matched MDOT SHA 2024 count sections, "
             f"hatched where fewer than {hx['min_sections']} sections; lines: Interstates and MD 295; (b) by county and functional class, all public roads, against the MDOT SHA 2024 Mileage Reports."), **caps}
-    S = ["% Supplementary figures of the regional traffic validation (generated by 4_matsim/validation/regional_validation.py)"]
+    S = ["% Supplementary figures of the regional traffic validation (generated by assignment/validation/regional_validation.py)"]
     ebar = f" Error bars: range over the {n} seeds." if n > 1 else ""   # one seed: stated once in the section text
     for k, cap in caps.items():
         S += ["\\begin{figure}[p]", "  \\centering", f"  \\includegraphics[width=\\textwidth]{{figures/{k}.pdf}}", f"  \\caption{{{cap}{ebar}}}", f"  \\label{{fig:s_{k[4:]}}}", "\\end{figure}", ""]

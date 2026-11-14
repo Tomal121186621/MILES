@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validation of the traffic assignment (stage 4, MATSim) against counts, screenlines, mileage, commute and survey data.
 
-    python3 build_matsim.py [--runs DIR ...] [--pop-log FILE] [--reuse] [--out PDF] [--work DIR]
+    python3 reports/validation_pdfs/build_matsim.py [--runs DIR ...] [--pop-log FILE] [--reuse] [--out PDF] [--work DIR]
 
 --runs    the MATSim run folders, one per seed (default: the final runs pipeline/runs_respec/matsim/2024_s1 ... 2024_s5, absolute paths).
           Each needs the final link statistics (ITERS/it.100) and its hourly link volumes (<run>/link_hours.csv.gz, or
@@ -11,6 +11,9 @@
 --reuse   reuse the computed tables and figures of the work directory and only rebuild the document.
 The comparison scripts of 4_matsim/validation are run on the given folders; all their output goes to the work directory.
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, json, os, re, sys
 import numpy as np, pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -21,8 +24,8 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--runs", nargs="+", default=[f"{V}/pipeline/runs_respec/matsim/2024_s{i}" for i in range(1, 6)])
 ap.add_argument("--pop-log", default=f"{V}/pipeline/runs/matsim_pop/2024_respec/build.log")
 ap.add_argument("--reuse", action="store_true")
-ap.add_argument("--out", default=f"{HERE}/matsim_validation.pdf")
-ap.add_argument("--work", default=f"{HERE}/work/matsim_respec")
+ap.add_argument("--out", default=f"{OUTDIR}/matsim_validation.pdf")
+ap.add_argument("--work", default=f"{OUTDIR}/work/matsim_respec")
 a = ap.parse_args()
 WORK = os.path.abspath(a.work)
 O = matsim_compute.compute([os.path.abspath(r) for r in a.runs], WORK, reuse=a.reuse)
@@ -532,7 +535,7 @@ doc.para(f"The average executed score rises by {cv.score_change_80_90_pct:.1f}\\
 # ------------------------------------------------------------------ appendix: station table, interstates
 doc.clear(); doc.section("Appendix: station table, interstates")
 SDg = pd.read_csv(f"{DG}/stations_diagnostics.csv", dtype={"LOCATION_ID": str}, low_memory=False)
-MP = {f["properties"]["LOCATION_ID"]: f["properties"].get("ID_MP") for f in json.load(open(f"{ROOT}/I695_pricing/data/mdot_aadt_statewide_2015-2024.geojson"))["features"]}
+MP = {f["properties"]["LOCATION_ID"]: f["properties"].get("ID_MP") for f in json.load(open(f"{PRICING_HOME}/data/mdot_aadt_statewide_2015-2024.geojson"))["features"]}
 I = SDg[(SDg.use == "mainline") & SDg.cls.isin(["Interstate: I-695", "Interstate: other"])].copy()
 I["mp"] = pd.to_numeric(I.LOCATION_ID.map(MP), errors="coerce"); I["sw_ne"] = I.x + I.y
 LN = pd.read_csv(f"{V}/data/count_stations_matched.csv", dtype={"LOCATION_ID": str}, low_memory=False).drop_duplicates("LOCATION_ID").set_index("LOCATION_ID")

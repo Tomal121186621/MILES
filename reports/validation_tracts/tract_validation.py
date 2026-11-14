@@ -17,8 +17,11 @@ Inputs: out/blocks2020.parquet, out/blocks2010.parquet, out/lodes_block_zone.par
         (abit_extract.py); data/raw/acs_tract (ACS tract tables); data/raw/lodes_wac, lodes_od, bps.
 Outputs: out/*.csv (unit-level comparisons + metrics_summary.csv); figures by tract_figures.py.
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, json, glob, os, networkx as nx
-V = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026"
+V = f"{WORKSPACE}"
 D0 = f"{V}/5_reports/validation_tracts/out"; RAW = f"{V}/data/raw"
 # env: TRACT_CACHE (extracts of the runs), TRACT_OUT (outputs), SILO_BASE (2016 microdata folder of the land-use runs)
 C = os.environ.get("TRACT_CACHE", f"{D0}/cache"); D = os.environ.get("TRACT_OUT", D0); os.makedirs(D, exist_ok=True)

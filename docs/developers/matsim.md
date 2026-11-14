@@ -1,6 +1,6 @@
 # MATSim runner
 
-`assignment/java/matsim-run` is a Maven project on MATSim 2024.0 with the road-pricing contrib.
+`assignment/engine/matsim-run` is a Maven project on MATSim 2024.0 with the road-pricing contrib.
 
 | Class | Role |
 |---|---|

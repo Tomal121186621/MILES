@@ -10,11 +10,11 @@
 
     The few land-use parameters that are calibrated, and on what.
 
--   :material-check-all: **[Validation](validation.md)**
+-   :material-check-all: **[Validation](validation/index.md)**
 
     Every stage against data it never saw.
 
--   :material-map-marker-radius: **[Validation map](validation-map.md)**
+-   :material-map-marker-radius: **[Validation map](validation/map.md)**
 
     Interactive map of every count station against the simulated traffic.
 

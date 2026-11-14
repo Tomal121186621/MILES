@@ -85,11 +85,11 @@ they are built from the census microdata and the travel survey by each folder's 
 
 | Estimation output | Engine file |
 |---|---|
-| Residential location, car ownership, workplace, schools | `landuse/input/*_respec.csv`, `landuse/schoolchoice/apply/` (via `landuse/engine_check/e01`–`e04`) |
-| Tour mode choice | `activity/coef_respec/tour_mode_choice.csv` |
-| Destinations and stops | `activity/coef_respec/dest_choice_mnl.csv` |
-| Return home, outings | `activity/coef_respec/tasha/tasha_return_home.csv`, `tasha_subtour.csv` |
-| Activity distributions | `activity/coef_respec/tasha/tasha_frequency.csv`, `tasha_start.csv`, `tasha_duration.csv` |
+| Residential location, car ownership, workplace, schools | `landuse/engine_inputs/`, `landuse/schools/parameters/` (via `landuse/coefficients/write_residential_location.py`–`e04`) |
+| Tour mode choice | `activity/parameters/tour_mode_choice.csv` |
+| Destinations and stops | `activity/parameters/dest_choice_mnl.csv` |
+| Return home, outings | `activity/parameters/tasha/tasha_return_home.csv`, `tasha_subtour.csv` |
+| Activity distributions | `activity/parameters/tasha/tasha_frequency.csv`, `tasha_start.csv`, `tasha_duration.csv` |
 
-`activity/build_coef_respec.py` writes the activity files and `TERM_MAP.csv`, which maps all 699 estimated terms to
+`activity/build_parameters.py` writes the activity files and `TERM_MAP.csv`, which maps all 699 estimated terms to
 their engine file and variable.

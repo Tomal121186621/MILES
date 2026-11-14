@@ -36,5 +36,5 @@ utility can be summarised by income decile or by area.
 ## 4. Land-use scenarios
 
 Edit the land-use inputs (`development_*.csv` for building capacity, job control totals for employment), write a
-properties file with `landuse/run/make_properties.py`, and run SILO from 2016; then rerun schools, ORIOLE-Day and
+properties file with `landuse/run/write_properties.py`, and run SILO from 2016; then rerun schools, ORIOLE-Day and
 MATSim on the scenario's 2024 population.

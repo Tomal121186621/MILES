@@ -34,17 +34,20 @@ models use cars against licensed DRIVERS, so carlt is evaluated with the 'cars <
 data/accessibility_<Y>_detail.csv adds inc_group, car_avail, year, the single purposes (shopping, recreation, accompany,
 other), A_usd (A / |beta_cost|, dollars), A_ls (logsum specification) and beta_cost.
 """
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, json, os, pickle, sys
 import numpy as np
 import pandas as pd
 
-ROOT = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM"; V = f"{ROOT}/Validation_2026"
-DCD = f"{V}/3_abit/destination_choice"; sys.path.insert(0, DCD); sys.path.insert(0, f"{V}/3_abit")
+ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
+DCD = f"{ORIOLE_HOME}/activity/lib/destination_choice"; sys.path.insert(0, DCD); sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib")
 import dc_common as C   # noqa: E402
 
 PURPOSES = {"work": "WORK", "shopping": "SHOPPING", "recreation": "RECREATION", "accompany": "ACCOMPANY", "other": "OTHER"}
 INC_BRACKETS = [40000, 75000, 125000]   # 2026-10-27; overridden by --inc-brackets
-INC_NAMES = ["LOW", "MEDIUM", "HIGH", "VERY_HIGH"]            # SILO HouseholdType income groups (2_silo/resloc/rc.py)
+INC_NAMES = ["LOW", "MEDIUM", "HIGH", "VERY_HIGH"]            # SILO HouseholdType income groups (landuse/lib/residential/rc.py)
 CAR_NAMES = ["nocar", "carlt", "carge"]                      # no car / fewer cars than workers (resloc) / cars >= workers
 
 

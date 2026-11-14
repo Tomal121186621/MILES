@@ -7,22 +7,25 @@
                fig_s_val_stage3_{survey,modes,y2024,y2024b}.pdf
   Also writes  val_data/fit_summary.csv (figure, panel, variable, fit) for the captions and the text.
 
-Style: 5_reports/paperstyle.py (width = \\textwidth, fonts >= 7.5 pt, model blue, observed dark grey; finish() refuses overlaps).
+Style: reports/paperstyle.py (width = \\textwidth, fonts >= 7.5 pt, model blue, observed dark grey; finish() refuses overlaps).
 Error bars: land use = min-max over the five seeds; activities 2024 and the per-replication survey checks = min-max over the ten
 replications; activities on the survey households (only mean and s.d. saved) = +-1 s.d.  Fit (right-hand panel title), one
 measure per panel type: distributions (shares over the classes of one variable, summing to 100 %) -> total variation distance
 TVD = 1/2 sum_k |m_k - o_k| in percentage points; all other panels (rates, means, counts,
 independent shares) -> mean absolute percentage error MAPE = mean_k |m_k - o_k| / o_k over the bars with o_k > 0.
 Data: saved validation outputs (see validation_inventory.md); stage-1 Maryland shares from val_data/build_stage1_shares.py.
-Nothing is calibrated or adjusted here.   Usage: python3 make_stage_validation.py"""
+Nothing is calibrated or adjusted here.   Usage: python3 reports/article/make_stage_validation.py"""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, glob, pickle
 import numpy as np, pandas as pd
-ROOT = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM"; V = f"{ROOT}/Validation_2026"
-HERE = os.path.dirname(os.path.abspath(__file__)); VD = f"{HERE}/val_data"
-sys.path.insert(0, f"{V}/5_reports"); import paperstyle as ps          # noqa: E402
+ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
+HERE = f"{V}/5_reports/article/figures"; VD = f"{HERE}/val_data"   # article figures and their data (workspace)
+sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps          # noqa: E402
 import matplotlib.pyplot as plt                                          # noqa: E402
 from matplotlib.patches import Patch                                     # noqa: E402
-T24 = f"{V}/3_abit/temporal_2024"; F24 = f"{V}/3_abit/final_2024"
+T24 = f"{ORIOLE_HOME}/activity/lib/reporting_2024"; F24 = f"{V}/3_abit/final_2024"
 sys.path.insert(0, T24); import t24common as C                           # noqa: E402
 
 COL = dict(model=ps.MODEL, model2="#86b6ef", obs=ps.OBSERVED, obs2="#b5b3ab")

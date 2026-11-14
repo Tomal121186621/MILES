@@ -13,16 +13,19 @@ Sources
                                      region (persons dropped by the population converter as external-external); 10 % sample, expanded by ten;
                                      the length of the straight line inside the region, times a detour factor, gives their vehicle miles
   observed passenger vehicle miles : SHA mileage reports 2024 converted to weekday passenger vehicles (regional_validation.py, c1_vmt_fc.csv)
-  cordon mix                       : the 16 principal crossings of the regional boundary with their 2023 counts (Updated MATSim/network_validation_2023,
+  cordon mix                       : the 16 principal crossings of the regional boundary with their 2023 counts (MATSIM_HOME/network_validation_2023,
                                      gateways_2023.csv), used only to split the through traffic between freeways and arterials
   trucks, buses, light trucks      : MDOT SHA classification counts at the stations of the region (vehicle classes 2, 3, 4, 5-13)
   business driving of households  : FHWA 2022 National Household Travel Survey, trip file (data/raw/nhts/2022_csv.zip): share of the car-driver
                                      vehicle miles of weekday trips to or from a work-related meeting or trip
 Not in the project: the external trip tables of the statewide model (through trips from beyond the model area, e.g. the I-95 corridor north
 of Delaware), and a count of fleet and delivery vehicles; the ranges below say where this matters.
-Usage: python3 coverage_estimate.py   (env OUT, REGIONAL_DATA) -> data/coverage_estimate.csv, coverage_through_trips.csv, coverage_sources.json"""
+Usage: python3 assignment/validation/coverage_estimate.py   (env OUT, REGIONAL_DATA) -> data/coverage_estimate.csv, coverage_through_trips.csv, coverage_sources.json"""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, json, zipfile, numpy as np, pandas as pd
-H = os.path.dirname(os.path.abspath(__file__)); V = os.path.dirname(os.path.dirname(H)); ROOT = os.path.dirname(V)
+V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
 WORK = f"{V}/5_reports/validation_pdfs/work/matsim_respec"
 RD = os.environ.get("REGIONAL_DATA", f"{WORK}/regional/data"); OUT = os.environ.get("OUT", H); DATA = f"{OUT}/data"; os.makedirs(DATA, exist_ok=True)
 ABIT_OUT = os.environ.get("ABIT_OUT", f"{V}/3_abit/final_2024/run_respec/fin24_s08/output")
@@ -35,8 +38,8 @@ VMT_FC = {"Interstates and freeways": ["Interstate", "Other freeway, expressway"
 
 def through_trips():
     import geopandas as gpd, shapely
-    bmr = set(open(f"{ROOT}/ABIT/input/maryland/BMR.txt").read().split())
-    poly = gpd.read_file(f"{ROOT}/Updated MATSim/data/bmr_counties.gpkg").to_crs(26985).geometry.union_all()      # activity-model coordinates: Maryland State Plane (metres)
+    bmr = set(open(f"{ABIT_HOME}/input/maryland/BMR.txt").read().split())
+    poly = gpd.read_file(f"{MATSIM_HOME}/data/bmr_counties.gpkg").to_crs(26985).geometry.union_all()      # activity-model coordinates: Maryland State Plane (metres)
     Lg = pd.read_parquet(f"{ABIT_OUT}/legs_full.parquet", columns=["person_id", "start_zone", "end_zone", "start_x", "start_y", "end_x", "end_y", "mode", "distance_m"])
     touch = Lg.start_zone.isin(bmr) | Lg.end_zone.isin(bmr); persons_touch = set(Lg.person_id[touch])
     ext = Lg[~Lg.person_id.isin(persons_touch)]; n_persons_ext = ext.person_id.nunique()
@@ -66,7 +69,7 @@ def through_trips():
 
 
 def cordon_mix():
-    g = pd.read_csv(f"{ROOT}/Updated MATSim/network_validation_2023/calibration/gateways_2023.csv")
+    g = pd.read_csv(f"{MATSIM_HOME}/network_validation_2023/calibration/gateways_2023.csv")
     tot = g.cordon_aadt.sum(); fw = g[g.hwy == "motorway"].cordon_aadt.sum()
     return dict(crossings=int(len(g)), cordon_aadt_2023=float(tot), freeway_share=float(fw / tot), arterial_share=float(1 - fw / tot))
 

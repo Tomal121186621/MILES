@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Orchestration of the integrated land-use / travel loop (0_framework/FRAMEWORK.md, "The integrated loop").
+"""Orchestration of the integrated land-use / travel loop (see pipeline/README.md and the documentation site).
 
     skims(2016) <- MATSim 2016 base (ABIT on the 2016 population, network_2024, the earliest network built)
     for Y in 2018, 2020, 2022, 2024, 2026:
@@ -27,10 +27,13 @@ Commands (run_chain.py [--test] [--force] [--dry-run] <command> ...):
   test                                                                        the 1 % smoke test (implies --test)
   status                                                                      list the completed stages
 Paths and run constants are at the top of the file; stage directories: <runs root>/{silo,abit,matsim_pop,matsim,skims}/."""
+import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+_sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
+from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, os, sys, json, subprocess, time, hashlib, re, shutil, gzip, datetime, glob
-ROOT = "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM"
-V = f"{ROOT}/Validation_2026"; P = f"{V}/pipeline"; S = f"{V}/2_silo"; A3 = f"{V}/3_abit"; M4 = f"{V}/4_matsim"
-ABIT = f"{ROOT}/ABIT"; MAT = f"{ROOT}/Updated MATSim"; LOGS = f"{P}/logs"
+ROOT = f"{PROJECT_ROOT}"
+V = f"{WORKSPACE}"; P = f"{V}/pipeline"; S = f"{V}/2_silo"; A3 = f"{V}/3_abit"; M4 = f"{V}/4_matsim"
+ABIT = f"{ABIT_HOME}"; MAT = f"{MATSIM_HOME}"; LOGS = f"{P}/logs"
 JAVA_HOME = subprocess.run(["/usr/libexec/java_home", "-v", "21"], capture_output=True, text=True).stdout.strip(); JAVA = f"{JAVA_HOME}/bin/java"
 # MATSim: the runner of the I-695 study (Updated MATSim/code/matsim-run, class RunBaltimoreToll, MATSim 2024.0), run as in
 # I695_pricing/02_run/run_matsim.sh with the constants of I695_pricing/config.py (STRAT, JVM, ASCS); mode choice stays in ABIT (hybrid design).
@@ -43,15 +46,17 @@ NETWORK_OF_YEAR = {2016: 2024, 2018: 2024, 2020: 2024, 2022: 2024, 2024: 2024, 2
 TRANSIT = {y: {"schedule": f"{M4}/transit/transitSchedule_{y}.xml.gz", "vehicles": f"{M4}/transit/transitVehicles_{y}.xml.gz", "network": f"{M4}/transit/network_{y}_pt.xml.gz"} for y in (2024, 2026)}
 TRANSIT_SKIM_ARGS = ["--peak", "7", "9", "--step", "15", "--radius", "1600", "--extension", "0", "--max-tt", "180"]   # transit_skim.py: AM peak, departures every 15 min, one-mile walk access/egress, 3 h cap
 # value of time (2026-11-02, author decision for the validation study): the USDOT rule of ABIT's tour mode choice, VOT_n = 0.5 x max(hhIncome_n, $5,000)
-# / 2,080 h ($/h; hhIncome = annual household income, person attribute written by abit_to_matsim_pop.py as ABIT computes it); marginal utility of
+# / 2,080 h ($/h; hhIncome = annual household income, person attribute written by activities_to_matsim.py as ABIT computes it); marginal utility of
 # money = performing (0.78 utils/h) / VOT_n (RunBaltimoreToll -Dincome.vot.form=usdot).  Before: income.vot.form=power, elasticity 0.6, median 84216.
 MATSIM_STRAT = {"reroute.weight": "0.15", "tam.weight": "0.10", "tam.range": "1800", "tam.affectduration": "false", "income.vot.form": "usdot", "vot.share": "0.5", "vot.hours": "2080", "vot.income.floor": "5000"}
 MATSIM_JVM = {"modechoice": "false", "innovoff": "0.9", "plan.memory": "5", "write.outputs": "true"}
-ASC_FILE = f"{ROOT}/I695_pricing/02_run/ascs_frozen.json"; ASCS = {"car": "0.00", "pt": "0.75", "ride": "-0.60", "walk": "0.10", "bike": "-2.10"}
-# SILO: the rebuilt engine (2_silo/run/run_silo.sh), properties from make_properties.py with the calibrated parameters of calibration/params.json
-SILO_PARAMS = f"{S}/calibration/params.json"; ZONES = f"{S}/input/zoneSystem.csv"
-# ABIT: compiled with javac into 3_abit/classes (compile_abit()); classpath 3_abit/abit_classpath.txt; native libs for the omx reader
-ABIT_CLASSES = f"{A3}/classes"; ABIT_CP = f"{A3}/abit_classpath.txt"; ABIT_MAIN = "abm.RunAbitMarylandLos"; ABIT_LIB = f"{ABIT}/src/main/resources/lib/macosx64"
+ASC_FILE = f"{PRICING_HOME}/02_run/ascs_frozen.json"; ASCS = {"car": "0.00", "pt": "0.75", "ride": "-0.60", "walk": "0.10", "bike": "-2.10"}
+# SILO: the rebuilt engine (landuse/run/run_silo.sh), properties from landuse/run/write_properties.py with the calibrated parameters of
+# WORKSPACE/2_silo/calibration/params.json
+SILO_RUN = f"{ORIOLE_HOME}/landuse/run/run_silo.sh"; SILO_PARAMS = f"{S}/calibration/params.json"; ZONES = f"{S}/input/zoneSystem.csv"
+# ABIT: compiled with javac into WORKSPACE/3_abit/classes (compile_abit()); classpath activity/abit_classpath.txt (jar paths, $HOME expanded);
+# native libs for the omx reader
+ABIT_CLASSES = f"{A3}/classes"; ABIT_CP = f"{ORIOLE_HOME}/activity/abit_classpath.txt"; ABIT_MAIN = "abm.RunAbitMarylandLos"; ABIT_LIB = f"{ABIT}/src/main/resources/lib/macosx64"
 # coefficient set of the abit stage (2026-10-23): the model of record, the behavioural TASHA-style set 3_abit/coef_tasha (TASHA generation,
 # estimated destination MNL, estimated anchored locations, return-home logit and work attendance; run_params.csv: tasha.generation = true,
 # dest.choice.model = mnl); ABIT_COEF_DIR overrides it (3_abit/coef_tasha_cal: calibrated variant; 3_abit/coef_calibrated: the earlier
@@ -176,8 +181,8 @@ def silo_step(cfg, y0, y1, k=0, seed=None, skims_tag=None, from_scen=None):
     os.makedirs(f"{base}/microData", exist_ok=True); os.makedirs(f"{base}/skims", exist_ok=True); link(f"{S}/input", f"{base}/input")
     for kind, p in files.items(): link(p, f"{base}/microData/{kind}_{y0}.csv")
     link(auto, f"{base}/skims/auto_peak_time.csv.gz"); link(transit, f"{base}/skims/transit_peak_time.csv.gz")
-    # properties: make_properties.py (writes 2_silo/run/<scen>.properties) -> this base directory, calibrated parameters, start-year skim keys
-    subprocess.run(["python3", f"{S}/run/make_properties.py", scen, str(y0), str(y1), "-1", str(seed)], check=True, capture_output=True)
+    # properties: write_properties.py (writes 2_silo/run/<scen>.properties) -> this base directory, calibrated parameters, start-year skim keys
+    subprocess.run(["python3", f"{ORIOLE_HOME}/landuse/run/write_properties.py", scen, str(y0), str(y1), "-1", str(seed)], check=True, capture_output=True)
     src = f"{S}/run/{scen}.properties"; t = open(src).read(); os.remove(src)
     params = json.load(open(SILO_PARAMS)) if os.path.exists(SILO_PARAMS) else {}
     subs = {"base.directory": f"{base}/", "school.file.ascii": "microData/schools", "number.of.threads": str(cfg.threads), **{kk: str(vv) for kk, vv in params.items()}}
@@ -185,8 +190,8 @@ def silo_step(cfg, y0, y1, k=0, seed=None, skims_tag=None, from_scen=None):
     t = t.replace("auto.peak.sov.skim.2016 ", f"auto.peak.sov.skim.{y0} ").replace("transit.peak.time.2016 ", f"transit.peak.time.{y0} ")
     props = f"{cfg.R}/silo/{scen}.properties"; open(props, "w").write(t)
     log(f"silo-step {scen}: {y0} -> {y1}, restart from {prev or '2016 base files'}, skims '{skims_tag}', seed {seed}, params {params}")
-    if cfg.test and not cfg.dry: log(f"test mode: SILO not started. Command: bash {S}/run/run_silo.sh {props} {cfg.silo_xmx}   (engine log 2_silo/run/logs/{scen}.log)"); return scen
-    rc = run(cfg, ["bash", f"{S}/run/run_silo.sh", props, cfg.silo_xmx], f"{LOGS}/silo_{scen}.log")
+    if cfg.test and not cfg.dry: log(f"test mode: SILO not started. Command: bash {SILO_RUN} {props} {cfg.silo_xmx}   (engine log 2_silo/run/logs/{scen}.log)"); return scen
+    rc = run(cfg, ["bash", SILO_RUN, props, cfg.silo_xmx], f"{LOGS}/silo_{scen}.log", env={"ORIOLE_WORKSPACE": WORKSPACE, "ORIOLE_HOME": ORIOLE_HOME})
     if cfg.dry: st = state_load(cfg); st["silo"][str(y1)] = scen; state_save(cfg, st); return scen
     outs = [f"{out}/microData/futureYears/{kk}_{y1}.csv" for kk in ["hh", "pp", "dd", "jj", "schools"]]
     if rc != 0 or not all(os.path.exists(o) for o in outs[:4]): raise SystemExit(f"SILO {scen} failed (rc {rc}); see 2_silo/run/logs/{scen}.log")
@@ -251,10 +256,13 @@ def convergence(cfg, prev_scen, scen, year, prev_tag=None, cur_tag=None):
     return rec
 
 # ---------------------------------------------------------------- stage: ABIT
+def abit_classpath():
+    """Maven classpath of ABIT (activity/abit_classpath.txt); a literal $HOME in it stands for the user's home directory."""
+    return open(ABIT_CP).read().strip().replace("$HOME", os.path.expanduser("~"))
 def compile_abit(cfg):
     if os.path.exists(f"{ABIT_CLASSES}/abm/RunAbitMarylandLos.class") and not cfg.force: return
     os.makedirs(ABIT_CLASSES, exist_ok=True); srcs = subprocess.run(["find", f"{ABIT}/src/main/java", "-name", "*.java"], capture_output=True, text=True).stdout.split()
-    rc = run(cfg, [f"{JAVA_HOME}/bin/javac", "-nowarn", "-d", ABIT_CLASSES, "-cp", open(ABIT_CP).read().strip()] + srcs, f"{LOGS}/abit_compile.log")
+    rc = run(cfg, [f"{JAVA_HOME}/bin/javac", "-nowarn", "-d", ABIT_CLASSES, "-cp", abit_classpath()] + srcs, f"{LOGS}/abit_compile.log")
     if rc != 0: raise SystemExit("ABIT compilation failed, see logs/abit_compile.log")
 def abit(cfg, y, k=0, skims_tag=None, silo_scen=None, sample=None):
     tag = cfg.tag(y, k); name = f"{cfg.prefix}abit_{tag}"; d = f"{cfg.R}/abit/{name}"; t0 = time.time()
@@ -264,21 +272,21 @@ def abit(cfg, y, k=0, skims_tag=None, silo_scen=None, sample=None):
     scen, scen_dir = (find_silo_scen(cfg, y, silo_scen) if y != 2016 else (None, None)); files = microdata(cfg, y, scen_dir)
     _, sk_abit = skim_dirs(cfg, skims_tag); compile_abit(cfg)
     # coefficient set: ABIT_COEF (env ABIT_COEF_DIR; default the model of record 3_abit/coef_tasha, 2026-10-23; the pristine
-    # reference ABIT/input/maryland/coef stays untouched).  make_abit_properties.py reads run_params.csv and targets_education.csv of the set.
+    # reference ABIT/input/maryland/coef stays untouched).  write_properties.py reads run_params.csv and targets_education.csv of the set.
     env = {"ABIT_RUN_ROOT": f"{cfg.R}/abit", "ABIT_COEF_DIR": f"{d}/coef"} | ({"SILO_SCEN_DIR": scen_dir} if scen_dir else {}); props = f"{cfg.R}/abit/{name}.properties"; coef = f"{d}/coef"
-    if cfg.dry: log(f"abit {tag}: properties by make_abit_properties.py {name} {scen or 'base'} {y} {sample} {sk_abit} (env {env}); modechoice.dir -> {coef}")
+    if cfg.dry: log(f"abit {tag}: properties by write_properties.py {name} {scen or 'base'} {y} {sample} {sk_abit} (env {env}); modechoice.dir -> {coef}")
     else:
         # the mode-choice re-anchoring (RunAbitMarylandLos -> writeReanchored) rewrites modechoice_full_*.csv in modechoice.dir: give every run
         # its own copy of the coefficient directory so the shared inputs do not drift between runs (reproducibility)
         shutil.rmtree(coef, ignore_errors=True); shutil.copytree(ABIT_COEF, coef)
-        r = subprocess.run(["python3", f"{A3}/make_abit_properties.py", name, scen or "base", str(y), str(sample), sk_abit], capture_output=True, text=True, env=dict(os.environ) | env)
-        if r.returncode != 0: raise SystemExit(f"make_abit_properties failed: {r.stdout}{r.stderr}")
+        r = subprocess.run(["python3", f"{ORIOLE_HOME}/activity/write_properties.py", name, scen or "base", str(y), str(sample), sk_abit], capture_output=True, text=True, env=dict(os.environ) | env)
+        if r.returncode != 0: raise SystemExit(f"write_properties failed: {r.stdout}{r.stderr}")
         t = open(props).read()
         t = re.sub(r"^modechoice.dir\s*=.*$", f"modechoice.dir = {coef}", t, flags=re.M); t = re.sub(r"^number.of.threads\s*=.*$", f"number.of.threads = {cfg.threads}", t, flags=re.M)
         if ABIT_ATTENDANCE: t += f"\ntasha.attendance.file = {ABIT_ATTENDANCE}\n"
         open(props, "w").write(t)
     log(f"abit {tag}: year {y}, population {scen or '2016 base'}, skims '{skims_tag}', sample {sample}")
-    cp = f"{ABIT_CLASSES}:{open(ABIT_CP).read().strip()}"
+    cp = f"{ABIT_CLASSES}:{abit_classpath()}"
     rc = run(cfg, [JAVA, f"-Xmx{cfg.xmx}", f"-Djava.library.path={ABIT_LIB}", "-cp", cp, ABIT_MAIN, props], f"{d}/abit.log", cwd=d)
     if cfg.dry: return d
     outs = [f"{d}/output/legs_{name}.csv", f"{d}/output/activities_{name}.csv"]
@@ -291,7 +299,7 @@ def abit(cfg, y, k=0, skims_tag=None, silo_scen=None, sample=None):
 # ---------------------------------------------------------------- stage: ABIT plans -> MATSim population
 def matsim_pop(cfg, y, k=0, silo_scen=None, src=None, residents_only=False, no_gateways=False):
     """src (optional, validation study 2026-11-02): {"activities", "legs", "pp", "hh"} of an ABIT run outside the chain (e.g. the final 2024
-    replication, parquet); residents_only: abit_to_matsim_pop.py --residents-only (BMR residents, no cordon gateways)."""
+    replication, parquet); residents_only: activities_to_matsim.py --residents-only (BMR residents, no cordon gateways)."""
     tag = cfg.tag(y, k); d = f"{cfg.R}/matsim_pop/{tag}"; out = f"{d}/population_{tag}.xml.gz"; t0 = time.time()
     if is_done(cfg, d): log(f"matsim-pop {tag}: done, skipped"); return out
     name = f"{cfg.prefix}abit_{tag}"; ad = f"{cfg.R}/abit/{name}"; acts, legs = f"{ad}/output/activities_{name}.csv", f"{ad}/output/legs_{name}.csv"
@@ -300,7 +308,7 @@ def matsim_pop(cfg, y, k=0, silo_scen=None, src=None, residents_only=False, no_g
     if src: files = {"pp": src["pp"], "hh": src["hh"]}
     else: scen, scen_dir = (find_silo_scen(cfg, y, silo_scen) if y != 2016 else (None, None)); files = microdata(cfg, y, scen_dir)
     os.makedirs(d, exist_ok=True)
-    cmd = ["python3", f"{P}/abit_to_matsim_pop.py", "--activities", acts, "--legs", legs, "--pp", files["pp"], "--hh", files["hh"], "--out", out, "--expansion", str(1.0 / cfg.sample)] + (["--residents-only"] if residents_only else []) + (["--no-gateways"] if no_gateways else [])
+    cmd = ["python3", f"{ORIOLE_HOME}/pipeline/activities_to_matsim.py", "--activities", acts, "--legs", legs, "--pp", files["pp"], "--hh", files["hh"], "--out", out, "--expansion", str(1.0 / cfg.sample)] + (["--residents-only"] if residents_only else []) + (["--no-gateways"] if no_gateways else [])
     rc = run(cfg, cmd, f"{LOGS}/matsim_pop_{tag}.log")
     if cfg.dry: return out
     if rc != 0 or not os.path.exists(out): raise SystemExit(f"population conversion failed; see logs/matsim_pop_{tag}.log")
@@ -329,12 +337,12 @@ def matsim(cfg, y, net, seed, k=0, iterations=None, sample=None, toll="NONE", pl
     if is_done(cfg, d): log(f"matsim {tag} seed {seed}: done, skipped"); return d
     plans = plans or f"{cfg.R}/matsim_pop/{tag}/population_{tag}.xml.gz"
     tr = TRANSIT[net_year]; net = tr["network"]; SCHED, VEH_FULL = tr["schedule"], tr["vehicles"]   # the run network = the mapper's output of network_<year> (car links unchanged, transit links added)
-    VEH = f"{d}/transitVehicles_scaled.xml.gz"   # vehicle capacity and PCE times the sample (4_matsim/transit/vehicle_types.py --scale): a bus of a 10 % run takes 10 % of a bus's road space
+    VEH = f"{d}/transitVehicles_scaled.xml.gz"   # vehicle capacity and PCE times the sample (assignment/transit/vehicle_types.py --scale): a bus of a 10 % run takes 10 % of a bus's road space
     for f in [MATSIM_JAR, net_base, net, plans, SCHED, VEH_FULL]:
         if not os.path.exists(f) and not cfg.dry: raise SystemExit(f"missing: {f}" + ("" if not f.startswith(f"{M4}/transit") else " (build the transit set: 4_matsim/transit/TRANSIT_BUILD.md)"))
     if not cfg.dry and check_transit(cfg, net, SCHED)["n_missing"]: raise SystemExit("transit schedule links missing in the network; re-map the schedule (4_matsim/transit/TRANSIT_BUILD.md)")
     if not cfg.dry:
-        os.makedirs(d, exist_ok=True); r = subprocess.run(["python3", "-I", f"{M4}/transit/vehicle_types.py", SCHED, VEH, "--scale", str(sample)], capture_output=True, text=True)
+        os.makedirs(d, exist_ok=True); r = subprocess.run(["python3", "-I", f"{ORIOLE_HOME}/assignment/transit/vehicle_types.py", SCHED, VEH, "--scale", str(sample)], capture_output=True, text=True)
         if r.returncode != 0: raise SystemExit(f"vehicle_types.py failed: {r.stdout}{r.stderr}")
         log(f"transit vehicles scaled to the sample: {r.stdout.strip()}")
     asc = json.load(open(ASC_FILE)) if os.path.exists(ASC_FILE) else ASCS; flow = sample; stor = round(sample ** 0.75, 4)   # storage = flow^0.75 (I695_pricing/config.py rule)
@@ -357,14 +365,14 @@ def transit_skims(cfg, net_year):
     d = f"{cfg.R}/skims/transit_{net_year}"; t0 = time.time(); tr = TRANSIT[net_year]
     if is_done(cfg, d): return d
     os.makedirs(d, exist_ok=True)
-    cmd = ["python3", f"{P}/transit_skim.py", tr["network"], tr["schedule"], tr["vehicles"], d] + TRANSIT_SKIM_ARGS + ["--threads", str(min(cfg.threads, 6)), "--xmx", "6g"]
+    cmd = ["python3", f"{ORIOLE_HOME}/pipeline/transit_skim.py", tr["network"], tr["schedule"], tr["vehicles"], d] + TRANSIT_SKIM_ARGS + ["--threads", str(min(cfg.threads, 6)), "--xmx", "6g"]
     rc = run(cfg, cmd, f"{LOGS}/skims_transit_{net_year}.log")
     if cfg.dry: return d
     outs = [f"{d}/{f}.csv.gz" for f in ["transit_peak_time"] + TRANSIT_SKIMS]
     if rc != 0 or not all(os.path.exists(o) for o in outs): raise SystemExit(f"transit_skim.py failed for network {net_year}; see logs/skims_transit_{net_year}.log")
     st = json.load(open(f"{d}/transit_skim_stats.json"))
     log(f"transit skims {net_year}: reachable on-network pairs all {st['reachable_share_on_network']['all']:.1%} / bus {st['reachable_share_on_network']['bus']:.1%}, mean {st['mean_min_reachable']['all']:.1f} min, prior {st['pairs_from_prior']:.1%}")
-    mark_done(cfg, "transit-skims", str(net_year), d, [tr["network"], tr["schedule"], tr["vehicles"], f"{P}/transit_skim.py", f"{P}/java/TransitSkim.java"], outs, t0,
+    mark_done(cfg, "transit-skims", str(net_year), d, [tr["network"], tr["schedule"], tr["vehicles"], f"{ORIOLE_HOME}/pipeline/transit_skim.py", f"{ORIOLE_HOME}/pipeline/TransitSkim.java"], outs, t0,
               {"network_year": net_year, "args": TRANSIT_SKIM_ARGS, "stats": {kk: st[kk] for kk in ["off_network_zones", "pairs_from_prior", "reachable_share_on_network", "mean_min_reachable", "compare_base_bmr_internal"]}})
     return d
 def skims(cfg, y, k=0, seeds=None, net=None):
@@ -375,7 +383,7 @@ def skims(cfg, y, k=0, seeds=None, net=None):
     runs = [r for r in runs if os.path.exists(f"{r}/output_events.xml.gz")]
     if not runs:
         if cfg.dry:
-            log(f"skims {tag}: would run matsim_to_skim.py on every <runs root>/matsim/{tag}_s*/output_events.xml.gz, average the seeds, transit_skim.py on the schedule of network_{NETWORK_OF_YEAR.get(y, 2024)} and install the skims")
+            log(f"skims {tag}: would run skims_from_matsim.py on every <runs root>/matsim/{tag}_s*/output_events.xml.gz, average the seeds, transit_skim.py on the schedule of network_{NETWORK_OF_YEAR.get(y, 2024)} and install the skims")
             st = state_load(cfg); st["skims"][str(y)] = tag; state_save(cfg, st); return tag
         raise SystemExit(f"no finished MATSim run for {tag} under {cfg.R}/matsim")
     net = network_path(net or json.load(open(marker(runs[0])))["network"]); net_year = network_year(net); os.makedirs(d, exist_ok=True); per_seed = []
@@ -383,7 +391,7 @@ def skims(cfg, y, k=0, seeds=None, net=None):
         s = r.rsplit("_s", 1)[1]; pre = f"{d}/seed{s}/auto_peak_time"
         if not os.path.exists(pre + ".csv.gz") or cfg.force:
             # prior for zone pairs beyond the network or without a path: the 2016 base skim (the MSTM zone system covers six states, the network the Baltimore region)
-            rc = run(cfg, ["python3", f"{P}/matsim_to_skim.py", net, f"{r}/output_events.xml.gz", pre, "7", "9", f"{S}/input/skims/auto_peak_time.csv.gz"], f"{LOGS}/skims_{tag}.log")
+            rc = run(cfg, ["python3", f"{ORIOLE_HOME}/pipeline/skims_from_matsim.py", net, f"{r}/output_events.xml.gz", pre, "7", "9", f"{S}/input/skims/auto_peak_time.csv.gz"], f"{LOGS}/skims_{tag}.log")
             if cfg.dry: continue
             if rc != 0: raise SystemExit(f"matsim_to_skim failed for seed {s}; see logs/skims_{tag}.log")
         per_seed.append(pre + ".csv.gz")
@@ -447,8 +455,8 @@ def main():
     p = sp.add_parser("silo-step"); p.add_argument("y0", type=int); p.add_argument("y1", type=int); p.add_argument("--iter", type=int, default=0); p.add_argument("--skims"); p.add_argument("--from-scen")
     p = sp.add_parser("abit"); p.add_argument("y", type=int); p.add_argument("--iter", type=int, default=0); p.add_argument("--skims"); p.add_argument("--silo-scen")
     p = sp.add_parser("matsim-pop"); p.add_argument("y", type=int); p.add_argument("--iter", type=int, default=0); p.add_argument("--silo-scen")
-    p.add_argument("--residents-only", action="store_true", help="BMR residents only, no cordon gateways (abit_to_matsim_pop.py --residents-only)")
-    p.add_argument("--no-gateways", action="store_true", help="all chain persons touching the BMR, cordon gateways and inflow cap off (abit_to_matsim_pop.py --no-gateways)")
+    p.add_argument("--residents-only", action="store_true", help="BMR residents only, no cordon gateways (activities_to_matsim.py --residents-only)")
+    p.add_argument("--no-gateways", action="store_true", help="all chain persons touching the BMR, cordon gateways and inflow cap off (activities_to_matsim.py --no-gateways)")
     for o in ["--activities", "--legs", "--pp", "--hh"]: p.add_argument(o, help="ABIT/SILO input outside the chain (all four together)")
     p = sp.add_parser("matsim"); p.add_argument("y", type=int); p.add_argument("network"); p.add_argument("seed", type=int); p.add_argument("--iter", type=int, default=0); p.add_argument("--toll", default="NONE"); p.add_argument("--plans")
     p.add_argument("--iterations", type=int, default=argparse.SUPPRESS, help="also accepted after the stage (same as the global option)"); p.add_argument("--sample", type=float, default=argparse.SUPPRESS)
