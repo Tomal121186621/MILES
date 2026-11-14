@@ -52,7 +52,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css?v=5">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -2548,22 +2548,15 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
 <p>Every stage is tested on data it was neither estimated nor calibrated on. <strong>Verification</strong> compares a model with its
 estimation data; <strong>validation</strong> with data used in no estimation or calibration step. Each stage page shows the same
 things: headline numbers, the main figure, every comparison in detail, and a scorecard.</p>
-<div class="miles-bars">
-<div data-name="Synthetic population" data-ok="25" data-close="3" data-out="3"></div>
-<div data-name="Land use" data-ok="27" data-close="6" data-out="3"></div>
-<div data-name="School location" data-ok="2" data-close="4" data-out="2"></div>
-<div data-name="Activities" data-ok="25" data-close="13" data-out="5"></div>
-<div data-name="County view (all variables, 24 counties)" data-ok="282" data-close="51" data-out="3"></div>
-<p class="mh-legend"><i class="ok"></i>Within limit <i class="close"></i>Within twice the limit <i class="out"></i>Outside</p>
-</div>
-
 <table>
 <thead>
 <tr>
 <th>Stage</th>
 <th>Tested against</th>
 <th style="text-align: right;">Comparisons</th>
-<th>Result</th>
+<th style="text-align: right;">Within</th>
+<th style="text-align: right;">Close</th>
+<th style="text-align: right;">Outside</th>
 </tr>
 </thead>
 <tbody>
@@ -2571,43 +2564,50 @@ things: headline numbers, the main figure, every comparison in detail, and a sco
 <td><a href="population/">Synthetic population</a></td>
 <td>ACS PUMS 2014–18, held-out PUMS test split, LODES, travel survey</td>
 <td style="text-align: right;">31</td>
-<td><span class="vb ok">25 within</span> <span class="vb close">3 close</span> <span class="vb out">3 outside</span></td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr>
 <td><a href="landuse/">Land use</a></td>
 <td>ACS, Census estimates, JOLTS, permits, county flows; out of sample 2021–24</td>
 <td style="text-align: right;">36</td>
-<td><span class="vb ok">27 within</span> <span class="vb close">6 close</span> <span class="vb out">3 outside</span></td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr>
 <td><a href="schools/">School location</a></td>
 <td>Survey students, ACS enrolment</td>
 <td style="text-align: right;">8</td>
-<td><span class="vb ok">2 within</span> <span class="vb close">4 close</span> <span class="vb out">2 outside</span></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
 </tr>
 <tr>
 <td><a href="activities/">Activities</a></td>
 <td>Survey hold-out half; ATUS, ACS 2024, LODES</td>
 <td style="text-align: right;">43</td>
-<td><span class="vb ok">25 within</span> <span class="vb close">13 close</span> <span class="vb out">5 outside</span></td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">5</td>
 </tr>
 <tr>
 <td><a href="county/">County view</a></td>
 <td>Every variable by county, all 24 Maryland counties</td>
 <td style="text-align: right;">336</td>
-<td><span class="vb ok">282 within</span> <span class="vb close">51 close</span> <span class="vb out">3 outside</span></td>
-</tr>
-<tr>
-<td><a href="traffic/">Traffic</a></td>
-<td>2,308 count stations, 21 continuous counters, 7 screenlines, mileage</td>
-<td style="text-align: right;">—</td>
-<td>model ÷ count 0.81 (passenger vehicles), R² 0.90</td>
+<td style="text-align: right;">282</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">3</td>
 </tr>
 </tbody>
 </table>
+<p>Traffic is compared as a ratio rather than counted against a limit, because the model carries residents only: simulated
+passenger-vehicle volumes are 0.81 of the 2024 counts at 2,308 mainline stations (R² 0.90 across stations); see
+<a href="traffic/">Traffic</a>.</p>
 <p><strong>Within:</strong> a distribution within 5 percentage points (total variation distance), a set of shares within 5 points on
 average (mean absolute difference) or a rate within 5 % (mean absolute percentage error) of the observed value, the acceptance limits of the land-use and activity tests. <strong>Close:</strong> within twice
-that. <strong>Outside:</strong> beyond. Traffic is compared as a ratio, because the model carries residents only.</p>
+that. <strong>Outside:</strong> beyond. </p>
 <h2 id="strategy">Strategy<a class="headerlink" href="#strategy" title="Permanent link">¶</a></h2>
 <p>Each stage is estimated on one set of data and tested on another:</p>
 <table>
@@ -2817,7 +2817,7 @@ the same region; no later diary exists here, so the hold-out half and the 2024 b
       
         <script src="../../assets/javascripts/mathjax.js"></script>
       
-        <script src="../../assets/javascripts/home.js"></script>
+        <script src="../../assets/javascripts/home.js?v=5"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
       

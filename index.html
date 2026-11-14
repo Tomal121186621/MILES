@@ -50,7 +50,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/extra.css">
+      <link rel="stylesheet" href="assets/stylesheets/extra.css?v=5">
     
     <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -428,8 +428,11 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
 
   <!-- hero -->
   <section class="mh-hero">
-    <canvas id="mh-roads" aria-hidden="true" data-src="assets/data/roads.json"></canvas>
+    <video class="mh-video" autoplay="" muted="" playsinline="" preload="auto" poster="assets/video/miles_traffic_poster.jpg" aria-hidden="true">
+      <source src="assets/video/miles_traffic.mp4" type="video/mp4">
+    </video>
     <div class="mh-hero__shade"></div>
+    <div class="mh-clock" aria-hidden="true"><b>08:00</b><span>simulated weekday, 2024</span></div>
     <div class="mh-wrap mh-hero__body">
       <p class="mh-eyebrow">Maryland Integrated Land-use and Everyday-travel Simulator</p>
       <h1>From census records<br>to <span>cars on the road</span></h1>
@@ -441,7 +444,8 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
         <a class="mh-btn" href="model-design/">How it works</a>
         <a class="mh-btn mh-btn--ghost" href="https://github.com/Tomal121186621/MILES"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"></path></svg> GitHub</a>
       </div>
-      <p class="mh-caption">Background: major roads of the Baltimore region in the MILES network.</p>
+      <p class="mh-caption">Background: simulated cars of a 2024 weekday in the Baltimore region, 04:00 to midnight, from the MILES
+        MATSim run (10 % sample). Each car follows its simulated route, departure time and travel time.</p>
     </div>
   </section>
 
@@ -486,7 +490,7 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
             </dl>
             <p class="mh-links"><a href="model-design/population/">Model design</a><a href="calibration-validation/validation/population/">Validation</a></p>
           </div>
-          <aside class="mh-score" data-ok="25" data-close="3" data-out="3"><h4>Validation</h4></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>Held-out 10 % of ACS PUMS records; ACS 2014–18 by PUMA</p></aside>
         </article>
         <article class="mh-panel">
           <div>
@@ -500,7 +504,7 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
             </dl>
             <p class="mh-links"><a href="model-design/landuse/">Model design</a><a href="calibration-validation/estimates/landuse/">Estimates</a><a href="calibration-validation/validation/landuse/">Validation</a></p>
           </div>
-          <aside class="mh-score" data-ok="27" data-close="6" data-out="3"><h4>Validation</h4></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>Movers 2019–21; ACS and Census 2021–24, years not used in calibration</p></aside>
         </article>
         <article class="mh-panel">
           <div>
@@ -514,7 +518,7 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
             </dl>
             <p class="mh-links"><a href="model-design/schools/">Model design</a><a href="calibration-validation/estimates/schools/">Estimates</a><a href="calibration-validation/validation/schools/">Validation</a></p>
           </div>
-          <aside class="mh-score" data-ok="2" data-close="4" data-out="2"><h4>Validation</h4></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>Survey hold-out half; ACS enrolment</p></aside>
         </article>
         <article class="mh-panel">
           <div>
@@ -528,7 +532,7 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
             </dl>
             <p class="mh-links"><a href="model-design/activity/">Model design</a><a href="calibration-validation/estimates/modes/">Estimates</a><a href="calibration-validation/validation/activities/">Validation</a></p>
           </div>
-          <aside class="mh-score" data-ok="25" data-close="13" data-out="5"><h4>Validation</h4></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>Survey hold-out half (10,899 households); ATUS, ACS and LODES 2024</p></aside>
         </article>
         <article class="mh-panel">
           <div>
@@ -542,7 +546,7 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
             </dl>
             <p class="mh-links"><a href="model-design/assignment/">Model design</a><a href="calibration-validation/validation/traffic/">Validation</a><a href="calibration-validation/validation/map/">Map</a></p>
           </div>
-          <aside class="mh-kpi"><h4>Against 2024 counts</h4><b>0.81</b><span>model ÷ count, passenger vehicles, 2,308 mainline stations</span><b>0.90</b><span>R² across stations</span></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>2024 traffic counts at 2,308 mainline stations, continuous counters and screenlines</p></aside>
         </article>
       </div>
     </div>
@@ -575,13 +579,14 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
         <p class="mh-cta"><a class="mh-btn mh-btn--primary" href="calibration-validation/validation/">Validation results</a>
           <a class="mh-btn" href="calibration-validation/validation/map/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2c3.31 0 6 2.66 6 5.95C18 12.41 12 19 12 19S6 12.41 6 7.95C6 4.66 8.69 2 12 2m0 4a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2m8 13c0 2.21-3.58 4-8 4s-8-1.79-8-4c0-1.29 1.22-2.44 3.11-3.17l.64.91C6.67 17.19 6 17.81 6 18.5c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5c0-.69-.67-1.31-1.75-1.76l.64-.91C18.78 16.56 20 17.71 20 19"></path></svg> Interactive count map</a></p>
       </div>
-      <div class="mh-bars" id="mh-bars">
-        <div data-name="Synthetic population" data-ok="25" data-close="3" data-out="3"></div>
-        <div data-name="Land use" data-ok="27" data-close="6" data-out="3"></div>
-        <div data-name="School location" data-ok="2" data-close="4" data-out="2"></div>
-        <div data-name="Activities" data-ok="25" data-close="13" data-out="5"></div>
-        <div data-name="County view" data-ok="282" data-close="51" data-out="3"></div>
-        <p class="mh-legend"><i class="ok"></i>Within limit <i class="close"></i>Within twice the limit <i class="out"></i>Outside</p>
+      <div>
+      <dl class="mh-tested">
+        <dt>Synthetic population</dt><dd>Held-out 10 % of ACS PUMS records; ACS 2014–18 by PUMA</dd>
+        <dt>Land use</dt><dd>Calibrated on 2017–20; tested on ACS and Census 2021–24</dd>
+        <dt>School location</dt><dd>Survey hold-out half; ACS enrolment</dd>
+        <dt>Activities</dt><dd>Survey hold-out half; ATUS, ACS and LODES 2024</dd>
+        <dt>Traffic</dt><dd>2024 counts at 2,308 mainline stations, continuous counters, screenlines</dd>
+      </dl>
       </div>
     </div>
   </section>
@@ -768,7 +773,7 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
       
         <script src="assets/javascripts/mathjax.js"></script>
       
-        <script src="assets/javascripts/home.js"></script>
+        <script src="assets/javascripts/home.js?v=5"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
       
