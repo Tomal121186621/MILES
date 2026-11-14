@@ -1,0 +1,5757 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="MILES (Maryland Integrated Land-use and Everyday-travel Simulator), an agent-based platform of population, land use, activities and traffic for Maryland">
+      
+      
+        <meta name="author" content="Raas Sarker Tomal">
+      
+      
+        <link rel="canonical" href="https://tomal121186621.github.io/MILES/inputs-outputs/data/acs-pums/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../travel-survey/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/img/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>ACS microdata - MILES</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css?v=5">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#american-community-survey-microdata" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+New: <a href="../../../calibration-validation/estimates/">full result tables of all 28 estimated models</a> and the
+<a href="../../../calibration-validation/validation/map/">interactive traffic validation map</a>.
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="MILES" class="md-header__button md-logo" aria-label="MILES" data-md-component="logo">
+      
+  <img src="../../../assets/img/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MILES
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ACS microdata
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="deep-orange" aria-label="Dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="deep-orange" aria-label="Light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Tomal121186621/MILES" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Tomal121186621/MILES
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../get-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Get started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../model-design/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Model design
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Inputs and outputs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../applying/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Applying MILES
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../calibration-validation/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Calibration and validation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../developers/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Developers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MILES" class="md-nav__button md-logo" aria-label="MILES" data-md-component="logo">
+      
+  <img src="../../../assets/img/logo.svg" alt="logo">
+
+    </a>
+    MILES
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Tomal121186621/MILES" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Tomal121186621/MILES
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../get-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/repository/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repository layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/running/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Run the chain
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime and storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../model-design/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model design
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Model design
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic population
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/activity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Activities (MILES-Day)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/assignment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inputs and outputs
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Inputs and outputs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inputs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input data in detail
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Input data in detail
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACS microdata
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACS microdata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#201216-5-year-file-population-synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2012–16 5-year file: population synthesis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2012–16 5-year file: population synthesis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Records
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#households" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Households
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#numeric-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numeric variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#201418-5-year-file-controls-car-ownership-and-population-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2014–18 5-year file: controls, car ownership and population test
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2014–18 5-year file: controls, car ownership and population test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#car-ownership-estimation-sample" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Car-ownership estimation sample
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mover-households-201418-and-201921-residential-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mover households, 2014–18 and 2019–21: residential location
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mover households, 2014–18 and 2019–21: residential location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#201519-5-year-file-commute-mode-shares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2015–19 5-year file: commute-mode shares
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2015–19 5-year file: commute-mode shares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-year-files-201624-yearly-targets-and-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-year files, 2016–24: yearly targets and tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-year files, 2016–24: yearly targets and tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics-maryland" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics: Maryland
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../travel-survey/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regional Travel Survey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../employment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Employment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../landuse-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Population and housing controls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zones-geography/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zones, skims and geography
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../road-network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Road network
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../traffic-counts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic counts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../zones-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zone system and networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../outputs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outputs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../applying/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Applying MILES
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Applying MILES
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applying/scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applying/i695/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case study, I-695 pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../calibration-validation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration and validation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Calibration and validation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../calibration-validation/estimates/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimated models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estimated models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use and workplaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Destinations and stops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/tour-formation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/modes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour and leg modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../calibration-validation/validation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Validation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic population
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/activities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Activities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/traffic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/interstates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interstates by station
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/county/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    County view
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/baselines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Against standard methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Known limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../developers/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developers
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Population code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/silo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SILO engine changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/activity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MILES-Day engine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/matsim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MATSim runner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/estimation-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimation package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../about/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#201216-5-year-file-population-synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2012–16 5-year file: population synthesis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2012–16 5-year file: population synthesis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Records
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#households" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Households
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#numeric-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numeric variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#201418-5-year-file-controls-car-ownership-and-population-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2014–18 5-year file: controls, car ownership and population test
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2014–18 5-year file: controls, car ownership and population test">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#car-ownership-estimation-sample" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Car-ownership estimation sample
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mover-households-201418-and-201921-residential-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mover households, 2014–18 and 2019–21: residential location
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mover households, 2014–18 and 2019–21: residential location">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#201519-5-year-file-commute-mode-shares" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2015–19 5-year file: commute-mode shares
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2015–19 5-year file: commute-mode shares">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-year-files-201624-yearly-targets-and-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1-year files, 2016–24: yearly targets and tests
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1-year files, 2016–24: yearly targets and tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics-maryland" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics: Maryland
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Inputs and outputs
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Input data in detail
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="american-community-survey-microdata">American Community Survey microdata<a class="headerlink" href="#american-community-survey-microdata" title="Permanent link">¶</a></h1>
+<p>The American Community Survey Public Use Microdata Sample (PUMS) <a href="../../inputs/#sources">[1]</a> is the main source of household and person attributes in MILES. The Census Bureau releases it as one household and one person file per state and vintage; the files are public and are read directly from the downloaded zip archives. MILES uses several vintages, each for a different purpose. All shares below are weighted with the PUMS household (<code>WGTP</code>) or person (<code>PWGTP</code>) weights unless stated otherwise; dollar values are in 2016 dollars. Variable names are those of the PUMS data dictionaries of the Census Bureau.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Unit</th>
+<th>Area</th>
+<th>Used for</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2012–16 5-year</td>
+<td>Household, person</td>
+<td>Six states, model-area PUMAs</td>
+<td>Training of the population generator</td>
+<td>Estimation; test (held-out split)</td>
+</tr>
+<tr>
+<td>2014–18 5-year</td>
+<td>Household, person</td>
+<td>Six states; Maryland</td>
+<td>Population controls; car ownership; population test</td>
+<td>Input; estimation; test</td>
+</tr>
+<tr>
+<td>2014–18 and 2017–21 5-year, movers</td>
+<td>Household</td>
+<td>Six states</td>
+<td>Residential location (region, zone, dwelling)</td>
+<td>Estimation (2014–18); test (2019–21)</td>
+</tr>
+<tr>
+<td>2013–17 5-year</td>
+<td>Household, person</td>
+<td>Maryland</td>
+<td>Vacant units on the market by PUMA; base employment rates by age and sex</td>
+<td>Input</td>
+</tr>
+<tr>
+<td>5-year files 2014–18 to 2020–24</td>
+<td>Household, person</td>
+<td>Maryland</td>
+<td>Yearly land-use tests: households, workers, events, commute time</td>
+<td>Test</td>
+</tr>
+<tr>
+<td>2015–19 5-year (2017–19)</td>
+<td>Person</td>
+<td>DC, MD, VA, WV</td>
+<td>Commute-mode shares for choice-based weights</td>
+<td>Target</td>
+</tr>
+<tr>
+<td>1-year, 2016–24</td>
+<td>Person</td>
+<td>Six states</td>
+<td>Employment rates by age, sex and year</td>
+<td>Target</td>
+</tr>
+<tr>
+<td>1-year 2024; 2020–24 5-year</td>
+<td>Household, person</td>
+<td>Maryland</td>
+<td>Commute and household benchmarks of 2024</td>
+<td>Test</td>
+</tr>
+</tbody>
+</table>
+<h2 id="201216-5-year-file-population-synthesis">2012–16 5-year file: population synthesis<a class="headerlink" href="#201216-5-year-file-population-synthesis" title="Permanent link">¶</a></h2>
+<p>The generator of the synthetic population (a conditional variational autoencoder) is trained on the households and persons of the 2012–16 5-year PUMS <a href="../../inputs/#sources">[1]</a> of the six states that the zone system touches: Delaware, the District of Columbia, Maryland, Pennsylvania, Virginia and West Virginia. Only the Public Use Microdata Areas (PUMAs) that contain a model zone are kept (96 PUMAs). The files are the standard state household (<code>csv_h&lt;st&gt;.zip</code>) and person (<code>csv_p&lt;st&gt;.zip</code>) files of the Census Bureau.</p>
+<h3 id="codebook">Codebook<a class="headerlink" href="#codebook" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SERIALNO</code></td>
+<td>Housing unit identifier; joins persons to households</td>
+<td>string</td>
+<td>13 characters; the first four give the survey year</td>
+<td>all</td>
+</tr>
+<tr>
+<td><code>PUMA</code></td>
+<td>Public Use Microdata Area (2010 definition)</td>
+<td>string</td>
+<td>5 digits; with the state code gives <code>puma_key</code></td>
+<td>conditioning variable; zone allocation</td>
+</tr>
+<tr>
+<td><code>TYPE</code></td>
+<td>Type of unit</td>
+<td>integer</td>
+<td>1 housing unit; 2, 3 group quarters (dropped)</td>
+<td>filter</td>
+</tr>
+<tr>
+<td><code>WGTP</code></td>
+<td>Household weight</td>
+<td>integer</td>
+<td>households; clipped to 0–200</td>
+<td>training weights</td>
+</tr>
+<tr>
+<td><code>NP</code></td>
+<td>Number of persons</td>
+<td>integer</td>
+<td>1–20; 7 or more pooled for conditioning</td>
+<td>household size</td>
+</tr>
+<tr>
+<td><code>VEH</code></td>
+<td>Vehicles available</td>
+<td>integer</td>
+<td>0–6; recoded 0, 1, 2, 3, 4 or more</td>
+<td>household autos</td>
+</tr>
+<tr>
+<td><code>HINCP</code>, <code>ADJINC</code></td>
+<td>Household income; inflation factor</td>
+<td>integer</td>
+<td>dollars, × <code>ADJINC</code>/10⁶ to 2016 dollars; 22 bins, open top bin</td>
+<td>household income</td>
+</tr>
+<tr>
+<td><code>BLD</code></td>
+<td>Units in structure</td>
+<td>integer</td>
+<td>1–10; recoded to 5 dwelling types</td>
+<td>dwelling type</td>
+</tr>
+<tr>
+<td><code>YBL</code></td>
+<td>Year structure built</td>
+<td>integer</td>
+<td>1–20 (decades to 2004, then single years 2005–16); recoded to a year</td>
+<td>dwelling year built</td>
+</tr>
+<tr>
+<td><code>BDSP</code></td>
+<td>Bedrooms</td>
+<td>integer</td>
+<td>0–5 or more</td>
+<td>dwelling bedrooms</td>
+</tr>
+<tr>
+<td><code>GRNTP</code>, <code>SMOCP</code></td>
+<td>Gross rent; selected monthly owner costs</td>
+<td>integer</td>
+<td>dollars per month; summed, clipped to 0–10,000</td>
+<td>dwelling monthly cost</td>
+</tr>
+<tr>
+<td><code>TEN</code></td>
+<td>Tenure</td>
+<td>integer</td>
+<td>1, 2 owned; 3, 4 rented or occupied without rent</td>
+<td>dwelling tenure</td>
+</tr>
+<tr>
+<td><code>SPORDER</code></td>
+<td>Person number in the household</td>
+<td>integer</td>
+<td>1–20</td>
+<td>household roster</td>
+</tr>
+<tr>
+<td><code>PWGTP</code></td>
+<td>Person weight</td>
+<td>integer</td>
+<td>persons; clipped to 0–500</td>
+<td>training weights</td>
+</tr>
+<tr>
+<td><code>AGEP</code></td>
+<td>Age</td>
+<td>integer</td>
+<td>years, 0–96 (top-coded); 18 five-year bins</td>
+<td>person age</td>
+</tr>
+<tr>
+<td><code>SEX</code></td>
+<td>Sex</td>
+<td>integer</td>
+<td>1 male, 2 female</td>
+<td>person gender</td>
+</tr>
+<tr>
+<td><code>RAC1P</code>, <code>HISP</code></td>
+<td>Race; Hispanic origin</td>
+<td>integer</td>
+<td>recoded to 5 groups (Hispanic of any race first)</td>
+<td>person race</td>
+</tr>
+<tr>
+<td><code>ESR</code></td>
+<td>Employment status recode</td>
+<td>integer</td>
+<td>1–6; with <code>SCHG</code> and age gives occupation</td>
+<td>person occupation</td>
+</tr>
+<tr>
+<td><code>SCHG</code></td>
+<td>Grade level attending</td>
+<td>integer</td>
+<td>1–16; any grade = student</td>
+<td>person occupation</td>
+</tr>
+<tr>
+<td><code>PINCP</code></td>
+<td>Person income</td>
+<td>integer</td>
+<td>dollars, × <code>ADJINC</code>/10⁶; 16 bins, bin 0 = no income</td>
+<td>person income</td>
+</tr>
+<tr>
+<td><code>NATIVITY</code>, <code>CIT</code></td>
+<td>Nativity; citizenship</td>
+<td>integer</td>
+<td>recoded native, naturalised, not a citizen</td>
+<td>person nationality</td>
+</tr>
+<tr>
+<td><code>RELP</code></td>
+<td>Relationship to the reference person</td>
+<td>integer</td>
+<td>0–17; recoded to 8 roles</td>
+<td>person relationship</td>
+</tr>
+<tr>
+<td><code>JWTR</code></td>
+<td>Means of transportation to work</td>
+<td>integer</td>
+<td>1–12; bicycle, walked, other (9, 10, 12) = no licence</td>
+<td>driver's licence proxy</td>
+</tr>
+<tr>
+<td><code>POWPUMA</code>, <code>POWSP</code></td>
+<td>Place-of-work PUMA and state</td>
+<td>string</td>
+<td>PUMA of work</td>
+<td>workplace assignment</td>
+</tr>
+</tbody>
+</table>
+<h3 id="records">Records<a class="headerlink" href="#records" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th style="text-align: right;">Household records</th>
+<th style="text-align: right;">Person records</th>
+<th style="text-align: right;">In model-area PUMAs</th>
+<th style="text-align: right;">Housing units kept</th>
+<th style="text-align: right;">Persons kept</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Delaware</td>
+<td style="text-align: right;">22,502</td>
+<td style="text-align: right;">44,486</td>
+<td style="text-align: right;">22,502</td>
+<td style="text-align: right;">17,991</td>
+<td style="text-align: right;">42,864</td>
+</tr>
+<tr>
+<td>District of Columbia</td>
+<td style="text-align: right;">18,379</td>
+<td style="text-align: right;">32,648</td>
+<td style="text-align: right;">18,379</td>
+<td style="text-align: right;">14,333</td>
+<td style="text-align: right;">29,598</td>
+</tr>
+<tr>
+<td>Maryland</td>
+<td style="text-align: right;">134,588</td>
+<td style="text-align: right;">295,066</td>
+<td style="text-align: right;">134,588</td>
+<td style="text-align: right;">113,205</td>
+<td style="text-align: right;">281,513</td>
+</tr>
+<tr>
+<td>Pennsylvania</td>
+<td style="text-align: right;">317,416</td>
+<td style="text-align: right;">640,261</td>
+<td style="text-align: right;">43,786</td>
+<td style="text-align: right;">36,792</td>
+<td style="text-align: right;">91,166</td>
+</tr>
+<tr>
+<td>Virginia</td>
+<td style="text-align: right;">194,229</td>
+<td style="text-align: right;">416,279</td>
+<td style="text-align: right;">67,356</td>
+<td style="text-align: right;">61,150</td>
+<td style="text-align: right;">159,293</td>
+</tr>
+<tr>
+<td>West Virginia</td>
+<td style="text-align: right;">48,662</td>
+<td style="text-align: right;">90,734</td>
+<td style="text-align: right;">12,623</td>
+<td style="text-align: right;">9,558</td>
+<td style="text-align: right;">21,767</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td style="text-align: right;"><strong>735,776</strong></td>
+<td style="text-align: right;"><strong>1,519,474</strong></td>
+<td style="text-align: right;"><strong>299,234</strong></td>
+<td style="text-align: right;"><strong>253,029</strong></td>
+<td style="text-align: right;"><strong>626,201</strong></td>
+</tr>
+</tbody>
+</table>
+<p>After the coverage scaling, the sample represents 4,704,934 households and 12,491,069 persons in households (253,029 household and 626,201 person records; mean weighted household size 2.52). The households are split by PUMA into a training (202,427), a validation (25,304) and a held-out test set (25,298 households); the test set is used only for the validation of the generator.</p>
+<p>Missing values among the kept records (share of records): <code>VEH</code> 0.0 %; <code>HINCP</code> 0.0 %; <code>GRNTP</code> 73.9 %; <code>SMOCP</code> 27.6 %; <code>TEN</code> 0.0 %; <code>ESR</code> 19.2 %; <code>SCHG</code> 76.2 %; <code>PINCP</code> 17.9 %; <code>JWTR</code> 49.6 %; <code>POWPUMA</code> 49.6 %. Vacant units and group quarters are not kept, so vehicles, income and tenure are complete; <code>GRNTP</code> is reported for renters and <code>SMOCP</code> for owners only. <code>ESR</code> is missing for persons under 16, <code>PINCP</code> for persons under 15, <code>SCHG</code> for persons not attending school, and <code>JWTR</code> and <code>POWPUMA</code> for persons who did not work in the reference week.</p>
+<h3 id="households">Households<a class="headerlink" href="#households" title="Permanent link">¶</a></h3>
+<p>Weighted shares (%) of the kept households, by state of the PUMA.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Category</th>
+<th style="text-align: right;">MD</th>
+<th style="text-align: right;">DC</th>
+<th style="text-align: right;">VA</th>
+<th style="text-align: right;">PA</th>
+<th style="text-align: right;">DE</th>
+<th style="text-align: right;">WV</th>
+<th style="text-align: right;">All</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Household size</td>
+<td>1</td>
+<td style="text-align: right;">27.2</td>
+<td style="text-align: right;">43.7</td>
+<td style="text-align: right;">24.3</td>
+<td style="text-align: right;">24.9</td>
+<td style="text-align: right;">26.8</td>
+<td style="text-align: right;">29.1</td>
+<td style="text-align: right;">27.2</td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td style="text-align: right;">32.7</td>
+<td style="text-align: right;">30.6</td>
+<td style="text-align: right;">31.8</td>
+<td style="text-align: right;">36.8</td>
+<td style="text-align: right;">36.4</td>
+<td style="text-align: right;">35.8</td>
+<td style="text-align: right;">33.4</td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">12.1</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">16.0</td>
+<td style="text-align: right;">15.3</td>
+<td style="text-align: right;">15.6</td>
+<td style="text-align: right;">16.3</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">16.2</td>
+<td style="text-align: right;">13.7</td>
+<td style="text-align: right;">12.9</td>
+<td style="text-align: right;">11.5</td>
+<td style="text-align: right;">13.9</td>
+</tr>
+<tr>
+<td></td>
+<td>5</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">6.1</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">2.3</td>
+</tr>
+<tr>
+<td></td>
+<td>7 or more</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr>
+<td>Vehicles available</td>
+<td>0</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">36.4</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">9.3</td>
+</tr>
+<tr>
+<td></td>
+<td>1</td>
+<td style="text-align: right;">32.8</td>
+<td style="text-align: right;">43.7</td>
+<td style="text-align: right;">30.4</td>
+<td style="text-align: right;">28.4</td>
+<td style="text-align: right;">33.9</td>
+<td style="text-align: right;">32.8</td>
+<td style="text-align: right;">32.3</td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td style="text-align: right;">36.7</td>
+<td style="text-align: right;">16.0</td>
+<td style="text-align: right;">40.9</td>
+<td style="text-align: right;">40.5</td>
+<td style="text-align: right;">39.8</td>
+<td style="text-align: right;">37.5</td>
+<td style="text-align: right;">37.3</td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td style="text-align: right;">14.4</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">16.3</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">16.3</td>
+<td style="text-align: right;">14.5</td>
+</tr>
+<tr>
+<td></td>
+<td>4 or more</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">6.7</td>
+</tr>
+<tr>
+<td>Dwelling type</td>
+<td>Single-family detached</td>
+<td style="text-align: right;">52.9</td>
+<td style="text-align: right;">12.1</td>
+<td style="text-align: right;">50.5</td>
+<td style="text-align: right;">64.6</td>
+<td style="text-align: right;">61.3</td>
+<td style="text-align: right;">71.0</td>
+<td style="text-align: right;">52.9</td>
+</tr>
+<tr>
+<td></td>
+<td>Single-family attached</td>
+<td style="text-align: right;">21.1</td>
+<td style="text-align: right;">25.5</td>
+<td style="text-align: right;">20.2</td>
+<td style="text-align: right;">14.9</td>
+<td style="text-align: right;">14.0</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">19.3</td>
+</tr>
+<tr>
+<td></td>
+<td>2–4 units</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">10.2</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">4.2</td>
+</tr>
+<tr>
+<td></td>
+<td>5 or more units</td>
+<td style="text-align: right;">21.2</td>
+<td style="text-align: right;">52.1</td>
+<td style="text-align: right;">25.5</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">13.3</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">21.0</td>
+</tr>
+<tr>
+<td></td>
+<td>Mobile home, other</td>
+<td style="text-align: right;">1.3</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">5.2</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">13.2</td>
+<td style="text-align: right;">2.6</td>
+</tr>
+<tr>
+<td>Tenure</td>
+<td>Owner</td>
+<td style="text-align: right;">66.2</td>
+<td style="text-align: right;">40.4</td>
+<td style="text-align: right;">65.6</td>
+<td style="text-align: right;">73.0</td>
+<td style="text-align: right;">70.5</td>
+<td style="text-align: right;">70.7</td>
+<td style="text-align: right;">66.1</td>
+</tr>
+<tr>
+<td></td>
+<td>Renter</td>
+<td style="text-align: right;">33.8</td>
+<td style="text-align: right;">59.6</td>
+<td style="text-align: right;">34.4</td>
+<td style="text-align: right;">27.0</td>
+<td style="text-align: right;">29.5</td>
+<td style="text-align: right;">29.3</td>
+<td style="text-align: right;">33.9</td>
+</tr>
+<tr>
+<td>Household income (2016 $)</td>
+<td>Under $25,000</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">21.3</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">24.1</td>
+<td style="text-align: right;">15.0</td>
+</tr>
+<tr>
+<td></td>
+<td>$25,000–49,999</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">16.2</td>
+<td style="text-align: right;">12.6</td>
+<td style="text-align: right;">22.8</td>
+<td style="text-align: right;">22.6</td>
+<td style="text-align: right;">24.3</td>
+<td style="text-align: right;">17.8</td>
+</tr>
+<tr>
+<td></td>
+<td>$50,000–74,999</td>
+<td style="text-align: right;">16.9</td>
+<td style="text-align: right;">13.1</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">19.2</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">16.6</td>
+</tr>
+<tr>
+<td></td>
+<td>$75,000–99,999</td>
+<td style="text-align: right;">13.2</td>
+<td style="text-align: right;">10.8</td>
+<td style="text-align: right;">12.7</td>
+<td style="text-align: right;">13.4</td>
+<td style="text-align: right;">13.7</td>
+<td style="text-align: right;">13.6</td>
+<td style="text-align: right;">13.1</td>
+</tr>
+<tr>
+<td></td>
+<td>$100,000–149,999</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">15.5</td>
+<td style="text-align: right;">20.8</td>
+<td style="text-align: right;">15.1</td>
+<td style="text-align: right;">14.8</td>
+<td style="text-align: right;">12.0</td>
+<td style="text-align: right;">17.7</td>
+</tr>
+<tr>
+<td></td>
+<td>$150,000–199,999</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">12.7</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">9.0</td>
+</tr>
+<tr>
+<td></td>
+<td>$200,000 or more</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">14.5</td>
+<td style="text-align: right;">17.9</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">10.9</td>
+</tr>
+</tbody>
+</table>
+<h3 id="persons">Persons<a class="headerlink" href="#persons" title="Permanent link">¶</a></h3>
+<p>Weighted shares (%) of the persons in the kept households.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Category</th>
+<th style="text-align: right;">MD</th>
+<th style="text-align: right;">DC</th>
+<th style="text-align: right;">VA</th>
+<th style="text-align: right;">PA</th>
+<th style="text-align: right;">DE</th>
+<th style="text-align: right;">WV</th>
+<th style="text-align: right;">All</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Age</td>
+<td>0–5</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">7.7</td>
+</tr>
+<tr>
+<td></td>
+<td>6–17</td>
+<td style="text-align: right;">15.5</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">16.3</td>
+<td style="text-align: right;">16.0</td>
+<td style="text-align: right;">15.1</td>
+<td style="text-align: right;">15.1</td>
+<td style="text-align: right;">15.5</td>
+</tr>
+<tr>
+<td></td>
+<td>18–34</td>
+<td style="text-align: right;">22.3</td>
+<td style="text-align: right;">32.5</td>
+<td style="text-align: right;">22.8</td>
+<td style="text-align: right;">19.6</td>
+<td style="text-align: right;">21.7</td>
+<td style="text-align: right;">21.1</td>
+<td style="text-align: right;">22.4</td>
+</tr>
+<tr>
+<td></td>
+<td>35–64</td>
+<td style="text-align: right;">41.0</td>
+<td style="text-align: right;">37.5</td>
+<td style="text-align: right;">41.8</td>
+<td style="text-align: right;">40.9</td>
+<td style="text-align: right;">39.5</td>
+<td style="text-align: right;">41.4</td>
+<td style="text-align: right;">40.9</td>
+</tr>
+<tr>
+<td></td>
+<td>65 or older</td>
+<td style="text-align: right;">13.6</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">10.8</td>
+<td style="text-align: right;">16.2</td>
+<td style="text-align: right;">16.4</td>
+<td style="text-align: right;">15.3</td>
+<td style="text-align: right;">13.5</td>
+</tr>
+<tr>
+<td>Sex</td>
+<td>Male</td>
+<td style="text-align: right;">48.2</td>
+<td style="text-align: right;">47.2</td>
+<td style="text-align: right;">49.4</td>
+<td style="text-align: right;">49.1</td>
+<td style="text-align: right;">48.2</td>
+<td style="text-align: right;">49.6</td>
+<td style="text-align: right;">48.6</td>
+</tr>
+<tr>
+<td></td>
+<td>Female</td>
+<td style="text-align: right;">51.8</td>
+<td style="text-align: right;">52.8</td>
+<td style="text-align: right;">50.6</td>
+<td style="text-align: right;">50.9</td>
+<td style="text-align: right;">51.8</td>
+<td style="text-align: right;">50.4</td>
+<td style="text-align: right;">51.4</td>
+</tr>
+<tr>
+<td>Race and ethnicity</td>
+<td>White, non-Hispanic</td>
+<td style="text-align: right;">52.6</td>
+<td style="text-align: right;">35.7</td>
+<td style="text-align: right;">56.3</td>
+<td style="text-align: right;">85.6</td>
+<td style="text-align: right;">63.7</td>
+<td style="text-align: right;">88.9</td>
+<td style="text-align: right;">59.4</td>
+</tr>
+<tr>
+<td></td>
+<td>Black, non-Hispanic</td>
+<td style="text-align: right;">29.0</td>
+<td style="text-align: right;">47.5</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">20.8</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">20.8</td>
+</tr>
+<tr>
+<td></td>
+<td>Hispanic</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">10.8</td>
+<td style="text-align: right;">15.6</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">3.1</td>
+<td style="text-align: right;">10.3</td>
+</tr>
+<tr>
+<td></td>
+<td>Asian or Pacific Islander, non-Hispanic</td>
+<td style="text-align: right;">6.1</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">12.3</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">6.5</td>
+</tr>
+<tr>
+<td></td>
+<td>Other, non-Hispanic</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">3.0</td>
+</tr>
+<tr>
+<td>Occupation</td>
+<td>Employed</td>
+<td style="text-align: right;">51.8</td>
+<td style="text-align: right;">54.9</td>
+<td style="text-align: right;">54.5</td>
+<td style="text-align: right;">49.6</td>
+<td style="text-align: right;">48.0</td>
+<td style="text-align: right;">46.0</td>
+<td style="text-align: right;">51.8</td>
+</tr>
+<tr>
+<td></td>
+<td>Student</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">14.0</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">16.6</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">17.4</td>
+<td style="text-align: right;">17.3</td>
+</tr>
+<tr>
+<td></td>
+<td>Retired</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">9.2</td>
+<td style="text-align: right;">14.7</td>
+<td style="text-align: right;">15.3</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">11.9</td>
+</tr>
+<tr>
+<td></td>
+<td>Unemployed</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">2.8</td>
+</tr>
+<tr>
+<td></td>
+<td>Child under 6</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">7.7</td>
+</tr>
+<tr>
+<td></td>
+<td>Other</td>
+<td style="text-align: right;">8.1</td>
+<td style="text-align: right;">8.8</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">9.5</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">8.4</td>
+</tr>
+<tr>
+<td>Driver's licence (proxy), age 16+</td>
+<td>Yes</td>
+<td style="text-align: right;">98.0</td>
+<td style="text-align: right;">88.9</td>
+<td style="text-align: right;">97.7</td>
+<td style="text-align: right;">97.9</td>
+<td style="text-align: right;">98.4</td>
+<td style="text-align: right;">98.6</td>
+<td style="text-align: right;">97.5</td>
+</tr>
+<tr>
+<td></td>
+<td>No</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">2.5</td>
+</tr>
+<tr>
+<td>Nationality</td>
+<td>Native-born</td>
+<td style="text-align: right;">85.1</td>
+<td style="text-align: right;">85.6</td>
+<td style="text-align: right;">76.4</td>
+<td style="text-align: right;">95.3</td>
+<td style="text-align: right;">90.9</td>
+<td style="text-align: right;">96.8</td>
+<td style="text-align: right;">85.4</td>
+</tr>
+<tr>
+<td></td>
+<td>Naturalised citizen</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">11.9</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">7.2</td>
+</tr>
+<tr>
+<td></td>
+<td>Not a citizen</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">11.6</td>
+<td style="text-align: right;">2.4</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">7.4</td>
+</tr>
+</tbody>
+</table>
+<h3 id="numeric-variables">Numeric variables<a class="headerlink" href="#numeric-variables" title="Permanent link">¶</a></h3>
+<p>Weighted mean, median and standard deviation; minimum and maximum over the records.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Unit</th>
+<th style="text-align: right;">Records</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Std. dev.</th>
+<th style="text-align: right;">Min</th>
+<th style="text-align: right;">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Household size</td>
+<td>persons</td>
+<td style="text-align: right;">253,029</td>
+<td style="text-align: right;">2.52</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.46</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr>
+<td>Household income</td>
+<td>2016 $</td>
+<td style="text-align: right;">253,029</td>
+<td style="text-align: right;">101,846</td>
+<td style="text-align: right;">76,044</td>
+<td style="text-align: right;">100,040</td>
+<td style="text-align: right;">-15,157</td>
+<td style="text-align: right;">2,203,935</td>
+</tr>
+<tr>
+<td>Bedrooms</td>
+<td>rooms</td>
+<td style="text-align: right;">253,029</td>
+<td style="text-align: right;">2.89</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1.14</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>Monthly housing cost</td>
+<td>$</td>
+<td style="text-align: right;">253,029</td>
+<td style="text-align: right;">1,560</td>
+<td style="text-align: right;">1,370</td>
+<td style="text-align: right;">1,065</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">10,000</td>
+</tr>
+<tr>
+<td>Year built (recoded)</td>
+<td>year</td>
+<td style="text-align: right;">253,029</td>
+<td style="text-align: right;">1975</td>
+<td style="text-align: right;">1975</td>
+<td style="text-align: right;">23.0</td>
+<td style="text-align: right;">1935</td>
+<td style="text-align: right;">2016</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>years</td>
+<td style="text-align: right;">626,201</td>
+<td style="text-align: right;">38.05</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">22.53</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">96</td>
+</tr>
+<tr>
+<td>Person income</td>
+<td>2016 $</td>
+<td style="text-align: right;">626,201</td>
+<td style="text-align: right;">39,399</td>
+<td style="text-align: right;">20,152</td>
+<td style="text-align: right;">61,783</td>
+<td style="text-align: right;">-12,458</td>
+<td style="text-align: right;">1,678,031</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/data/acs_2016_households.png" data-desc-position="bottom"><img alt="Household distributions, 2012–16 PUMS" src="../../../assets/img/data/acs_2016_households.png"></a></p>
+<p><em>Weighted distributions of the households of the model-area PUMAs, Maryland and the other five states, ACS PUMS 2012–16.</em></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/data/acs_2016_age_sex.png" data-desc-position="bottom"><img alt="Persons by age and sex, 2012–16 PUMS" src="../../../assets/img/data/acs_2016_age_sex.png"></a></p>
+<p><em>Weighted age distribution of the persons in the kept households by sex, all six states, ACS PUMS 2012–16.</em></p>
+<h3 id="processing">Processing<a class="headerlink" href="#processing" title="Permanent link">¶</a></h3>
+<ul>
+<li>Housing units only (<code>TYPE</code> = 1, <code>NP</code> ≥ 1); group quarters are not part of the synthetic population.</li>
+<li>PUMAs without a model zone are dropped. In the five PUMAs that lie partly outside the zone system (West Virginia and Virginia), household and person weights are multiplied by the covered share of the PUMA.</li>
+<li>Incomes are converted to 2016 dollars with <code>ADJINC</code> and binned (22 household, 16 person bins); income is not top-coded beyond the Census Bureau's own top-coding. Dollar values are redrawn within the bin at generation.</li>
+<li>Occupation: age under 6 → child; <code>ESR</code> 1, 2, 4, 5 → employed; attending school (<code>SCHG</code> &gt; 0) → student; <code>ESR</code> 3 → unemployed; age 62 or older and not in the labour force → retired; otherwise other.</li>
+<li>The PUMS has no driver's licence variable. Persons aged 16 or older are coded as licensed unless their usual means of travel to work is bicycle, walking or other; persons under 16 are unlicensed.</li>
+<li>Missing values are set to 0 before the recodes (no rent or owner cost, no income, not employed, not attending school); missing <code>BLD</code> and <code>YBL</code> become single-family detached and 1985.</li>
+<li>Weights are clipped to 0–200 (households) and 0–500 (persons).</li>
+</ul>
+<h2 id="201418-5-year-file-controls-car-ownership-and-population-test">2014–18 5-year file: controls, car ownership and population test<a class="headerlink" href="#201418-5-year-file-controls-car-ownership-and-population-test" title="Permanent link">¶</a></h2>
+<p>The 2014–18 5-year file <a href="../../inputs/#sources">[1]</a> is centred on the base year 2016. It is used three times: (a) its person and household weights per PUMA are the controls to which the generated population is fitted (persons in households by age band 0–17, 18–34, 35–64, 65+; households by size 1 to 5 or more); (b) the Maryland households form the estimation sample of the car-ownership model; (c) the Maryland PUMA distributions (age, sex, employment, household size, income, vehicles, tenure, dwelling type) are the test of the base-year population.</p>
+<h3 id="codebook_1">Codebook<a class="headerlink" href="#codebook_1" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SERIALNO</code></td>
+<td>Housing unit identifier</td>
+<td>string</td>
+<td>join of persons to households; hash gives the 80/20 split</td>
+<td>all</td>
+</tr>
+<tr>
+<td><code>PUMA</code></td>
+<td>PUMA (2010)</td>
+<td>integer</td>
+<td>5 digits</td>
+<td>controls; location variables</td>
+</tr>
+<tr>
+<td><code>TYPE</code></td>
+<td>Type of unit</td>
+<td>integer</td>
+<td>1 housing unit (kept)</td>
+<td>filter</td>
+</tr>
+<tr>
+<td><code>WGTP</code></td>
+<td>Household weight</td>
+<td>integer</td>
+<td>households</td>
+<td>controls; weights</td>
+</tr>
+<tr>
+<td><code>PWGTP</code></td>
+<td>Person weight</td>
+<td>integer</td>
+<td>persons</td>
+<td>controls</td>
+</tr>
+<tr>
+<td><code>RELP</code></td>
+<td>Relationship</td>
+<td>integer</td>
+<td>16, 17 group quarters (dropped)</td>
+<td>controls</td>
+</tr>
+<tr>
+<td><code>NP</code></td>
+<td>Number of persons</td>
+<td>integer</td>
+<td>1–20, capped at 8</td>
+<td>car ownership: household size</td>
+</tr>
+<tr>
+<td><code>VEH</code></td>
+<td>Vehicles available</td>
+<td>integer</td>
+<td>0–6, recoded 0, 1, 2, 3 or more</td>
+<td>car ownership: choice</td>
+</tr>
+<tr>
+<td><code>HINCP</code>, <code>ADJINC</code></td>
+<td>Household income; inflation factor</td>
+<td>integer</td>
+<td>dollars, to 2016 dollars with <code>ADJINC</code> and the CPI-U</td>
+<td>car ownership: income</td>
+</tr>
+<tr>
+<td><code>BLD</code></td>
+<td>Units in structure</td>
+<td>integer</td>
+<td>2 detached, 3 attached, 4–9 multifamily</td>
+<td>car ownership: dwelling type</td>
+</tr>
+<tr>
+<td><code>BDSP</code></td>
+<td>Bedrooms</td>
+<td>integer</td>
+<td>0–5 or more</td>
+<td>car ownership</td>
+</tr>
+<tr>
+<td><code>ESR</code></td>
+<td>Employment status</td>
+<td>integer</td>
+<td>1, 2, 4, 5 = worker</td>
+<td>car ownership: workers</td>
+</tr>
+<tr>
+<td><code>AGEP</code></td>
+<td>Age</td>
+<td>integer</td>
+<td>years; 16+ = potential driver; 65+</td>
+<td>car ownership; controls</td>
+</tr>
+</tbody>
+</table>
+<h3 id="car-ownership-estimation-sample">Car-ownership estimation sample<a class="headerlink" href="#car-ownership-estimation-sample" title="Permanent link">¶</a></h3>
+<p>114,078 Maryland households (weighted 2,192,515); 91,348 in the estimation sample and 22,730 held out. Shares are weighted by <code>WGTP</code>; areas are the counties of each 2010 PUMA.</p>
+<table>
+<thead>
+<tr>
+<th>County (PUMA group)</th>
+<th style="text-align: right;">Records</th>
+<th style="text-align: right;">Households</th>
+<th style="text-align: right;">0 cars (%)</th>
+<th style="text-align: right;">1 car (%)</th>
+<th style="text-align: right;">2 cars (%)</th>
+<th style="text-align: right;">3+ cars (%)</th>
+<th style="text-align: right;">Mean size</th>
+<th style="text-align: right;">Median income (2016 $)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Montgomery</td>
+<td style="text-align: right;">19,679</td>
+<td style="text-align: right;">370,225</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">33.4</td>
+<td style="text-align: right;">40.1</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">2.64</td>
+<td style="text-align: right;">101,673</td>
+</tr>
+<tr>
+<td>Baltimore County</td>
+<td style="text-align: right;">16,258</td>
+<td style="text-align: right;">312,914</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">35.5</td>
+<td style="text-align: right;">38.5</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">2.47</td>
+<td style="text-align: right;">71,284</td>
+</tr>
+<tr>
+<td>Prince George's</td>
+<td style="text-align: right;">16,395</td>
+<td style="text-align: right;">308,849</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">36.6</td>
+<td style="text-align: right;">33.1</td>
+<td style="text-align: right;">21.7</td>
+<td style="text-align: right;">2.61</td>
+<td style="text-align: right;">78,593</td>
+</tr>
+<tr>
+<td>Baltimore City</td>
+<td style="text-align: right;">12,578</td>
+<td style="text-align: right;">238,436</td>
+<td style="text-align: right;">29.3</td>
+<td style="text-align: right;">40.6</td>
+<td style="text-align: right;">23.1</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">2.20</td>
+<td style="text-align: right;">46,051</td>
+</tr>
+<tr>
+<td>Anne Arundel</td>
+<td style="text-align: right;">8,924</td>
+<td style="text-align: right;">207,599</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">27.9</td>
+<td style="text-align: right;">42.4</td>
+<td style="text-align: right;">26.0</td>
+<td style="text-align: right;">2.55</td>
+<td style="text-align: right;">93,227</td>
+</tr>
+<tr>
+<td>Howard</td>
+<td style="text-align: right;">5,128</td>
+<td style="text-align: right;">112,966</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">27.3</td>
+<td style="text-align: right;">44.5</td>
+<td style="text-align: right;">24.6</td>
+<td style="text-align: right;">2.67</td>
+<td style="text-align: right;">113,605</td>
+</tr>
+<tr>
+<td>Harford</td>
+<td style="text-align: right;">4,798</td>
+<td style="text-align: right;">93,285</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">26.5</td>
+<td style="text-align: right;">42.2</td>
+<td style="text-align: right;">26.4</td>
+<td style="text-align: right;">2.55</td>
+<td style="text-align: right;">81,184</td>
+</tr>
+<tr>
+<td>Frederick</td>
+<td style="text-align: right;">5,398</td>
+<td style="text-align: right;">91,404</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">25.0</td>
+<td style="text-align: right;">41.3</td>
+<td style="text-align: right;">29.7</td>
+<td style="text-align: right;">2.63</td>
+<td style="text-align: right;">88,212</td>
+</tr>
+<tr>
+<td>Calvert / St. Mary's</td>
+<td style="text-align: right;">3,150</td>
+<td style="text-align: right;">72,059</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">22.3</td>
+<td style="text-align: right;">38.3</td>
+<td style="text-align: right;">35.1</td>
+<td style="text-align: right;">2.67</td>
+<td style="text-align: right;">93,599</td>
+</tr>
+<tr>
+<td>Caroline / Dorchester / Kent / Queen Anne's / Talbot</td>
+<td style="text-align: right;">4,599</td>
+<td style="text-align: right;">68,029</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">28.0</td>
+<td style="text-align: right;">39.5</td>
+<td style="text-align: right;">26.5</td>
+<td style="text-align: right;">2.39</td>
+<td style="text-align: right;">61,401</td>
+</tr>
+<tr>
+<td>Somerset / Wicomico / Worcester</td>
+<td style="text-align: right;">3,557</td>
+<td style="text-align: right;">67,694</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">33.3</td>
+<td style="text-align: right;">36.0</td>
+<td style="text-align: right;">22.3</td>
+<td style="text-align: right;">2.38</td>
+<td style="text-align: right;">54,453</td>
+</tr>
+<tr>
+<td>Carroll</td>
+<td style="text-align: right;">3,474</td>
+<td style="text-align: right;">60,449</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">20.1</td>
+<td style="text-align: right;">39.5</td>
+<td style="text-align: right;">36.0</td>
+<td style="text-align: right;">2.68</td>
+<td style="text-align: right;">88,551</td>
+</tr>
+<tr>
+<td>Charles</td>
+<td style="text-align: right;">2,586</td>
+<td style="text-align: right;">55,903</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">27.1</td>
+<td style="text-align: right;">37.0</td>
+<td style="text-align: right;">32.6</td>
+<td style="text-align: right;">2.73</td>
+<td style="text-align: right;">91,990</td>
+</tr>
+<tr>
+<td>Washington</td>
+<td style="text-align: right;">2,925</td>
+<td style="text-align: right;">55,864</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">31.6</td>
+<td style="text-align: right;">34.6</td>
+<td style="text-align: right;">25.8</td>
+<td style="text-align: right;">2.48</td>
+<td style="text-align: right;">57,643</td>
+</tr>
+<tr>
+<td>Allegany / Garrett</td>
+<td style="text-align: right;">2,831</td>
+<td style="text-align: right;">39,909</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">34.6</td>
+<td style="text-align: right;">35.1</td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: right;">2.30</td>
+<td style="text-align: right;">42,366</td>
+</tr>
+<tr>
+<td>Cecil</td>
+<td style="text-align: right;">1,798</td>
+<td style="text-align: right;">36,930</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">28.5</td>
+<td style="text-align: right;">38.0</td>
+<td style="text-align: right;">28.5</td>
+<td style="text-align: right;">2.52</td>
+<td style="text-align: right;">69,006</td>
+</tr>
+<tr>
+<td><strong>Maryland</strong></td>
+<td style="text-align: right;"><strong>114,078</strong></td>
+<td style="text-align: right;"><strong>2,192,515</strong></td>
+<td style="text-align: right;"><strong>8.9</strong></td>
+<td style="text-align: right;"><strong>32.3</strong></td>
+<td style="text-align: right;"><strong>37.1</strong></td>
+<td style="text-align: right;"><strong>21.7</strong></td>
+<td style="text-align: right;"><strong>2.53</strong></td>
+<td style="text-align: right;"><strong>77,949</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Explanatory variables of the car-ownership model (weighted).</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Std. dev.</th>
+<th style="text-align: right;">Min</th>
+<th style="text-align: right;">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Household size</td>
+<td style="text-align: right;">2.53</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: right;">1.44</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">8.00</td>
+</tr>
+<tr>
+<td>Workers</td>
+<td style="text-align: right;">1.32</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">8.00</td>
+</tr>
+<tr>
+<td>Persons aged 16+</td>
+<td style="text-align: right;">2.01</td>
+<td style="text-align: right;">2.00</td>
+<td style="text-align: right;">0.97</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">15.00</td>
+</tr>
+<tr>
+<td>Children under 16</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">11.00</td>
+</tr>
+<tr>
+<td>Any member 65+ (share)</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+<tr>
+<td>Income (thousand 2016 $)</td>
+<td style="text-align: right;">102.69</td>
+<td style="text-align: right;">77.95</td>
+<td style="text-align: right;">99.70</td>
+<td style="text-align: right;">-6.85</td>
+<td style="text-align: right;">1663.28</td>
+</tr>
+<tr>
+<td>Single-family detached (share)</td>
+<td style="text-align: right;">0.53</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+<tr>
+<td>Multifamily (share)</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+<tr>
+<td>Bedrooms</td>
+<td style="text-align: right;">2.93</td>
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">1.13</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">5.00</td>
+</tr>
+<tr>
+<td>Log dwelling density of the PUMA (units per km²)</td>
+<td style="text-align: right;">5.52</td>
+<td style="text-align: right;">6.04</td>
+<td style="text-align: right;">1.32</td>
+<td style="text-align: right;">2.83</td>
+<td style="text-align: right;">7.62</td>
+</tr>
+</tbody>
+</table>
+<h3 id="processing_1">Processing<a class="headerlink" href="#processing_1" title="Permanent link">¶</a></h3>
+<ul>
+<li>Housing units with at least one person, non-missing <code>VEH</code> and positive weight.</li>
+<li>Income in 2016 dollars: <code>HINCP</code> × <code>ADJINC</code>/10⁶ × CPI-U 2016/2018. Household counts by person type from the person file (workers: <code>ESR</code> 1, 2, 4, 5).</li>
+<li>PUMA-level accessibility (with and without a car, by income group) and dwelling density are attached from the zone system; the PUMAs are the location unit of this sample.</li>
+<li>Estimation and hold-out: 80/20 by a hash of <code>SERIALNO</code>.</li>
+<li>Controls: persons in households (<code>RELP</code> not 16, 17) by age band and households by size, summed over the PUMAs of all six states.</li>
+</ul>
+<h2 id="mover-households-201418-and-201921-residential-location">Mover households, 2014–18 and 2019–21: residential location<a class="headerlink" href="#mover-households-201418-and-201921-residential-location" title="Permanent link">¶</a></h2>
+<p>The residential location models (region, zone and dwelling) are estimated on households that moved in the year before the interview, from the 5-year PUMS <a href="../../inputs/#sources">[1]</a> of the six states. The 2014–18 file gives the estimation sample and a held-out validation sample; the survey years 2019–21 of the 2017–21 file (no overlap with 2014–18, same 2010 geography) give an out-of-time test. The dwellings occupied by all households that moved in within 12 months form the market from which the alternatives of the dwelling model are sampled.</p>
+<h3 id="codebook_2">Codebook<a class="headerlink" href="#codebook_2" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MV</code></td>
+<td>When moved into this house</td>
+<td>integer</td>
+<td>1 = within 12 months</td>
+<td>mover filter; dwelling market</td>
+</tr>
+<tr>
+<td><code>MIG</code></td>
+<td>Mobility status one year ago</td>
+<td>integer</td>
+<td>1 same house; 2 abroad; 3 different house in the U.S.</td>
+<td>mover filter (3)</td>
+</tr>
+<tr>
+<td><code>MIGSP</code>, <code>MIGPUMA</code></td>
+<td>State and migration PUMA of residence one year ago</td>
+<td>integer</td>
+<td>origin of the move</td>
+<td>region model: origin</td>
+</tr>
+<tr>
+<td><code>ST</code>, <code>PUMA</code></td>
+<td>State and PUMA of the current residence</td>
+<td>integer</td>
+<td>destination of the move</td>
+<td>region and zone models</td>
+</tr>
+<tr>
+<td><code>POWSP</code>, <code>POWPUMA</code></td>
+<td>State and place-of-work PUMA</td>
+<td>integer</td>
+<td>of each worker</td>
+<td>commute accessibility</td>
+</tr>
+<tr>
+<td><code>RELP</code> / <code>RELSHIPP</code></td>
+<td>Relationship</td>
+<td>integer</td>
+<td>0 / 20 = householder</td>
+<td>householder attributes</td>
+</tr>
+<tr>
+<td><code>AGEP</code>, <code>RAC1P</code>, <code>HISP</code></td>
+<td>Age, race, Hispanic origin</td>
+<td>integer</td>
+<td>of the householder; race in 4 groups</td>
+<td>region model</td>
+</tr>
+<tr>
+<td><code>ESR</code></td>
+<td>Employment status</td>
+<td>integer</td>
+<td>1, 2, 4, 5 = worker</td>
+<td>workers</td>
+</tr>
+<tr>
+<td><code>NP</code></td>
+<td>Number of persons</td>
+<td>integer</td>
+<td>1–20, capped at 4</td>
+<td>household size</td>
+</tr>
+<tr>
+<td><code>HINCP</code>, <code>ADJINC</code></td>
+<td>Household income</td>
+<td>integer</td>
+<td>2016 dollars; 4 groups at $40,000, $75,000, $125,000</td>
+<td>income group</td>
+</tr>
+<tr>
+<td><code>GRNTP</code>, <code>SMOCP</code>, <code>ADJHSG</code></td>
+<td>Rent; owner costs; housing adjustment</td>
+<td>integer</td>
+<td>dollars per month, 2016 dollars</td>
+<td>dwelling price</td>
+</tr>
+<tr>
+<td><code>VALP</code></td>
+<td>Property value</td>
+<td>integer</td>
+<td>dollars</td>
+<td>dwelling model</td>
+</tr>
+<tr>
+<td><code>BLD</code>, <code>BDSP</code>, <code>YBL</code> / <code>YRBLT</code></td>
+<td>Structure type, bedrooms, year built</td>
+<td>integer</td>
+<td>5 types; age of dwelling</td>
+<td>dwelling model</td>
+</tr>
+<tr>
+<td><code>TEN</code></td>
+<td>Tenure</td>
+<td>integer</td>
+<td>1, 2 owner</td>
+<td>dwelling model</td>
+</tr>
+<tr>
+<td><code>VEH</code></td>
+<td>Vehicles available</td>
+<td>integer</td>
+<td>0–6</td>
+<td>dwelling model</td>
+</tr>
+<tr>
+<td><code>TYPE</code> / <code>TYPEHUGQ</code></td>
+<td>Type of unit</td>
+<td>integer</td>
+<td>1 housing unit (kept)</td>
+<td>filter</td>
+</tr>
+<tr>
+<td><code>WGTP</code></td>
+<td>Household weight</td>
+<td>integer</td>
+<td>households</td>
+<td>weights</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics">Statistics<a class="headerlink" href="#statistics" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Sample</th>
+<th style="text-align: right;">Mover households</th>
+<th style="text-align: right;">Weighted</th>
+<th style="text-align: right;">Same state one year ago (%)</th>
+<th style="text-align: right;">Owners (%)</th>
+<th style="text-align: right;">Dwellings in the market</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estimation (2014–18)</td>
+<td style="text-align: right;">15,163</td>
+<td style="text-align: right;">348,111</td>
+<td style="text-align: right;">89.9</td>
+<td style="text-align: right;">29.9</td>
+<td style="text-align: right;">29,876</td>
+</tr>
+<tr>
+<td>Validation (2014–18)</td>
+<td style="text-align: right;">3,820</td>
+<td style="text-align: right;">85,995</td>
+<td style="text-align: right;">89.1</td>
+<td style="text-align: right;">29.9</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Out-of-time test (2019–21)</td>
+<td style="text-align: right;">10,294</td>
+<td style="text-align: right;">258,802</td>
+<td style="text-align: right;">88.0</td>
+<td style="text-align: right;">37.7</td>
+<td style="text-align: right;">16,555</td>
+</tr>
+</tbody>
+</table>
+<p>Weighted shares (%) of the mover households.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Category</th>
+<th style="text-align: right;">Estimation 2014–18</th>
+<th style="text-align: right;">Test 2019–21</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Income group (2016 $)</td>
+<td>Under $40,000</td>
+<td style="text-align: right;">30.8</td>
+<td style="text-align: right;">26.5</td>
+</tr>
+<tr>
+<td></td>
+<td>$40,000–74,999</td>
+<td style="text-align: right;">26.2</td>
+<td style="text-align: right;">26.4</td>
+</tr>
+<tr>
+<td></td>
+<td>$75,000–124,999</td>
+<td style="text-align: right;">22.8</td>
+<td style="text-align: right;">23.1</td>
+</tr>
+<tr>
+<td></td>
+<td>$125,000 or more</td>
+<td style="text-align: right;">20.2</td>
+<td style="text-align: right;">24.0</td>
+</tr>
+<tr>
+<td>Household size</td>
+<td>1</td>
+<td style="text-align: right;">30.1</td>
+<td style="text-align: right;">32.9</td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td style="text-align: right;">33.0</td>
+<td style="text-align: right;">33.1</td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td style="text-align: right;">16.1</td>
+<td style="text-align: right;">14.8</td>
+</tr>
+<tr>
+<td></td>
+<td>4 or more</td>
+<td style="text-align: right;">20.7</td>
+<td style="text-align: right;">19.2</td>
+</tr>
+<tr>
+<td>Dwelling type</td>
+<td>Single-family detached</td>
+<td style="text-align: right;">27.7</td>
+<td style="text-align: right;">30.3</td>
+</tr>
+<tr>
+<td></td>
+<td>Single-family attached</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">18.8</td>
+</tr>
+<tr>
+<td></td>
+<td>2–4 units</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">7.1</td>
+</tr>
+<tr>
+<td></td>
+<td>5 or more units</td>
+<td style="text-align: right;">42.3</td>
+<td style="text-align: right;">41.9</td>
+</tr>
+<tr>
+<td></td>
+<td>Mobile home, other</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: right;">1.9</td>
+</tr>
+<tr>
+<td>Householder race</td>
+<td>White, non-Hispanic</td>
+<td style="text-align: right;">55.5</td>
+<td style="text-align: right;">54.8</td>
+</tr>
+<tr>
+<td></td>
+<td>Black, non-Hispanic</td>
+<td style="text-align: right;">24.7</td>
+<td style="text-align: right;">23.8</td>
+</tr>
+<tr>
+<td></td>
+<td>Hispanic</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">10.4</td>
+</tr>
+<tr>
+<td></td>
+<td>Other</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">11.1</td>
+</tr>
+</tbody>
+</table>
+<p>Numeric variables, estimation sample (weighted).</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th style="text-align: right;">Records</th>
+<th style="text-align: right;">Mean</th>
+<th style="text-align: right;">Median</th>
+<th style="text-align: right;">Std. dev.</th>
+<th style="text-align: right;">Min</th>
+<th style="text-align: right;">Max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Household income (2016 $)</td>
+<td style="text-align: right;">15,163</td>
+<td style="text-align: right;">85,671</td>
+<td style="text-align: right;">63,903</td>
+<td style="text-align: right;">85,969</td>
+<td style="text-align: right;">-12,375</td>
+<td style="text-align: right;">1,204,720</td>
+</tr>
+<tr>
+<td>Monthly housing cost (2016 $)</td>
+<td style="text-align: right;">15,163</td>
+<td style="text-align: right;">1,592</td>
+<td style="text-align: right;">1,454</td>
+<td style="text-align: right;">910</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8,559</td>
+</tr>
+<tr>
+<td>Householder age</td>
+<td style="text-align: right;">15,163</td>
+<td style="text-align: right;">39.62</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">14.96</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">96</td>
+</tr>
+<tr>
+<td>Workers</td>
+<td style="text-align: right;">15,163</td>
+<td style="text-align: right;">1.36</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td>Bedrooms</td>
+<td style="text-align: right;">15,163</td>
+<td style="text-align: right;">2.36</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.19</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr>
+<td>Dwelling age (years)</td>
+<td style="text-align: right;">15,163</td>
+<td style="text-align: right;">37.76</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">24.16</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">83</td>
+</tr>
+</tbody>
+</table>
+<h3 id="processing_2">Processing<a class="headerlink" href="#processing_2" title="Permanent link">¶</a></h3>
+<ul>
+<li>Mover household: the householder lived in a different house in the U.S. one year ago (<code>MIG</code> 3) and the household moved in within 12 months (<code>MV</code> 1); housing units only.</li>
+<li>Kept when both the origin migration PUMA and the destination PUMA touch the zone system, and the structure type is known.</li>
+<li>Incomes and housing costs in 2016 dollars (<code>ADJINC</code>, <code>ADJHSG</code>, CPI-U).</li>
+<li>Estimation and validation: 80/20 by a hash of <code>SERIALNO</code>. The 2019–23 file is not used because it recodes all years to 2020 PUMAs.</li>
+<li>PUMAs, migration PUMAs and place-of-work PUMAs are linked to zones and regions through the Census tract-to-PUMA file and the IPUMS PUMA–MIGPUMA–POWPUMA crosswalk.</li>
+</ul>
+<h2 id="201519-5-year-file-commute-mode-shares">2015–19 5-year file: commute-mode shares<a class="headerlink" href="#201519-5-year-file-commute-mode-shares" title="Permanent link">¶</a></h2>
+<p>The work-tour mode choice model is estimated on the travel survey with choice-based weights (weighted exogenous sample maximum likelihood). The population mode shares by home county come from the interview years 2017–19 of the 2015–19 5-year person files <a href="../../inputs/#sources">[1]</a> of the District of Columbia, Maryland, Virginia and West Virginia, the period of the survey.</p>
+<h3 id="codebook_3">Codebook<a class="headerlink" href="#codebook_3" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SERIALNO</code></td>
+<td>Housing unit identifier</td>
+<td>string</td>
+<td>first four characters = interview year (2017–19 kept)</td>
+<td>filter</td>
+</tr>
+<tr>
+<td><code>PUMA</code></td>
+<td>PUMA (2010)</td>
+<td>integer</td>
+<td>5 digits; PUMAs grouped to county strata</td>
+<td>strata</td>
+</tr>
+<tr>
+<td><code>PWGTP</code></td>
+<td>Person weight</td>
+<td>integer</td>
+<td>persons</td>
+<td>weights</td>
+</tr>
+<tr>
+<td><code>AGEP</code></td>
+<td>Age</td>
+<td>integer</td>
+<td>16 or older kept</td>
+<td>filter</td>
+</tr>
+<tr>
+<td><code>ESR</code></td>
+<td>Employment status</td>
+<td>integer</td>
+<td>1, 4 = at work in the reference week</td>
+<td>filter</td>
+</tr>
+<tr>
+<td><code>RELSHIPP</code></td>
+<td>Relationship</td>
+<td>integer</td>
+<td>37, 38 = group quarters (dropped)</td>
+<td>filter</td>
+</tr>
+<tr>
+<td><code>JWTRNS</code></td>
+<td>Means of transportation to work</td>
+<td>integer</td>
+<td>1 car, truck, van; 2 bus; 3 subway; 4 commuter rail; 5 light rail; 7 taxi; 8 motorcycle; 9 bicycle; 10 walked; 11 worked from home (dropped); 6 ferry and 12 other (dropped)</td>
+<td>mode</td>
+</tr>
+<tr>
+<td><code>JWRIP</code></td>
+<td>Vehicle occupancy</td>
+<td>integer</td>
+<td>persons in the car; a k-person carpool counts 1/k as driver</td>
+<td>driver or passenger</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics_1">Statistics<a class="headerlink" href="#statistics_1" title="Permanent link">¶</a></h3>
+<p>Commuters at work in the reference week who did not work from home, interview years 2017–19; weighted mode shares (%).</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th style="text-align: right;">Person records 2017–19</th>
+<th style="text-align: right;">Commuters kept</th>
+<th style="text-align: right;">Weighted commuters</th>
+<th style="text-align: right;">Car driver</th>
+<th style="text-align: right;">Car passenger</th>
+<th style="text-align: right;">Bus</th>
+<th style="text-align: right;">Rail</th>
+<th style="text-align: right;">Walk</th>
+<th style="text-align: right;">Bicycle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>District of Columbia</td>
+<td style="text-align: right;">19,761</td>
+<td style="text-align: right;">10,143</td>
+<td style="text-align: right;">204,307</td>
+<td style="text-align: right;">40.1</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">13.5</td>
+<td style="text-align: right;">23.6</td>
+<td style="text-align: right;">13.2</td>
+<td style="text-align: right;">5.1</td>
+</tr>
+<tr>
+<td>Maryland</td>
+<td style="text-align: right;">179,540</td>
+<td style="text-align: right;">83,160</td>
+<td style="text-align: right;">1,712,958</td>
+<td style="text-align: right;">83.6</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">3.9</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr>
+<td>Virginia</td>
+<td style="text-align: right;">254,115</td>
+<td style="text-align: right;">114,069</td>
+<td style="text-align: right;">2,337,533</td>
+<td style="text-align: right;">87.4</td>
+<td style="text-align: right;">5.7</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr>
+<td>West Virginia</td>
+<td style="text-align: right;">53,954</td>
+<td style="text-align: right;">20,149</td>
+<td style="text-align: right;">413,060</td>
+<td style="text-align: right;">91.5</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr>
+<td><strong>All four</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><strong>4,667,858</strong></td>
+<td style="text-align: right;"><strong>84.3</strong></td>
+<td style="text-align: right;"><strong>5.6</strong></td>
+<td style="text-align: right;"><strong>3.1</strong></td>
+<td style="text-align: right;"><strong>4.0</strong></td>
+<td style="text-align: right;"><strong>2.5</strong></td>
+<td style="text-align: right;"><strong>0.6</strong></td>
+</tr>
+</tbody>
+</table>
+<p>As in the survey coding, taxi counts as car passenger and motorcycle as car driver; subway, commuter rail and light rail are pooled as rail. Strata are unions of the counties that share a PUMA; strata with fewer than 100 survey work tours are pooled by state.</p>
+<h2 id="1-year-files-201624-yearly-targets-and-tests">1-year files, 2016–24: yearly targets and tests<a class="headerlink" href="#1-year-files-201624-yearly-targets-and-tests" title="Permanent link">¶</a></h2>
+<p>The 1-year person files <a href="../../inputs/#sources">[1]</a> of the six states give the employment rates by single year of age and sex for every simulated year (the yearly targets of the employment model, pooled over the PUMAs of the model area and by state). The 2024 1-year household and person files of Maryland are the 2024 benchmark of the commute (work from home, departure time, travel time, mode and county-to-county flows), and the 2024 person files of the six states give the telework rates. The 2020 file is the Census Bureau's experimental release with experimental weights. PUMAs follow the 2010 definition up to 2021 and the 2020 definition from 2022.</p>
+<h3 id="codebook_4">Codebook<a class="headerlink" href="#codebook_4" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SERIALNO</code></td>
+<td>Housing unit identifier</td>
+<td>string</td>
+<td></td>
+<td>join</td>
+</tr>
+<tr>
+<td><code>PUMA</code>, <code>ST</code></td>
+<td>PUMA and state</td>
+<td>integer</td>
+<td>2010 PUMAs to 2021, 2020 PUMAs from 2022</td>
+<td>model-area filter</td>
+</tr>
+<tr>
+<td><code>PWGTP</code></td>
+<td>Person weight</td>
+<td>integer</td>
+<td>persons; 80 replicate weights <code>PWGTP1</code>–<code>PWGTP80</code> for standard errors</td>
+<td>weights</td>
+</tr>
+<tr>
+<td><code>AGEP</code>, <code>SEX</code></td>
+<td>Age; sex</td>
+<td>integer</td>
+<td>years; 1 male, 2 female</td>
+<td>employment rates</td>
+</tr>
+<tr>
+<td><code>ESR</code></td>
+<td>Employment status</td>
+<td>integer</td>
+<td>1, 2, 4, 5 = employed</td>
+<td>employment rates</td>
+</tr>
+<tr>
+<td><code>RELP</code> (to 2018) / <code>RELSHIPP</code> (from 2019)</td>
+<td>Relationship</td>
+<td>integer</td>
+<td>16, 17 / 37, 38 = group quarters (dropped)</td>
+<td>filter</td>
+</tr>
+<tr>
+<td><code>JWTR</code> (to 2018) / <code>JWTRNS</code> (from 2019)</td>
+<td>Means of transportation to work</td>
+<td>integer</td>
+<td>11 = worked from home</td>
+<td>telework; commute mode</td>
+</tr>
+<tr>
+<td><code>JWMNP</code>, <code>JWDP</code></td>
+<td>Travel time to work; departure time</td>
+<td>integer</td>
+<td>minutes; 5- to 30-minute intervals</td>
+<td>2024 commute benchmark</td>
+</tr>
+<tr>
+<td><code>POWSP</code>, <code>POWPUMA</code></td>
+<td>Place of work</td>
+<td>integer</td>
+<td>state and PUMA</td>
+<td>2024 commute flows</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics-maryland">Statistics: Maryland<a class="headerlink" href="#statistics-maryland" title="Permanent link">¶</a></h3>
+<p>Persons in households. Employment rate: employed persons aged 16+ over all persons aged 16+. Worked from home: share of workers at work in the reference week. Weighted.</p>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th style="text-align: right;">Person records</th>
+<th style="text-align: right;">Persons in households</th>
+<th style="text-align: right;">Employment rate (%)</th>
+<th style="text-align: right;">Men (%)</th>
+<th style="text-align: right;">Women (%)</th>
+<th style="text-align: right;">Worked from home (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2016</td>
+<td style="text-align: right;">59,408</td>
+<td style="text-align: right;">5,875,912</td>
+<td style="text-align: right;">65.9</td>
+<td style="text-align: right;">70.7</td>
+<td style="text-align: right;">61.7</td>
+<td style="text-align: right;">4.7</td>
+</tr>
+<tr>
+<td>2017</td>
+<td style="text-align: right;">59,463</td>
+<td style="text-align: right;">5,911,516</td>
+<td style="text-align: right;">65.7</td>
+<td style="text-align: right;">70.7</td>
+<td style="text-align: right;">61.3</td>
+<td style="text-align: right;">5.0</td>
+</tr>
+<tr>
+<td>2018</td>
+<td style="text-align: right;">59,840</td>
+<td style="text-align: right;">5,902,271</td>
+<td style="text-align: right;">65.8</td>
+<td style="text-align: right;">70.5</td>
+<td style="text-align: right;">61.5</td>
+<td style="text-align: right;">5.0</td>
+</tr>
+<tr>
+<td>2019</td>
+<td style="text-align: right;">60,237</td>
+<td style="text-align: right;">5,905,181</td>
+<td style="text-align: right;">65.8</td>
+<td style="text-align: right;">70.5</td>
+<td style="text-align: right;">61.5</td>
+<td style="text-align: right;">5.4</td>
+</tr>
+<tr>
+<td>2020</td>
+<td style="text-align: right;">49,319</td>
+<td style="text-align: right;">5,899,076</td>
+<td style="text-align: right;">63.2</td>
+<td style="text-align: right;">67.8</td>
+<td style="text-align: right;">59.0</td>
+<td style="text-align: right;">21.2</td>
+</tr>
+<tr>
+<td>2021</td>
+<td style="text-align: right;">62,853</td>
+<td style="text-align: right;">6,027,375</td>
+<td style="text-align: right;">63.9</td>
+<td style="text-align: right;">68.5</td>
+<td style="text-align: right;">59.8</td>
+<td style="text-align: right;">24.1</td>
+</tr>
+<tr>
+<td>2022</td>
+<td style="text-align: right;">62,442</td>
+<td style="text-align: right;">6,039,338</td>
+<td style="text-align: right;">65.6</td>
+<td style="text-align: right;">70.5</td>
+<td style="text-align: right;">61.1</td>
+<td style="text-align: right;">19.7</td>
+</tr>
+<tr>
+<td>2023</td>
+<td style="text-align: right;">62,031</td>
+<td style="text-align: right;">6,055,057</td>
+<td style="text-align: right;">66.0</td>
+<td style="text-align: right;">70.5</td>
+<td style="text-align: right;">61.8</td>
+<td style="text-align: right;">16.9</td>
+</tr>
+<tr>
+<td>2024</td>
+<td style="text-align: right;">62,777</td>
+<td style="text-align: right;">6,133,638</td>
+<td style="text-align: right;">66.1</td>
+<td style="text-align: right;">70.1</td>
+<td style="text-align: right;">62.5</td>
+<td style="text-align: right;">15.7</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/data/acs_1yr_maryland.png" data-desc-position="bottom"><img alt="Maryland employment rate and work from home, 2016–24" src="../../../assets/img/data/acs_1yr_maryland.png"></a></p>
+<p><em>Maryland, persons in households, ACS 1-year PUMS 2016–24 (2020: experimental weights).</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Input data in detail">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Input data in detail
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../travel-survey/" class="md-footer__link md-footer__link--next" aria-label="Next: Regional Travel Survey">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Regional Travel Survey
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Raas Sarker Tomal · Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM), University of Maryland, College Park
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Tomal121186621" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:rtomal@umd.edu" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.path", "announce.dismiss", "content.tooltips", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../../assets/javascripts/home.js?v=5"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

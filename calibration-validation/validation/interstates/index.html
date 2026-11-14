@@ -1,0 +1,5410 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="MILES (Maryland Integrated Land-use and Everyday-travel Simulator), an agent-based platform of population, land use, activities and traffic for Maryland">
+      
+      
+        <meta name="author" content="Raas Sarker Tomal">
+      
+      
+        <link rel="canonical" href="https://tomal121186621.github.io/MILES/calibration-validation/validation/interstates/">
+      
+      
+        <link rel="prev" href="../traffic/">
+      
+      
+        <link rel="next" href="../county/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/img/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Interstates by station - MILES</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css?v=5">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#interstates-station-by-station" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+New: <a href="../../estimates/">full result tables of all 28 estimated models</a> and the
+<a href="../map/">interactive traffic validation map</a>.
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="MILES" class="md-header__button md-logo" aria-label="MILES" data-md-component="logo">
+      
+  <img src="../../../assets/img/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MILES
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Interstates by station
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="deep-orange" aria-label="Dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="deep-orange" aria-label="Light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Tomal121186621/MILES" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Tomal121186621/MILES
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../get-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Get started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../model-design/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Model design
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../inputs-outputs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Inputs and outputs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../applying/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Applying MILES
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Calibration and validation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../developers/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Developers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MILES" class="md-nav__button md-logo" aria-label="MILES" data-md-component="logo">
+      
+  <img src="../../../assets/img/logo.svg" alt="logo">
+
+    </a>
+    MILES
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Tomal121186621/MILES" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Tomal121186621/MILES
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../get-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/repository/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repository layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/running/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Run the chain
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime and storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../model-design/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model design
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Model design
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic population
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/activity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Activities (MILES-Day)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/assignment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../inputs-outputs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inputs and outputs
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Inputs and outputs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/inputs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../inputs-outputs/data/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input data in detail
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Input data in detail
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/data/acs-pums/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACS microdata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/data/travel-survey/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regional Travel Survey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/data/employment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Employment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/data/landuse-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Population and housing controls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/data/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/data/zones-geography/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zones, skims and geography
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/data/road-network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Road network
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/data/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/data/traffic-counts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic counts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/data/benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/zones-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zone system and networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../inputs-outputs/outputs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outputs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../applying/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Applying MILES
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Applying MILES
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applying/scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applying/i695/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case study, I-695 pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration and validation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Calibration and validation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../estimation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../estimates/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimated models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_3" id="__nav_6_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estimated models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../estimates/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use and workplaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../estimates/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../estimates/locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Destinations and stops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../estimates/tour-formation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../estimates/modes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour and leg modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_5" id="__nav_6_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Validation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic population
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../activities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Activities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../traffic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interstates by station
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interstates by station
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#summary-by-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary by route
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-695" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-695
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-95" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-95
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-83
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-97" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-97
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-895" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-895
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-70" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-70
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-195" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-195
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-395" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-395
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-595" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-595
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-795" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-795
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capital-beltway-i-495" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capital Beltway (I-495)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../county/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    County view
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../baselines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Against standard methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Known limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../developers/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developers
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Population code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/silo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SILO engine changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/activity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MILES-Day engine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/matsim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MATSim runner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/estimation-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimation package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../about/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#summary-by-route" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary by route
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-695" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-695
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-95" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-95
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-83
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-97" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-97
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-895" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-895
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-70" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-70
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-195" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-195
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-395" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-395
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-595" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-595
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#i-795" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I-795
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capital-beltway-i-495" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Capital Beltway (I-495)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Calibration and validation
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Validation
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="interstates-station-by-station">Interstates, station by station<a class="headerlink" href="#interstates-station-by-station" title="Permanent link">¶</a></h1>
+<p>Simulated weekday traffic on the interstates of the study area against the 2024 MDOT SHA counts at every matched mainline station. Model: passenger vehicles (cars of residents and of in-commuters), mean of five seeds, scaled from the 10 % sample. Count: average annual weekday traffic 2024, all vehicles, and passenger vehicles after removing the station's truck and bus share (the classified share where the station is classified, otherwise the regional share). FHWA limit: the maximum deviation for the station's volume group in the FHWA Travel Model Validation and Reasonableness Checking Manual. Stations are listed in milepoint order.</p>
+<p>The model carries residents of the six counties and workers commuting into them. Through traffic, visitors and trucks are not simulated, so ratios below 1 are expected on the through routes (I-95, I-70, I-83 north of the Beltway).</p>
+<h2 id="summary-by-route">Summary by route<a class="headerlink" href="#summary-by-route" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th style="text-align: right;">Stations</th>
+<th style="text-align: right;">Count, passenger vehicles</th>
+<th style="text-align: right;">Model</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">%RMSE</th>
+<th style="text-align: right;">Within FHWA limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#i695">I-695</a></td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">5,266,150</td>
+<td style="text-align: right;">4,772,852</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">14.2</td>
+<td style="text-align: right;">19 of 40</td>
+</tr>
+<tr>
+<td><a href="#i95">I-95</a></td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">2,793,180</td>
+<td style="text-align: right;">1,835,080</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">39.7</td>
+<td style="text-align: right;">0 of 20</td>
+</tr>
+<tr>
+<td><a href="#i83">I-83</a></td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">1,462,300</td>
+<td style="text-align: right;">1,383,690</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">15.5</td>
+<td style="text-align: right;">9 of 17</td>
+</tr>
+<tr>
+<td><a href="#i97">I-97</a></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">870,390</td>
+<td style="text-align: right;">738,890</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">21.3</td>
+<td style="text-align: right;">3 of 8</td>
+</tr>
+<tr>
+<td><a href="#i895">I-895</a></td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">722,410</td>
+<td style="text-align: right;">784,993</td>
+<td style="text-align: right;">1.09</td>
+<td style="text-align: right;">41.0</td>
+<td style="text-align: right;">5 of 16</td>
+</tr>
+<tr>
+<td><a href="#i70">I-70</a></td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">521,060</td>
+<td style="text-align: right;">496,370</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">7.5</td>
+<td style="text-align: right;">5 of 7</td>
+</tr>
+<tr>
+<td><a href="#i195">I-195</a></td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">152,210</td>
+<td style="text-align: right;">112,640</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">42.2</td>
+<td style="text-align: right;">0 of 4</td>
+</tr>
+<tr>
+<td><a href="#i395">I-395</a></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">62,410</td>
+<td style="text-align: right;">61,030</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">2.2</td>
+<td style="text-align: right;">1 of 1</td>
+</tr>
+<tr>
+<td><a href="#i595">I-595</a></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">658,580</td>
+<td style="text-align: right;">356,780</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">51.1</td>
+<td style="text-align: right;">0 of 6</td>
+</tr>
+<tr>
+<td><a href="#i795">I-795</a></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">239,350</td>
+<td style="text-align: right;">238,390</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">0 of 3</td>
+</tr>
+<tr>
+<td><strong>All interstates</strong></td>
+<td style="text-align: right;"><strong>122</strong></td>
+<td style="text-align: right;"><strong>12,748,040</strong></td>
+<td style="text-align: right;"><strong>10,780,715</strong></td>
+<td style="text-align: right;"><strong>0.85</strong></td>
+<td style="text-align: right;"><strong>28.6</strong></td>
+<td style="text-align: right;"><strong>42 of 122</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-695">I-695<a class="headerlink" href="#i-695" title="Permanent link">¶</a></h2>
+<p>Baltimore Beltway.</p>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Count, passenger</th>
+<th style="text-align: right;">Model, passenger (s.d.)</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">FHWA limit</th>
+<th style="text-align: center;">Within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0077</td>
+<td>.15 mi north of Hollins Ferry Rd</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">135,700</td>
+<td style="text-align: right;">125,200</td>
+<td style="text-align: right;">103,800 (278)</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1115</td>
+<td>.30 mi S of IS95</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">131,000</td>
+<td style="text-align: right;">120,800</td>
+<td style="text-align: right;">102,700 (221)</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0772</td>
+<td>.20 mi S of MD2</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">72,320</td>
+<td style="text-align: right;">66,720</td>
+<td style="text-align: right;">27,120 (290)</td>
+<td style="text-align: right;">0.41</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1114</td>
+<td>.20 mi S of US1</td>
+<td>Baltimore</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">180,500</td>
+<td style="text-align: right;">166,500</td>
+<td style="text-align: right;">147,000 (360)</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0774</td>
+<td>.20 mi S of IS97</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">108,800</td>
+<td style="text-align: right;">100,400</td>
+<td style="text-align: right;">78,690 (240)</td>
+<td style="text-align: right;">0.78</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1113</td>
+<td>.40 mi N of US1</td>
+<td>Baltimore</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">190,400</td>
+<td style="text-align: right;">175,700</td>
+<td style="text-align: right;">166,100 (294)</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B0776</td>
+<td>.20 mi N of MD648E</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">128,900</td>
+<td style="text-align: right;">118,900</td>
+<td style="text-align: right;">129,800 (346)</td>
+<td style="text-align: right;">1.09</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1190</td>
+<td>.30 mi N of MD372</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">208,800</td>
+<td style="text-align: right;">192,600</td>
+<td style="text-align: right;">168,500 (337)</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0777</td>
+<td>.30 mi S of MD295</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">160,700</td>
+<td style="text-align: right;">149,300</td>
+<td style="text-align: right;">143,600 (278)</td>
+<td style="text-align: right;">0.96</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1213</td>
+<td>.20 mi N of MD144</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">194,200</td>
+<td style="text-align: right;">179,200</td>
+<td style="text-align: right;">157,100 (135)</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0778</td>
+<td>.20 mi N of MD295</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">114,400</td>
+<td style="text-align: right;">105,500</td>
+<td style="text-align: right;">100,700 (150)</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>P0032</td>
+<td>100ft north of Ingleside Ave</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">181,200</td>
+<td style="text-align: right;">167,200</td>
+<td style="text-align: right;">163,400 (338)</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B0779</td>
+<td>100ft S of BALTIMORE CO/L</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">118,100</td>
+<td style="text-align: right;">108,900</td>
+<td style="text-align: right;">98,130 (210)</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1111</td>
+<td>.50 mi S of IS70</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">185,400</td>
+<td style="text-align: right;">168,800</td>
+<td style="text-align: right;">168,400 (344)</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1110</td>
+<td>.40 mi S of MD122</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">153,700</td>
+<td style="text-align: right;">141,800</td>
+<td style="text-align: right;">107,700 (350)</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1109</td>
+<td>.50 mi N of MD122</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">200,100</td>
+<td style="text-align: right;">184,600</td>
+<td style="text-align: right;">195,500 (437)</td>
+<td style="text-align: right;">1.06</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>P0078</td>
+<td>1.03 Miles south of IS 795</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">185,800</td>
+<td style="text-align: right;">171,400</td>
+<td style="text-align: right;">178,200 (115)</td>
+<td style="text-align: right;">1.04</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1191</td>
+<td>.30 mi N of IS795</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">180,300</td>
+<td style="text-align: right;">166,300</td>
+<td style="text-align: right;">139,900 (190)</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1192</td>
+<td>.30 mi N of MD140</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">192,300</td>
+<td style="text-align: right;">177,400</td>
+<td style="text-align: right;">174,500 (439)</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1193</td>
+<td>.10 mi N of MD129</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">181,200</td>
+<td style="text-align: right;">167,200</td>
+<td style="text-align: right;">156,400 (455)</td>
+<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1108</td>
+<td>.50 mi N of STEVENSON RD</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">189,600</td>
+<td style="text-align: right;">174,900</td>
+<td style="text-align: right;">171,700 (408)</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B030040</td>
+<td>.50 mi N of GREENSPRING AVE</td>
+<td>Baltimore</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">172,500</td>
+<td style="text-align: right;">159,200</td>
+<td style="text-align: right;">170,700 (375)</td>
+<td style="text-align: right;">1.07</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1105</td>
+<td>.10 mi S of MD139</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">163,200</td>
+<td style="text-align: right;">150,600</td>
+<td style="text-align: right;">138,300 (187)</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1104</td>
+<td>.50 mi S of MD45</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">164,200</td>
+<td style="text-align: right;">151,500</td>
+<td style="text-align: right;">150,600 (165)</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1103</td>
+<td>.40 mi N of MD45</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">160,800</td>
+<td style="text-align: right;">148,300</td>
+<td style="text-align: right;">133,900 (276)</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>P5044</td>
+<td>west of Providence Rd</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">156,800</td>
+<td style="text-align: right;">144,700</td>
+<td style="text-align: right;">148,200 (357)</td>
+<td style="text-align: right;">1.02</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>P0054</td>
+<td>.41 mi north of Cromwell Bridge Rd</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">149,000</td>
+<td style="text-align: right;">137,400</td>
+<td style="text-align: right;">154,200 (395)</td>
+<td style="text-align: right;">1.12</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1100</td>
+<td>.20 mi N of MD542</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">153,500</td>
+<td style="text-align: right;">141,600</td>
+<td style="text-align: right;">144,700 (428)</td>
+<td style="text-align: right;">1.02</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1099</td>
+<td>.30 mi S of MD147</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">165,600</td>
+<td style="text-align: right;">156,000</td>
+<td style="text-align: right;">153,600 (312)</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1194</td>
+<td>.40 mi N of MD147</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">169,800</td>
+<td style="text-align: right;">160,700</td>
+<td style="text-align: right;">127,100 (381)</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>P5041</td>
+<td>north of US 1</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">137,900</td>
+<td style="text-align: right;">127,200</td>
+<td style="text-align: right;">96,610 (359)</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>P0034</td>
+<td>.59 mi north of US 1</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">150,100</td>
+<td style="text-align: right;">138,500</td>
+<td style="text-align: right;">118,200 (436)</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1178</td>
+<td>.60 mi N of MD 7</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">118,100</td>
+<td style="text-align: right;">109,000</td>
+<td style="text-align: right;">92,420 (276)</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1196</td>
+<td>.10 mi S of MD7</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">111,000</td>
+<td style="text-align: right;">102,400</td>
+<td style="text-align: right;">71,640 (311)</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1097</td>
+<td>.30 mi N of US40</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">106,700</td>
+<td style="text-align: right;">98,410</td>
+<td style="text-align: right;">80,040 (308)</td>
+<td style="text-align: right;">0.81</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1096</td>
+<td>1.0 MILE south of MD 702</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">77,290</td>
+<td style="text-align: right;">71,300</td>
+<td style="text-align: right;">50,550 (120)</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1095</td>
+<td>.50 mi S of MD150</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">42,840</td>
+<td style="text-align: right;">37,940</td>
+<td style="text-align: right;">20,450 (84)</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>P0074</td>
+<td>50ft south of Trappe Rd</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">35,840</td>
+<td style="text-align: right;">30,350</td>
+<td style="text-align: right;">22,620 (88)</td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1093</td>
+<td>.10 mi N of BEACHWOOD RD</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">41,170</td>
+<td style="text-align: right;">37,980</td>
+<td style="text-align: right;">19,000 (102)</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1198</td>
+<td>.40 mi N of MD157</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">36,580</td>
+<td style="text-align: right;">33,750</td>
+<td style="text-align: right;">1,082 (32)</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-95">I-95<a class="headerlink" href="#i-95" title="Permanent link">¶</a></h2>
+<p>John F. Kennedy Memorial Highway and Fort McHenry Tunnel.</p>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Count, passenger</th>
+<th style="text-align: right;">Model, passenger (s.d.)</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">FHWA limit</th>
+<th style="text-align: center;">Within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0051</td>
+<td>.15 mi north of Howard County Line</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">161,900</td>
+<td style="text-align: right;">144,700</td>
+<td style="text-align: right;">117,800 (262)</td>
+<td style="text-align: right;">0.81</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B2529</td>
+<td>.50 mi S of MD216</td>
+<td>Howard</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">194,900</td>
+<td style="text-align: right;">177,100</td>
+<td style="text-align: right;">125,100 (105)</td>
+<td style="text-align: right;">0.71</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B240122</td>
+<td>.40 mi S of WASHINGTON BLVD</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">162,000</td>
+<td style="text-align: right;">147,200</td>
+<td style="text-align: right;">130,800 (180)</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>P0071</td>
+<td>.65 mi north of IS 195</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">162,000</td>
+<td style="text-align: right;">146,200</td>
+<td style="text-align: right;">119,300 (409)</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B2530</td>
+<td>.50 mi N of MD216</td>
+<td>Howard</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">208,900</td>
+<td style="text-align: right;">183,100</td>
+<td style="text-align: right;">137,800 (172)</td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B240123</td>
+<td>.30 mi N of WASHINGTON BLVD</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">158,500</td>
+<td style="text-align: right;">144,000</td>
+<td style="text-align: right;">125,400 (265)</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0983</td>
+<td>.30 mi S of BALTO CITY LINE</td>
+<td>Baltimore</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">212,300</td>
+<td style="text-align: right;">190,100</td>
+<td style="text-align: right;">141,400 (158)</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B2449</td>
+<td>.50 mi S of MD24</td>
+<td>Harford</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">152,800</td>
+<td style="text-align: right;">138,900</td>
+<td style="text-align: right;">52,250 (322)</td>
+<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B2429</td>
+<td>.50 mi N of MD24</td>
+<td>Harford</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">121,000</td>
+<td style="text-align: right;">110,000</td>
+<td style="text-align: right;">63,950 (312)</td>
+<td style="text-align: right;">0.58</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B2531</td>
+<td>.70 mi S of MD175</td>
+<td>Howard</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">191,700</td>
+<td style="text-align: right;">174,200</td>
+<td style="text-align: right;">131,800 (336)</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>T0007</td>
+<td>at Fort McHenry Tunnel</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">140,800</td>
+<td style="text-align: right;">127,900</td>
+<td style="text-align: right;">45,000 (426)</td>
+<td style="text-align: right;">0.35</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>P0039</td>
+<td>.08 mi south of MD 103</td>
+<td>Howard</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">191,900</td>
+<td style="text-align: right;">174,400</td>
+<td style="text-align: right;">138,300 (329)</td>
+<td style="text-align: right;">0.79</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B2440</td>
+<td>.50 mi N of MD543</td>
+<td>Harford</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">101,000</td>
+<td style="text-align: right;">91,820</td>
+<td style="text-align: right;">56,210 (193)</td>
+<td style="text-align: right;">0.61</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B240124</td>
+<td>.30 mi S of MD150</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">115,100</td>
+<td style="text-align: right;">104,600</td>
+<td style="text-align: right;">75,510 (377)</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B2532</td>
+<td>.50 mi N of MD100</td>
+<td>Howard</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">178,600</td>
+<td style="text-align: right;">162,300</td>
+<td style="text-align: right;">120,600 (265)</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B240125</td>
+<td>.40 mi N of MD150</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">116,900</td>
+<td style="text-align: right;">106,300</td>
+<td style="text-align: right;">73,740 (435)</td>
+<td style="text-align: right;">0.69</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B240072</td>
+<td>.30 mi N of US40</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">106,100</td>
+<td style="text-align: right;">93,550</td>
+<td style="text-align: right;">40,530 (534)</td>
+<td style="text-align: right;">0.43</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B2430</td>
+<td>.60 mi N of MD22</td>
+<td>Harford</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">80,280</td>
+<td style="text-align: right;">64,710</td>
+<td style="text-align: right;">39,030 (187)</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B030064</td>
+<td>.10 mi S of KENWOOD AVE</td>
+<td>Baltimore</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">185,700</td>
+<td style="text-align: right;">167,000</td>
+<td style="text-align: right;">30,330 (121)</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0989</td>
+<td>.50 mi N of MD43</td>
+<td>Baltimore</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">161,600</td>
+<td style="text-align: right;">145,100</td>
+<td style="text-align: right;">70,230 (465)</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-83">I-83<a class="headerlink" href="#i-83" title="Permanent link">¶</a></h2>
+<p>Jones Falls Expressway and Harrisburg Expressway.</p>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Count, passenger</th>
+<th style="text-align: right;">Model, passenger (s.d.)</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">FHWA limit</th>
+<th style="text-align: center;">Within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B240001</td>
+<td>.10 mi N of FAYETTE ST</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">55,770</td>
+<td style="text-align: right;">50,690</td>
+<td style="text-align: right;">50,420 (206)</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>P0076</td>
+<td>.04 mi north of Old Pimlico Rd</td>
+<td>Baltimore</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">87,680</td>
+<td style="text-align: right;">85,810</td>
+<td style="text-align: right;">78,640 (168)</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>BC002</td>
+<td>.30 mi S of north AVE</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">101,400</td>
+<td style="text-align: right;">92,130</td>
+<td style="text-align: right;">93,400 (262)</td>
+<td style="text-align: right;">1.01</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B240002</td>
+<td>.20 mi S of 28TH ST</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">94,700</td>
+<td style="text-align: right;">86,070</td>
+<td style="text-align: right;">115,800 (267)</td>
+<td style="text-align: right;">1.34</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0975</td>
+<td>.20 mi N of RUXTON RD</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">92,390</td>
+<td style="text-align: right;">83,970</td>
+<td style="text-align: right;">72,320 (288)</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B030038</td>
+<td>.30 mi N of JOPPA RD</td>
+<td>Baltimore</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">227,500</td>
+<td style="text-align: right;">218,300</td>
+<td style="text-align: right;">206,200 (291)</td>
+<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B240003</td>
+<td>.10 mi N of 41ST ST STRUC #3207</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">128,700</td>
+<td style="text-align: right;">126,400</td>
+<td style="text-align: right;">109,200 (148)</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>P0052</td>
+<td>.64 mi north of IS 695</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">126,900</td>
+<td style="text-align: right;">115,300</td>
+<td style="text-align: right;">123,800 (155)</td>
+<td style="text-align: right;">1.07</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B240004</td>
+<td>.50 mi S of NORTHERN PKWY</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">110,000</td>
+<td style="text-align: right;">99,960</td>
+<td style="text-align: right;">115,800 (229)</td>
+<td style="text-align: right;">1.16</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1189</td>
+<td>.40 mi N of TIMONIUM RD</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">119,800</td>
+<td style="text-align: right;">108,900</td>
+<td style="text-align: right;">103,700 (104)</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B0977</td>
+<td>.50 mi N of PADONIA RD</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">104,500</td>
+<td style="text-align: right;">94,960</td>
+<td style="text-align: right;">85,800 (140)</td>
+<td style="text-align: right;">0.90</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1199</td>
+<td>.10 mi N of WARREN RD</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">80,850</td>
+<td style="text-align: right;">73,480</td>
+<td style="text-align: right;">67,790 (114)</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>P0027</td>
+<td>.50 mile south of Belfast Rd</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">60,050</td>
+<td style="text-align: right;">53,090</td>
+<td style="text-align: right;">48,150 (235)</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>P5036</td>
+<td>.1 mi north of BELFAST RD</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">51,830</td>
+<td style="text-align: right;">47,110</td>
+<td style="text-align: right;">23,060 (93)</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0979</td>
+<td>.50 mi N of MD137</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">55,560</td>
+<td style="text-align: right;">50,500</td>
+<td style="text-align: right;">37,290 (68)</td>
+<td style="text-align: right;">0.74</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1188</td>
+<td>.50 mi N of MIDDLETOWN RD</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">47,680</td>
+<td style="text-align: right;">38,190</td>
+<td style="text-align: right;">27,640 (49)</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0980</td>
+<td>.50 mi N of MD45</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">45,190</td>
+<td style="text-align: right;">37,440</td>
+<td style="text-align: right;">24,680 (55)</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-97">I-97<a class="headerlink" href="#i-97" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Count, passenger</th>
+<th style="text-align: right;">Model, passenger (s.d.)</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">FHWA limit</th>
+<th style="text-align: center;">Within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B020015</td>
+<td>.10 mi N of MD450</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">94,650</td>
+<td style="text-align: right;">86,020</td>
+<td style="text-align: right;">59,680 (126)</td>
+<td style="text-align: right;">0.69</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0641</td>
+<td>.10 mi S of MILLERSVILLE RD STRUC #020148002</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">107,400</td>
+<td style="text-align: right;">97,650</td>
+<td style="text-align: right;">71,360 (154)</td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0804</td>
+<td>.10 mi N of STRUC#0214000</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">122,100</td>
+<td style="text-align: right;">110,900</td>
+<td style="text-align: right;">100,400 (100)</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B0839</td>
+<td>.30 mi N of MD3BU</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">142,000</td>
+<td style="text-align: right;">129,100</td>
+<td style="text-align: right;">85,100 (252)</td>
+<td style="text-align: right;">0.66</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0627</td>
+<td>.10 mi N of MD174</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">124,900</td>
+<td style="text-align: right;">113,500</td>
+<td style="text-align: right;">121,700 (194)</td>
+<td style="text-align: right;">1.07</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B020059</td>
+<td>.60 mi N of MD100</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">143,400</td>
+<td style="text-align: right;">130,300</td>
+<td style="text-align: right;">106,900 (136)</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0628</td>
+<td>.60 mi N of MD176</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">99,270</td>
+<td style="text-align: right;">90,220</td>
+<td style="text-align: right;">95,370 (204)</td>
+<td style="text-align: right;">1.06</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>P5037</td>
+<td>.20 MILE south of IS 695</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">124,000</td>
+<td style="text-align: right;">112,700</td>
+<td style="text-align: right;">98,380 (254)</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-895">I-895<a class="headerlink" href="#i-895" title="Permanent link">¶</a></h2>
+<p>Harbor Tunnel Thruway.</p>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Count, passenger</th>
+<th style="text-align: right;">Model, passenger (s.d.)</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">FHWA limit</th>
+<th style="text-align: center;">Within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B0834</td>
+<td>A-.20 mi N of IS695</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">25,720</td>
+<td style="text-align: right;">24,910</td>
+<td style="text-align: right;">28,020 (208)</td>
+<td style="text-align: right;">1.12</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B0843</td>
+<td>B-.10 mi N of MD2</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">21,230</td>
+<td style="text-align: right;">20,400</td>
+<td style="text-align: right;">50,400 (264)</td>
+<td style="text-align: right;">2.47</td>
+<td style="text-align: right;">±20 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1120</td>
+<td>.50 mi N of HOWARD CO/L</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">15,380</td>
+<td style="text-align: right;">14,900</td>
+<td style="text-align: right;">5,941 (65)</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">±20 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0787</td>
+<td>.10 mi S of BALTO CITY LINE</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">61,390</td>
+<td style="text-align: right;">55,790</td>
+<td style="text-align: right;">82,220 (309)</td>
+<td style="text-align: right;">1.47</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0835</td>
+<td>B-.10 mi N of MD695</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4,770</td>
+<td style="text-align: right;">4,620</td>
+<td style="text-align: right;">26,310 (209)</td>
+<td style="text-align: right;">5.70</td>
+<td style="text-align: right;">±50 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B2581</td>
+<td>.10 mi S of BALTIMORE CO/L</td>
+<td>Howard</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">14,810</td>
+<td style="text-align: right;">14,340</td>
+<td style="text-align: right;">2,812 (78)</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">±20 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>BC044</td>
+<td>.30 mi S of FRANKFURST AVE</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">72,610</td>
+<td style="text-align: right;">65,990</td>
+<td style="text-align: right;">90,090 (215)</td>
+<td style="text-align: right;">1.36</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>T0004</td>
+<td>at Baltimore Harbor Tunnel</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">85,540</td>
+<td style="text-align: right;">77,740</td>
+<td style="text-align: right;">104,700 (386)</td>
+<td style="text-align: right;">1.35</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1121</td>
+<td>.30 mi N of IS695</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">13,850</td>
+<td style="text-align: right;">12,590</td>
+<td style="text-align: right;">11,120 (148)</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">±20 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B1174</td>
+<td>.20 mi N of MD295</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">41,080</td>
+<td style="text-align: right;">37,330</td>
+<td style="text-align: right;">18,330 (150)</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>BC050</td>
+<td>.20 mi S of ODONNELL ST</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">75,640</td>
+<td style="text-align: right;">68,740</td>
+<td style="text-align: right;">84,830 (284)</td>
+<td style="text-align: right;">1.23</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>BC051</td>
+<td>.20 mi N of ODONNELL ST</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">66,660</td>
+<td style="text-align: right;">60,580</td>
+<td style="text-align: right;">63,950 (237)</td>
+<td style="text-align: right;">1.06</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>BC052</td>
+<td>.10 mi S of E. LOMBARD ST</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">67,170</td>
+<td style="text-align: right;">61,050</td>
+<td style="text-align: right;">60,600 (219)</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>BC053</td>
+<td>.20 mi N of E. LOMBARD ST</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">68,360</td>
+<td style="text-align: right;">62,130</td>
+<td style="text-align: right;">58,170 (232)</td>
+<td style="text-align: right;">0.94</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>BC008</td>
+<td>.20 mi S of MORAVIA RD</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">70,600</td>
+<td style="text-align: right;">64,160</td>
+<td style="text-align: right;">54,130 (220)</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0984</td>
+<td>.10 mi N of MORAVIA PARK DR</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">84,880</td>
+<td style="text-align: right;">77,140</td>
+<td style="text-align: right;">43,370 (249)</td>
+<td style="text-align: right;">0.56</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-70">I-70<a class="headerlink" href="#i-70" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Count, passenger</th>
+<th style="text-align: right;">Model, passenger (s.d.)</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">FHWA limit</th>
+<th style="text-align: center;">Within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B1534</td>
+<td>1.0 mi E of MD27</td>
+<td>Carroll</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">70,640</td>
+<td style="text-align: right;">64,200</td>
+<td style="text-align: right;">57,000 (333)</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>P0053</td>
+<td>1.25 Miles west of IS 695</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">101,400</td>
+<td style="text-align: right;">91,970</td>
+<td style="text-align: right;">96,740 (302)</td>
+<td style="text-align: right;">1.05</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B2522</td>
+<td>.40 mi W of MD97</td>
+<td>Howard</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">85,190</td>
+<td style="text-align: right;">75,180</td>
+<td style="text-align: right;">65,890 (289)</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>P0046</td>
+<td>.85 mi west of MD 32</td>
+<td>Howard</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">85,130</td>
+<td style="text-align: right;">77,370</td>
+<td style="text-align: right;">72,240 (257)</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B2524</td>
+<td>.40 mi E of MD32</td>
+<td>Howard</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">87,870</td>
+<td style="text-align: right;">78,780</td>
+<td style="text-align: right;">75,650 (229)</td>
+<td style="text-align: right;">0.96</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B2583</td>
+<td>.10 mi W of MARRIOTTSVILLE RD</td>
+<td>Howard</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">67,720</td>
+<td style="text-align: right;">61,550</td>
+<td style="text-align: right;">57,180 (269)</td>
+<td style="text-align: right;">0.93</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+<tr>
+<td>B2525</td>
+<td>.50 mi W of US29</td>
+<td>Howard</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">82,200</td>
+<td style="text-align: right;">72,010</td>
+<td style="text-align: right;">71,670 (200)</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-195">I-195<a class="headerlink" href="#i-195" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Count, passenger</th>
+<th style="text-align: right;">Model, passenger (s.d.)</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">FHWA limit</th>
+<th style="text-align: center;">Within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B0808</td>
+<td>.70 mi S of MD295</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">62,070</td>
+<td style="text-align: right;">56,410</td>
+<td style="text-align: right;">39,540 (231)</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1071</td>
+<td>.40 mi N of US1</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">47,570</td>
+<td style="text-align: right;">46,120</td>
+<td style="text-align: right;">20,230 (361)</td>
+<td style="text-align: right;">0.44</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1073</td>
+<td>.40 mi N of IS95</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">28,360</td>
+<td style="text-align: right;">25,780</td>
+<td style="text-align: right;">21,310 (58)</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>P0066</td>
+<td>.59 mi north of MD 295</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">26,290</td>
+<td style="text-align: right;">23,900</td>
+<td style="text-align: right;">31,560 (380)</td>
+<td style="text-align: right;">1.32</td>
+<td style="text-align: right;">±15 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-395">I-395<a class="headerlink" href="#i-395" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Count, passenger</th>
+<th style="text-align: right;">Model, passenger (s.d.)</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">FHWA limit</th>
+<th style="text-align: center;">Within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BC055</td>
+<td>.10 mi N of ML KING BLVD</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">64,790</td>
+<td style="text-align: right;">62,410</td>
+<td style="text-align: right;">61,030 (244)</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">yes</td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-595">I-595<a class="headerlink" href="#i-595" title="Permanent link">¶</a></h2>
+<p>John Hanson Highway.</p>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Count, passenger</th>
+<th style="text-align: right;">Model, passenger (s.d.)</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">FHWA limit</th>
+<th style="text-align: center;">Within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0024</td>
+<td>US 50/IS 595 - 1.34 Miles west of MD 424</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">84,370</td>
+<td style="text-align: right;">76,680</td>
+<td style="text-align: right;">57,970 (151)</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0810</td>
+<td>.50 mi E of MD424</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">99,780</td>
+<td style="text-align: right;">93,200</td>
+<td style="text-align: right;">54,010 (132)</td>
+<td style="text-align: right;">0.58</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0840</td>
+<td>.40 mi E of IS97</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">144,000</td>
+<td style="text-align: right;">130,900</td>
+<td style="text-align: right;">36,010 (103)</td>
+<td style="text-align: right;">0.28</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0841</td>
+<td>.25 mi W of MD450</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">131,800</td>
+<td style="text-align: right;">119,800</td>
+<td style="text-align: right;">54,650 (77)</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0644</td>
+<td>.40 mi W of MD2</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">126,500</td>
+<td style="text-align: right;">114,900</td>
+<td style="text-align: right;">62,000 (122)</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B0645</td>
+<td>.50 mi E of MD2</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">135,400</td>
+<td style="text-align: right;">123,100</td>
+<td style="text-align: right;">92,140 (150)</td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-795">I-795<a class="headerlink" href="#i-795" title="Permanent link">¶</a></h2>
+<p>Northwest Expressway.</p>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Count, passenger</th>
+<th style="text-align: right;">Model, passenger (s.d.)</th>
+<th style="text-align: right;">Model ÷ count</th>
+<th style="text-align: right;">FHWA limit</th>
+<th style="text-align: center;">Within</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B030066</td>
+<td>.10 mi N of MT. WILSON LA</td>
+<td>Baltimore</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">125,200</td>
+<td style="text-align: right;">120,300</td>
+<td style="text-align: right;">97,990 (216)</td>
+<td style="text-align: right;">0.81</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1171</td>
+<td>.60 mi N of MD940</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">71,920</td>
+<td style="text-align: right;">65,360</td>
+<td style="text-align: right;">76,240 (128)</td>
+<td style="text-align: right;">1.17</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+<tr>
+<td>B1173</td>
+<td>.50 mi S of MD140</td>
+<td>Baltimore</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">57,330</td>
+<td style="text-align: right;">53,690</td>
+<td style="text-align: right;">64,160 (70)</td>
+<td style="text-align: right;">1.20</td>
+<td style="text-align: right;">±10 %</td>
+<td style="text-align: center;">no</td>
+</tr>
+</tbody>
+</table>
+<h2 id="capital-beltway-i-495">Capital Beltway (I-495)<a class="headerlink" href="#capital-beltway-i-495" title="Permanent link">¶</a></h2>
+<p>The Capital Beltway lies outside the study area: the model carries only the residents of the six counties and the workers commuting into them who use it, not the Washington region's own traffic. The share below is therefore the part of the counted traffic made up of modelled persons, not a test of the model. Stations matched to the two carriageways named Capital Beltway in the network; the I-95 part of the Beltway in Prince George's County is included.</p>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Location</th>
+<th>County</th>
+<th style="text-align: right;">Lanes</th>
+<th style="text-align: right;">Count, all vehicles</th>
+<th style="text-align: right;">Model, passenger</th>
+<th style="text-align: right;">Model ÷ count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P5043</td>
+<td>north of MD 190</td>
+<td>Montgomery</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">235,211</td>
+<td style="text-align: right;">47,754</td>
+<td style="text-align: right;">0.20</td>
+</tr>
+<tr>
+<td>B2899</td>
+<td>.50 mi W of MD187</td>
+<td>Montgomery</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">110,853</td>
+<td style="text-align: right;">46,003</td>
+<td style="text-align: right;">0.41</td>
+</tr>
+<tr>
+<td>B2900</td>
+<td>.30 mi E of MD187</td>
+<td>Montgomery</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">117,003</td>
+<td style="text-align: right;">52,517</td>
+<td style="text-align: right;">0.45</td>
+</tr>
+<tr>
+<td>B2971</td>
+<td>.20 mi E of MD355</td>
+<td>Montgomery</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">214,280</td>
+<td style="text-align: right;">74,414</td>
+<td style="text-align: right;">0.35</td>
+</tr>
+<tr>
+<td>B2901</td>
+<td>.80 mi W of MD97</td>
+<td>Montgomery</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">213,520</td>
+<td style="text-align: right;">98,401</td>
+<td style="text-align: right;">0.46</td>
+</tr>
+<tr>
+<td>P5029</td>
+<td>0.08 mi east of Sligo Creek Pkwy</td>
+<td>Montgomery</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">215,826</td>
+<td style="text-align: right;">101,911</td>
+<td style="text-align: right;">0.47</td>
+</tr>
+<tr>
+<td>B2902</td>
+<td>.20 mi E of US29</td>
+<td>Montgomery</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">207,093</td>
+<td style="text-align: right;">88,162</td>
+<td style="text-align: right;">0.43</td>
+</tr>
+<tr>
+<td>P0041</td>
+<td>.82 mi west of MD 650</td>
+<td>Montgomery</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">193,608</td>
+<td style="text-align: right;">93,375</td>
+<td style="text-align: right;">0.48</td>
+</tr>
+<tr>
+<td>B3289</td>
+<td>.10 mi W of MD212</td>
+<td>Prince George's</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">222,541</td>
+<td style="text-align: right;">108,731</td>
+<td style="text-align: right;">0.49</td>
+</tr>
+<tr>
+<td>B3155</td>
+<td>.30 mi S of MD210</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">203,510</td>
+<td style="text-align: right;">6,244</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr>
+<td>B3154</td>
+<td>.40 mi S of MD414</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">178,331</td>
+<td style="text-align: right;">39,798</td>
+<td style="text-align: right;">0.22</td>
+</tr>
+<tr>
+<td>P0049</td>
+<td>200ft south of Temple Hill Rd Overpass</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">163,866</td>
+<td style="text-align: right;">50,507</td>
+<td style="text-align: right;">0.31</td>
+</tr>
+<tr>
+<td>B3152</td>
+<td>.40 mi N of MD5</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">201,451</td>
+<td style="text-align: right;">60,310</td>
+<td style="text-align: right;">0.30</td>
+</tr>
+<tr>
+<td>B3151</td>
+<td>.40 mi S of MD4</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">197,140</td>
+<td style="text-align: right;">65,932</td>
+<td style="text-align: right;">0.33</td>
+</tr>
+<tr>
+<td>B160133</td>
+<td>.50 mi N of MD4</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">210,111</td>
+<td style="text-align: right;">80,315</td>
+<td style="text-align: right;">0.38</td>
+</tr>
+<tr>
+<td>P0043</td>
+<td>1.02 Miles south of MD 214</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">209,313</td>
+<td style="text-align: right;">83,571</td>
+<td style="text-align: right;">0.40</td>
+</tr>
+<tr>
+<td>S1999160246</td>
+<td>.50 mile north of MD 214</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">203,231</td>
+<td style="text-align: right;">83,868</td>
+<td style="text-align: right;">0.41</td>
+</tr>
+<tr>
+<td>B3149</td>
+<td>.40 mi S of MD202</td>
+<td>Prince George's</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">206,370</td>
+<td style="text-align: right;">81,575</td>
+<td style="text-align: right;">0.40</td>
+</tr>
+<tr>
+<td>B3148</td>
+<td>.10 mi S of MD704</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">202,610</td>
+<td style="text-align: right;">92,833</td>
+<td style="text-align: right;">0.46</td>
+</tr>
+<tr>
+<td>B3147</td>
+<td>.60 mi N of IS595/US50</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">223,181</td>
+<td style="text-align: right;">86,677</td>
+<td style="text-align: right;">0.39</td>
+</tr>
+<tr>
+<td>P0055</td>
+<td>.05 mi north of Good Luck Rd</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">196,525</td>
+<td style="text-align: right;">102,250</td>
+<td style="text-align: right;">0.52</td>
+</tr>
+<tr>
+<td>B3145</td>
+<td>.30 mi S of MD201</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">215,931</td>
+<td style="text-align: right;">69,766</td>
+<td style="text-align: right;">0.32</td>
+</tr>
+<tr>
+<td>B3144</td>
+<td>.30 mi N of MD201</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">195,050</td>
+<td style="text-align: right;">71,762</td>
+<td style="text-align: right;">0.37</td>
+</tr>
+<tr>
+<td>B3354</td>
+<td>.40 mi S of US1</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">183,111</td>
+<td style="text-align: right;">72,290</td>
+<td style="text-align: right;">0.39</td>
+</tr>
+<tr>
+<td>B3143</td>
+<td>.30 mi N of US1</td>
+<td>Prince George's</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">191,660</td>
+<td style="text-align: right;">73,078</td>
+<td style="text-align: right;">0.38</td>
+</tr>
+<tr>
+<td><strong>All 25 stations</strong></td>
+<td></td>
+<td></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><strong>4,911,326</strong></td>
+<td style="text-align: right;"><strong>1,832,044</strong></td>
+<td style="text-align: right;"><strong>0.37</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The value at B3155 (south of MD 210, near the Woodrow Wilson Bridge interchange) suggests that the station was matched to a minor carriageway; treat it with caution.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../traffic/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Traffic">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Traffic
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../county/" class="md-footer__link md-footer__link--next" aria-label="Next: County view">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                County view
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Raas Sarker Tomal · Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM), University of Maryland, College Park
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Tomal121186621" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:rtomal@umd.edu" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.path", "announce.dismiss", "content.tooltips", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../../assets/javascripts/home.js?v=5"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

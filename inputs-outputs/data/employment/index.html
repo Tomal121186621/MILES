@@ -1,0 +1,4905 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="MILES (Maryland Integrated Land-use and Everyday-travel Simulator), an agent-based platform of population, land use, activities and traffic for Maryland">
+      
+      
+        <meta name="author" content="Raas Sarker Tomal">
+      
+      
+        <link rel="canonical" href="https://tomal121186621.github.io/MILES/inputs-outputs/data/employment/">
+      
+      
+        <link rel="prev" href="../travel-survey/">
+      
+      
+        <link rel="next" href="../landuse-controls/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/img/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Employment - MILES</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css?v=5">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#employment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+New: <a href="../../../calibration-validation/estimates/">full result tables of all 28 estimated models</a> and the
+<a href="../../../calibration-validation/validation/map/">interactive traffic validation map</a>.
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="MILES" class="md-header__button md-logo" aria-label="MILES" data-md-component="logo">
+      
+  <img src="../../../assets/img/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MILES
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Employment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="deep-orange" aria-label="Dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="deep-orange" aria-label="Light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Tomal121186621/MILES" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Tomal121186621/MILES
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../get-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Get started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../model-design/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Model design
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Inputs and outputs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../applying/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Applying MILES
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../calibration-validation/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Calibration and validation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../developers/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Developers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MILES" class="md-nav__button md-logo" aria-label="MILES" data-md-component="logo">
+      
+  <img src="../../../assets/img/logo.svg" alt="logo">
+
+    </a>
+    MILES
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Tomal121186621/MILES" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Tomal121186621/MILES
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../get-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/repository/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repository layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/running/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Run the chain
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime and storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../model-design/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model design
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Model design
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic population
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/activity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Activities (MILES-Day)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/assignment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inputs and outputs
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Inputs and outputs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inputs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input data in detail
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Input data in detail
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../acs-pums/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACS microdata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../travel-survey/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regional Travel Survey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Employment
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Employment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#lodes-workplace-area-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LODES workplace area characteristics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LODES workplace area characteristics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lodes-origindestination-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LODES origin–destination flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LODES origin–destination flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quarterly-census-of-employment-and-wages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quarterly Census of Employment and Wages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quarterly Census of Employment and Wages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-openings-and-labor-turnover-survey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job Openings and Labor Turnover Survey
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Job Openings and Labor Turnover Survey">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../landuse-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Population and housing controls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zones-geography/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zones, skims and geography
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../road-network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Road network
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../traffic-counts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic counts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../zones-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zone system and networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../outputs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outputs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../applying/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Applying MILES
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Applying MILES
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applying/scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applying/i695/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case study, I-695 pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../calibration-validation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration and validation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Calibration and validation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../calibration-validation/estimates/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimated models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estimated models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use and workplaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Destinations and stops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/tour-formation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/modes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour and leg modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../calibration-validation/validation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Validation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic population
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/activities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Activities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/traffic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/interstates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interstates by station
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/county/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    County view
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/baselines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Against standard methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Known limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../developers/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developers
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Population code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/silo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SILO engine changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/activity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MILES-Day engine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/matsim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MATSim runner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/estimation-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimation package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../about/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#lodes-workplace-area-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LODES workplace area characteristics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LODES workplace area characteristics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lodes-origindestination-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LODES origin–destination flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LODES origin–destination flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quarterly-census-of-employment-and-wages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quarterly Census of Employment and Wages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quarterly Census of Employment and Wages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#job-openings-and-labor-turnover-survey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Job Openings and Labor Turnover Survey
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Job Openings and Labor Turnover Survey">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Inputs and outputs
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Input data in detail
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="employment">Employment<a class="headerlink" href="#employment" title="Permanent link">¶</a></h1>
+<p>Jobs enter MILES at three points: the 2016 job inventory of the synthetic population, the yearly job control totals of the land-use model, and the vacant share of jobs. Workplace counts come from the LEHD Origin–Destination Employment Statistics (LODES), county growth from the Quarterly Census of Employment and Wages (QCEW), and vacancies from the Job Openings and Labor Turnover Survey (JOLTS). All three are public. Counties marked * form the study area.</p>
+<h2 id="lodes-workplace-area-characteristics">LODES workplace area characteristics<a class="headerlink" href="#lodes-workplace-area-characteristics" title="Permanent link">¶</a></h2>
+<p>Jobs by census block of workplace, all jobs (segment S000, job type JT00), LODES version 8 on 2020 blocks <a href="../../inputs/#sources">[3]</a>. Maryland files 2016–2023 give the 2016 job inventory (by zone and job type) and the growth path of the job control totals; the files of the District of Columbia, Delaware, Pennsylvania, Virginia and West Virginia for 2017 give the zone employment used in activity-model estimation, and those for 2022 the 2024 benchmarks. The block crosswalk (<code>md_xwalk.csv.gz</code>) supplies the county and the block centroid. Downloaded from the LEHD server; no registration.</p>
+<h3 id="codebook">Codebook<a class="headerlink" href="#codebook" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>w_geocode</code></td>
+<td>Census block of workplace (2020)</td>
+<td>string, 15 digits</td>
+<td>state (2) + county (3) + tract (6) + block (4)</td>
+<td>Population; land use; activities</td>
+</tr>
+<tr>
+<td><code>C000</code></td>
+<td>Total jobs</td>
+<td>integer</td>
+<td>jobs</td>
+<td>Population; land use; activities</td>
+</tr>
+<tr>
+<td><code>CNS01</code> … <code>CNS20</code></td>
+<td>Jobs by NAICS sector (20 sectors)</td>
+<td>integer</td>
+<td>jobs; grouped into four SILO job types, table below</td>
+<td>Population; land use</td>
+</tr>
+<tr>
+<td><code>tabblk2020</code></td>
+<td>Block code (crosswalk)</td>
+<td>string</td>
+<td>joins <code>w_geocode</code></td>
+<td>Population; land use</td>
+</tr>
+<tr>
+<td><code>cty</code></td>
+<td>County FIPS code (crosswalk)</td>
+<td>string, 5 digits</td>
+<td>e.g. 24510 Baltimore City</td>
+<td>Land use</td>
+</tr>
+<tr>
+<td><code>blklatdd</code>, <code>blklondd</code></td>
+<td>Block internal point (crosswalk)</td>
+<td>float</td>
+<td>decimal degrees, WGS 84</td>
+<td>Population; land use</td>
+</tr>
+</tbody>
+</table>
+<p>Sector groups used for the four SILO job types:</p>
+<table>
+<thead>
+<tr>
+<th>Job type</th>
+<th>LODES sectors</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Retail</td>
+<td><code>CNS07</code> retail trade; <code>CNS18</code> accommodation and food</td>
+</tr>
+<tr>
+<td>Office</td>
+<td><code>CNS09</code> information; <code>CNS10</code> finance and insurance; <code>CNS11</code> real estate; <code>CNS12</code> professional, scientific, technical; <code>CNS13</code> management of companies; <code>CNS14</code> administrative and waste services; <code>CNS15</code> educational services; <code>CNS16</code> health care and social assistance; <code>CNS20</code> public administration</td>
+</tr>
+<tr>
+<td>Industry</td>
+<td><code>CNS01</code> agriculture, forestry, fishing; <code>CNS02</code> mining, oil and gas; <code>CNS03</code> utilities; <code>CNS04</code> construction; <code>CNS05</code> manufacturing; <code>CNS06</code> wholesale trade; <code>CNS08</code> transportation and warehousing</td>
+</tr>
+<tr>
+<td>Other</td>
+<td><code>CNS17</code> arts, entertainment, recreation; <code>CNS19</code> other services</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics">Statistics<a class="headerlink" href="#statistics" title="Permanent link">¶</a></h3>
+<p>Maryland files: blocks with at least one job, total jobs and job-type shares (%).</p>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th style="text-align: right;">Blocks</th>
+<th style="text-align: right;">Jobs</th>
+<th style="text-align: right;">Retail</th>
+<th style="text-align: right;">Office</th>
+<th style="text-align: right;">Industry</th>
+<th style="text-align: right;">Other</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2016</td>
+<td style="text-align: right;">32,239</td>
+<td style="text-align: right;">2,586,279</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">57.2</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">5.3</td>
+</tr>
+<tr>
+<td>2017</td>
+<td style="text-align: right;">32,396</td>
+<td style="text-align: right;">2,607,045</td>
+<td style="text-align: right;">19.8</td>
+<td style="text-align: right;">57.1</td>
+<td style="text-align: right;">17.6</td>
+<td style="text-align: right;">5.5</td>
+</tr>
+<tr>
+<td>2018</td>
+<td style="text-align: right;">32,617</td>
+<td style="text-align: right;">2,628,952</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">57.2</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">5.5</td>
+</tr>
+<tr>
+<td>2019</td>
+<td style="text-align: right;">32,733</td>
+<td style="text-align: right;">2,634,322</td>
+<td style="text-align: right;">19.1</td>
+<td style="text-align: right;">57.5</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">5.4</td>
+</tr>
+<tr>
+<td>2020</td>
+<td style="text-align: right;">29,162</td>
+<td style="text-align: right;">2,469,147</td>
+<td style="text-align: right;">17.7</td>
+<td style="text-align: right;">58.1</td>
+<td style="text-align: right;">19.6</td>
+<td style="text-align: right;">4.6</td>
+</tr>
+<tr>
+<td>2021</td>
+<td style="text-align: right;">29,639</td>
+<td style="text-align: right;">2,431,733</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">57.1</td>
+<td style="text-align: right;">20.0</td>
+<td style="text-align: right;">4.7</td>
+</tr>
+<tr>
+<td>2022</td>
+<td style="text-align: right;">29,919</td>
+<td style="text-align: right;">2,518,064</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">57.7</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">4.9</td>
+</tr>
+<tr>
+<td>2023</td>
+<td style="text-align: right;">30,936</td>
+<td style="text-align: right;">2,613,215</td>
+<td style="text-align: right;">18.4</td>
+<td style="text-align: right;">57.6</td>
+<td style="text-align: right;">18.9</td>
+<td style="text-align: right;">5.1</td>
+</tr>
+</tbody>
+</table>
+<p>No field is missing. The sector columns sum to <code>C000</code> in every row, and every workplace block is in the crosswalk. In 2016 a block with jobs holds a median of 10 jobs (mean 80.2, maximum 17,243). The crosswalk lists 83,827 Maryland blocks, all with an internal point.</p>
+<p>Maryland jobs by sector, 2016 and 2023.</p>
+<table>
+<thead>
+<tr>
+<th>Sector</th>
+<th>Job type</th>
+<th style="text-align: right;">Jobs 2016</th>
+<th style="text-align: right;">Share 2016 (%)</th>
+<th style="text-align: right;">Jobs 2023</th>
+<th style="text-align: right;">Change (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Health care and social assistance</td>
+<td>Office</td>
+<td style="text-align: right;">366,792</td>
+<td style="text-align: right;">14.2</td>
+<td style="text-align: right;">378,100</td>
+<td style="text-align: right;">3.1</td>
+</tr>
+<tr>
+<td>Retail trade</td>
+<td>Retail</td>
+<td style="text-align: right;">287,972</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">265,579</td>
+<td style="text-align: right;">-7.8</td>
+</tr>
+<tr>
+<td>Educational services</td>
+<td>Office</td>
+<td style="text-align: right;">274,191</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">259,079</td>
+<td style="text-align: right;">-5.5</td>
+</tr>
+<tr>
+<td>Professional, scientific, technical</td>
+<td>Office</td>
+<td style="text-align: right;">253,383</td>
+<td style="text-align: right;">9.8</td>
+<td style="text-align: right;">291,714</td>
+<td style="text-align: right;">15.1</td>
+</tr>
+<tr>
+<td>Accommodation and food</td>
+<td>Retail</td>
+<td style="text-align: right;">223,055</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">215,227</td>
+<td style="text-align: right;">-3.5</td>
+</tr>
+<tr>
+<td>Public administration</td>
+<td>Office</td>
+<td style="text-align: right;">206,949</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">212,010</td>
+<td style="text-align: right;">2.4</td>
+</tr>
+<tr>
+<td>Administrative and waste services</td>
+<td>Office</td>
+<td style="text-align: right;">167,523</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">171,374</td>
+<td style="text-align: right;">2.3</td>
+</tr>
+<tr>
+<td>Construction</td>
+<td>Industry</td>
+<td style="text-align: right;">161,525</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">163,801</td>
+<td style="text-align: right;">1.4</td>
+</tr>
+<tr>
+<td>Manufacturing</td>
+<td>Industry</td>
+<td style="text-align: right;">105,462</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">113,851</td>
+<td style="text-align: right;">8.0</td>
+</tr>
+<tr>
+<td>Finance and insurance</td>
+<td>Office</td>
+<td style="text-align: right;">94,908</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">80,801</td>
+<td style="text-align: right;">-14.9</td>
+</tr>
+<tr>
+<td>Other services</td>
+<td>Other</td>
+<td style="text-align: right;">93,319</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">91,851</td>
+<td style="text-align: right;">-1.6</td>
+</tr>
+<tr>
+<td>Wholesale trade</td>
+<td>Industry</td>
+<td style="text-align: right;">87,519</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">86,572</td>
+<td style="text-align: right;">-1.1</td>
+</tr>
+<tr>
+<td>Transportation and warehousing</td>
+<td>Industry</td>
+<td style="text-align: right;">87,338</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">112,445</td>
+<td style="text-align: right;">28.7</td>
+</tr>
+<tr>
+<td>Real estate</td>
+<td>Office</td>
+<td style="text-align: right;">45,570</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">42,513</td>
+<td style="text-align: right;">-6.7</td>
+</tr>
+<tr>
+<td>Information</td>
+<td>Office</td>
+<td style="text-align: right;">43,919</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">40,418</td>
+<td style="text-align: right;">-8.0</td>
+</tr>
+<tr>
+<td>Arts, entertainment, recreation</td>
+<td>Other</td>
+<td style="text-align: right;">43,646</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">40,509</td>
+<td style="text-align: right;">-7.2</td>
+</tr>
+<tr>
+<td>Management of companies</td>
+<td>Office</td>
+<td style="text-align: right;">26,519</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">30,222</td>
+<td style="text-align: right;">14.0</td>
+</tr>
+<tr>
+<td>Utilities</td>
+<td>Industry</td>
+<td style="text-align: right;">9,895</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">9,908</td>
+<td style="text-align: right;">0.1</td>
+</tr>
+<tr>
+<td>Agriculture, forestry, fishing</td>
+<td>Industry</td>
+<td style="text-align: right;">5,557</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">5,880</td>
+<td style="text-align: right;">5.8</td>
+</tr>
+<tr>
+<td>Mining, oil and gas</td>
+<td>Industry</td>
+<td style="text-align: right;">1,237</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">1,361</td>
+<td style="text-align: right;">10.0</td>
+</tr>
+</tbody>
+</table>
+<p>Jobs by county of workplace.</p>
+<table>
+<thead>
+<tr>
+<th>County</th>
+<th style="text-align: right;">2016</th>
+<th style="text-align: right;">2019</th>
+<th style="text-align: right;">2020</th>
+<th style="text-align: right;">2023</th>
+<th style="text-align: right;">Change 2016–23 (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Allegany</td>
+<td style="text-align: right;">28,212</td>
+<td style="text-align: right;">27,898</td>
+<td style="text-align: right;">25,568</td>
+<td style="text-align: right;">25,839</td>
+<td style="text-align: right;">-8.4</td>
+</tr>
+<tr>
+<td>Anne Arundel *</td>
+<td style="text-align: right;">267,214</td>
+<td style="text-align: right;">270,513</td>
+<td style="text-align: right;">248,686</td>
+<td style="text-align: right;">269,612</td>
+<td style="text-align: right;">0.9</td>
+</tr>
+<tr>
+<td>Baltimore City *</td>
+<td style="text-align: right;">343,789</td>
+<td style="text-align: right;">348,824</td>
+<td style="text-align: right;">338,318</td>
+<td style="text-align: right;">344,611</td>
+<td style="text-align: right;">0.2</td>
+</tr>
+<tr>
+<td>Baltimore County *</td>
+<td style="text-align: right;">390,752</td>
+<td style="text-align: right;">398,040</td>
+<td style="text-align: right;">374,559</td>
+<td style="text-align: right;">385,518</td>
+<td style="text-align: right;">-1.3</td>
+</tr>
+<tr>
+<td>Calvert</td>
+<td style="text-align: right;">23,035</td>
+<td style="text-align: right;">21,637</td>
+<td style="text-align: right;">20,433</td>
+<td style="text-align: right;">21,372</td>
+<td style="text-align: right;">-7.2</td>
+</tr>
+<tr>
+<td>Caroline</td>
+<td style="text-align: right;">8,698</td>
+<td style="text-align: right;">9,102</td>
+<td style="text-align: right;">8,916</td>
+<td style="text-align: right;">8,855</td>
+<td style="text-align: right;">1.8</td>
+</tr>
+<tr>
+<td>Carroll *</td>
+<td style="text-align: right;">58,247</td>
+<td style="text-align: right;">57,878</td>
+<td style="text-align: right;">54,197</td>
+<td style="text-align: right;">57,897</td>
+<td style="text-align: right;">-0.6</td>
+</tr>
+<tr>
+<td>Cecil</td>
+<td style="text-align: right;">30,227</td>
+<td style="text-align: right;">31,140</td>
+<td style="text-align: right;">31,648</td>
+<td style="text-align: right;">32,838</td>
+<td style="text-align: right;">8.6</td>
+</tr>
+<tr>
+<td>Charles</td>
+<td style="text-align: right;">38,976</td>
+<td style="text-align: right;">37,316</td>
+<td style="text-align: right;">35,206</td>
+<td style="text-align: right;">37,882</td>
+<td style="text-align: right;">-2.8</td>
+</tr>
+<tr>
+<td>Dorchester</td>
+<td style="text-align: right;">10,790</td>
+<td style="text-align: right;">11,902</td>
+<td style="text-align: right;">11,760</td>
+<td style="text-align: right;">12,350</td>
+<td style="text-align: right;">14.5</td>
+</tr>
+<tr>
+<td>Frederick</td>
+<td style="text-align: right;">99,506</td>
+<td style="text-align: right;">104,114</td>
+<td style="text-align: right;">96,754</td>
+<td style="text-align: right;">108,637</td>
+<td style="text-align: right;">9.2</td>
+</tr>
+<tr>
+<td>Garrett</td>
+<td style="text-align: right;">11,544</td>
+<td style="text-align: right;">11,930</td>
+<td style="text-align: right;">11,194</td>
+<td style="text-align: right;">11,219</td>
+<td style="text-align: right;">-2.8</td>
+</tr>
+<tr>
+<td>Harford *</td>
+<td style="text-align: right;">81,363</td>
+<td style="text-align: right;">84,157</td>
+<td style="text-align: right;">80,377</td>
+<td style="text-align: right;">87,506</td>
+<td style="text-align: right;">7.6</td>
+</tr>
+<tr>
+<td>Howard *</td>
+<td style="text-align: right;">177,901</td>
+<td style="text-align: right;">183,273</td>
+<td style="text-align: right;">173,424</td>
+<td style="text-align: right;">185,575</td>
+<td style="text-align: right;">4.3</td>
+</tr>
+<tr>
+<td>Kent</td>
+<td style="text-align: right;">8,001</td>
+<td style="text-align: right;">7,861</td>
+<td style="text-align: right;">7,043</td>
+<td style="text-align: right;">7,744</td>
+<td style="text-align: right;">-3.2</td>
+</tr>
+<tr>
+<td>Montgomery</td>
+<td style="text-align: right;">484,038</td>
+<td style="text-align: right;">490,319</td>
+<td style="text-align: right;">468,650</td>
+<td style="text-align: right;">491,378</td>
+<td style="text-align: right;">1.5</td>
+</tr>
+<tr>
+<td>Prince George's</td>
+<td style="text-align: right;">317,051</td>
+<td style="text-align: right;">333,163</td>
+<td style="text-align: right;">285,598</td>
+<td style="text-align: right;">318,010</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr>
+<td>Queen Anne's</td>
+<td style="text-align: right;">14,508</td>
+<td style="text-align: right;">15,070</td>
+<td style="text-align: right;">14,145</td>
+<td style="text-align: right;">15,068</td>
+<td style="text-align: right;">3.9</td>
+</tr>
+<tr>
+<td>Somerset</td>
+<td style="text-align: right;">6,070</td>
+<td style="text-align: right;">5,407</td>
+<td style="text-align: right;">4,966</td>
+<td style="text-align: right;">5,954</td>
+<td style="text-align: right;">-1.9</td>
+</tr>
+<tr>
+<td>St. Mary's</td>
+<td style="text-align: right;">33,213</td>
+<td style="text-align: right;">34,551</td>
+<td style="text-align: right;">34,925</td>
+<td style="text-align: right;">35,732</td>
+<td style="text-align: right;">7.6</td>
+</tr>
+<tr>
+<td>Talbot</td>
+<td style="text-align: right;">19,358</td>
+<td style="text-align: right;">17,738</td>
+<td style="text-align: right;">16,505</td>
+<td style="text-align: right;">17,015</td>
+<td style="text-align: right;">-12.1</td>
+</tr>
+<tr>
+<td>Washington</td>
+<td style="text-align: right;">67,909</td>
+<td style="text-align: right;">65,625</td>
+<td style="text-align: right;">62,886</td>
+<td style="text-align: right;">66,246</td>
+<td style="text-align: right;">-2.4</td>
+</tr>
+<tr>
+<td>Wicomico</td>
+<td style="text-align: right;">44,591</td>
+<td style="text-align: right;">45,225</td>
+<td style="text-align: right;">43,511</td>
+<td style="text-align: right;">43,883</td>
+<td style="text-align: right;">-1.6</td>
+</tr>
+<tr>
+<td>Worcester</td>
+<td style="text-align: right;">21,286</td>
+<td style="text-align: right;">21,639</td>
+<td style="text-align: right;">19,878</td>
+<td style="text-align: right;">22,474</td>
+<td style="text-align: right;">5.6</td>
+</tr>
+<tr>
+<td><strong>Study area</strong></td>
+<td style="text-align: right;"><strong>1,319,266</strong></td>
+<td style="text-align: right;"><strong>1,342,685</strong></td>
+<td style="text-align: right;"><strong>1,269,561</strong></td>
+<td style="text-align: right;"><strong>1,330,719</strong></td>
+<td style="text-align: right;"><strong>0.9</strong></td>
+</tr>
+<tr>
+<td><strong>Maryland</strong></td>
+<td style="text-align: right;"><strong>2,586,279</strong></td>
+<td style="text-align: right;"><strong>2,634,322</strong></td>
+<td style="text-align: right;"><strong>2,469,147</strong></td>
+<td style="text-align: right;"><strong>2,613,215</strong></td>
+<td style="text-align: right;"><strong>1.0</strong></td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/data/emp_county_jobs.png" data-desc-position="bottom"><img alt="Workplace jobs by Maryland county in 2016 and 2023, and the change 2016 to 2023 in LODES jobs and QCEW covered employment" src="../../../assets/img/data/emp_county_jobs.png"></a></p>
+<p>Other states (all blocks of the state; the model uses the blocks inside the zone system).</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th style="text-align: right;">Blocks 2017</th>
+<th style="text-align: right;">Jobs 2017</th>
+<th style="text-align: right;">Blocks 2022</th>
+<th style="text-align: right;">Jobs 2022</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>District of Columbia</td>
+<td style="text-align: right;">3,629</td>
+<td style="text-align: right;">690,999</td>
+<td style="text-align: right;">3,991</td>
+<td style="text-align: right;">656,985</td>
+</tr>
+<tr>
+<td>Delaware</td>
+<td style="text-align: right;">6,020</td>
+<td style="text-align: right;">438,969</td>
+<td style="text-align: right;">7,134</td>
+<td style="text-align: right;">443,301</td>
+</tr>
+<tr>
+<td>Pennsylvania</td>
+<td style="text-align: right;">107,191</td>
+<td style="text-align: right;">5,777,904</td>
+<td style="text-align: right;">103,210</td>
+<td style="text-align: right;">5,786,513</td>
+</tr>
+<tr>
+<td>Virginia</td>
+<td style="text-align: right;">52,913</td>
+<td style="text-align: right;">3,729,094</td>
+<td style="text-align: right;">55,584</td>
+<td style="text-align: right;">3,793,766</td>
+</tr>
+<tr>
+<td>West Virginia</td>
+<td style="text-align: right;">14,388</td>
+<td style="text-align: right;">684,952</td>
+<td style="text-align: right;">15,028</td>
+<td style="text-align: right;">663,554</td>
+</tr>
+</tbody>
+</table>
+<h3 id="processing">Processing<a class="headerlink" href="#processing" title="Permanent link">¶</a></h3>
+<ul>
+<li>Blocks are placed in model zones by their crosswalk internal point (point in polygon); a point outside every polygon (coastline) takes the nearest zone.</li>
+<li>Sectors are summed to the four job types of the table above.</li>
+<li>2016 inventory: Maryland zones take the 2016 LODES jobs by type divided by (1 − 0.0401), the 2016 JOLTS job-openings rate, so that 4.01 % of jobs are vacant; zones outside Maryland keep the MSTM 2016 inventory.</li>
+<li>Job control totals: the 2016 synthetic jobs of a zone and type are multiplied by the LODES change of that zone and type relative to 2016 (the county change where the zone had no 2016 jobs of the type); county totals then follow QCEW (next section).</li>
+</ul>
+<h2 id="lodes-origindestination-flows">LODES origin–destination flows<a class="headerlink" href="#lodes-origindestination-flows" title="Permanent link">¶</a></h2>
+<p>Jobs by pair of home block and workplace block <a href="../../inputs/#sources">[3]</a>. The <code>main</code> file holds jobs with home and workplace in Maryland; the <code>aux</code> file of a state holds jobs in that state held by residents of other states. They are used only for validation: the share of Maryland residents' jobs located in the home county (2016–2023), and the 2022 county-to-county commuting pattern of the 2024 benchmarks.</p>
+<h3 id="codebook_1">Codebook<a class="headerlink" href="#codebook_1" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h_geocode</code></td>
+<td>Census block of residence</td>
+<td>string, 15 digits</td>
+<td>first five digits = county</td>
+<td>Land-use validation; 2024 benchmarks</td>
+</tr>
+<tr>
+<td><code>w_geocode</code></td>
+<td>Census block of workplace</td>
+<td>string, 15 digits</td>
+<td>first five digits = county</td>
+<td>Land-use validation; 2024 benchmarks</td>
+</tr>
+<tr>
+<td><code>S000</code></td>
+<td>Jobs of the block pair</td>
+<td>integer</td>
+<td>jobs</td>
+<td>Land-use validation; 2024 benchmarks</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics_1">Statistics<a class="headerlink" href="#statistics_1" title="Permanent link">¶</a></h3>
+<p>Maryland files. <em>Own county</em>: share of jobs held by Maryland residents (main file) located in the home county.</p>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th style="text-align: right;">Block pairs</th>
+<th style="text-align: right;">Jobs, home and work in Maryland</th>
+<th style="text-align: right;">Pairs with one job (%)</th>
+<th style="text-align: right;">Own county (%)</th>
+<th style="text-align: right;">Jobs in Maryland, home elsewhere</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2016</td>
+<td style="text-align: right;">2,032,069</td>
+<td style="text-align: right;">2,286,383</td>
+<td style="text-align: right;">92.0</td>
+<td style="text-align: right;">48.7</td>
+<td style="text-align: right;">299,896</td>
+</tr>
+<tr>
+<td>2017</td>
+<td style="text-align: right;">2,041,712</td>
+<td style="text-align: right;">2,294,363</td>
+<td style="text-align: right;">92.1</td>
+<td style="text-align: right;">48.2</td>
+<td style="text-align: right;">312,682</td>
+</tr>
+<tr>
+<td>2018</td>
+<td style="text-align: right;">2,059,365</td>
+<td style="text-align: right;">2,315,616</td>
+<td style="text-align: right;">92.0</td>
+<td style="text-align: right;">48.1</td>
+<td style="text-align: right;">313,336</td>
+</tr>
+<tr>
+<td>2019</td>
+<td style="text-align: right;">2,064,828</td>
+<td style="text-align: right;">2,319,287</td>
+<td style="text-align: right;">92.1</td>
+<td style="text-align: right;">48.2</td>
+<td style="text-align: right;">315,035</td>
+</tr>
+<tr>
+<td>2020</td>
+<td style="text-align: right;">1,935,509</td>
+<td style="text-align: right;">2,169,307</td>
+<td style="text-align: right;">92.1</td>
+<td style="text-align: right;">47.0</td>
+<td style="text-align: right;">299,840</td>
+</tr>
+<tr>
+<td>2021</td>
+<td style="text-align: right;">1,908,839</td>
+<td style="text-align: right;">2,128,870</td>
+<td style="text-align: right;">92.4</td>
+<td style="text-align: right;">46.2</td>
+<td style="text-align: right;">302,863</td>
+</tr>
+<tr>
+<td>2022</td>
+<td style="text-align: right;">1,979,851</td>
+<td style="text-align: right;">2,209,215</td>
+<td style="text-align: right;">92.4</td>
+<td style="text-align: right;">46.2</td>
+<td style="text-align: right;">308,849</td>
+</tr>
+<tr>
+<td>2023</td>
+<td style="text-align: right;">2,059,264</td>
+<td style="text-align: right;">2,304,321</td>
+<td style="text-align: right;">92.3</td>
+<td style="text-align: right;">46.5</td>
+<td style="text-align: right;">308,894</td>
+</tr>
+</tbody>
+</table>
+<p>Own-county share (%) by home county.</p>
+<table>
+<thead>
+<tr>
+<th>Home county</th>
+<th style="text-align: right;">2016</th>
+<th style="text-align: right;">2019</th>
+<th style="text-align: right;">2023</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Allegany</td>
+<td style="text-align: right;">76.0</td>
+<td style="text-align: right;">74.8</td>
+<td style="text-align: right;">72.1</td>
+</tr>
+<tr>
+<td>Anne Arundel *</td>
+<td style="text-align: right;">47.0</td>
+<td style="text-align: right;">45.8</td>
+<td style="text-align: right;">42.9</td>
+</tr>
+<tr>
+<td>Baltimore City *</td>
+<td style="text-align: right;">47.4</td>
+<td style="text-align: right;">46.9</td>
+<td style="text-align: right;">46.2</td>
+</tr>
+<tr>
+<td>Baltimore County *</td>
+<td style="text-align: right;">43.1</td>
+<td style="text-align: right;">43.1</td>
+<td style="text-align: right;">41.6</td>
+</tr>
+<tr>
+<td>Calvert</td>
+<td style="text-align: right;">39.0</td>
+<td style="text-align: right;">38.0</td>
+<td style="text-align: right;">36.6</td>
+</tr>
+<tr>
+<td>Caroline</td>
+<td style="text-align: right;">26.3</td>
+<td style="text-align: right;">25.0</td>
+<td style="text-align: right;">23.8</td>
+</tr>
+<tr>
+<td>Carroll *</td>
+<td style="text-align: right;">33.6</td>
+<td style="text-align: right;">33.0</td>
+<td style="text-align: right;">32.3</td>
+</tr>
+<tr>
+<td>Cecil</td>
+<td style="text-align: right;">50.0</td>
+<td style="text-align: right;">48.5</td>
+<td style="text-align: right;">46.2</td>
+</tr>
+<tr>
+<td>Charles</td>
+<td style="text-align: right;">35.9</td>
+<td style="text-align: right;">34.2</td>
+<td style="text-align: right;">33.2</td>
+</tr>
+<tr>
+<td>Dorchester</td>
+<td style="text-align: right;">36.7</td>
+<td style="text-align: right;">37.6</td>
+<td style="text-align: right;">35.0</td>
+</tr>
+<tr>
+<td>Frederick</td>
+<td style="text-align: right;">45.4</td>
+<td style="text-align: right;">44.4</td>
+<td style="text-align: right;">42.7</td>
+</tr>
+<tr>
+<td>Garrett</td>
+<td style="text-align: right;">69.5</td>
+<td style="text-align: right;">69.9</td>
+<td style="text-align: right;">68.0</td>
+</tr>
+<tr>
+<td>Harford *</td>
+<td style="text-align: right;">39.0</td>
+<td style="text-align: right;">38.7</td>
+<td style="text-align: right;">38.8</td>
+</tr>
+<tr>
+<td>Howard *</td>
+<td style="text-align: right;">33.2</td>
+<td style="text-align: right;">32.7</td>
+<td style="text-align: right;">32.1</td>
+</tr>
+<tr>
+<td>Kent</td>
+<td style="text-align: right;">58.3</td>
+<td style="text-align: right;">57.6</td>
+<td style="text-align: right;">54.0</td>
+</tr>
+<tr>
+<td>Montgomery</td>
+<td style="text-align: right;">70.5</td>
+<td style="text-align: right;">69.7</td>
+<td style="text-align: right;">67.7</td>
+</tr>
+<tr>
+<td>Prince George's</td>
+<td style="text-align: right;">48.7</td>
+<td style="text-align: right;">49.3</td>
+<td style="text-align: right;">46.2</td>
+</tr>
+<tr>
+<td>Queen Anne's</td>
+<td style="text-align: right;">28.4</td>
+<td style="text-align: right;">28.2</td>
+<td style="text-align: right;">28.8</td>
+</tr>
+<tr>
+<td>Somerset</td>
+<td style="text-align: right;">34.4</td>
+<td style="text-align: right;">32.2</td>
+<td style="text-align: right;">29.2</td>
+</tr>
+<tr>
+<td>St. Mary's</td>
+<td style="text-align: right;">50.9</td>
+<td style="text-align: right;">51.1</td>
+<td style="text-align: right;">49.6</td>
+</tr>
+<tr>
+<td>Talbot</td>
+<td style="text-align: right;">47.3</td>
+<td style="text-align: right;">43.9</td>
+<td style="text-align: right;">43.1</td>
+</tr>
+<tr>
+<td>Washington</td>
+<td style="text-align: right;">59.2</td>
+<td style="text-align: right;">56.6</td>
+<td style="text-align: right;">54.4</td>
+</tr>
+<tr>
+<td>Wicomico</td>
+<td style="text-align: right;">63.9</td>
+<td style="text-align: right;">63.2</td>
+<td style="text-align: right;">59.5</td>
+</tr>
+<tr>
+<td>Worcester</td>
+<td style="text-align: right;">58.2</td>
+<td style="text-align: right;">57.6</td>
+<td style="text-align: right;">55.7</td>
+</tr>
+</tbody>
+</table>
+<p>Jobs held by Maryland residents in other states (<code>aux</code> file of the workplace state).</p>
+<table>
+<thead>
+<tr>
+<th>Workplace state</th>
+<th style="text-align: right;">2016</th>
+<th style="text-align: right;">2017</th>
+<th style="text-align: right;">2022</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>District of Columbia</td>
+<td style="text-align: right;">280,484</td>
+<td style="text-align: right;">278,265</td>
+<td style="text-align: right;">256,918</td>
+</tr>
+<tr>
+<td>Virginia</td>
+<td style="text-align: right;">138,073</td>
+<td style="text-align: right;">142,868</td>
+<td style="text-align: right;">147,677</td>
+</tr>
+<tr>
+<td>Pennsylvania</td>
+<td style="text-align: right;">25,974</td>
+<td style="text-align: right;">28,074</td>
+<td style="text-align: right;">30,406</td>
+</tr>
+<tr>
+<td>Delaware</td>
+<td style="text-align: right;">26,021</td>
+<td style="text-align: right;">26,540</td>
+<td style="text-align: right;">27,219</td>
+</tr>
+<tr>
+<td>West Virginia</td>
+<td style="text-align: right;">8,137</td>
+<td style="text-align: right;">8,153</td>
+<td style="text-align: right;">8,697</td>
+</tr>
+</tbody>
+</table>
+<h3 id="processing_1">Processing<a class="headerlink" href="#processing_1" title="Permanent link">¶</a></h3>
+<ul>
+<li>Home and workplace counties are the first five digits of the block codes; flows are summed to county pairs.</li>
+<li>LODES counts jobs, not workers: a person with two jobs appears twice, and federal civilian jobs are included while self-employment is not.</li>
+</ul>
+<h2 id="quarterly-census-of-employment-and-wages">Quarterly Census of Employment and Wages<a class="headerlink" href="#quarterly-census-of-employment-and-wages" title="Permanent link">¶</a></h2>
+<p>Employment and wages covered by unemployment insurance, by county, ownership and industry, annual averages, from the BLS open-data files <a href="../../inputs/#sources">[6]</a>. MILES uses the county total for all ownerships and industries: its growth sets the county job control totals from 2016 to 2024 (later years keep the 2024 level), and the Maryland average annual pay deflated by the CPI gives the assumed real wage growth of 0.5 % a year. 594 county files are present (66 counties, 2016–2024).</p>
+<h3 id="codebook_2">Codebook<a class="headerlink" href="#codebook_2" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>area_fips</code></td>
+<td>County FIPS code</td>
+<td>string, 5 digits</td>
+<td>counties of the six states of the zone system</td>
+<td>Land use</td>
+</tr>
+<tr>
+<td><code>own_code</code></td>
+<td>Ownership</td>
+<td>integer</td>
+<td>0 = all ownerships (used); 1–5 = federal, state, local, private</td>
+<td>Land use</td>
+</tr>
+<tr>
+<td><code>industry_code</code></td>
+<td>Industry</td>
+<td>string</td>
+<td>10 = total, all industries (used)</td>
+<td>Land use</td>
+</tr>
+<tr>
+<td><code>year</code></td>
+<td>Year</td>
+<td>integer</td>
+<td>2016–2024</td>
+<td>Land use</td>
+</tr>
+<tr>
+<td><code>annual_avg_emplvl</code></td>
+<td>Annual average employment</td>
+<td>integer</td>
+<td>jobs</td>
+<td>Land use: job control totals</td>
+</tr>
+<tr>
+<td><code>avg_annual_pay</code></td>
+<td>Average annual pay</td>
+<td>integer</td>
+<td>dollars, current</td>
+<td>Land use: real wage growth</td>
+</tr>
+<tr>
+<td><code>disclosure_code</code></td>
+<td>Disclosure flag</td>
+<td>string</td>
+<td>N = not disclosed</td>
+<td>Check only</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics_2">Statistics<a class="headerlink" href="#statistics_2" title="Permanent link">¶</a></h3>
+<p>The 594 files hold 717,052 rows; the county total (ownership 0, industry 10) is disclosed in every file.</p>
+<p>Covered employment, Maryland counties, annual average.</p>
+<table>
+<thead>
+<tr>
+<th>County</th>
+<th style="text-align: right;">2016</th>
+<th style="text-align: right;">2019</th>
+<th style="text-align: right;">2020</th>
+<th style="text-align: right;">2024</th>
+<th style="text-align: right;">Change 2016–24 (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Allegany</td>
+<td style="text-align: right;">29,312</td>
+<td style="text-align: right;">28,872</td>
+<td style="text-align: right;">26,086</td>
+<td style="text-align: right;">26,680</td>
+<td style="text-align: right;">-9.0</td>
+</tr>
+<tr>
+<td>Anne Arundel *</td>
+<td style="text-align: right;">267,653</td>
+<td style="text-align: right;">274,972</td>
+<td style="text-align: right;">255,908</td>
+<td style="text-align: right;">288,447</td>
+<td style="text-align: right;">7.8</td>
+</tr>
+<tr>
+<td>Baltimore City *</td>
+<td style="text-align: right;">337,194</td>
+<td style="text-align: right;">344,378</td>
+<td style="text-align: right;">328,182</td>
+<td style="text-align: right;">348,184</td>
+<td style="text-align: right;">3.3</td>
+</tr>
+<tr>
+<td>Baltimore County *</td>
+<td style="text-align: right;">373,523</td>
+<td style="text-align: right;">380,770</td>
+<td style="text-align: right;">350,800</td>
+<td style="text-align: right;">374,470</td>
+<td style="text-align: right;">0.3</td>
+</tr>
+<tr>
+<td>Calvert</td>
+<td style="text-align: right;">24,142</td>
+<td style="text-align: right;">22,668</td>
+<td style="text-align: right;">20,919</td>
+<td style="text-align: right;">22,676</td>
+<td style="text-align: right;">-6.1</td>
+</tr>
+<tr>
+<td>Caroline</td>
+<td style="text-align: right;">9,346</td>
+<td style="text-align: right;">9,940</td>
+<td style="text-align: right;">9,342</td>
+<td style="text-align: right;">9,246</td>
+<td style="text-align: right;">-1.1</td>
+</tr>
+<tr>
+<td>Carroll *</td>
+<td style="text-align: right;">57,894</td>
+<td style="text-align: right;">58,660</td>
+<td style="text-align: right;">54,237</td>
+<td style="text-align: right;">59,195</td>
+<td style="text-align: right;">2.2</td>
+</tr>
+<tr>
+<td>Cecil</td>
+<td style="text-align: right;">31,667</td>
+<td style="text-align: right;">33,458</td>
+<td style="text-align: right;">33,094</td>
+<td style="text-align: right;">36,713</td>
+<td style="text-align: right;">15.9</td>
+</tr>
+<tr>
+<td>Charles</td>
+<td style="text-align: right;">42,920</td>
+<td style="text-align: right;">41,505</td>
+<td style="text-align: right;">38,436</td>
+<td style="text-align: right;">43,087</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr>
+<td>Dorchester</td>
+<td style="text-align: right;">11,202</td>
+<td style="text-align: right;">11,514</td>
+<td style="text-align: right;">11,751</td>
+<td style="text-align: right;">11,903</td>
+<td style="text-align: right;">6.3</td>
+</tr>
+<tr>
+<td>Frederick</td>
+<td style="text-align: right;">99,418</td>
+<td style="text-align: right;">105,170</td>
+<td style="text-align: right;">96,984</td>
+<td style="text-align: right;">108,438</td>
+<td style="text-align: right;">9.1</td>
+</tr>
+<tr>
+<td>Garrett</td>
+<td style="text-align: right;">11,705</td>
+<td style="text-align: right;">12,050</td>
+<td style="text-align: right;">11,302</td>
+<td style="text-align: right;">12,162</td>
+<td style="text-align: right;">3.9</td>
+</tr>
+<tr>
+<td>Harford *</td>
+<td style="text-align: right;">91,428</td>
+<td style="text-align: right;">95,333</td>
+<td style="text-align: right;">89,316</td>
+<td style="text-align: right;">95,188</td>
+<td style="text-align: right;">4.1</td>
+</tr>
+<tr>
+<td>Howard *</td>
+<td style="text-align: right;">168,168</td>
+<td style="text-align: right;">174,642</td>
+<td style="text-align: right;">161,299</td>
+<td style="text-align: right;">173,483</td>
+<td style="text-align: right;">3.2</td>
+</tr>
+<tr>
+<td>Kent</td>
+<td style="text-align: right;">7,901</td>
+<td style="text-align: right;">7,951</td>
+<td style="text-align: right;">7,180</td>
+<td style="text-align: right;">7,648</td>
+<td style="text-align: right;">-3.2</td>
+</tr>
+<tr>
+<td>Montgomery</td>
+<td style="text-align: right;">463,967</td>
+<td style="text-align: right;">472,495</td>
+<td style="text-align: right;">439,259</td>
+<td style="text-align: right;">462,298</td>
+<td style="text-align: right;">-0.4</td>
+</tr>
+<tr>
+<td>Prince George's</td>
+<td style="text-align: right;">312,033</td>
+<td style="text-align: right;">322,168</td>
+<td style="text-align: right;">295,521</td>
+<td style="text-align: right;">329,476</td>
+<td style="text-align: right;">5.6</td>
+</tr>
+<tr>
+<td>Queen Anne's</td>
+<td style="text-align: right;">14,748</td>
+<td style="text-align: right;">15,647</td>
+<td style="text-align: right;">14,321</td>
+<td style="text-align: right;">16,269</td>
+<td style="text-align: right;">10.3</td>
+</tr>
+<tr>
+<td>Somerset</td>
+<td style="text-align: right;">6,683</td>
+<td style="text-align: right;">6,736</td>
+<td style="text-align: right;">6,121</td>
+<td style="text-align: right;">6,963</td>
+<td style="text-align: right;">4.2</td>
+</tr>
+<tr>
+<td>St. Mary's</td>
+<td style="text-align: right;">43,340</td>
+<td style="text-align: right;">45,789</td>
+<td style="text-align: right;">45,449</td>
+<td style="text-align: right;">49,113</td>
+<td style="text-align: right;">13.3</td>
+</tr>
+<tr>
+<td>Talbot</td>
+<td style="text-align: right;">19,353</td>
+<td style="text-align: right;">18,493</td>
+<td style="text-align: right;">16,291</td>
+<td style="text-align: right;">18,220</td>
+<td style="text-align: right;">-5.9</td>
+</tr>
+<tr>
+<td>Washington</td>
+<td style="text-align: right;">66,896</td>
+<td style="text-align: right;">64,943</td>
+<td style="text-align: right;">59,852</td>
+<td style="text-align: right;">64,206</td>
+<td style="text-align: right;">-4.0</td>
+</tr>
+<tr>
+<td>Wicomico</td>
+<td style="text-align: right;">45,006</td>
+<td style="text-align: right;">45,282</td>
+<td style="text-align: right;">42,777</td>
+<td style="text-align: right;">46,139</td>
+<td style="text-align: right;">2.5</td>
+</tr>
+<tr>
+<td>Worcester</td>
+<td style="text-align: right;">24,308</td>
+<td style="text-align: right;">25,017</td>
+<td style="text-align: right;">22,054</td>
+<td style="text-align: right;">26,303</td>
+<td style="text-align: right;">8.2</td>
+</tr>
+<tr>
+<td><strong>Study area</strong></td>
+<td style="text-align: right;"><strong>1,295,860</strong></td>
+<td style="text-align: right;"><strong>1,328,755</strong></td>
+<td style="text-align: right;"><strong>1,239,742</strong></td>
+<td style="text-align: right;"><strong>1,338,967</strong></td>
+<td style="text-align: right;"><strong>3.3</strong></td>
+</tr>
+<tr>
+<td><strong>Maryland</strong></td>
+<td style="text-align: right;"><strong>2,559,807</strong></td>
+<td style="text-align: right;"><strong>2,618,453</strong></td>
+<td style="text-align: right;"><strong>2,436,481</strong></td>
+<td style="text-align: right;"><strong>2,636,507</strong></td>
+<td style="text-align: right;"><strong>3.0</strong></td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/data/emp_series.png" data-desc-position="bottom"><img alt="Maryland workplace jobs and covered employment as an index of 2016, and state job-openings rates 2016–2024" src="../../../assets/img/data/emp_series.png"></a></p>
+<h3 id="processing_2">Processing<a class="headerlink" href="#processing_2" title="Permanent link">¶</a></h3>
+<ul>
+<li>Counties merged in the zone system are summed: 51919 = Fairfax County, Fairfax City and Falls Church; 51942 = Prince William, Manassas and Manassas Park; 51951 = Frederick County (Virginia) and Winchester.</li>
+<li>County jobs of year Y = 2016 base jobs × Q(Y) / Q(2016) × (1 − v(2016)) / (1 − v(Y)), with Q the QCEW employment and v the JOLTS job-openings rate of the county's state; within a county the zone and type split follows LODES.</li>
+</ul>
+<h2 id="job-openings-and-labor-turnover-survey">Job Openings and Labor Turnover Survey<a class="headerlink" href="#job-openings-and-labor-turnover-survey" title="Permanent link">¶</a></h2>
+<p>Monthly state estimates of job openings, hires and quits, seasonally adjusted, total nonfarm, from the BLS public API <a href="../../inputs/#sources">[4]</a>. The job-openings rate (openings as a percent of employment plus openings) sets the vacant share of jobs: 4.01 % in the 2016 base (Maryland) and the state rate of each later year in the job control totals. The Maryland quits rate of 2017–2019 sets the yearly rate of job-to-job changes.</p>
+<h3 id="codebook_3">Codebook<a class="headerlink" href="#codebook_3" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>seriesID</code></td>
+<td>Series</td>
+<td>string</td>
+<td><code>JTS000000&lt;ss&gt;0000000JOR</code> openings rate of state ss; <code>JTS000000240000000QUR</code> Maryland quits rate</td>
+<td>Population; land use</td>
+</tr>
+<tr>
+<td><code>year</code>, <code>period</code></td>
+<td>Reference month</td>
+<td>string</td>
+<td>M01–M12 (M13 annual, dropped)</td>
+<td>Population; land use</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>Rate</td>
+<td>float</td>
+<td>percent</td>
+<td>Population; land use</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics_3">Statistics<a class="headerlink" href="#statistics_3" title="Permanent link">¶</a></h3>
+<p>Job-openings rate, annual mean of the monthly values (%).</p>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th style="text-align: right;">Maryland</th>
+<th style="text-align: right;">D.C.</th>
+<th style="text-align: right;">Delaware</th>
+<th style="text-align: right;">Pennsylvania</th>
+<th style="text-align: right;">Virginia</th>
+<th style="text-align: right;">West Virginia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2016</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">3.5</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">4.0</td>
+</tr>
+<tr>
+<td>2017</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">4.1</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">4.5</td>
+</tr>
+<tr>
+<td>2018</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">3.3</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">4.7</td>
+<td style="text-align: right;">5.0</td>
+</tr>
+<tr>
+<td>2019</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">3.8</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">5.3</td>
+</tr>
+<tr>
+<td>2020</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">6.1</td>
+</tr>
+<tr>
+<td>2021</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">7.4</td>
+</tr>
+<tr>
+<td>2022</td>
+<td style="text-align: right;">7.2</td>
+<td style="text-align: right;">5.6</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">7.3</td>
+<td style="text-align: right;">8.2</td>
+</tr>
+<tr>
+<td>2023</td>
+<td style="text-align: right;">6.3</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">5.8</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">7.1</td>
+</tr>
+<tr>
+<td>2024</td>
+<td style="text-align: right;">5.1</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">4.9</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">6.1</td>
+</tr>
+</tbody>
+</table>
+<p>Every state-year has 12 monthly values. The Maryland quits rate averages 2.1 % a month over 2017–2019 (36 months; range 1.6–2.7 %), or 25.2 % a year.</p>
+<h3 id="processing_3">Processing<a class="headerlink" href="#processing_3" title="Permanent link">¶</a></h3>
+<ul>
+<li>Annual rate = mean of the twelve monthly rates; years after 2024 keep the 2024 rate.</li>
+<li>Vacant jobs = filled jobs / (1 − rate) − filled jobs.</li>
+<li>The quits rate is an upper bound for job-to-job changes, because quits include exits from employment.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../travel-survey/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Regional Travel Survey">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Regional Travel Survey
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../landuse-controls/" class="md-footer__link md-footer__link--next" aria-label="Next: Population and housing controls">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Population and housing controls
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Raas Sarker Tomal · Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM), University of Maryland, College Park
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Tomal121186621" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:rtomal@umd.edu" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.path", "announce.dismiss", "content.tooltips", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../../assets/javascripts/home.js?v=5"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

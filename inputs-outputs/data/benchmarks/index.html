@@ -1,0 +1,4824 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="MILES (Maryland Integrated Land-use and Everyday-travel Simulator), an agent-based platform of population, land use, activities and traffic for Maryland">
+      
+      
+        <meta name="author" content="Raas Sarker Tomal">
+      
+      
+        <link rel="canonical" href="https://tomal121186621.github.io/MILES/inputs-outputs/data/benchmarks/">
+      
+      
+        <link rel="prev" href="../traffic-counts/">
+      
+      
+        <link rel="next" href="../../zones-networks/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/img/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Validation benchmarks - MILES</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css?v=5">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#validation-benchmarks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+New: <a href="../../../calibration-validation/estimates/">full result tables of all 28 estimated models</a> and the
+<a href="../../../calibration-validation/validation/map/">interactive traffic validation map</a>.
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="MILES" class="md-header__button md-logo" aria-label="MILES" data-md-component="logo">
+      
+  <img src="../../../assets/img/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MILES
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Validation benchmarks
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="deep-orange" aria-label="Dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="deep-orange" aria-label="Light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden="">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Tomal121186621/MILES" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Tomal121186621/MILES
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../get-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Get started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../model-design/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Model design
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Inputs and outputs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../applying/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Applying MILES
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../calibration-validation/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Calibration and validation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../developers/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Developers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MILES" class="md-nav__button md-logo" aria-label="MILES" data-md-component="logo">
+      
+  <img src="../../../assets/img/logo.svg" alt="logo">
+
+    </a>
+    MILES
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Tomal121186621/MILES" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Tomal121186621/MILES
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../get-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/repository/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Repository layout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/running/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Run the chain
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../get-started/runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime and storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../model-design/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model design
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Model design
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic population
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/activity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Activities (MILES-Day)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/assignment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inputs and outputs
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Inputs and outputs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../inputs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked="">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Input data in detail
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Input data in detail
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../acs-pums/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ACS microdata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../travel-survey/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regional Travel Survey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../employment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Employment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../landuse-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Population and housing controls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zones-geography/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zones, skims and geography
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../road-network/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Road network
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../traffic-counts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic counts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation benchmarks
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#american-time-use-survey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        American Time Use Survey
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="American Time Use Survey">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#national-household-travel-survey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        National Household Travel Survey
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="National Household Travel Survey">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#american-community-survey-2024-journey-to-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        American Community Survey 2024, journey to work
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="American Community Survey 2024, journey to work">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#american-community-survey-summary-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        American Community Survey summary tables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="American Community Survey summary tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../zones-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zone system and networks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../outputs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Outputs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../applying/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Applying MILES
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Applying MILES
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applying/scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../applying/i695/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case study, I-695 pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../calibration-validation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration and validation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Calibration and validation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../calibration-validation/estimates/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimated models
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Estimated models
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use and workplaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/locations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Destinations and stops
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/tour-formation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/estimates/modes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tour and leg modes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/calibration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Calibration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../calibration-validation/validation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Validation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synthetic population
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/landuse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Land use
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/schools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    School location
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/activities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Activities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/traffic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traffic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/interstates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interstates by station
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/county/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    County view
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/validation/map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Validation map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/baselines/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Against standard methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../calibration-validation/limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Known limitations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../developers/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developers
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Developers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/population/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Population code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/silo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SILO engine changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/activity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MILES-Day engine
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/matsim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MATSim runner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../developers/estimation-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Estimation package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../about/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix="">
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/team/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Team
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/publications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#american-time-use-survey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        American Time Use Survey
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="American Time Use Survey">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#national-household-travel-survey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        National Household Travel Survey
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="National Household Travel Survey">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#american-community-survey-2024-journey-to-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        American Community Survey 2024, journey to work
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="American Community Survey 2024, journey to work">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#american-community-survey-summary-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        American Community Survey summary tables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="American Community Survey summary tables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codebook_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codebook
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#statistics_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Inputs and outputs
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Input data in detail
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="validation-benchmarks">Validation benchmarks<a class="headerlink" href="#validation-benchmarks" title="Permanent link">¶</a></h1>
+<p>The data on this page are used only to test MILES; no model is estimated on them. They describe travel and commuting in the
+forecast year 2024 (the time-use survey, the 2024 American Community Survey) or give an independent check of the base period
+(the National Household Travel Survey). The ACS microdata used for estimation and calibration are described on
+<a href="../acs-pums/">ACS PUMS</a>. Bracketed numbers refer to the <a href="../../inputs/#sources">sources</a> of the data page.</p>
+<p>Shares and means are weighted with the survey weights. Cells based on fewer than 10 unweighted records are shown as
+"—". The <em>study area</em> or <em>Baltimore region</em> is Baltimore City and the counties of Anne Arundel, Baltimore, Carroll,
+Harford and Howard.</p>
+<h2 id="american-time-use-survey">American Time Use Survey<a class="headerlink" href="#american-time-use-survey" title="Permanent link">¶</a></h2>
+<p>The American Time Use Survey (ATUS) <a href="../../inputs/#sources">17</a> records one diary day (4:00 to 4:00) of one person aged 15 or over per
+household, sampled from households leaving the Current Population Survey. MILES uses the multi-year files 2003–2024
+(respondent, activity, summary and CPS files), public, downloaded from the Bureau of Labor Statistics. The files hold
+252,808 diaries of 2003–2024. They test the number and type of
+activities per person and the commute in 2024 (<code>activity/lib/reporting_2024/bench_atus.py</code>).</p>
+<h3 id="codebook">Codebook<a class="headerlink" href="#codebook" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TUCASEID</code></td>
+<td>Respondent identifier</td>
+<td>Integer (14 digits)</td>
+<td>Year and month of the CPS interview, household</td>
+<td>Join key</td>
+</tr>
+<tr>
+<td><code>TUYEAR</code></td>
+<td>Year of the diary</td>
+<td>Integer</td>
+<td>2003–2024; used: 2017–2019 and 2021–2024</td>
+<td>Period selection</td>
+</tr>
+<tr>
+<td><code>TUDIARYDAY</code></td>
+<td>Day of the week of the diary</td>
+<td>Categorical</td>
+<td>1 Sunday … 7 Saturday; used: 2–6</td>
+<td>Weekday filter</td>
+</tr>
+<tr>
+<td><code>TRHOLIDAY</code></td>
+<td>Diary day was a holiday</td>
+<td>Binary</td>
+<td>0 no, 1 yes; used: 0</td>
+<td>Weekday filter</td>
+</tr>
+<tr>
+<td><code>TUFNWGTP</code></td>
+<td>Final person weight</td>
+<td>Continuous</td>
+<td>Person-days</td>
+<td>All weighted statistics</td>
+</tr>
+<tr>
+<td><code>TELFS</code></td>
+<td>Labour force status</td>
+<td>Categorical</td>
+<td>1, 2 employed; 3, 4 unemployed; 5 not in labour force</td>
+<td>Employed persons</td>
+</tr>
+<tr>
+<td><code>TEAGE</code></td>
+<td>Age</td>
+<td>Integer</td>
+<td>Years, 15–85 (top-coded)</td>
+<td>Age filter (15+)</td>
+</tr>
+<tr>
+<td><code>TESCHENR</code></td>
+<td>Enrolled in school</td>
+<td>Categorical</td>
+<td>1 yes, 2 no, −1 not asked</td>
+<td>Student flag</td>
+</tr>
+<tr>
+<td><code>GESTFIPS</code></td>
+<td>State of residence (CPS file)</td>
+<td>Categorical</td>
+<td>FIPS code; used: 11, 24, 51</td>
+<td>Pool selection</td>
+</tr>
+<tr>
+<td><code>TUACTIVITY_N</code></td>
+<td>Episode number within the diary</td>
+<td>Integer</td>
+<td>1, 2, …</td>
+<td>Episode order</td>
+</tr>
+<tr>
+<td><code>TUSTARTTIM</code></td>
+<td>Start time of the episode</td>
+<td>Time</td>
+<td>hh<img alt="🇲🇲" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@16.0.1/assets/svg/1f1f2-1f1f2.svg" title=":mm:">ss</td>
+<td>Activity start, departure</td>
+</tr>
+<tr>
+<td><code>TUACTDUR24</code></td>
+<td>Duration of the episode, truncated at 4:00</td>
+<td>Integer</td>
+<td>Minutes</td>
+<td>Activity duration, travel time</td>
+</tr>
+<tr>
+<td><code>TRCODEP</code></td>
+<td>Six-digit activity code</td>
+<td>Categorical</td>
+<td>05 work, 06 education, 07 consumer purchases, 18 travel, …</td>
+<td>Activity type, travel episodes</td>
+</tr>
+<tr>
+<td><code>TEWHERE</code></td>
+<td>Where the episode took place, or the mode of travel</td>
+<td>Categorical</td>
+<td>1 home or yard; 12 car driver, 13 car passenger, 14 walk, 15 bus, 16 subway or train, 17 bicycle; other places</td>
+<td>Home or away, commute mode</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics">Statistics<a class="headerlink" href="#statistics" title="Permanent link">¶</a></h3>
+<p>Sample of weekday diaries (Monday to Friday, not a holiday) of persons aged 15 or over. Single years hold about 70
+Maryland weekday diaries, so four years (2021–2024) are pooled for the 2024 benchmark and three years (2017–2019)
+describe the base period; the year 2020 is not used.</p>
+<table>
+<thead>
+<tr>
+<th>Pool</th>
+<th style="text-align: right;">Years</th>
+<th style="text-align: right;">Weekday diaries, age 15+</th>
+<th style="text-align: right;">Employed</th>
+<th style="text-align: right;">With a commute</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Maryland</td>
+<td style="text-align: right;">2017–2019</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">182</td>
+<td style="text-align: right;">139</td>
+</tr>
+<tr>
+<td>Maryland</td>
+<td style="text-align: right;">2021–2024</td>
+<td style="text-align: right;">279</td>
+<td style="text-align: right;">183</td>
+<td style="text-align: right;">87</td>
+</tr>
+<tr>
+<td>DC, Maryland and Virginia</td>
+<td style="text-align: right;">2017–2019</td>
+<td style="text-align: right;">706</td>
+<td style="text-align: right;">476</td>
+<td style="text-align: right;">350</td>
+</tr>
+<tr>
+<td>DC, Maryland and Virginia</td>
+<td style="text-align: right;">2021–2024</td>
+<td style="text-align: right;">804</td>
+<td style="text-align: right;">521</td>
+<td style="text-align: right;">255</td>
+</tr>
+</tbody>
+</table>
+<p>Activities per person and share of persons with at least one activity of each type, weekday. An activity is a stay
+away from home after a trip (or a return home), as defined under <em>Processing</em>.</p>
+<table>
+<thead>
+<tr>
+<th>Activity</th>
+<th style="text-align: right;">MD 2017–2019: per person</th>
+<th style="text-align: right;">MD 2017–2019: with activity (%)</th>
+<th style="text-align: right;">MD 2021–2024: per person</th>
+<th style="text-align: right;">MD 2021–2024: with activity (%)</th>
+<th style="text-align: right;">DC+MD+VA 2017–2019: per person</th>
+<th style="text-align: right;">DC+MD+VA 2017–2019: with activity (%)</th>
+<th style="text-align: right;">DC+MD+VA 2021–2024: per person</th>
+<th style="text-align: right;">DC+MD+VA 2021–2024: with activity (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Work</td>
+<td style="text-align: right;">0.60</td>
+<td style="text-align: right;">49.9</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">34.2</td>
+<td style="text-align: right;">0.63</td>
+<td style="text-align: right;">51.3</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: right;">34.6</td>
+</tr>
+<tr>
+<td>School</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">8.2</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: right;">9.9</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">7.2</td>
+</tr>
+<tr>
+<td>Shopping</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">35.4</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">30.7</td>
+<td style="text-align: right;">0.46</td>
+<td style="text-align: right;">34.9</td>
+<td style="text-align: right;">0.45</td>
+<td style="text-align: right;">30.7</td>
+</tr>
+<tr>
+<td>Other</td>
+<td style="text-align: right;">1.44</td>
+<td style="text-align: right;">64.2</td>
+<td style="text-align: right;">1.10</td>
+<td style="text-align: right;">56.2</td>
+<td style="text-align: right;">1.36</td>
+<td style="text-align: right;">62.4</td>
+<td style="text-align: right;">1.15</td>
+<td style="text-align: right;">56.8</td>
+</tr>
+<tr>
+<td>Return home</td>
+<td style="text-align: right;">1.10</td>
+<td style="text-align: right;">73.4</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">66.7</td>
+<td style="text-align: right;">1.03</td>
+<td style="text-align: right;">74.5</td>
+<td style="text-align: right;">0.91</td>
+<td style="text-align: right;">65.3</td>
+</tr>
+<tr>
+<td>All activities</td>
+<td style="text-align: right;">3.74</td>
+<td style="text-align: right;">89.8</td>
+<td style="text-align: right;">2.98</td>
+<td style="text-align: right;">83.0</td>
+<td style="text-align: right;">3.57</td>
+<td style="text-align: right;">88.9</td>
+<td style="text-align: right;">2.99</td>
+<td style="text-align: right;">79.1</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/data/bench_atus_participation.png" data-desc-position="bottom"><img alt="Share of persons with each activity type, Maryland weekday diaries, 2017–2019 and 2021–2024" src="../../../assets/img/data/bench_atus_participation.png"></a></p>
+<p><em>Share of Maryland weekday diarists aged 15 and over with at least one activity of each type, ATUS.</em></p>
+<p>Commute on the diary day (persons with a work stay away from home):</p>
+<table>
+<thead>
+<tr>
+<th>Pool</th>
+<th style="text-align: right;">Years</th>
+<th style="text-align: right;">Commuters</th>
+<th style="text-align: right;">Employed with work away from home (%)</th>
+<th style="text-align: right;">Mean travel time (min)</th>
+<th style="text-align: right;">Median (min)</th>
+<th style="text-align: right;">Mean departure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Maryland</td>
+<td style="text-align: right;">2017–2019</td>
+<td style="text-align: right;">139</td>
+<td style="text-align: right;">74.5</td>
+<td style="text-align: right;">41.4</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">7:45</td>
+</tr>
+<tr>
+<td>Maryland</td>
+<td style="text-align: right;">2021–2024</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">47.1</td>
+<td style="text-align: right;">33.3</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">7:49</td>
+</tr>
+<tr>
+<td>DC, Maryland and Virginia</td>
+<td style="text-align: right;">2017–2019</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: right;">73.7</td>
+<td style="text-align: right;">34.7</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">7:45</td>
+</tr>
+<tr>
+<td>DC, Maryland and Virginia</td>
+<td style="text-align: right;">2021–2024</td>
+<td style="text-align: right;">255</td>
+<td style="text-align: right;">50.5</td>
+<td style="text-align: right;">36.5</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">7:39</td>
+</tr>
+</tbody>
+</table>
+<p>Mode of the trip arriving at work, DC, Maryland and Virginia (share of commuters):</p>
+<table>
+<thead>
+<tr>
+<th>Mode of the trip arriving at work</th>
+<th style="text-align: right;">2017–2019 (%)</th>
+<th style="text-align: right;">2021–2024 (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Car, driver</td>
+<td style="text-align: right;">80.9</td>
+<td style="text-align: right;">81.9</td>
+</tr>
+<tr>
+<td>Car, passenger</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Bus</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Rail</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Walk</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">3.2</td>
+</tr>
+<tr>
+<td>Bicycle</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Other</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">8.1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="processing">Processing<a class="headerlink" href="#processing" title="Permanent link">¶</a></h3>
+<ul>
+<li>Diary days on Monday to Friday that are not holidays, respondents aged 15 or over living in Maryland (pool <em>Maryland</em>) or
+  in DC, Maryland or Virginia (larger pool, used where the Maryland sample is small).</li>
+<li>The diary is cut into stays at every travel episode (activity code 18xxxx). A stay after a travel episode is an activity at
+  the trip's destination; the first stay of the day is not an activity. A stay is at home when its episodes are at home or in
+  the yard (<code>TEWHERE</code> 1); episodes without a place take the place of the previous episode.</li>
+<li>The type of a stay away from home is the category with the most minutes: work (05), education (06), shopping (07) or other.</li>
+<li>The commute is the last trip leaving home before the first work stay. Its travel time is the sum of the travel episodes up
+  to the arrival at work, without stops; its mode is that of the trip arriving at work.</li>
+</ul>
+<h2 id="national-household-travel-survey">National Household Travel Survey<a class="headerlink" href="#national-household-travel-survey" title="Permanent link">¶</a></h2>
+<p>The National Household Travel Survey (NHTS) <a href="../../inputs/#sources">18</a> is the national one-day travel diary of the Federal Highway
+Administration. Two public files are used:</p>
+<ul>
+<li><strong>NHTS 2017</strong> (household, person and trip files): an independent check of the base period of the regional survey,
+  for residents of the Baltimore–Columbia–Towson metropolitan area (<code>activity/lib/reporting_2024/obs_surveys.py</code>).
+  The national file holds 129,696 households, 264,234 persons and 923,572 trips.</li>
+<li><strong>NHTS 2022</strong> (trip file): the trip length of car drivers and the share of business driving, used to check the traffic
+  assignment (<code>assignment/validation/regional_validation.py</code>, <code>coverage_estimate.py</code>). The public 2022 file does not
+  identify the metropolitan area; the closest class is the South Atlantic division, metropolitan areas of 1–3 million with
+  heavy rail. The national file holds 31,074 trips.</li>
+</ul>
+<h3 id="codebook_1">Codebook<a class="headerlink" href="#codebook_1" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HOUSEID</code>, <code>PERSONID</code></td>
+<td>Household and person identifiers</td>
+<td>String, integer</td>
+<td>—</td>
+<td>Join keys (2017)</td>
+</tr>
+<tr>
+<td><code>HH_CBSA</code></td>
+<td>Core-based statistical area of the household</td>
+<td>Categorical</td>
+<td>12580 Baltimore–Columbia–Towson</td>
+<td>Area selection (2017)</td>
+</tr>
+<tr>
+<td><code>TRAVDAY</code></td>
+<td>Day of the week of the travel day</td>
+<td>Categorical</td>
+<td>1 Sunday … 7 Saturday; used: 2–6</td>
+<td>Weekday filter (2017)</td>
+</tr>
+<tr>
+<td><code>R_AGE</code></td>
+<td>Age of the person</td>
+<td>Integer</td>
+<td>Years; used: 5 and over</td>
+<td>Person filter (2017)</td>
+</tr>
+<tr>
+<td><code>WORKER</code></td>
+<td>Person is a worker</td>
+<td>Categorical</td>
+<td>1 yes, 2 no</td>
+<td>Description (2017)</td>
+</tr>
+<tr>
+<td><code>WTPERFIN</code>, <code>WTTRDFIN</code></td>
+<td>Person and trip weights</td>
+<td>Continuous</td>
+<td>Persons; trips per year</td>
+<td>Weighted statistics (2017)</td>
+</tr>
+<tr>
+<td><code>TDTRPNUM</code></td>
+<td>Trip number within the travel day</td>
+<td>Integer</td>
+<td>1, 2, …</td>
+<td>Trip order (2017)</td>
+</tr>
+<tr>
+<td><code>STRTTIME</code>, <code>ENDTIME</code></td>
+<td>Trip start and end time</td>
+<td>Integer</td>
+<td>hhmm</td>
+<td>Departure and arrival (2017)</td>
+</tr>
+<tr>
+<td><code>WHYFROM</code>, <code>WHYTO</code></td>
+<td>Purpose at the origin and destination</td>
+<td>Categorical</td>
+<td>1, 2 home; 3 work; 4 work-related; 7 change of mode; 8 school; 11 buy goods; others</td>
+<td>Activity type; business trips (2022)</td>
+</tr>
+<tr>
+<td><code>TRPTRANS</code></td>
+<td>Mode of the trip</td>
+<td>Categorical</td>
+<td>2017: 1 walk, 2 bicycle, 3–6 car, van, SUV, pickup, 11 public bus, 15, 16 rail, …; 2022: 1–4 car, van, SUV, pickup</td>
+<td>Mode; car filter (2022)</td>
+</tr>
+<tr>
+<td><code>DRVR_FLG</code></td>
+<td>Person drove on the trip</td>
+<td>Binary</td>
+<td>1 yes, 2 no</td>
+<td>Car driver</td>
+</tr>
+<tr>
+<td><code>TRPMILES</code></td>
+<td>Trip distance (network)</td>
+<td>Continuous</td>
+<td>Miles</td>
+<td>Trip length</td>
+</tr>
+<tr>
+<td><code>TRVLCMIN</code></td>
+<td>Trip duration</td>
+<td>Integer</td>
+<td>Minutes</td>
+<td>Travel time</td>
+</tr>
+<tr>
+<td><code>CENSUS_D</code>, <code>MSASIZE</code>, <code>RAIL</code></td>
+<td>Census division; size class of the metropolitan area; area has heavy rail</td>
+<td>Categorical</td>
+<td>5 South Atlantic; 4 = 1–3 million; 1 yes</td>
+<td>Area selection (2022)</td>
+</tr>
+<tr>
+<td><code>TDWKND</code></td>
+<td>Travel day on a weekend</td>
+<td>Binary</td>
+<td>1 weekend, 2 weekday</td>
+<td>Weekday filter (2022)</td>
+</tr>
+<tr>
+<td><code>WTTRDFIN5D</code></td>
+<td>Trip weight, weekday</td>
+<td>Continuous</td>
+<td>Weekday trips</td>
+<td>Weighted statistics (2022)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics_1">Statistics<a class="headerlink" href="#statistics_1" title="Permanent link">¶</a></h3>
+<p><strong>NHTS 2017, Baltimore metropolitan area, weekday.</strong> 290 households, 596 persons aged 5 or over
+and 1,982 unlinked trips (1,959 trips after joining changes of mode). 55.1 % of the
+weighted persons are workers. Trip distance: mean 13.0 km, median 5.3 km,
+standard deviation 25.5 km; trip duration: mean 25.5 min, median
+15 min.</p>
+<p>Activities per person (one activity per linked trip, at its destination):</p>
+<table>
+<thead>
+<tr>
+<th>Activity</th>
+<th style="text-align: right;">Per person</th>
+<th style="text-align: right;">Persons with the activity (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Work</td>
+<td style="text-align: right;">0.37</td>
+<td style="text-align: right;">33.1</td>
+</tr>
+<tr>
+<td>School</td>
+<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">14.2</td>
+</tr>
+<tr>
+<td>Shopping</td>
+<td style="text-align: right;">0.36</td>
+<td style="text-align: right;">26.2</td>
+</tr>
+<tr>
+<td>Other</td>
+<td style="text-align: right;">1.27</td>
+<td style="text-align: right;">57.3</td>
+</tr>
+<tr>
+<td>Return home</td>
+<td style="text-align: right;">1.25</td>
+<td style="text-align: right;">80.1</td>
+</tr>
+<tr>
+<td>All activities</td>
+<td style="text-align: right;">3.40</td>
+<td style="text-align: right;">83.0</td>
+</tr>
+</tbody>
+</table>
+<p>Mode of the unlinked trips (share of weighted trips):</p>
+<table>
+<thead>
+<tr>
+<th>Mode (unlinked trips)</th>
+<th style="text-align: right;">Trips</th>
+<th style="text-align: right;">Share (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Car, driver</td>
+<td style="text-align: right;">1,343</td>
+<td style="text-align: right;">61.6</td>
+</tr>
+<tr>
+<td>Car, passenger</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: right;">15.0</td>
+</tr>
+<tr>
+<td>Public bus</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">5.1</td>
+</tr>
+<tr>
+<td>Rail</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>School bus</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">3.9</td>
+</tr>
+<tr>
+<td>Walk</td>
+<td style="text-align: right;">187</td>
+<td style="text-align: right;">10.6</td>
+</tr>
+<tr>
+<td>Bicycle</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr>
+<td>Other</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">3.3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NHTS 2022, car-driver trips on weekdays.</strong> Of 15,300 car-driver trips with a distance in the national
+file, 131 are in the South Atlantic class used for the comparison and have a positive duration. Their distance has a mean of
+16.4 km (median 8.2 km, standard deviation 19.7 km);
+their duration has a mean of 23.7 min (median 20 min). Work-related trips
+(<code>WHYTO</code> or <code>WHYFROM</code> 4) make up 3.9 % of the car-driver distance nationally and
+0.6 % in the South Atlantic class.</p>
+<h3 id="processing_1">Processing<a class="headerlink" href="#processing_1" title="Permanent link">¶</a></h3>
+<ul>
+<li>NHTS 2017: households of the Baltimore–Columbia–Towson area (which adds Queen Anne's County to the study area) with a
+  weekday travel day; persons aged 5 or over. Legs that end in a change of mode (<code>WHYTO</code> 7) are joined to the next trip.
+  Destination purpose: home (1, 2), work (3), school (8), shopping (11), other. Distances are capped at 300 km.</li>
+<li>NHTS 2022: weekday car-driver trips (<code>DRVR_FLG</code> 1, <code>TRPTRANS</code> 1–4) with a positive distance and duration.</li>
+</ul>
+<h2 id="american-community-survey-2024-journey-to-work">American Community Survey 2024, journey to work<a class="headerlink" href="#american-community-survey-2024-journey-to-work" title="Permanent link">¶</a></h2>
+<p>The journey-to-work questions of the ACS person file <a href="../../inputs/#sources">1</a> describe commuting in the forecast year: whether a worker
+worked from home, the mode, the departure time and the travel time to work on the reference week. MILES uses the Maryland
+person files of the <strong>2024 1-year</strong> sample (62,777 records) and of the <strong>2020–2024 5-year</strong> sample
+(299,422 records), both public (<code>activity/lib/reporting_2024/bench_acs.py</code>). The same file series is described
+for estimation on <a href="../acs-pums/">ACS PUMS</a>.</p>
+<h3 id="codebook_2">Codebook<a class="headerlink" href="#codebook_2" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SERIALNO</code></td>
+<td>Housing unit identifier</td>
+<td>String</td>
+<td>Year of interview in the first four characters</td>
+<td>Join key; years of the 5-year file</td>
+</tr>
+<tr>
+<td><code>PUMA</code></td>
+<td>Public use microdata area of residence (2020 definition)</td>
+<td>Categorical</td>
+<td>5-digit code; nested in counties of the study area</td>
+<td>County, Baltimore region</td>
+</tr>
+<tr>
+<td><code>PWGTP</code></td>
+<td>Person weight</td>
+<td>Integer</td>
+<td>Persons</td>
+<td>All weighted statistics</td>
+</tr>
+<tr>
+<td><code>PWGTP1</code>–<code>PWGTP80</code></td>
+<td>Replicate weights</td>
+<td>Integer</td>
+<td>Persons</td>
+<td>Standard errors (successive differences)</td>
+</tr>
+<tr>
+<td><code>AGEP</code></td>
+<td>Age</td>
+<td>Integer</td>
+<td>Years</td>
+<td>Workers aged 16+</td>
+</tr>
+<tr>
+<td><code>ESR</code></td>
+<td>Employment status</td>
+<td>Categorical</td>
+<td>1, 2 civilian employed (at work, with a job not at work); 4, 5 armed forces; 3 unemployed; 6 not in labour force</td>
+<td>Workers; at work last week (1, 4)</td>
+</tr>
+<tr>
+<td><code>RELSHIPP</code></td>
+<td>Relationship to the reference person</td>
+<td>Categorical</td>
+<td>20–36 household members; 37, 38 group quarters</td>
+<td>Household population</td>
+</tr>
+<tr>
+<td><code>JWTRNS</code></td>
+<td>Means of transportation to work</td>
+<td>Categorical</td>
+<td>1 car, truck or van; 2 bus; 3 subway; 4 commuter rail; 5 light rail; 6 ferry; 7 taxi; 8 motorcycle; 9 bicycle; 10 walked; 11 worked from home; 12 other</td>
+<td>Mode; worked from home</td>
+</tr>
+<tr>
+<td><code>JWRIP</code></td>
+<td>Vehicle occupancy</td>
+<td>Integer</td>
+<td>1 drove alone, 2–10 persons in the carpool</td>
+<td>Driver and passenger shares</td>
+</tr>
+<tr>
+<td><code>JWMNP</code></td>
+<td>Travel time to work</td>
+<td>Integer</td>
+<td>Minutes, 1–200</td>
+<td>Travel time</td>
+</tr>
+<tr>
+<td><code>JWDP</code></td>
+<td>Time of departure for work</td>
+<td>Categorical</td>
+<td>150 intervals of 5–30 min (decoded with the data dictionary)</td>
+<td>Departure time</td>
+</tr>
+<tr>
+<td><code>POWSP</code>, <code>POWPUMA</code></td>
+<td>Place of work, state and PUMA</td>
+<td>Categorical</td>
+<td>FIPS state; 5-digit place-of-work PUMA</td>
+<td>Commute flows</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics_2">Statistics<a class="headerlink" href="#statistics_2" title="Permanent link">¶</a></h3>
+<p>Household population (group quarters excluded). Worked from home: share of workers at work in the reference week.
+Travel time and departure: commuters (at work, not working from home).</p>
+<table>
+<thead>
+<tr>
+<th>Vintage</th>
+<th>Area</th>
+<th style="text-align: right;">Persons (records)</th>
+<th style="text-align: right;">Workers (records)</th>
+<th style="text-align: right;">Workers (weighted)</th>
+<th style="text-align: right;">Worked from home (%)</th>
+<th style="text-align: right;">Commuters (records)</th>
+<th style="text-align: right;">Mean travel time (min)</th>
+<th style="text-align: right;">Median (min)</th>
+<th style="text-align: right;">SD (min)</th>
+<th style="text-align: right;">Mean departure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024 (1-year)</td>
+<td>Maryland</td>
+<td style="text-align: right;">60,090</td>
+<td style="text-align: right;">31,485</td>
+<td style="text-align: right;">3,260,281</td>
+<td style="text-align: right;">15.7</td>
+<td style="text-align: right;">25,566</td>
+<td style="text-align: right;">32.3</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">24.0</td>
+<td style="text-align: right;">8:14</td>
+</tr>
+<tr>
+<td>2024 (1-year)</td>
+<td>Baltimore region</td>
+<td style="text-align: right;">25,966</td>
+<td style="text-align: right;">13,693</td>
+<td style="text-align: right;">1,452,629</td>
+<td style="text-align: right;">14.9</td>
+<td style="text-align: right;">11,243</td>
+<td style="text-align: right;">30.4</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">22.9</td>
+<td style="text-align: right;">8:16</td>
+</tr>
+<tr>
+<td>2020–2024 (5-year)</td>
+<td>Maryland</td>
+<td style="text-align: right;">284,800</td>
+<td style="text-align: right;">146,634</td>
+<td style="text-align: right;">3,168,183</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">113,871</td>
+<td style="text-align: right;">31.2</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">23.0</td>
+<td style="text-align: right;">8:15</td>
+</tr>
+<tr>
+<td>2020–2024 (5-year)</td>
+<td>Baltimore region</td>
+<td style="text-align: right;">122,483</td>
+<td style="text-align: right;">63,327</td>
+<td style="text-align: right;">1,421,624</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">50,061</td>
+<td style="text-align: right;">29.3</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">21.8</td>
+<td style="text-align: right;">8:19</td>
+</tr>
+</tbody>
+</table>
+<p>Mode to work of commuters, 2024 1-year (a car-pool of <em>k</em> persons counts 1/<em>k</em> as driver):</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th style="text-align: right;">Maryland</th>
+<th style="text-align: right;">Baltimore region</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Car, driver</td>
+<td style="text-align: right;">84.1</td>
+<td style="text-align: right;">85.9</td>
+</tr>
+<tr>
+<td>Car, passenger</td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: right;">5.5</td>
+</tr>
+<tr>
+<td>Bus</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">2.5</td>
+</tr>
+<tr>
+<td>Rail</td>
+<td style="text-align: right;">3.2</td>
+<td style="text-align: right;">1.5</td>
+</tr>
+<tr>
+<td>Walk</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: right;">2.3</td>
+</tr>
+<tr>
+<td>Bicycle</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">0.4</td>
+</tr>
+<tr>
+<td>Other</td>
+<td style="text-align: right;">1.9</td>
+<td style="text-align: right;">1.9</td>
+</tr>
+</tbody>
+</table>
+<p>By county of residence, 2024 1-year:</p>
+<table>
+<thead>
+<tr>
+<th>County</th>
+<th style="text-align: right;">Persons (records)</th>
+<th style="text-align: right;">Workers (weighted)</th>
+<th style="text-align: right;">Worked from home (%)</th>
+<th style="text-align: right;">Commuters (records)</th>
+<th style="text-align: right;">Mean travel time (min)</th>
+<th style="text-align: right;">Car driver (%)</th>
+<th style="text-align: right;">Bus and rail (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baltimore City</td>
+<td style="text-align: right;">4,436</td>
+<td style="text-align: right;">280,624</td>
+<td style="text-align: right;">14.1</td>
+<td style="text-align: right;">1,935</td>
+<td style="text-align: right;">30.5</td>
+<td style="text-align: right;">72.0</td>
+<td style="text-align: right;">10.8</td>
+</tr>
+<tr>
+<td>Anne Arundel</td>
+<td style="text-align: right;">5,787</td>
+<td style="text-align: right;">321,571</td>
+<td style="text-align: right;">15.2</td>
+<td style="text-align: right;">2,622</td>
+<td style="text-align: right;">30.9</td>
+<td style="text-align: right;">89.6</td>
+<td style="text-align: right;">2.2</td>
+</tr>
+<tr>
+<td>Baltimore County</td>
+<td style="text-align: right;">7,669</td>
+<td style="text-align: right;">438,021</td>
+<td style="text-align: right;">13.7</td>
+<td style="text-align: right;">3,288</td>
+<td style="text-align: right;">27.9</td>
+<td style="text-align: right;">87.3</td>
+<td style="text-align: right;">2.8</td>
+</tr>
+<tr>
+<td>Carroll</td>
+<td style="text-align: right;">2,007</td>
+<td style="text-align: right;">89,114</td>
+<td style="text-align: right;">12.9</td>
+<td style="text-align: right;">853</td>
+<td style="text-align: right;">36.7</td>
+<td style="text-align: right;">91.1</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr>
+<td>Harford</td>
+<td style="text-align: right;">2,759</td>
+<td style="text-align: right;">139,761</td>
+<td style="text-align: right;">11.4</td>
+<td style="text-align: right;">1,212</td>
+<td style="text-align: right;">32.9</td>
+<td style="text-align: right;">92.7</td>
+<td style="text-align: right;">0.8</td>
+</tr>
+<tr>
+<td>Howard</td>
+<td style="text-align: right;">3,308</td>
+<td style="text-align: right;">183,538</td>
+<td style="text-align: right;">22.0</td>
+<td style="text-align: right;">1,333</td>
+<td style="text-align: right;">29.8</td>
+<td style="text-align: right;">90.1</td>
+<td style="text-align: right;">3.1</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/data/bench_acs_traveltime.png" data-desc-position="bottom"><img alt="Distribution of the travel time to work, Maryland and the Baltimore region, ACS 2024 1-year" src="../../../assets/img/data/bench_acs_traveltime.png"></a></p>
+<p><em>Travel time to work of commuters living in Maryland and in the Baltimore region, ACS 2024 1-year PUMS (weighted; the classes have unequal widths).</em></p>
+<h3 id="processing_2">Processing<a class="headerlink" href="#processing_2" title="Permanent link">¶</a></h3>
+<ul>
+<li>Workers: <code>ESR</code> 1, 2, 4 or 5 and age 16 or over. Counties are assigned from the 2020 PUMA with the PUMA-to-county lookup
+  of the 2024 code list; in the study area every PUMA lies in one county.</li>
+<li>The departure time is the midpoint of the <code>JWDP</code> interval. Mode: drove alone counts as driver, a car-pool of <em>k</em>
+  persons as 1/<em>k</em> driver and (<em>k</em> − 1)/<em>k</em> passenger, motorcycle as driver; subway, commuter and light rail as rail;
+  ferry, taxi and other as other.</li>
+</ul>
+<h2 id="american-community-survey-summary-tables">American Community Survey summary tables<a class="headerlink" href="#american-community-survey-summary-tables" title="Permanent link">¶</a></h2>
+<p>Published ACS estimates <a href="../../inputs/#sources">1</a> (detailed tables, with 90 % margins of error) are the benchmark where the microdata are
+too coarse: by county for commuting and by census tract for households and housing. They were downloaded from the
+data.census.gov table service as one JSON file per table and county (60 county files; 114 tract files).</p>
+<ul>
+<li><strong>County tables, 2024 1-year and 2020–2024 5-year</strong> (<code>assignment/validation/regional_validation.py</code>): B08134 (travel time
+  to work by mode), B08136 (aggregate travel time), B08301 (means of transportation), B08302 (departure time) and B08303
+  (travel time) for the six study-area counties. Tables the Census Bureau does not publish in the 1-year release are empty:
+  B08134 Carroll, B08134 Harford, B08134 Howard, B08136 Carroll, B08136 Harford, B08301 Harford.</li>
+<li><strong>Tract tables</strong> (<code>reports/validation_tracts/tract_validation.py</code>): 2012–2016 5-year on 2010 tracts (B08202, B11001, B19001, B25003, B25007, B25008, B25009, B25032, B25044) and
+  2020–2024 5-year on 2020 tracts (B01003, B08201, B08301, B11001, B19001, B19013, B25003, B25008, B25032, B25044), all tracts of the six counties.</li>
+</ul>
+<h3 id="codebook_3">Codebook<a class="headerlink" href="#codebook_3" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+<th>Type</th>
+<th>Values / categories / units</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>B08134_001E</code>, <code>B08134_021E</code>–<code>_030E</code></td>
+<td>Workers 16+ who did not work from home; those who drove alone, by travel time</td>
+<td>Count</td>
+<td>Workers; bins of minutes</td>
+<td>Travel time to work by county</td>
+</tr>
+<tr>
+<td><code>B08136_001E</code>, <code>B08136_003E</code></td>
+<td>Aggregate travel time to work, all and drove alone</td>
+<td>Count</td>
+<td>Minutes</td>
+<td>Mean travel time (aggregate ÷ workers)</td>
+</tr>
+<tr>
+<td><code>B08301_001E</code>–<code>_021E</code></td>
+<td>Means of transportation to work</td>
+<td>Count</td>
+<td>003 drove alone, 004 car-pooled, 010 public transport, 018 bicycle, 019 walked, 021 worked from home</td>
+<td>Mode shares</td>
+</tr>
+<tr>
+<td><code>B08302_002E</code>–<code>_015E</code></td>
+<td>Time leaving home to go to work</td>
+<td>Count</td>
+<td>14 intervals, 0:00–23:59</td>
+<td>Departure profile</td>
+</tr>
+<tr>
+<td><code>B08303_002E</code>–<code>_013E</code></td>
+<td>Travel time to work</td>
+<td>Count</td>
+<td>12 bins, &lt; 5 to 90+ min</td>
+<td>Travel-time distribution</td>
+</tr>
+<tr>
+<td><code>B11001_001E</code></td>
+<td>Households</td>
+<td>Count</td>
+<td>Households</td>
+<td>Households by tract</td>
+</tr>
+<tr>
+<td><code>B25003_001E</code>–<code>_003E</code></td>
+<td>Tenure</td>
+<td>Count</td>
+<td>002 owner, 003 renter occupied</td>
+<td>Tenure</td>
+</tr>
+<tr>
+<td><code>B25008</code></td>
+<td>Population in occupied units by tenure</td>
+<td>Count</td>
+<td>Persons</td>
+<td>Household population</td>
+</tr>
+<tr>
+<td><code>B25044_001E</code>–<code>_010E</code></td>
+<td>Tenure by vehicles available</td>
+<td>Count</td>
+<td>003, 010 no vehicle (owner, renter)</td>
+<td>Car ownership</td>
+</tr>
+<tr>
+<td><code>B19001</code>, <code>B19013</code></td>
+<td>Household income in bins; median household income</td>
+<td>Count; dollars</td>
+<td>16 bins; inflation-adjusted dollars</td>
+<td>Income</td>
+</tr>
+<tr>
+<td><code>B25032</code></td>
+<td>Tenure by units in structure</td>
+<td>Count</td>
+<td>Dwelling types</td>
+<td>Dwelling type</td>
+</tr>
+<tr>
+<td><code>B01003</code>, <code>B08201</code>, <code>B08202</code>, <code>B25007</code>, <code>B25009</code></td>
+<td>Population; household size by vehicles; household size by workers; tenure by age of householder; tenure by household size</td>
+<td>Count</td>
+<td>Persons, households</td>
+<td>Tract composition</td>
+</tr>
+<tr>
+<td><code>…M</code></td>
+<td>90 % margin of error of each estimate</td>
+<td>Count</td>
+<td>Same as the estimate</td>
+<td>Tolerance of the comparison</td>
+</tr>
+</tbody>
+</table>
+<h3 id="statistics_3">Statistics<a class="headerlink" href="#statistics_3" title="Permanent link">¶</a></h3>
+<p>County commuting tables (estimates; "—" = not published in the 1-year release):</p>
+<table>
+<thead>
+<tr>
+<th>County</th>
+<th style="text-align: right;">5-year: workers not at home</th>
+<th style="text-align: right;">5-year: mean travel time (min)</th>
+<th style="text-align: right;">5-year: drove alone (%)</th>
+<th style="text-align: right;">5-year: public transport (%)</th>
+<th style="text-align: right;">5-year: worked from home (%)</th>
+<th style="text-align: right;">1-year: workers not at home</th>
+<th style="text-align: right;">1-year: mean travel time (min)</th>
+<th style="text-align: right;">1-year: drove alone (%)</th>
+<th style="text-align: right;">1-year: public transport (%)</th>
+<th style="text-align: right;">1-year: worked from home (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baltimore City</td>
+<td style="text-align: right;">222,441</td>
+<td style="text-align: right;">29.1</td>
+<td style="text-align: right;">55.5</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">243,705</td>
+<td style="text-align: right;">30.2</td>
+<td style="text-align: right;">56.5</td>
+<td style="text-align: right;">9.7</td>
+<td style="text-align: right;">14.0</td>
+</tr>
+<tr>
+<td>Anne Arundel</td>
+<td style="text-align: right;">257,880</td>
+<td style="text-align: right;">28.9</td>
+<td style="text-align: right;">70.0</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">273,560</td>
+<td style="text-align: right;">30.6</td>
+<td style="text-align: right;">70.6</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: right;">15.6</td>
+</tr>
+<tr>
+<td>Baltimore County</td>
+<td style="text-align: right;">351,951</td>
+<td style="text-align: right;">28.0</td>
+<td style="text-align: right;">69.5</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">16.5</td>
+<td style="text-align: right;">375,305</td>
+<td style="text-align: right;">28.1</td>
+<td style="text-align: right;">70.8</td>
+<td style="text-align: right;">2.6</td>
+<td style="text-align: right;">13.6</td>
+</tr>
+<tr>
+<td>Carroll</td>
+<td style="text-align: right;">75,334</td>
+<td style="text-align: right;">34.4</td>
+<td style="text-align: right;">73.9</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">74.7</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">13.2</td>
+</tr>
+<tr>
+<td>Harford</td>
+<td style="text-align: right;">115,350</td>
+<td style="text-align: right;">32.1</td>
+<td style="text-align: right;">75.1</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">14.9</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Howard</td>
+<td style="text-align: right;">129,859</td>
+<td style="text-align: right;">28.5</td>
+<td style="text-align: right;">64.9</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">26.0</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">66.2</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">23.0</td>
+</tr>
+</tbody>
+</table>
+<p>Tract tables, households and housing:</p>
+<table>
+<thead>
+<tr>
+<th>Vintage</th>
+<th>County</th>
+<th style="text-align: right;">Tracts</th>
+<th style="text-align: right;">Tracts with households</th>
+<th style="text-align: right;">Households</th>
+<th style="text-align: right;">Mean households per tract</th>
+<th style="text-align: right;">Owner occupied (%)</th>
+<th style="text-align: right;">No vehicle (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2012–2016</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">242,416</td>
+<td style="text-align: right;">1,224</td>
+<td style="text-align: right;">46.6</td>
+<td style="text-align: right;">29.4</td>
+</tr>
+<tr>
+<td>2012–2016</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">204,829</td>
+<td style="text-align: right;">2,008</td>
+<td style="text-align: right;">73.9</td>
+<td style="text-align: right;">3.9</td>
+</tr>
+<tr>
+<td>2012–2016</td>
+<td>Baltimore County</td>
+<td style="text-align: right;">214</td>
+<td style="text-align: right;">211</td>
+<td style="text-align: right;">312,826</td>
+<td style="text-align: right;">1,483</td>
+<td style="text-align: right;">65.8</td>
+<td style="text-align: right;">8.0</td>
+</tr>
+<tr>
+<td>2012–2016</td>
+<td>Carroll</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">60,449</td>
+<td style="text-align: right;">1,591</td>
+<td style="text-align: right;">81.2</td>
+<td style="text-align: right;">4.4</td>
+</tr>
+<tr>
+<td>2012–2016</td>
+<td>Harford</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">92,497</td>
+<td style="text-align: right;">1,623</td>
+<td style="text-align: right;">78.1</td>
+<td style="text-align: right;">4.9</td>
+</tr>
+<tr>
+<td>2012–2016</td>
+<td>Howard</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">109,872</td>
+<td style="text-align: right;">1,998</td>
+<td style="text-align: right;">73.4</td>
+<td style="text-align: right;">3.6</td>
+</tr>
+<tr>
+<td>2012–2016</td>
+<td>Study area</td>
+<td style="text-align: right;">669</td>
+<td style="text-align: right;">661</td>
+<td style="text-align: right;">1,022,889</td>
+<td style="text-align: right;">1,547</td>
+<td style="text-align: right;">65.7</td>
+<td style="text-align: right;">11.3</td>
+</tr>
+<tr>
+<td>2020–2024</td>
+<td>Baltimore City</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">255,668</td>
+<td style="text-align: right;">1,291</td>
+<td style="text-align: right;">47.5</td>
+<td style="text-align: right;">26.7</td>
+</tr>
+<tr>
+<td>2020–2024</td>
+<td>Anne Arundel</td>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">224,748</td>
+<td style="text-align: right;">1,770</td>
+<td style="text-align: right;">75.1</td>
+<td style="text-align: right;">4.1</td>
+</tr>
+<tr>
+<td>2020–2024</td>
+<td>Baltimore County</td>
+<td style="text-align: right;">219</td>
+<td style="text-align: right;">217</td>
+<td style="text-align: right;">332,801</td>
+<td style="text-align: right;">1,534</td>
+<td style="text-align: right;">66.4</td>
+<td style="text-align: right;">7.8</td>
+</tr>
+<tr>
+<td>2020–2024</td>
+<td>Carroll</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">64,285</td>
+<td style="text-align: right;">1,737</td>
+<td style="text-align: right;">84.3</td>
+<td style="text-align: right;">3.3</td>
+</tr>
+<tr>
+<td>2020–2024</td>
+<td>Harford</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">101,795</td>
+<td style="text-align: right;">1,725</td>
+<td style="text-align: right;">79.7</td>
+<td style="text-align: right;">4.4</td>
+</tr>
+<tr>
+<td>2020–2024</td>
+<td>Howard</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">121,065</td>
+<td style="text-align: right;">2,052</td>
+<td style="text-align: right;">71.5</td>
+<td style="text-align: right;">3.6</td>
+</tr>
+<tr>
+<td>2020–2024</td>
+<td>Study area</td>
+<td style="text-align: right;">703</td>
+<td style="text-align: right;">697</td>
+<td style="text-align: right;">1,100,362</td>
+<td style="text-align: right;">1,579</td>
+<td style="text-align: right;">66.6</td>
+<td style="text-align: right;">10.4</td>
+</tr>
+</tbody>
+</table>
+<h3 id="processing_3">Processing<a class="headerlink" href="#processing_3" title="Permanent link">¶</a></h3>
+<ul>
+<li>Values below −100,000 are the Census Bureau's annotation codes (for example a median that cannot be computed) and are
+  treated as missing.</li>
+<li>Tract results are compared on clusters of tracts and zones, so that 2010 and 2020 tracts and the zones nest; margins of error
+  of sums are combined as the square root of the sum of squares.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden="">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../traffic-counts/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Traffic counts">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Traffic counts
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../zones-networks/" class="md-footer__link md-footer__link--next" aria-label="Next: Zone system and networks">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Zone system and networks
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2026 Raas Sarker Tomal · Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM), University of Maryland, College Park
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Tomal121186621" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:rtomal@umd.edu" target="_blank" rel="noopener" title="" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4l208 156a48 48 0 0 0 57.6 0l208-156c12.1-9.1 19.2-23.3 19.2-38.4 0-26.5-21.5-48-48-48zM0 196v188c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64V196L313.6 344.8c-34.1 25.6-81.1 25.6-115.2 0z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.path", "announce.dismiss", "content.tooltips", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link", "toc.follow"], "search": "../../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../../assets/javascripts/home.js?v=5"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
