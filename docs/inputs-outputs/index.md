@@ -2,7 +2,7 @@
 
 <div class="grid cards" markdown>
 
--   :material-database-import: **[Input data](inputs.md)**
+-   :material-database-import: **[Data](inputs.md)**
 
     Every dataset, its source and which stage uses it.
 

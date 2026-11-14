@@ -99,7 +99,7 @@ nav:
       - Traffic assignment: model-design/assignment.md
   - Inputs and outputs:
       - inputs-outputs/index.md
-      - Input data: inputs-outputs/inputs.md
+      - Data: inputs-outputs/inputs.md
       - Zone system and networks: inputs-outputs/zones-networks.md
       - Configuration: inputs-outputs/configuration.md
       - Outputs: inputs-outputs/outputs.md
@@ -118,6 +118,7 @@ nav:
           - School location: calibration-validation/validation/schools.md
           - Activities: calibration-validation/validation/activities.md
           - Traffic: calibration-validation/validation/traffic.md
+          - County view: calibration-validation/validation/county.md
           - Validation map: calibration-validation/validation/map.md
       - Against standard methods: calibration-validation/baselines.md
       - Known limitations: calibration-validation/limitations.md

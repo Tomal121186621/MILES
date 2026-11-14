@@ -1,85 +1,113 @@
-# Data catalogue
+# Data
 
-Every dataset TERP uses, with its provider, the years used, what it is used for and where to get it.
-**Use**: *estimation* (a model is estimated on it), *input* (used as given), *target* (a calibrated parameter is
-matched to it) or *test* (used only to validate). **Access**: <span class="vb ok">public</span> free download;
-<span class="vb close">request</span> released by the agency on request; <span class="vb out">project</span> produced
-by an earlier stage of TERP.
+TERP is built from public data, with two exceptions marked † (released by the agency on request). The tables list
+the data by the stage that uses them; bracketed numbers refer to the sources at the end of the page. The role of a
+dataset is *estimation* (a model is estimated on it), *input* (used as given), *target* (a calibrated parameter is
+matched to it) or *test* (used only for validation).
 
-The files go into the workspace (`paths.workspace` in `terp.toml`) under `data/raw/<source>/`; the instruction sheet
-of each model folder of the estimation package lists the exact files and variables.
+Files are placed in the workspace under `data/raw/<source>/`. The instruction sheet of each model in the estimation
+package lists the exact files and variables.
 
-## Census microdata and population
+## Synthetic population
 
-| Dataset | Provider | Years | Use | Access | Link |
-|---|---|---|---|---|---|
-| ACS Public Use Microdata Sample, 5-year (household and person files of DC, DE, MD, PA, VA, WV) | U.S. Census Bureau | 2012–16, 2014–18, 2015–19 | Estimation of the synthetic population, residential location and car ownership; tests | <span class="vb ok">public</span> | [census.gov PUMS](https://www2.census.gov/programs-surveys/acs/data/pums/) |
-| ACS PUMS, 1-year files | U.S. Census Bureau | 2016–24 | Calibration targets; out-of-sample tests | <span class="vb ok">public</span> | [census.gov PUMS](https://www2.census.gov/programs-surveys/acs/data/pums/) |
-| Population estimates, county totals and components of change | U.S. Census Bureau | 2010–24 | Input: county control totals; test of births and deaths | <span class="vb ok">public</span> | [popest datasets](https://www2.census.gov/programs-surveys/popest/datasets/) |
-| Census 2010 and 2020 redistricting files (PL 94-171): block housing units | U.S. Census Bureau | 2010, 2020 | Input: placing households in zones | <span class="vb ok">public</span> | [2010](https://www2.census.gov/census_2010/01-Redistricting_File--PL_94-171/) · [2020](https://www2.census.gov/programs-surveys/decennial/2020/data/01-Redistricting_File--PL_94-171/) |
-| TIGER/Line census tracts and blocks | U.S. Census Bureau | 2010 | Matching survey locations to zones | <span class="vb ok">public</span> | [TIGER 2010 tracts](https://www2.census.gov/geo/tiger/TIGER2010/TRACT/2010/) |
-| Census Gazetteer, tract internal points | U.S. Census Bureau | 2010 | Tract-to-zone matching, trip lengths | <span class="vb ok">public</span> | [Gazetteer files](https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html) |
-| Tract-to-PUMA relationship file | U.S. Census Bureau | 2010 | Geography crosswalk | <span class="vb ok">public</span> | [relationship file](https://www2.census.gov/geo/docs/maps-data/data/rel/2010_Census_Tract_to_2010_PUMA.txt) |
-| PUMA to migration and place-of-work PUMA crosswalk | IPUMS USA | 2010 geography | Residential location: previous home of movers | <span class="vb ok">public</span> | [IPUMS crosswalk](https://usa.ipums.org/usa/resources/volii/puma_migpuma1_pwpuma00.xls) |
-| ACS county-to-county commuting and migration flows | U.S. Census Bureau | 2014–20 | Test of commute and mover flows; external workplaces | <span class="vb ok">public</span> | [census.gov flows](https://www.census.gov/topics/population/migration/guidance/county-to-county-migration-flows.html) |
+| Dataset | Source | Years | Role |
+|---|---|---|---|
+| ACS Public Use Microdata Sample, 5-year, six states | U.S. Census Bureau [1] | 2012–16 | Estimation; test (held-out split) |
+| ACS Public Use Microdata Sample, 5-year | U.S. Census Bureau [1] | 2014–18 | Test |
+| Redistricting files, block housing units | U.S. Census Bureau [2] | 2010, 2020 | Input: households by zone |
+| LEHD Origin–Destination Employment Statistics | U.S. Census Bureau [3] | 2016 | Input: jobs by zone |
+| Job Openings and Labor Turnover Survey | Bureau of Labor Statistics [4] | 2016 | Input: vacant jobs |
 
-## Jobs, housing and the economy
+## Land use and workplaces
 
-| Dataset | Provider | Years | Use | Access | Link |
-|---|---|---|---|---|---|
-| LEHD LODES 8: workplace area characteristics, origin–destination flows, crosswalks | U.S. Census Bureau, LEHD | 2016–23 | Input: jobs by zone and type; test of commute flows | <span class="vb ok">public</span> | [LODES 8](https://lehd.ces.census.gov/data/lodes/LODES8/) |
-| Quarterly Census of Employment and Wages, county jobs | Bureau of Labor Statistics | 2016–24 | Input: jobs in 2024 | <span class="vb ok">public</span> | [QCEW](https://www.bls.gov/cew/) |
-| JOLTS job openings and quits, Maryland | Bureau of Labor Statistics | 2016–24 | Input: vacant jobs; test of job changes | <span class="vb ok">public</span> | [JOLTS series](https://api.bls.gov/publicAPI/v1/timeseries/data/JTS000000240000000JOR) |
-| Building Permits Survey, county | U.S. Census Bureau | 2016–24 | Input: new dwellings | <span class="vb ok">public</span> | [BPS county files](https://www2.census.gov/econ/bps/County/) |
-| Consumer price index, CPI-U | Bureau of Labor Statistics | 2014–24 | Incomes in 2016 dollars | <span class="vb ok">public</span> | [CUUR0000SA0](https://data.bls.gov/timeseries/CUUR0000SA0) |
-| Stanford Education Data Archive 4.1, county learning growth | SEDA, Stanford | 2009–18 | Residential location: school quality | <span class="vb ok">public</span> | [SEDA](https://edopportunity.org/get-the-data/) |
-| Uniform Crime Reporting, index offences by county | Maryland Statistical Analysis Center | 2016 | Residential location: crime | <span class="vb ok">public</span> | [Maryland open data](https://opendata.maryland.gov/api/views/jwfa-fdxs/rows.csv?accessType=DOWNLOAD) |
+| Dataset | Source | Years | Role |
+|---|---|---|---|
+| ACS PUMS, households that moved | U.S. Census Bureau [1] | 2014–21 | Estimation (2014–18); test (2019–21) |
+| ACS PUMS, households | U.S. Census Bureau [1] | 2014–18 | Estimation: car ownership |
+| ACS PUMS, 1-year | U.S. Census Bureau [1] | 2016–24 | Target; test |
+| Population estimates and components of change | U.S. Census Bureau [5] | 2010–24 | Input: county totals; test |
+| LEHD Origin–Destination Employment Statistics | U.S. Census Bureau [3] | 2016–23 | Input: jobs; test: commute flows |
+| Quarterly Census of Employment and Wages | Bureau of Labor Statistics [6] | 2016–24 | Input: jobs in 2024 |
+| Job Openings and Labor Turnover Survey | Bureau of Labor Statistics [4] | 2016–24 | Input: vacancies; test: quits |
+| Building Permits Survey | U.S. Census Bureau [7] | 2016–24 | Input: new dwellings |
+| County-to-county commuting and migration flows | U.S. Census Bureau [8] | 2014–20 | Test |
+| Stanford Education Data Archive, county learning growth | Stanford University [9] | 2009–18 | Estimation: residential location |
+| Uniform Crime Reporting, county index offences | Maryland Statistical Analysis Center [10] | 2016 | Estimation: residential location |
+| Consumer Price Index, all urban consumers | Bureau of Labor Statistics [11] | 2014–24 | Input: constant dollars |
 
-## Schools
+## School location
 
-| Dataset | Provider | Years | Use | Access | Link |
-|---|---|---|---|---|---|
-| Common Core of Data and Private School Survey directories, with geocodes | NCES | 2023–25 | Input: schools and enrolment | <span class="vb ok">public</span> | [CCD](https://nces.ed.gov/ccd/files.asp) · [PSS](https://nces.ed.gov/surveys/pss/) |
-| IPEDS institutional characteristics and enrolment | NCES | 2023–24 | Input: colleges and enrolment | <span class="vb ok">public</span> | [IPEDS data center](https://nces.ed.gov/ipeds/datacenter/DataFiles.aspx) |
-| School Attendance Boundary Survey | NCES EDGE | 2015–16 | Input: attendance zones | <span class="vb ok">public</span> | [SABS](https://nces.ed.gov/programs/edge/data/SABS_1516_SchoolLevels.zip) |
+| Dataset | Source | Years | Role |
+|---|---|---|---|
+| Common Core of Data and Private School Survey | National Center for Education Statistics [12] | 2023–25 | Input: schools and enrolment |
+| Integrated Postsecondary Education Data System | National Center for Education Statistics [13] | 2023–24 | Input: colleges and enrolment |
+| School Attendance Boundary Survey | National Center for Education Statistics [14] | 2015–16 | Input: attendance zones |
 
-## Travel behaviour
+## Activities
 
-| Dataset | Provider | Years | Use | Access | Link |
-|---|---|---|---|---|---|
-| Regional Travel Survey: households, persons, trips | Baltimore Metropolitan Council and Metropolitan Washington Council of Governments | 2017/18 | Estimation of the travel models (estimation half); validation (hold-out half) | <span class="vb close">request</span> | [BMC](https://www.baltometro.org/) · [MWCOG](https://www.mwcog.org/) |
-| BMC and TPB traffic analysis zones (zone codes of the survey) | BMC GIS; MWCOG Regional Transportation Data Clearinghouse | 2010 | Survey locations to model zones | <span class="vb ok">public</span> | [BMC TAZ](https://gis.baltometro.org/arcgis/rest/services/Regional_Boundaries/MapServer/14) · [TPB TAZ](https://gis.mwcog.org/wa/rest/services/RTDC/TAZ/MapServer) |
-| American Time Use Survey | Bureau of Labor Statistics | 2021–24 | Test of 2024 activities and start times | <span class="vb ok">public</span> | [ATUS data files](https://www.bls.gov/tus/datafiles.htm) |
-| National Household Travel Survey | FHWA | 2017 | Test of activities and trip lengths | <span class="vb ok">public</span> | [NHTS](https://nhts.ornl.gov/) |
-| Vehicle operating cost | AAA, *Your Driving Costs* | 2017 | Car cost per mile in mode choice | <span class="vb ok">public</span> | [AAA](https://newsroom.aaa.com/auto/your-driving-costs/) |
-| Transit fares | MTA Maryland, WMATA | 2017/18 | Transit cost in mode choice | <span class="vb ok">public</span> | [MTA](https://www.mta.maryland.gov/) · [WMATA](https://www.wmata.com/) |
+| Dataset | Source | Years | Role |
+|---|---|---|---|
+| Regional Travel Survey † | Baltimore Metropolitan Council; Metropolitan Washington Council of Governments [15] | 2017/18 | Estimation (one half); test (other half) |
+| Traffic analysis zones of the survey | Baltimore Metropolitan Council; MWCOG [16] | 2010 | Input: survey locations |
+| American Time Use Survey | Bureau of Labor Statistics [17] | 2021–24 | Test |
+| National Household Travel Survey | Federal Highway Administration [18] | 2017 | Test |
+| Vehicle operating cost | AAA [19] | 2017 | Input: car cost |
+| Transit fares | MTA Maryland; WMATA [20] | 2017/18 | Input: transit cost |
 
-## Zones, networks and transit
+## Networks and traffic
 
-| Dataset | Provider | Years | Use | Access | Link |
-|---|---|---|---|---|---|
-| Maryland Statewide Transportation Model: 1,588-zone system, zone polygons, AM-peak car skims | MDOT | base year | Input: zones and car times | <span class="vb close">request</span> | [MDOT SHA](https://roads.maryland.gov/) |
-| OpenStreetMap, Maryland extract | OpenStreetMap contributors, via Geofabrik | 2026 | Input: road network | <span class="vb ok">public</span> | [Geofabrik Maryland](https://download.geofabrik.de/north-america/us/maryland.html) |
-| MDOT SHA functional classification, lane mileage, interchange exits, speed-limit signs | MDOT SHA | 2021–26 | Network audit, posted speeds | <span class="vb ok">public</span> | [MDOT SHA open data](https://data.imap.maryland.gov/) |
-| MTA Maryland GTFS: local bus, light rail, Metro, MARC, commuter bus | Maryland Transit Administration | 2026 | Input: transit schedule and skims | <span class="vb ok">public</span> | [MTA developer resources](https://www.mta.maryland.gov/developer-resources) |
-| GTFS of the other operators of the network area (Charm City Circulator, RTA, Annapolis, Anne Arundel, Harford, Carroll, WMATA, Ride On, TheBus, Amtrak and others) | Each operator; Mobility Database mirror | 2026 | Input: transit schedule | <span class="vb ok">public</span> | [Mobility Database](https://mobilitydatabase.org/) |
+| Dataset | Source | Years | Role |
+|---|---|---|---|
+| Maryland Statewide Transportation Model: zones and car skims † | Maryland Department of Transportation [21] | base year | Input: zones, car times |
+| OpenStreetMap | OpenStreetMap contributors [22] | 2026 | Input: road network |
+| Roadway functional class, lanes, speed-limit signs | MDOT State Highway Administration [23] | 2021–26 | Input: speeds; network check |
+| GTFS timetables of 18 operators | MTA Maryland and regional operators [24] | 2026 | Input: transit network and skims |
+| Traffic counts, average weekday traffic (3,797 stations) | MDOT State Highway Administration [23] | 2024 | Test |
+| Continuous count stations, hourly volumes | Federal Highway Administration [25] | 2024 | Test |
+| Vehicle-miles by county and road class | MDOT State Highway Administration [26] | 2024 | Test |
+| National Transit Database, boardings by mode | Federal Transit Administration [27] | 2017/18, 2024 | Test |
 
-## Traffic counts and mileage (validation only)
+† Released by the agency on request; not redistributed with TERP.
 
-| Dataset | Provider | Years | Use | Access | Link |
-|---|---|---|---|---|---|
-| Annual average daily and weekday traffic, statewide count stations | MDOT SHA | 2024 | Test of daily volumes | <span class="vb ok">public</span> | [Maryland iMAP open data](https://data.imap.maryland.gov/) |
-| Travel Monitoring Analysis System, continuous count stations | FHWA | 2024 | Test of hourly volumes | <span class="vb ok">public</span> | [TMAS data](https://www.fhwa.dot.gov/policyinformation/tables/tmasdata/2024/) |
-| Mileage reports, vehicle-miles by county and road class | MDOT SHA | 2024 | Test of regional traffic | <span class="vb ok">public</span> | [2024 mileage report](https://www.roads.maryland.gov/OPPEN/2024_Mileage_Reports.pdf) |
-| National Transit Database, unlinked trips by mode | Federal Transit Administration | 2017/18, 2024 | Test of transit boardings | <span class="vb ok">public</span> | [NTD data](https://www.transit.dot.gov/ntd/ntd-data) |
+## Geography
 
-## Produced by TERP
+| Dataset | Source | Years | Role |
+|---|---|---|---|
+| TIGER/Line census tracts and blocks | U.S. Census Bureau [28] | 2010 | Input: tract–zone matching |
+| Gazetteer, tract internal points | U.S. Census Bureau [29] | 2010 | Input: tract distances |
+| Tract-to-PUMA relationship file | U.S. Census Bureau [30] | 2010 | Input: crosswalk |
+| PUMA, migration PUMA and place-of-work PUMA crosswalk | IPUMS USA [31] | 2010 | Input: crosswalk |
 
-| Dataset | Produced by | Used by |
-|---|---|---|
-| Synthetic population of 2016 (households, persons, dwellings, jobs) | Synthetic population | Land use |
-| Population, dwellings and jobs of every year to 2024 | Land use | Schools, activities |
-| Zone accessibility by year | Pipeline (`accessibility.py`) | Residential location, car ownership, workplace choice |
-| Door-to-door transit skims | Pipeline (`transit_skim.py`) on the MATSim transit schedule | Land use, activities |
-| Weekday plans | Activities | Traffic assignment |
-| 2024 road and transit networks | `assignment/network`, `assignment/transit` | Traffic assignment |
+## Sources
+
+1. U.S. Census Bureau. *American Community Survey Public Use Microdata Sample.* <https://www2.census.gov/programs-surveys/acs/data/pums/>
+2. U.S. Census Bureau. *Decennial Census Redistricting Data (PL 94-171).* <https://www2.census.gov/census_2010/01-Redistricting_File--PL_94-171/>; <https://www2.census.gov/programs-surveys/decennial/2020/data/01-Redistricting_File--PL_94-171/>
+3. U.S. Census Bureau. *LEHD Origin–Destination Employment Statistics (LODES 8).* <https://lehd.ces.census.gov/data/lodes/LODES8/>
+4. Bureau of Labor Statistics. *Job Openings and Labor Turnover Survey.* <https://www.bls.gov/jlt/>
+5. U.S. Census Bureau. *County Population Totals and Components of Change.* <https://www2.census.gov/programs-surveys/popest/datasets/>
+6. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages.* <https://www.bls.gov/cew/>
+7. U.S. Census Bureau. *Building Permits Survey, county data.* <https://www2.census.gov/econ/bps/County/>
+8. U.S. Census Bureau. *County-to-County Commuting and Migration Flows.* <https://www.census.gov/topics/population/migration/guidance/county-to-county-migration-flows.html>
+9. Reardon, S.F., et al. *Stanford Education Data Archive.* <https://edopportunity.org/get-the-data/>
+10. Maryland Statistical Analysis Center. *Violent Crime and Property Crime by County.* <https://opendata.maryland.gov/>
+11. Bureau of Labor Statistics. *Consumer Price Index for All Urban Consumers, series CUUR0000SA0.* <https://data.bls.gov/timeseries/CUUR0000SA0>
+12. National Center for Education Statistics. *Common Core of Data; Private School Universe Survey.* <https://nces.ed.gov/ccd/>; <https://nces.ed.gov/surveys/pss/>
+13. National Center for Education Statistics. *Integrated Postsecondary Education Data System.* <https://nces.ed.gov/ipeds/>
+14. National Center for Education Statistics. *School Attendance Boundary Survey 2015–16.* <https://nces.ed.gov/programs/edge/SABS>
+15. Baltimore Metropolitan Council; Metropolitan Washington Council of Governments. *2017/2018 Regional Travel Survey.* <https://www.baltometro.org/>; <https://www.mwcog.org/>
+16. Baltimore Metropolitan Council GIS; MWCOG Regional Transportation Data Clearinghouse. *Traffic analysis zones.* <https://gis.baltometro.org/>; <https://rtdc-mwcog.opendata.arcgis.com/>
+17. Bureau of Labor Statistics. *American Time Use Survey.* <https://www.bls.gov/tus/>
+18. Federal Highway Administration. *2017 National Household Travel Survey.* <https://nhts.ornl.gov/>
+19. AAA. *Your Driving Costs, 2017 edition.* <https://newsroom.aaa.com/auto/your-driving-costs/>
+20. Maryland Transit Administration; Washington Metropolitan Area Transit Authority. *Fares.* <https://www.mta.maryland.gov/>; <https://www.wmata.com/>
+21. Maryland Department of Transportation. *Maryland Statewide Transportation Model.* <https://www.roads.maryland.gov/>
+22. OpenStreetMap contributors. *Maryland extract, via Geofabrik.* <https://download.geofabrik.de/north-america/us/maryland.html>
+23. MDOT State Highway Administration. *Open data (functional classification, lane mileage, signs, traffic volumes).* <https://data.imap.maryland.gov/>
+24. Maryland Transit Administration and regional operators. *GTFS feeds*, also mirrored by the Mobility Database. <https://www.mta.maryland.gov/developer-resources>; <https://mobilitydatabase.org/>
+25. Federal Highway Administration. *Travel Monitoring Analysis System, 2024.* <https://www.fhwa.dot.gov/policyinformation/tables/tmasdata/2024/>
+26. MDOT State Highway Administration. *2024 Mileage Reports.* <https://www.roads.maryland.gov/OPPEN/2024_Mileage_Reports.pdf>
+27. Federal Transit Administration. *National Transit Database.* <https://www.transit.dot.gov/ntd/ntd-data>
+28. U.S. Census Bureau. *TIGER/Line Shapefiles, 2010.* <https://www2.census.gov/geo/tiger/TIGER2010/>
+29. U.S. Census Bureau. *Gazetteer Files.* <https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html>
+30. U.S. Census Bureau. *2010 Census Tract to 2010 PUMA Relationship File.* <https://www2.census.gov/geo/docs/maps-data/data/rel/2010_Census_Tract_to_2010_PUMA.txt>
+31. IPUMS USA. *PUMA, MIGPUMA and POWPUMA crosswalk.* <https://usa.ipums.org/usa/resources/volii/puma_migpuma1_pwpuma00.xls>

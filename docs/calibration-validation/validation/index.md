@@ -10,6 +10,7 @@ things: headline numbers, the main figure, every comparison in detail, and a sco
 | [Land use](landuse.md) | ACS, Census estimates, JOLTS, permits, county flows; out of sample 2021–24 | 36 | <span class="vb ok">22 within</span> <span class="vb close">8 close</span> <span class="vb out">6 outside</span> |
 | [School location](schools.md) | Survey students, ACS enrolment | 8 | <span class="vb ok">1 within</span> <span class="vb close">5 close</span> <span class="vb out">2 outside</span> |
 | [Activities](activities.md) | Survey hold-out half; ATUS, ACS 2024, LODES | 43 | <span class="vb ok">21 within</span> <span class="vb close">12 close</span> <span class="vb out">10 outside</span> |
+| [County view](county.md) | Every variable by county, all 24 Maryland counties | 336 | <span class="vb ok">282 within</span> <span class="vb close">51 close</span> <span class="vb out">3 outside</span> |
 | [Traffic](traffic.md) | 2,308 count stations, 21 continuous counters, 7 screenlines, mileage | — | model ÷ count 0.81 (passenger vehicles), R² 0.90 |
 
 **Within:** a distribution within 5 percentage points (total variation distance) or a rate within 5 % (mean absolute

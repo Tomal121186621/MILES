@@ -163,3 +163,14 @@
 [data-md-color-scheme="slate"] .vb.out { background: #3d1a18; color: #f19a92; }
 .vsum { margin: .4rem 0 .8rem; font-size: .78rem; }
 .vsum .vb { margin-left: .2rem; }
+
+/* tables: booktabs style (rules above, below and under the header; no fills) */
+.md-typeset table:not([class]) { border: none !important; border-radius: 0; box-shadow: none; font-size: .74rem;
+  border-top: 1.5px solid var(--md-default-fg-color) !important; border-bottom: 1.5px solid var(--md-default-fg-color) !important; }
+.md-typeset table:not([class]) th { background: transparent !important; font-weight: 700; border-bottom: .8px solid var(--md-default-fg-color) !important; }
+.md-typeset table:not([class]) td { border-top: none !important; }
+.md-typeset table:not([class]) tr:nth-child(even) td { background: transparent !important; }
+.md-typeset table:not([class]) tr:hover { background: transparent !important; box-shadow: none !important; }
+.md-typeset table:not([class]) th, .md-typeset table:not([class]) td { padding: .45em .9em; }
+.md-typeset .admonition.abstract table:not([class]) { border-top: none !important; border-bottom: none !important; }
+.md-typeset .admonition.abstract table td { border-top: .5px solid var(--terp-border) !important; }
