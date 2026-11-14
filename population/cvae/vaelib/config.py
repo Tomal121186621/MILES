@@ -1,7 +1,7 @@
 """Constants, local input paths, PUMS recode maps, income bin edges, cardinalities.
 
 Everything downstream imports from here. Data paths resolve under the configured VAE_HOME
-(inputs/ and outputs/ of the generator); the code lives in ORIOLE population/cvae.
+(inputs/ and outputs/ of the generator); the code lives in TERP population/cvae.
 
 Design notes vs the old vae_silo_v6:
   - Income is BINNED (categorical) — there is NO income top-code clip and NO Pareto/tail
@@ -13,16 +13,16 @@ Design notes vs the old vae_silo_v6:
 """
 from __future__ import annotations
 
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT as _ORIOLE_PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT as _TERP_PROJECT_ROOT  # noqa: E402,F401
 import json
 import math
 from pathlib import Path
 from typing import Final
 
 # ── Paths (self-contained) ───────────────────────────────────────────────
-PROJECT_ROOT: Final[Path] = Path(VAE_HOME)  # generator data folder (inputs/, outputs/); the code lives in ORIOLE population/cvae
+PROJECT_ROOT: Final[Path] = Path(VAE_HOME)  # generator data folder (inputs/, outputs/); the code lives in TERP population/cvae
 INPUTS_DIR: Final[Path] = PROJECT_ROOT / "inputs"
 OUTPUTS_DIR: Final[Path] = PROJECT_ROOT / "outputs"
 

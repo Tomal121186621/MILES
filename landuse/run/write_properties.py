@@ -6,9 +6,9 @@ landuse/coefficients/write_*.py); record (default) writes the earlier configurat
 Produces WORKSPACE/2_silo/run/base/ (base.directory with input/, microData/ links) and WORKSPACE/2_silo/run/<scenario_name>.properties.
 All values are observed-data inputs built by landuse/inputs and population/; model parameters start at the open-source
 defaults (or the earlier study's values where the notes give them) and are then set by the calibration loop."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 V = f"{WORKSPACE}"; S = f"{V}/2_silo"; R = f"{S}/run"; B = f"{R}/base"
 name, y0, y1 = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]); skim_years = sys.argv[4] if len(sys.argv) > 4 else "-1"; seed = sys.argv[5] if len(sys.argv) > 5 else "1"

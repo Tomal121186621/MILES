@@ -6,15 +6,15 @@ in, the engine builds the variables).  Also:
             data/accessibility_2016.csv, base-year stock = 2016 so the density ratio is 1) against hh.parquet, by PUMA
   age       2026-11-09: the model is re-estimated with the oldest member's age (s08_oldest_age.py), the engine's definition
     python3 landuse/checks/check_car_ownership.py <scratch dir>   ->  c02_car_check.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, zipfile, subprocess
 import numpy as np, pandas as pd
 V = f"{WORKSPACE}"; ROOT = PROJECT_ROOT
 HERE = f"{V}/side_experiments/respec_2026-11/engine_check"; SCR = sys.argv[1] if len(sys.argv) > 1 else HERE   # outputs (workspace)
 C = f"{ESTIMATION_RESULTS}/car_ownership"; INP = f"{V}/2_silo/input"   # estimation results (data)
-sys.path.insert(0, f"{ORIOLE_HOME}/estimation/development/car_ownership")   # estimation code (mnl, s04_form, s06_age)
+sys.path.insert(0, f"{TERP_HOME}/estimation/development/car_ownership")   # estimation code (mnl, s04_form, s06_age)
 from mnl import probs, design   # noqa: E402
 from s06_age import head_age, oldest_age, prep   # noqa: E402
 from s04_form import pieces   # noqa: E402

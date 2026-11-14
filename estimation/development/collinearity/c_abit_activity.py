@@ -8,9 +8,9 @@ Centring: all variables centred at their mean is an exact reparametrisation (con
 constant / variable estimate pairs are reported after it.
     ~/.venvs/biogeme/bin/python estimation/development/collinearity/c_abit_activity.py a01 a02;  python3 estimation/development/collinearity/c_abit_activity.py a03
       ->  a0x_<name>_var_corr.png / _est_corr.png / _var_corr.csv / _est_corr.csv / _pairs.csv / _facts.json"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd

@@ -25,7 +25,7 @@ import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import composite as K                                            # noqa: E402
 ps = K.ps
-sys.path.insert(0, f"{K.ORIOLE_HOME}/reports"); import tasha_stage3 as t3  # noqa: E402
+sys.path.insert(0, f"{K.TERP_HOME}/reports"); import tasha_stage3 as t3  # noqa: E402
 from matplotlib.ticker import MaxNLocator, MultipleLocator       # noqa: E402
 import matplotlib.transforms as mtrans                           # noqa: E402
 

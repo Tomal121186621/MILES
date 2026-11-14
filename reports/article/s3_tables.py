@@ -4,9 +4,9 @@
 
     ABIT_SUFFIX=_respec python3 reports/article/s3_tables.py      # default suffix _sched; edits WORKSPACE/5_reports/article/sections
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re
 import pandas as pd
 V = f"{WORKSPACE}"; ART = f"{V}/5_reports/article"   # article sources (workspace)

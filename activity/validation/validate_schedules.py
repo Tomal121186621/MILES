@@ -18,13 +18,13 @@ survey zones = zone of the tract internal point):
   by trip purpose (work if either end is work, shopping if either end is shopping, else other): mean miles, share under 2 miles,
     car driver and car passenger shares.
 Survey car driver = RTS modes 3 and 4 (MODE_MAP)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, glob, os, sys
 import numpy as np
 import pandas as pd
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib"); sys.path.insert(0, f"{ORIOLE_HOME}/activity/survey")
+sys.path.insert(0, f"{TERP_HOME}/activity/lib"); sys.path.insert(0, f"{TERP_HOME}/activity/survey")
 HERE = f"{WORKSPACE}/3_abit"   # data (survey_pop)
 from rts_common import V, RTS, ACT_PURPOSE, MODE_MAP, load_split
 from activity_metrics import dist_matrix

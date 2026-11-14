@@ -25,9 +25,9 @@ Candidates (in this order within each block) and expected signs: CANDIDATES.md.
 Rule (each candidate added to the current model of the segment): expected sign, robust |t| >= 1.96, BIC lower and hold-out
 (validation-half) log-likelihood higher.  Base terms are kept unless their sign is wrong with |t| > 2.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle, time
 import numpy as np
 import pandas as pd

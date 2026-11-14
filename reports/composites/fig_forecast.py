@@ -18,15 +18,15 @@ Supplementary Material
 Data: activity/lib/reporting_2024/report.py (run with T24_NO_OUTPUT=1: nothing is rewritten) and
 activity/lib/mode_choice/mc_t24.py -> results/t24_commute_mode_county.csv (same mc runs).
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 os.environ["T24_MODEL"] = "mc"; os.environ["T24_NO_OUTPUT"] = "1"
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import composite as K   # noqa: E402
 ps = K.ps; V = K.V
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/reporting_2024")
+sys.path.insert(0, f"{TERP_HOME}/activity/lib/reporting_2024")
 import numpy as np, pandas as pd   # noqa: E402
 from matplotlib.ticker import FixedLocator, NullLocator   # noqa: E402
 import report as R   # noqa: E402

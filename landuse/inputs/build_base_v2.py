@@ -16,9 +16,9 @@ b) Jobs: total jobs T = workers / (1 - 0.0401) (JOLTS 2016 openings rate); the T
    inventory elsewhere), largest remainders, all vacant.
 Outputs: input/microData/{pp,hh,jj}_2016_v2.csv; run/base_v2/ (input, skims links; microData links to the v2 files and dd_2016.csv);
 tables: WORKSPACE/2_silo/input_build/base_v2_employment.csv, base_v2_jobs_added.csv.   Usage: python3 landuse/inputs/build_base_v2.py"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, numpy as np, pandas as pd
 S = f"{WORKSPACE}/2_silo"; MD = f"{S}/input/microData"; OUT = f"{S}/input_build"
 RATE = 0.0401; rng = np.random.default_rng(20161028)

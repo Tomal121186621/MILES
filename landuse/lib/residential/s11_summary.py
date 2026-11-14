@@ -9,7 +9,7 @@ Figures follow reports/paperstyle.py (finish() refuses figures that break its ru
 import sys, json
 import numpy as np, pandas as pd
 from rc import *
-sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps
+sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps
 
 TAG = sys.argv[1] if len(sys.argv) > 1 else "prov"
 BALT = {24003: "Anne Arundel", 24005: "Baltimore County", 24013: "Carroll", 24025: "Harford", 24027: "Howard", 24510: "Baltimore City"}

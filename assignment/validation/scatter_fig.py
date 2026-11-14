@@ -4,12 +4,12 @@ vehicles, (b) passenger vehicles, coloured by facility group; equality line, lea
 coefficient of determination R^2 (squared Pearson correlation), %RMSE and number of stations in each panel.
 Reads the station table of validate_counts.py (model = mean of the seeds).  Nothing is fitted to the counts.
 Usage: python3 assignment/validation/scatter_fig.py [data_dir] [out_without_ext]   (defaults: WORKSPACE/4_matsim/validation/data/, WORKSPACE/5_reports/article/figures/fig_net_scatter)"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, numpy as np, pandas as pd
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"   # H: validation data and outputs (workspace)
-sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps   # noqa: E402
+sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps   # noqa: E402
 from matplotlib.lines import Line2D                              # noqa: E402
 DATA = sys.argv[1] if len(sys.argv) > 1 else f"{H}/data"
 OUT = sys.argv[2] if len(sys.argv) > 2 else f"{V}/5_reports/article/figures/fig_net_scatter"

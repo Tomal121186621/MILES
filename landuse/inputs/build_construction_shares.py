@@ -4,9 +4,9 @@ county in the housing units permitted in Maryland 2016-2019 (Census Building Per
 the calendar years simulated in the 2016-2020 calibration window), by structure type: 1-unit permits for SFD, SFA and MH, 2-4 units for
 MF234, 5+ units for MF5plus. The engine's vacancy response sets the Maryland total by type; the shares split it. The out-of-sample
 years 2021-2024 keep these 2016-2019 shares. Output: 2_silo/input/construction_county_shares.csv (type, region, share)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd
 V = f"{WORKSPACE}"
 P = pd.read_csv(f"{V}/data/silo_target_permits_by_county_year.csv"); P = P[P.year.between(2016, 2019)].groupby("county")[["units_1", "units_2_4", "units_5plus"]].sum()

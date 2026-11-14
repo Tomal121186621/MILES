@@ -10,11 +10,11 @@ Coefficient sets: tasha = coef_tasha (behavioural: distributions of the estimati
 calibration), tcal = coef_tasha_cal (the same, calibrated on the estimation half by calibrate_abit.py --tasha).  Skims: base car
 time and distance with the 2024 door-to-door transit skims (3_abit/skims/base_transit2024), the skims the destination MNL was
 estimated with."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, os, subprocess, sys, time
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, f"{ORIOLE_HOME}/activity")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, f"{TERP_HOME}/activity")
 import survey_population as S, run_activity_model as R
 HERE = f"{WORKSPACE}/3_abit"   # coefficient sets and skims (data)
 

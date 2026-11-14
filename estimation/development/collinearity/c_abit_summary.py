@@ -2,9 +2,9 @@
 """Collects the per-model results of c_abit_*.py into abit_summary.csv (as c_silo_summary.py): one row per flag (variable pair
 |r| >= 0.7, VIF >= 10, estimate pair |r| >= 0.8), one row per refit and one row per explicit check (pair "CHECK: ...").
     python3 estimation/development/collinearity/c_abit_summary.py   ->  abit_summary.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, json
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

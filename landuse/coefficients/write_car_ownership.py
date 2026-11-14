@@ -7,14 +7,14 @@ table (estimation/development/car_ownership/t_final_table.py: fit of the s07 fin
                                                        for all states, density = units per km2 of the PUMA as in s01_data.puma_location)
   2_silo/input/car_ownership_county_constants.csv  region,asc1,asc2,asc3 = 0 (no calibration yet)
     python3 landuse/coefficients/write_car_ownership.py [--coefficients-only]"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 V = f"{WORKSPACE}"; ROOT = PROJECT_ROOT
 C = f"{ESTIMATION_RESULTS}/car_ownership"; INP = f"{V}/2_silo/input"
-sys.path.insert(0, f"{ORIOLE_HOME}/estimation/development/car_ownership")   # estimation code; C holds its results (data)
+sys.path.insert(0, f"{TERP_HOME}/estimation/development/car_ownership")   # estimation code; C holds its results (data)
 from mnl import fit   # noqa: E402
 from s06_age import oldest_age, prep   # 2026-11-09: age of the oldest member (was the householder, s06_age.head_age)   # noqa: E402
 from s04_form import pieces   # noqa: E402

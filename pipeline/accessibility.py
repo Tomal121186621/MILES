@@ -34,15 +34,15 @@ models use cars against licensed DRIVERS, so carlt is evaluated with the 'cars <
 data/accessibility_<Y>_detail.csv adds inc_group, car_avail, year, the single purposes (shopping, recreation, accompany,
 other), A_usd (A / |beta_cost|, dollars), A_ls (logsum specification) and beta_cost.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, json, os, pickle, sys
 import numpy as np
 import pandas as pd
 
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
-DCD = f"{ORIOLE_HOME}/activity/lib/destination_choice"; sys.path.insert(0, DCD); sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib")
+DCD = f"{TERP_HOME}/activity/lib/destination_choice"; sys.path.insert(0, DCD); sys.path.insert(0, f"{TERP_HOME}/activity/lib")
 import dc_common as C   # noqa: E402
 
 PURPOSES = {"work": "WORK", "shopping": "SHOPPING", "recreation": "RECREATION", "accompany": "ACCOMPANY", "other": "OTHER"}

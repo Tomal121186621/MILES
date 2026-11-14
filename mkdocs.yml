@@ -1,4 +1,4 @@
-site_name: ORIOLE
+site_name: TERP
 site_description: Integrated population, land-use, activity and traffic simulation for Maryland
 site_author: Raas Sarker Tomal
 repo_url: https://github.com/Tomal121186621
@@ -95,7 +95,7 @@ nav:
       - Synthetic population: model-design/population.md
       - Land use: model-design/landuse.md
       - School location: model-design/schools.md
-      - Activities (ORIOLE-Day): model-design/activity.md
+      - Activities (TERP-Day): model-design/activity.md
       - Traffic assignment: model-design/assignment.md
   - Inputs and outputs:
       - inputs-outputs/index.md
@@ -103,7 +103,7 @@ nav:
       - Zone system and networks: inputs-outputs/zones-networks.md
       - Configuration: inputs-outputs/configuration.md
       - Outputs: inputs-outputs/outputs.md
-  - Applying ORIOLE:
+  - Applying TERP:
       - applying/index.md
       - Scenarios: applying/scenarios.md
       - Case study, I-695 pricing: applying/i695.md
@@ -125,7 +125,7 @@ nav:
       - developers/index.md
       - Population code: developers/population.md
       - SILO engine changes: developers/silo.md
-      - ORIOLE-Day engine: developers/activity.md
+      - TERP-Day engine: developers/activity.md
       - MATSim runner: developers/matsim.md
       - Pipeline: developers/pipeline.md
       - Estimation package: developers/estimation-package.md

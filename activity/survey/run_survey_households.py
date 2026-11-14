@@ -5,14 +5,14 @@ chain_respec): ten replications (seeds 1-10) on the households of the estimation
 svy_est_respec_sNN, svy_val_respec_sNN; skims base_transit2024), and ten on a 5 % sample of the synthetic 2016 population
 (run/val_respec_sNN), as the record settings.
     python3 activity/survey/run_survey_households.py [survey|chain|all]"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 A3 = f"{WORKSPACE}/3_abit"   # data (skims, runs)
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, f"{ORIOLE_HOME}/activity")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, f"{TERP_HOME}/activity")
 import survey_population as S, run_activity_model as R
-COEF = f"{ORIOLE_HOME}/activity/parameters"; SK = f"{A3}/skims/base_transit2024"
+COEF = f"{TERP_HOME}/activity/parameters"; SK = f"{A3}/skims/base_transit2024"
 what = sys.argv[1] if len(sys.argv) > 1 else "all"
 if what in ("survey", "all"):
     for half in ("estimation", "validation"):

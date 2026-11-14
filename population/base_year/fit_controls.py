@@ -11,9 +11,9 @@
     zone (zone_weights_2016.csv, 2010-2020 interpolated to 2016); non-Maryland PUMAs keep the original placement.
 Inputs: VAE_HOME/outputs/04_generated/{hh,pp}.parquet, PUMS 2014-2018 (centred on 2016).  Outputs: 1_vae/output/{hh,pp}.parquet
 with new ids, and 1_vae/output/rebalance_report.csv (per PUMA: households, persons, mean size before/after vs ACS)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, zipfile, os
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; OUT = f"{V}/1_vae/output"; os.makedirs(OUT, exist_ok=True)
 BANDS = [(0, 17), (18, 34), (35, 64), (65, 120)]; rng = np.random.default_rng(2026)

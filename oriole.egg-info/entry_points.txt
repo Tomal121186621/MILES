@@ -1,2 +1,2 @@
 [console_scripts]
-oriole = oriole_cli:main
+terp = terp_cli:main

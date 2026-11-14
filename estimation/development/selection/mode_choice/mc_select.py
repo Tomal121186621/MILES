@@ -19,9 +19,9 @@ LOS2 (car time and transit in-vehicle time separately + out-of-vehicle time + co
 block 4 paid-parking share at the destination (CD); block 5 home in the Washington region (TRAIN); block 7 stops of the tour on the
 non-car modes, ln density of the main-activity zone on walk and bicycle, household income >= $100k on bus.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle, time
 import numpy as np
 import pandas as pd

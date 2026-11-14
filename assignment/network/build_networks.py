@@ -15,9 +15,9 @@ the resolved list is written to changes_2024_2026.csv (one row per change) and c
 Outputs (this folder): network_2024.xml.gz, network_2026.xml.gz, changes_2024_2026.csv, changes_2024_2026_links.csv,
 build_networks.log.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re, gzip, json, csv, datetime, hashlib
 import numpy as np, pandas as pd
 

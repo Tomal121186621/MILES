@@ -50,13 +50,13 @@ to the next coarser cell, the order is in tasha_params.csv):
   params      minimum at-home slack between two out-of-home episodes (10th percentile of the observed at-home durations
               between two out-of-home episodes that are not RHW), workplace-type shares by age band, scheduling constants
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np
 import pandas as pd
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib"); sys.path.insert(0, f"{ORIOLE_HOME}/activity/survey")
+sys.path.insert(0, f"{TERP_HOME}/activity/lib"); sys.path.insert(0, f"{TERP_HOME}/activity/survey")
 from rts_common import V, RTS, ACT_PURPOSE, MI_KM, load_split, band_of, DIST_BINS
 from activity_metrics import dist_matrix
 from survey_population import tract_zone, geoid

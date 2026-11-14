@@ -12,12 +12,12 @@ classification counts, else its class; validate_counts.stations()).
 Model: residents' cars by link and hour, it.100 linkstats x 10 minus transit vehicles (validate_counts.model_seed), every finished seed.
 Fit: model / count of the summed volumes by period and road group; GEH of each station-direction-hour (UK TAG: GEH < 5 for 85 %).
 Usage: python3 assignment/validation/tmas_hourly.py [out_dir]  -> out_dir/data/tmas_*.csv, figures/fig_net_tmas_hourly; article table and figure."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, glob, re, numpy as np, pandas as pd
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, f"{ORIOLE_HOME}/reports")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, f"{TERP_HOME}/reports")
 import validate_counts as vc   # noqa: E402  (model_seed, stations, PERIODS, geh)
 import paperstyle as ps        # noqa: E402
 OUT = sys.argv[1] if len(sys.argv) > 1 else f"{H}/previews/tmas"

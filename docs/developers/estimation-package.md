@@ -1,6 +1,6 @@
 # Estimation package
 
-The estimation package lets anyone re-estimate every model of ORIOLE with **Python Biogeme** and check the result
+The estimation package lets anyone re-estimate every model of TERP with **Python Biogeme** and check the result
 against the published estimates. It lives in `estimation/package/`; the specification search behind each model is in `estimation/development/`.
 
 ## Layout
@@ -20,7 +20,7 @@ estimation/package/
 │   │   ├── model/                Biogeme script, published estimates
 │   │   └── output/               your results
 │   └── ...
-├── ABIT/                         ORIOLE-Day: distributions and 20 models
+├── ABIT/                         TERP-Day: distributions and 20 models
 │   ├── 00_tasha_distributions/   activity distributions (not a Biogeme model)
 │   ├── 01_primary_destination_pooled/
 │   └── ...

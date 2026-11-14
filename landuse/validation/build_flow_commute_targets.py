@@ -7,12 +7,12 @@
   data/silo_target_commute_acs.csv        ACS PUMS 5-year files 2018-2024: mean and median one-way travel time to work (JWMNP, min) of
                                           Maryland workers in households who commute (JWMNP > 0), and the share of those who work in
                                           Maryland, by vintage"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, zipfile, numpy as np, pandas as pd
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
-sys.path.insert(0, f"{ORIOLE_HOME}/landuse/lib/residential"); import s07_region_validation as RV
+sys.path.insert(0, f"{TERP_HOME}/landuse/lib/residential"); import s07_region_validation as RV
 c2r = RV.county_region(); out = []
 for nm in ["2014_2018", "2016_2020"]:
     f = RV.acs_flows(f"{V}/data/raw/resloc/CtyxCty_US_{nm}.txt", c2r).rename("flow").reset_index(); f.columns = ["orig", "dest", "flow"]; f["period"] = nm; out.append(f)

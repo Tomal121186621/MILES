@@ -14,9 +14,9 @@ region (default 'automatic' algorithm), robust (sandwich) standard errors.  Outp
 biogeme_<segment>.csv (parameters), biogeme_<segment>_stats.json, biogeme_<segment>.html (Biogeme report).
 Runs in its own environment (~/.venvs/biogeme: biogeme 3.3.5 needs pandas < 3, the main environment has pandas 3).
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import json, os, sys
 import numpy as np
 import pandas as pd

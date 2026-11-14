@@ -20,9 +20,9 @@ purpose mean); stops = the record's tour-with-stops flag.  Representative travel
 Outputs (ESTIMATION_RESULTS/accessibility_new): accessibility_2016_new.csv (zone, segment, purpose = work / nonwork, A = car-based, hansen),
 accessibility_2016_new_detail.csv (+ single purposes, A_usd, A_ls, beta_cost), accessibility_2016_new_multimodal.csv (contract
 columns, A = A_ls), ls_lambda.csv, ls_coef.csv, accessibility_new_checks.csv, accessibility_new.log."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, ast, json, argparse, time
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd
@@ -30,11 +30,11 @@ import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))                       # this folder (code)
 HERE = f"{ESTIMATION_RESULTS}/accessibility_new"; SBS = ESTIMATION_RESULTS; DPD = f"{SBS}/dest_primary"   # results (data)
 V26 = f"{WORKSPACE}"
-sys.path.insert(0, CODE); sys.path.insert(0, f"{ORIOLE_HOME}/estimation/development/primary_destination")
+sys.path.insert(0, CODE); sys.path.insert(0, f"{TERP_HOME}/estimation/development/primary_destination")
 import d_primary as DP          # noqa: E402  (full-set estimator; patches dc_model.features with lnd_male / lnd_hh1)
 FS, M, C = DP.FS, DP.M, DP.C
 import mode_logsum_new as L     # noqa: E402
-sys.path.insert(0, f"{ORIOLE_HOME}/pipeline")
+sys.path.insert(0, f"{TERP_HOME}/pipeline")
 import accessibility as PA      # noqa: E402  (pipeline: zone_table, segments, records, model, accessibility)
 import torch                    # noqa: E402
 

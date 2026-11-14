@@ -12,12 +12,12 @@ over licence (share of licence holders; car driver available only with a licence
 VOT: the median income of the 2016 base households of the group (2016 $) x 245.120 / 240.007 (2017 $ of the mode choice).
 Time of day: the (outbound, return) period pairs of the estimation-half school tours with a share of at least 5 % (re-normalised).
 Outputs work/logsum.npy (3 x 3 x 4 x 1588 x 1588 float32, zone index order), tables/logsum_segments.csv.   Usage: python3 landuse/schools/school_logsums.py"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, numpy as np, pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import school_common as C   # noqa: E402
-MC = f"{ORIOLE_HOME}/activity/lib/mode_choice"; sys.path.insert(0, MC); import mc_common as M; import mc_apply as A   # noqa: E402
+MC = f"{TERP_HOME}/activity/lib/mode_choice"; sys.path.insert(0, MC); import mc_common as M; import mc_apply as A   # noqa: E402
 b = A.coef()["school"]
 z = M.C.zones(); n = len(z); assert (z.id.values == C.zones().zone.values).all()
 p = pd.read_parquet(f"{C.W}/students.parquet"); p = p[p.half == "estimation"]

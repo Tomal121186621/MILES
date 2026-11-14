@@ -8,9 +8,9 @@ postsec; a K-8 student goes to the elementary band at ages <= 10 and to the midd
 Size components by zone and band (work/zone_size.parquet, school_data.py):
   K-12: pub (CCD), priv (PSS) enrolment of the band;
   college: pub4 (IPEDS SECTOR 1, public 4-year), priv4 (SECTOR 2-3, private 4-year), cc (SECTOR 4-9: 2-year and less-than-2-year)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, numpy as np, pandas as pd
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; S = f"{V}/2_silo"; RAW = f"{V}/data/raw"
 SC = f"{S}/schoolchoice"; W = f"{SC}/work"; T = f"{SC}/tables"; FIG = f"{SC}/figures"; JC = f"{S}/jobchoice"
@@ -41,7 +41,7 @@ def tt():
 def km():
     """zone-to-zone road distance (km) of the mode-choice LOS (3_abit/mode_choice/mc_common.los()['d'])"""
     if "km" in _c: return _c["km"]
-    import sys; sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/mode_choice"); import mc_common as M   # noqa: E402
+    import sys; sys.path.insert(0, f"{TERP_HOME}/activity/lib/mode_choice"); import mc_common as M   # noqa: E402
     d = np.asarray(M.los()["d"], np.float32); _c["km"] = d; return d
 
 

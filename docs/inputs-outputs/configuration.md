@@ -1,8 +1,8 @@
 # Configuration
 
-Each engine reads one properties file. The keys below are the ones that switch on ORIOLE's models; the values are
+Each engine reads one properties file. The keys below are the ones that switch on TERP's models; the values are
 those of the reported runs. In the SILO engine, the value `respec` of the `*.spec` and `job.choice.model` keys selects
-the estimated models documented on this site; `oriole landuse …` sets it for you.
+the estimated models documented on this site; `terp landuse …` sets it for you.
 
 ## Land use (SILO)
 
@@ -68,7 +68,7 @@ Written by `landuse/run/write_properties.py <scenario> <start> <end> [skim_years
 
     The levers are kept in `landuse/calibration/calibrated_parameters.json`.
 
-## Activities (ORIOLE-Day)
+## Activities (TERP-Day)
 
 Written by `activity/write_properties.py <name> <silo_scenario> <year> [sample] [skims]`; the switches of the
 coefficient set (`activity/parameters/run_params.csv`) are appended.

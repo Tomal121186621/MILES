@@ -22,9 +22,9 @@ Outputs: data/count_stations_matched.csv (every station in the area, matched or 
          data/count_stations_split.csv (matched stations with 2024 AADT: calibration_check / held_out).
 Nothing is fitted to the counts; the split exists so that the held-out half is never looked at before the final comparison.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, json, datetime
 import numpy as np, pandas as pd, geopandas as gpd, shapely
 from shapely import points

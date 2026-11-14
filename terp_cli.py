@@ -1,15 +1,15 @@
-"""The `oriole` command: one entry point for every step of the ORIOLE chain.
+"""The `terp` command: one entry point for every step of the TERP chain.
 
-    oriole config                         show the configured locations and check them
-    oriole population train|generate|base-year|validate
-    oriole landuse coefficients|base-workplaces|calibrate|run|seeds|schools|validate
-    oriole activity parameters|distributions|run|replications|validate
-    oriole assignment network|transit|plans|run|seeds|validate
-    oriole chain ...                      the pipeline orchestrator (run_chain.py)
-    oriole estimate <model> [--check]     re-estimate one model of the estimation package
-    oriole docs serve|build               the documentation website
+    terp config                         show the configured locations and check them
+    terp population train|generate|base-year|validate
+    terp landuse coefficients|base-workplaces|calibrate|run|seeds|schools|validate
+    terp activity parameters|distributions|run|replications|validate
+    terp assignment network|transit|plans|run|seeds|validate
+    terp chain ...                      the pipeline orchestrator (run_chain.py)
+    terp estimate <model> [--check]     re-estimate one model of the estimation package
+    terp docs serve|build               the documentation website
 
-Every command accepts --dry-run (print what would run). Locations come from oriole.toml (see oriole.example.toml).
+Every command accepts --dry-run (print what would run). Locations come from terp.toml (see terp.example.toml).
 """
 import argparse
 import os
@@ -23,7 +23,7 @@ HOME = os.path.dirname(os.path.abspath(__file__))
 
 # ------------------------------------------------------------------ configuration
 def load_config():
-    path = os.environ.get("ORIOLE_CONFIG") or os.path.join(HOME, "oriole.toml")
+    path = os.environ.get("TERP_CONFIG") or os.path.join(HOME, "terp.toml")
     if not os.path.exists(path):
         return {}, path
     try:
@@ -41,12 +41,12 @@ BIOGEME_PY = os.path.expanduser(CFG.get("python", {}).get("biogeme", "") or sys.
 
 
 def environment():
-    """environment of every step: configured locations as ORIOLE_* variables"""
+    """environment of every step: configured locations as TERP_* variables"""
     env = dict(os.environ)
-    env["ORIOLE_HOME"] = HOME
-    env["ORIOLE_CONFIG"] = CFG_PATH
+    env["TERP_HOME"] = HOME
+    env["TERP_CONFIG"] = CFG_PATH
     for k, v in CFG.get("paths", {}).items():
-        env[f"ORIOLE_{k.upper()}"] = os.path.abspath(os.path.expanduser(v))
+        env[f"TERP_{k.upper()}"] = os.path.abspath(os.path.expanduser(v))
     if JAVA.get("home"):
         env["JAVA_HOME"] = os.path.expanduser(JAVA["home"])
     env["PYTHONPATH"] = HOME + os.pathsep + env.get("PYTHONPATH", "")
@@ -75,16 +75,16 @@ def p(*parts):
 
 
 def workspace():
-    w = environment().get("ORIOLE_WORKSPACE")
+    w = environment().get("TERP_WORKSPACE")
     if not w:
-        sys.exit("oriole: set paths.workspace in oriole.toml (copy oriole.example.toml)")
+        sys.exit("terp: set paths.workspace in terp.toml (copy terp.example.toml)")
     return w
 
 
 # ------------------------------------------------------------------ config / sync
 def cmd_config(a):
-    print(f"configuration file: {CFG_PATH}{'' if os.path.exists(CFG_PATH) else '  (missing: copy oriole.example.toml)'}")
-    print(f"ORIOLE_HOME         {HOME}")
+    print(f"configuration file: {CFG_PATH}{'' if os.path.exists(CFG_PATH) else '  (missing: copy terp.example.toml)'}")
+    print(f"TERP_HOME         {HOME}")
     for k, v in CFG.get("paths", {}).items():
         v = os.path.abspath(os.path.expanduser(v))
         print(f"{k:<19} {v}  {'ok' if os.path.exists(v) else 'MISSING'}")
@@ -127,7 +127,7 @@ def cmd_population(a):
 
 
 # ------------------------------------------------------------------ land use
-LANDUSE_ENV = {"CALIB_SPEC": "respec", "OOS_SPEC": "respec", "SCHOOL_SPEC": "respec"}   # the estimated models of ORIOLE
+LANDUSE_ENV = {"CALIB_SPEC": "respec", "OOS_SPEC": "respec", "SCHOOL_SPEC": "respec"}   # the estimated models of TERP
 
 
 def cmd_landuse(a):
@@ -157,7 +157,7 @@ def cmd_landuse(a):
         run([PY, p("landuse", "schools", "assign_all_seeds.py")] + [str(s) for s in range(1, int(a.seeds) + 1)], extra_env=LANDUSE_ENV)
     elif a.step == "validate":
         if not a.args:
-            sys.exit("oriole landuse validate <scenario>")
+            sys.exit("terp landuse validate <scenario>")
         run([PY, p("landuse", "validation", "validate_landuse.py"), a.args[0], a.start, a.end])
 
 
@@ -191,7 +191,7 @@ def cmd_assignment(a):
     elif a.step == "plans":
         need = ["activities", "legs", "pp", "hh", "out"]
         if not all(getattr(a, k) for k in need):
-            sys.exit("oriole assignment plans --activities A --legs L --pp pp_2024.csv --hh hh_2024.csv --out population.xml.gz")
+            sys.exit("terp assignment plans --activities A --legs L --pp pp_2024.csv --hh hh_2024.csv --out population.xml.gz")
         raw = a.out.replace(".xml.gz", "_raw.xml.gz")
         run([PY, p("pipeline", "activities_to_matsim.py"), "--activities", a.activities, "--legs", a.legs, "--pp", a.pp, "--hh", a.hh,
              "--out", raw, "--no-gateways"])
@@ -243,7 +243,7 @@ def cmd_docs(a):
 # ------------------------------------------------------------------ parser
 def main(argv=None):
     global DRY
-    ap = argparse.ArgumentParser(prog="oriole", description="ORIOLE: population, land use, activities and traffic for Maryland")
+    ap = argparse.ArgumentParser(prog="terp", description="TERP: population, land use, activities and traffic for Maryland")
     ap.add_argument("--dry-run", action="store_true", help="print the commands without running them")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
@@ -260,10 +260,10 @@ def main(argv=None):
     s.add_argument("step", choices=["coefficients", "check", "base-workplaces", "calibrate", "run", "seeds", "schools", "validate"])
     s.add_argument("--start", default="2016"); s.add_argument("--end", default="2024"); s.add_argument("--seed", default="1")
     s.add_argument("--name"); s.add_argument("--seeds", default="5"); s.add_argument("--parallel", default="2")
-    s.add_argument("--rounds", default="4"); s.add_argument("--start-round", default="1"); s.add_argument("--tag", default="oriole")
+    s.add_argument("--rounds", default="4"); s.add_argument("--start-round", default="1"); s.add_argument("--tag", default="terp")
     s.add_argument("--heap"); s.add_argument("args", nargs=argparse.REMAINDER); s.set_defaults(f=cmd_landuse)
 
-    s = sub.add_parser("activity", help="activities (ORIOLE-Day)")
+    s = sub.add_parser("activity", help="activities (TERP-Day)")
     s.add_argument("step", choices=["parameters", "distributions", "run", "replications", "validate"])
     s.add_argument("--name"); s.add_argument("--year", default="2024"); s.add_argument("--seed", default="1")
     s.add_argument("--sample", default="0.1"); s.add_argument("--threads", default="6"); s.add_argument("--heap")

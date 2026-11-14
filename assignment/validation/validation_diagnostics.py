@@ -19,12 +19,12 @@ Writes to <OUT>/data and <OUT>/figures:
   links_map.parquet: car links with geometry (EPSG:26985) and the seed-mean daily volumes, for validation_map.py
   diagnostics.json: headline numbers
 Usage: python3 assignment/validation/validation_diagnostics.py   (env COUNTS_DATA, TMAS_DATA, REGIONAL_DATA, RUN_ROOT, OUT)"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, json, gzip, glob, warnings, numpy as np, pandas as pd; warnings.filterwarnings("ignore")
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
-sys.path.insert(0, f"{ORIOLE_HOME}/reports"); sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, f"{TERP_HOME}/reports"); sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import paperstyle as ps
 WORK = f"{V}/5_reports/validation_pdfs/work/matsim_respec"
 CD = os.environ.get("COUNTS_DATA", f"{WORK}/counts/data"); TD = os.environ.get("TMAS_DATA", f"{WORK}/tmas/data"); RD = os.environ.get("REGIONAL_DATA", f"{WORK}/regional/data")

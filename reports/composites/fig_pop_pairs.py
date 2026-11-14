@@ -7,12 +7,12 @@ household x household pairs use households.  Reference: the training split again
 Outputs: WORKSPACE/data/pop_pairs_srmse.csv, WORKSPACE/5_reports/article/figures/fig_val_pop_quality.{pdf,png}:
   SRMSE of every pair of attributes: below the diagonal the synthetic population, above it the training split, both against the test split
   (single-attribute errors are in the CSV; the article shows the single attributes against the ACS in fig_val_stage1)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, json, itertools, numpy as np, pandas as pd
 V = f"{WORKSPACE}"; VAE = f"{VAE_HOME}"   # generator data (outputs/); the generator code is population/cvae
-sys.path.insert(0, f"{ORIOLE_HOME}/population/cvae"); sys.path.insert(0, f"{ORIOLE_HOME}/reports")
+sys.path.insert(0, f"{TERP_HOME}/population/cvae"); sys.path.insert(0, f"{TERP_HOME}/reports")
 import torch
 from vaelib import config, crosswalks, validate as VV
 from vaelib.model import CVAE, CVAEConfig

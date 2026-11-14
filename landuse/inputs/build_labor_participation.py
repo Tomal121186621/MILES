@@ -2,9 +2,9 @@
 """Employment rate by single year of age and sex for the employment model's labour-participation targets: share of persons who are
 employed (ACS PUMS ESR 1, 2, 4, 5; civilian and armed forces, at work or with a job), Maryland, PUMS 2013-17 five-year file, person
 weights, smoothed over a 3-year age window. Output: 2_silo/input/laborParticipationRates.csv (age, male, female)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import zipfile, pandas as pd, numpy as np
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
 zf = zipfile.ZipFile(f"{ROOT}/inputs/pums_2017_5yr/csv_pmd.zip"); n = [x for x in zf.namelist() if x.endswith(".csv")][0]

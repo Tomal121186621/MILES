@@ -7,9 +7,9 @@ Licence normalised to 0 on walk (as m08: not identified against the constants si
 Blocks kept by the m08 rule (LR at 5 %, BIC, signs); lettered rows are alternatives compared by BIC among those that pass.
 Estimation half only; the validation half is used once, for the final model.
     ~/.venvs/biogeme/bin/python estimation/development/tour_mode_choice/m09_school.py   ->  m09_fit.csv, m09_coef.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 from scipy.stats import chi2

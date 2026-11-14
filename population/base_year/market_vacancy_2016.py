@@ -4,9 +4,9 @@ occupied) by 2010 PUMA, from the ACS PUMS 2013-17 Maryland housing file (VACS va
 and recreational units, migrant-worker units and "other vacant" units (largely long-term vacant or abandoned stock) are not
 available to movers and are excluded from the vacant dwelling stock that SILO's moves, construction and pricing models see.
 Output: 1_vae/output/market_vacancy_by_puma_2016.csv (puma, vacant_w, market_w, market_share) and the Maryland total."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import zipfile, pandas as pd
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"
 zf = zipfile.ZipFile(f"{ROOT}/inputs/pums_2017_5yr/csv_hmd.zip"); n = [x for x in zf.namelist() if x.endswith(".csv")][0]

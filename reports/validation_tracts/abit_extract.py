@@ -9,9 +9,9 @@ Output (out/cache/):
   abit_flows.parquet  rep, hzone, wzone, workers                  (distinct persons with a work activity: home zone -> zone of
                       their first work activity of the day; expanded x10)
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, pyarrow.parquet as pq, pyarrow.compute as pc, os, re
 V = f"{WORKSPACE}"
 RUN = os.environ.get("ABIT_RUN_DIR", f"{V}/3_abit/final_2024/run"); OUT = os.environ.get("TRACT_CACHE", f"{V}/5_reports/validation_tracts/out/cache"); os.makedirs(OUT, exist_ok=True)

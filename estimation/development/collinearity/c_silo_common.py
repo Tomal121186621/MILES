@@ -1,8 +1,8 @@
 """Shared helpers of the collinearity check (c_silo_*.py): within-choice correlations, VIF, estimate correlations, heatmaps in the
 style of car_ownership/s02_correlation.py, flags and pair classification, refit summaries.  Estimation half only."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re, json
 import numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg")

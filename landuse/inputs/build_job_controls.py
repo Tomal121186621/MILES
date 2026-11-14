@@ -14,9 +14,9 @@ Scaling: SILO's 2016 job stock (synthetic, from the VAE base) differs from LODES
   SILO_jobs_2016(z,t) x LODES(z,t,Y) / LODES(z,t,2016)  (zones with no 2016 LODES jobs of that type: county growth ratio),
 so the observed growth path is imposed without a base-year jump.  Non-Maryland zones: county QCEW growth only (no LODES here).
 Outputs: 2_silo/input/assumptions/jobControlTotals.csv; data/silo_target_jobs_by_region_type_year.csv (observed, for validation)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, geopandas as gpd, os, glob
 from shapely import points
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; RAW = f"{V}/data/raw"

@@ -3,9 +3,9 @@
 Survey, county annual files co<year>a.txt; two header rows; units by structure size 1, 2, 3-4, 5+), mapped to SILO dwelling types
 (SFD/SFA = 1-unit, MF234 = 2 to 4 units, MF5plus = 5+ units; MH not permitted through BPS). Maryland, 2016-2024.
 Output: data/silo_target_permits_by_county_year.csv (county, year, units_1, units_2_4, units_5plus, units_total)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np
 V = f"{WORKSPACE}"; rows = []
 for y in range(2016, 2025):

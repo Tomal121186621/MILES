@@ -6,9 +6,9 @@
 Each is given per seed and year, and as the mean / min / max over the seeds by year.
 Outputs WORKSPACE/2_silo/schoolchoice/tables/seeds_students_vs_acs.csv, seeds_capacity.csv, seeds_survey.csv (+ _byyear).
 Usage: python landuse/schools/summarize_seeds.py"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, glob, numpy as np, pandas as pd
 PFX = os.environ.get("SILO_SEEDS", "oos_s"); SUF = os.environ.get("SILO_OUT_SUFFIX", "")   # seed-run prefix and output suffix
 HERE = f"{WORKSPACE}/2_silo/schoolchoice"; T = f"{HERE}/tables"; R = f"{HERE}/runs"   # outputs of assign_all_seeds.py (workspace)

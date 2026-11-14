@@ -1,0 +1,2 @@
+[console_scripts]
+terp = terp_cli:main

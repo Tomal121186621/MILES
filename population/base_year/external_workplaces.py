@@ -11,9 +11,9 @@ allocator, whose friction-only draw left filled jobs by county at 0.71-1.04 of L
   multinomial on T_ij / O_i, so column sums match D_j up to sampling noise.
 Outputs (same layout as VAE step 05): 1_vae/vae_outputs/05_workplace/{jj,workplace}.parquet and data/stage1_workplace_check.csv
 (jobs by county vs LODES, same-county share, commute-time distribution vs survey)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, h5py, json, os
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; OUT = f"{V}/1_vae/vae_outputs/05_workplace"; os.makedirs(OUT, exist_ok=True)
 rng = np.random.default_rng(0)

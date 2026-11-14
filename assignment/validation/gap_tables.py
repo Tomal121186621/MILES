@@ -5,9 +5,9 @@ fastest paths, (3) like-for-like car-driver trip length (straight line between t
 (4) passenger traffic at the permanent counters by period.  Reads the outputs of regional_validation.py (c1e_vmt_per_capita.csv),
 validate_counts.py (counters_summary.csv), gap_routes.py and gap_triplength.py; writes sections/tab_net_gap_*.tex.
 Usage: python3 assignment/validation/gap_tables.py [regional_data_dir] [counts_data_dir] [gap_dir] [article_sections_dir]"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pandas as pd
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"   # H: validation data and outputs (workspace)
 ARGS = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -139,7 +139,7 @@ def length_figure(path=None):
     """Figure replacing the trip-length table (2026-11-04): share of car-driver trips by straight-line distance between tracts,
     survey against model, all trips and four purposes, and the mean length by purpose."""
     import numpy as np
-    sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps
+    sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps
     path = path or f"{V}/5_reports/article/figures/fig_net_gap_length"
     T = pd.read_csv(f"{GAP}/tract_l4l.csv", header=0, index_col=[0, 1])
     bands = ["0-1", "1-2", "2-5", "5-10", "10-20", "20+"]; blab = ["0–1", "1–2", "2–5", "5–10", "10–20", "20+"]

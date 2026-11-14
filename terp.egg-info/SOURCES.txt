@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+terp_cli.py
+terp_env.py
+terp.egg-info/PKG-INFO
+terp.egg-info/SOURCES.txt
+terp.egg-info/dependency_links.txt
+terp.egg-info/entry_points.txt
+terp.egg-info/requires.txt
+terp.egg-info/top_level.txt

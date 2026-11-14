@@ -8,14 +8,14 @@ work last week, not working at home; carpools split as in t24common.acs_mode_sha
 Model: tours with a WORK main activity of employed persons of the 2024 observed population (setting acs2024: ACS 2024 PUMS
 households placed in zones) by home county, 10 replications (mean); mode as ABIT writes it (car driver, car passenger, bus, train,
 walk, bike).  Counties with fewer than 200 ACS commuter records are not shown."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{WORKSPACE}/3_abit/mode_choice"; A3 = os.path.dirname(HERE); V = os.path.dirname(A3)
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/reporting_2024"); sys.path.insert(0, CODE)
+sys.path.insert(0, f"{TERP_HOME}/activity/lib/reporting_2024"); sys.path.insert(0, CODE)
 os.environ.setdefault("T24_MODEL", "mc")
 import t24common as C   # noqa: E402
 import mc_common as M   # noqa: E402
@@ -51,7 +51,7 @@ def ntd():
 
 
 def figure(r):
-    sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps
+    sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps
     fig, axs = ps.figure(height=3.4, ncols=2)
     col = {m: ps.CAT[i] for i, m in enumerate(MODES)}
     for ax, ms, lo, hi in [(axs[0], ["Car, driver"], 40, 100), (axs[1], [m for m in MODES if m != "Car, driver"], 0, None)]:

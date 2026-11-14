@@ -8,14 +8,14 @@ Variants (same data, structure and extra terms as the models of record):
   TCI  time + cost / (income / $50k): the cost term falls with income (Train and McFadden 1978 form); km on walk and bike only
 Estimation half; log-likelihood of the validation half with the estimates.
     ~/.venvs/biogeme/bin/python estimation/development/tour_mode_choice/m03_time_cost.py   ->  m03_fit.csv, m03_coef.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/mode_choice"   # results of this step (data); CODE = this folder
-MC = f"{ORIOLE_HOME}/activity/lib/mode_choice"
+MC = f"{TERP_HOME}/activity/lib/mode_choice"
 sys.path.insert(0, MC)
 import estimate_gc as G, estimate_hh as H, mc_common as M   # noqa: E402
 import biogeme.database as db, biogeme.biogeme as bio, biogeme.models as models

@@ -9,18 +9,18 @@ its classes) on the same 1 % sample and seed, and the fin24 runs (10 %, seeds 1-
 Measures as report_2024.py (temporal_2024/t24common.acts_from_legs, 5_reports/measures.measure): Maryland residents 5+ trips per
 person and trip mode shares (Table F6 form), Baltimore CBSA residents 5+ activities per person and mean zone-skim distance by type
 (Table F5 form); RTS 2017/18 from temporal_2024/data (obs.pkl, rts_persons / rts_acts)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re, shutil, subprocess, sys, time, pickle
 import numpy as np, pandas as pd
 
 V = WORKSPACE; A3 = f"{V}/3_abit"; HERE = f"{A3}/final_2024"   # data (runs, frozen snapshot)
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib")
+sys.path.insert(0, f"{TERP_HOME}/activity/lib")
 import replications as F   # noqa: E402  (inputs, reduce)
 RUN = f"{HERE}/run_respec_smoke"; SAMPLE = "0.01"; SEED = 1
 SETS = {"tasha": (f"{HERE}/frozen/coef", f"{HERE}/frozen/classes", f"{HERE}/frozen/abit_classpath.txt"),
-        "respec": (f"{ORIOLE_HOME}/activity/parameters", f"{A3}/classes", f"{ORIOLE_HOME}/activity/abit_classpath.txt")}
+        "respec": (f"{TERP_HOME}/activity/parameters", f"{A3}/classes", f"{TERP_HOME}/activity/abit_classpath.txt")}
 
 
 def run(tag):
@@ -28,7 +28,7 @@ def run(tag):
     if os.path.exists(f"{d}/output/legs_full.parquet"): print(f"{name}: done, skipped"); return
     os.makedirs(d, exist_ok=True); rc = f"{d}/coef"; shutil.rmtree(rc, ignore_errors=True); shutil.copytree(coef, rc)
     env = dict(os.environ) | {"ABIT_RUN_ROOT": RUN, "ABIT_COEF_DIR": rc, "SILO_SCEN_DIR": F.SCEN_DIR}
-    r = subprocess.run([sys.executable, f"{ORIOLE_HOME}/activity/write_properties.py", name, f"oos_s{F.SILO_SEED}", "2024", SAMPLE, F.SK], capture_output=True, text=True, env=env)
+    r = subprocess.run([sys.executable, f"{TERP_HOME}/activity/write_properties.py", name, f"oos_s{F.SILO_SEED}", "2024", SAMPLE, F.SK], capture_output=True, text=True, env=env)
     if r.returncode: raise SystemExit(f"write_properties failed: {r.stdout}{r.stderr}")
     props = f"{RUN}/{name}.properties"; t = open(props).read()
     for k, v in {"persons.file": f"{F.SCH}/pp_2024.csv", "schools.file": f"{F.SCH}/schools_2024.csv", "number.of.threads": F.THREADS, "modechoice.dir": rc}.items():
@@ -51,7 +51,7 @@ def run(tag):
 
 # ------------------------------------------------------------------------------------------------ comparison
 def compare():
-    sys.path.insert(0, f"{ORIOLE_HOME}/activity/validation"); import report_2024 as R
+    sys.path.insert(0, f"{TERP_HOME}/activity/validation"); import report_2024 as R
     C = R.C; obs = pickle.load(open(f"{R.T24}/data/measures/obs.pkl", "rb")); rts = obs["rts"][0]; kN = "Baltimore CBSA|5+"
     rk = pd.read_parquet(f"{R.T24}/data/rts_persons.parquet"); ra = pd.read_parquet(f"{R.T24}/data/rts_acts.parquet")
     rp = rk[(rk.age >= 5) & (rk.county // 1000 == 24)]; w = dict(zip(rp.person_id, rp.w)); rs = ra[ra.pid.isin(rp.person_id)].assign(w=lambda x: x.pid.map(w))

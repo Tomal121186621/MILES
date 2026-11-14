@@ -3,9 +3,9 @@
 re-run: chosen form 'Terms and terms x ln income' minus the terms listed with '-' in its 'spec' column),
 estimation half, chosen + 29 sampled dwellings (the draws of r06), unweighted as in the estimation.
     python3 estimation/development/collinearity/c_silo_dwelling.py   ->  dwelling_var_corr.png, dwelling_est_corr.png, dwelling_pairs.csv, dwelling_facts.json"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__))

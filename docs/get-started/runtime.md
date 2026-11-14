@@ -8,7 +8,7 @@ Measured on the development machine (Apple M5 Pro, 18 cores, 48 GB memory).
 | Base population export | – | – | – | about 1.1 GB of CSV (persons 614 MB) |
 | SILO calibration run, 2016–2020 | 24 GB | 12 | about 42 min | |
 | SILO run, 2016–2024 | 21–28 GB | 12 | about 1 h 40 min alone; 2 h 55 min with two in parallel | about 11 GB per run |
-| ORIOLE-Day, 10 % of households | 13 GB | 6 | about 6 min per replication | |
+| TERP-Day, 10 % of households | 13 GB | 6 | about 6 min per replication | |
 | MATSim, 10 % sample, 100 iterations | 32 GB | 12 | about 6 h per seed | plans 0.5 GB; events 1.3 GB |
 | Transit mapping (pt2matsim) | ≤ 9 GB | – | – | |
 

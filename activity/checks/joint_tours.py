@@ -6,14 +6,14 @@ same purpose, same destination tract, arrival within the joint window).  Unit: a
 episode (observed: household + jgid of the main episode in mode_choice/work/tours_validation.parquet; ABIT: household + joint_id of
 mc_tours.csv), two or more tours.
     python3 activity/checks/joint_tours.py   -> respec_joint_diag.csv (composition), respec_joint_rates.csv (groups per household by type)"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd
 V = WORKSPACE; A3 = f"{V}/3_abit"; SBS = f"{ESTIMATION_RESULTS}"   # data
-sys.path.insert(0, f"{ORIOLE_HOME}/estimation/development/tour_mode_choice"); sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/mode_choice"); sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib")
+sys.path.insert(0, f"{TERP_HOME}/estimation/development/tour_mode_choice"); sys.path.insert(0, f"{TERP_HOME}/activity/lib/mode_choice"); sys.path.insert(0, f"{TERP_HOME}/activity/lib")
 import m10_car_availability as CA   # noqa: E402
 SEEDS = range(1, 6); SMOKE = f"{A3}/final_2024/run_respec_smoke/smk_respec_s01"
 

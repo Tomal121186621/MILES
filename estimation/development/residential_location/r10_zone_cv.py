@@ -4,9 +4,9 @@ accessibility (r08_zone_multimodal.py).  The survey has no later sample, and its
 the comparison is repeated on five folds of all households (both halves): estimate on four folds (30 sampled cells), evaluate the
 held-out fold on the full choice set.
     python3 estimation/development/residential_location/r10_zone_cv.py   ->  r10_cv.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, CODE)

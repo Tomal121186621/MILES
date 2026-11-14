@@ -10,9 +10,9 @@ Cells: sex x age; ages 5-17 single years ('rate' = enrolled / persons); ages 18+
 55-64, 65+ ('rate' = enrolled NON-workers / persons, the rate the alignment uses for adults; 'rate_all' = all enrolled / persons).
 By state (MD, DC, VA, DE, PA, WV); a cell with fewer than 30 sample persons takes the rate of all states pooled (flag pooled = 1).
 Output apply/school_enrolment_rates.csv.   Usage: python3 -I landuse/schools/enrolment_rates.py"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import zipfile, numpy as np, pandas as pd
 V = f"{WORKSPACE}"; S = f"{V}/2_silo"; AP = f"{S}/schoolchoice/apply"
 ST = {"md": 24, "dc": 11, "de": 10, "pa": 42, "va": 51, "wv": 54}

@@ -15,9 +15,9 @@ than one episode (0 if the episode is in no closed chain).
     TAZ_THREADS=6 python3 estimation/development/other_locations/l_locations_newls.py check                 # plumbing check (old function reproduced) + old / new summary
     TAZ_THREADS=6 python3 estimation/development/other_locations/l_locations_newls.py l01_daycare [...]     # sequences -> <name>_fit.csv, _coef.csv, .log
     TAZ_THREADS=6 python3 estimation/development/other_locations/l_locations_newls.py revise l01_daycare [...]   # final stage of 2026-11-09 only (l_locations.Run.revise)"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 sys.dont_write_bytecode = True
 os.environ.setdefault("TAZ_THREADS", "6")
@@ -28,7 +28,7 @@ import l_locations as LL                   # noqa: E402
 M, C = LL.M, LL.C
 sys.path.insert(0, f"{os.path.dirname(CODE)}/accessibility")
 import mode_logsum_new as MN               # noqa: E402
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/mode_choice")
+sys.path.insert(0, f"{TERP_HOME}/activity/lib/mode_choice")
 import prep_tours as PT                    # noqa: E402
 import te_common as T                      # noqa: E402
 

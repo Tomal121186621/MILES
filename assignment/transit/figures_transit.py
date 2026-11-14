@@ -5,11 +5,11 @@ network, (a) the network area, (b) Baltimore.  Links used by a route are drawn o
 Usage: python assignment/transit/figures_transit.py <schedule.xml.gz> <network_pt.xml.gz> <out without extension>
 Panel functions (used by reports/composites/fig_mode_network.py): load_segments() parses the two files once and caches the line
 segments in data/transit_map_segments_<stem>.pkl; draw_map(ax, S, zoom) draws one map; handles() gives the legend entries."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, gzip, re, os, collections, pickle, numpy as np
-sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps
+sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps
 from matplotlib.collections import LineCollection
 from matplotlib.lines import Line2D
 HERE = f"{WORKSPACE}/4_matsim/transit"; DATA = f"{WORKSPACE}/data"   # transit build files and cached segments (workspace)

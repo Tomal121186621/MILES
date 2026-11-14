@@ -21,7 +21,7 @@ import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import composite as K                                   # noqa: E402
 ps = K.ps; V = K.V
-sys.path.insert(0, f"{K.ORIOLE_HOME}/assignment/transit")
+sys.path.insert(0, f"{K.TERP_HOME}/assignment/transit")
 import figures_transit as TR                            # noqa: E402
 from matplotlib.lines import Line2D                     # noqa: E402
 from matplotlib.patches import Patch                    # noqa: E402

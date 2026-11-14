@@ -1,17 +1,17 @@
-"""Configured locations of an ORIOLE installation.
+"""Configured locations of an TERP installation.
 
-ORIOLE_HOME   this repository (code, coefficients, parameters)
+TERP_HOME   this repository (code, coefficients, parameters)
 WORKSPACE     the folder with data and runs
-The other locations are optional external checkouts. Values come from environment variables (set by the `oriole`
-command) or from oriole.toml at the repository root.
+The other locations are optional external checkouts. Values come from environment variables (set by the `terp`
+command) or from terp.toml at the repository root.
 """
 import os
 
-ORIOLE_HOME = os.path.dirname(os.path.abspath(__file__))
+TERP_HOME = os.path.dirname(os.path.abspath(__file__))
 
 
 def _config():
-    path = os.environ.get("ORIOLE_CONFIG") or os.path.join(ORIOLE_HOME, "oriole.toml")
+    path = os.environ.get("TERP_CONFIG") or os.path.join(TERP_HOME, "terp.toml")
     if not os.path.exists(path):
         return {}
     try:
@@ -26,13 +26,13 @@ _CFG = _config()
 
 
 def _get(key, default=None):
-    v = os.environ.get(f"ORIOLE_{key.upper()}") or _CFG.get(key) or default
+    v = os.environ.get(f"TERP_{key.upper()}") or _CFG.get(key) or default
     return os.path.abspath(os.path.expanduser(v)) if v else None
 
 
 WORKSPACE = _get("workspace")
 if WORKSPACE is None:
-    raise SystemExit("ORIOLE: set paths.workspace in oriole.toml (copy oriole.example.toml) or ORIOLE_WORKSPACE")
+    raise SystemExit("TERP: set paths.workspace in terp.toml (copy terp.example.toml) or TERP_WORKSPACE")
 PROJECT_ROOT = _get("project_root", os.path.dirname(WORKSPACE))
 ESTIMATION_RESULTS = _get("estimation_results", os.path.join(WORKSPACE, "side_experiments", "respec_2026-11", "step_by_step"))
 ABIT_HOME = _get("abit_home", os.path.join(PROJECT_ROOT, "ABIT"))

@@ -8,14 +8,14 @@ Names: t*x_c -> b_tX<x>; lt, intra, cc, cs -> b_lt, b_intra, b_cc, b_cs; dcw -> 
 the engine's zones file labels DC 'dc', the base with 'bmc'); z_<s>*<x> -> b_<s>X<x>; mu -> mu_size; g_<type> unchanged.
 No ACS anchoring of the DC term (the record model's file *_dcacs has one): that is a calibration step to redo.
     python3 landuse/coefficients/write_workplace_choice.py"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 V = f"{WORKSPACE}"
 W = f"{ESTIMATION_RESULTS}/workplace"; INP = f"{V}/2_silo/input"
-sys.path.insert(0, f"{ORIOLE_HOME}/estimation/development/workplace_choice"); import wdc   # noqa: E402  (MEAN: centring constants)
+sys.path.insert(0, f"{TERP_HOME}/estimation/development/workplace_choice"); import wdc   # noqa: E402  (MEAN: centring constants)
 
 
 def engine_name(p):

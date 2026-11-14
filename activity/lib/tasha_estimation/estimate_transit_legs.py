@@ -33,17 +33,17 @@ Car-driver rule (from the data, results/tleg_cd_pattern.csv): car-driver legs of
 leg (the car is at home); in ABIT a car-driver first leg forces the last leg to car driver and vice versa (the car must come back)
 when the drawn modes disagree -> see MarylandTashaGenerator.transitLegModes.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, json
 import numpy as np
 import pandas as pd
 from scipy.stats import chi2
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{WORKSPACE}/3_abit/tasha_estimation"; A3 = os.path.dirname(HERE)
-sys.path.insert(0, CODE); sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/mode_choice"); sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib")
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/distributions")
+sys.path.insert(0, CODE); sys.path.insert(0, f"{TERP_HOME}/activity/lib/mode_choice"); sys.path.insert(0, f"{TERP_HOME}/activity/lib")
+sys.path.insert(0, f"{TERP_HOME}/activity/distributions")
 import te_common as T                     # noqa: E402
 import build_distributions as TD          # noqa: E402
 import mc_common as M                     # noqa: E402

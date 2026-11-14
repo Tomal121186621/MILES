@@ -27,9 +27,9 @@ Commands (run_chain.py [--test] [--force] [--dry-run] <command> ...):
   test                                                                        the 1 % smoke test (implies --test)
   status                                                                      list the completed stages
 Paths and run constants are at the top of the file; stage directories: <runs root>/{silo,abit,matsim_pop,matsim,skims}/."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, os, sys, json, subprocess, time, hashlib, re, shutil, gzip, datetime, glob
 ROOT = f"{PROJECT_ROOT}"
 V = f"{WORKSPACE}"; P = f"{V}/pipeline"; S = f"{V}/2_silo"; A3 = f"{V}/3_abit"; M4 = f"{V}/4_matsim"
@@ -53,10 +53,10 @@ MATSIM_JVM = {"modechoice": "false", "innovoff": "0.9", "plan.memory": "5", "wri
 ASC_FILE = f"{PRICING_HOME}/02_run/ascs_frozen.json"; ASCS = {"car": "0.00", "pt": "0.75", "ride": "-0.60", "walk": "0.10", "bike": "-2.10"}
 # SILO: the rebuilt engine (landuse/run/run_silo.sh), properties from landuse/run/write_properties.py with the calibrated parameters of
 # WORKSPACE/2_silo/calibration/params.json
-SILO_RUN = f"{ORIOLE_HOME}/landuse/run/run_silo.sh"; SILO_PARAMS = f"{S}/calibration/params.json"; ZONES = f"{S}/input/zoneSystem.csv"
+SILO_RUN = f"{TERP_HOME}/landuse/run/run_silo.sh"; SILO_PARAMS = f"{S}/calibration/params.json"; ZONES = f"{S}/input/zoneSystem.csv"
 # ABIT: compiled with javac into WORKSPACE/3_abit/classes (compile_abit()); classpath activity/abit_classpath.txt (jar paths, $HOME expanded);
 # native libs for the omx reader
-ABIT_CLASSES = f"{A3}/classes"; ABIT_CP = f"{ORIOLE_HOME}/activity/abit_classpath.txt"; ABIT_MAIN = "abm.RunAbitMarylandLos"; ABIT_LIB = f"{ABIT}/src/main/resources/lib/macosx64"
+ABIT_CLASSES = f"{A3}/classes"; ABIT_CP = f"{TERP_HOME}/activity/abit_classpath.txt"; ABIT_MAIN = "abm.RunAbitMarylandLos"; ABIT_LIB = f"{ABIT}/src/main/resources/lib/macosx64"
 # coefficient set of the abit stage (2026-10-23): the model of record, the behavioural TASHA-style set 3_abit/coef_tasha (TASHA generation,
 # estimated destination MNL, estimated anchored locations, return-home logit and work attendance; run_params.csv: tasha.generation = true,
 # dest.choice.model = mnl); ABIT_COEF_DIR overrides it (3_abit/coef_tasha_cal: calibrated variant; 3_abit/coef_calibrated: the earlier
@@ -182,7 +182,7 @@ def silo_step(cfg, y0, y1, k=0, seed=None, skims_tag=None, from_scen=None):
     for kind, p in files.items(): link(p, f"{base}/microData/{kind}_{y0}.csv")
     link(auto, f"{base}/skims/auto_peak_time.csv.gz"); link(transit, f"{base}/skims/transit_peak_time.csv.gz")
     # properties: write_properties.py (writes 2_silo/run/<scen>.properties) -> this base directory, calibrated parameters, start-year skim keys
-    subprocess.run(["python3", f"{ORIOLE_HOME}/landuse/run/write_properties.py", scen, str(y0), str(y1), "-1", str(seed)], check=True, capture_output=True)
+    subprocess.run(["python3", f"{TERP_HOME}/landuse/run/write_properties.py", scen, str(y0), str(y1), "-1", str(seed)], check=True, capture_output=True)
     src = f"{S}/run/{scen}.properties"; t = open(src).read(); os.remove(src)
     params = json.load(open(SILO_PARAMS)) if os.path.exists(SILO_PARAMS) else {}
     subs = {"base.directory": f"{base}/", "school.file.ascii": "microData/schools", "number.of.threads": str(cfg.threads), **{kk: str(vv) for kk, vv in params.items()}}
@@ -191,7 +191,7 @@ def silo_step(cfg, y0, y1, k=0, seed=None, skims_tag=None, from_scen=None):
     props = f"{cfg.R}/silo/{scen}.properties"; open(props, "w").write(t)
     log(f"silo-step {scen}: {y0} -> {y1}, restart from {prev or '2016 base files'}, skims '{skims_tag}', seed {seed}, params {params}")
     if cfg.test and not cfg.dry: log(f"test mode: SILO not started. Command: bash {SILO_RUN} {props} {cfg.silo_xmx}   (engine log 2_silo/run/logs/{scen}.log)"); return scen
-    rc = run(cfg, ["bash", SILO_RUN, props, cfg.silo_xmx], f"{LOGS}/silo_{scen}.log", env={"ORIOLE_WORKSPACE": WORKSPACE, "ORIOLE_HOME": ORIOLE_HOME})
+    rc = run(cfg, ["bash", SILO_RUN, props, cfg.silo_xmx], f"{LOGS}/silo_{scen}.log", env={"TERP_WORKSPACE": WORKSPACE, "TERP_HOME": TERP_HOME})
     if cfg.dry: st = state_load(cfg); st["silo"][str(y1)] = scen; state_save(cfg, st); return scen
     outs = [f"{out}/microData/futureYears/{kk}_{y1}.csv" for kk in ["hh", "pp", "dd", "jj", "schools"]]
     if rc != 0 or not all(os.path.exists(o) for o in outs[:4]): raise SystemExit(f"SILO {scen} failed (rc {rc}); see 2_silo/run/logs/{scen}.log")
@@ -279,7 +279,7 @@ def abit(cfg, y, k=0, skims_tag=None, silo_scen=None, sample=None):
         # the mode-choice re-anchoring (RunAbitMarylandLos -> writeReanchored) rewrites modechoice_full_*.csv in modechoice.dir: give every run
         # its own copy of the coefficient directory so the shared inputs do not drift between runs (reproducibility)
         shutil.rmtree(coef, ignore_errors=True); shutil.copytree(ABIT_COEF, coef)
-        r = subprocess.run(["python3", f"{ORIOLE_HOME}/activity/write_properties.py", name, scen or "base", str(y), str(sample), sk_abit], capture_output=True, text=True, env=dict(os.environ) | env)
+        r = subprocess.run(["python3", f"{TERP_HOME}/activity/write_properties.py", name, scen or "base", str(y), str(sample), sk_abit], capture_output=True, text=True, env=dict(os.environ) | env)
         if r.returncode != 0: raise SystemExit(f"write_properties failed: {r.stdout}{r.stderr}")
         t = open(props).read()
         t = re.sub(r"^modechoice.dir\s*=.*$", f"modechoice.dir = {coef}", t, flags=re.M); t = re.sub(r"^number.of.threads\s*=.*$", f"number.of.threads = {cfg.threads}", t, flags=re.M)
@@ -308,7 +308,7 @@ def matsim_pop(cfg, y, k=0, silo_scen=None, src=None, residents_only=False, no_g
     if src: files = {"pp": src["pp"], "hh": src["hh"]}
     else: scen, scen_dir = (find_silo_scen(cfg, y, silo_scen) if y != 2016 else (None, None)); files = microdata(cfg, y, scen_dir)
     os.makedirs(d, exist_ok=True)
-    cmd = ["python3", f"{ORIOLE_HOME}/pipeline/activities_to_matsim.py", "--activities", acts, "--legs", legs, "--pp", files["pp"], "--hh", files["hh"], "--out", out, "--expansion", str(1.0 / cfg.sample)] + (["--residents-only"] if residents_only else []) + (["--no-gateways"] if no_gateways else [])
+    cmd = ["python3", f"{TERP_HOME}/pipeline/activities_to_matsim.py", "--activities", acts, "--legs", legs, "--pp", files["pp"], "--hh", files["hh"], "--out", out, "--expansion", str(1.0 / cfg.sample)] + (["--residents-only"] if residents_only else []) + (["--no-gateways"] if no_gateways else [])
     rc = run(cfg, cmd, f"{LOGS}/matsim_pop_{tag}.log")
     if cfg.dry: return out
     if rc != 0 or not os.path.exists(out): raise SystemExit(f"population conversion failed; see logs/matsim_pop_{tag}.log")
@@ -342,7 +342,7 @@ def matsim(cfg, y, net, seed, k=0, iterations=None, sample=None, toll="NONE", pl
         if not os.path.exists(f) and not cfg.dry: raise SystemExit(f"missing: {f}" + ("" if not f.startswith(f"{M4}/transit") else " (build the transit set: 4_matsim/transit/TRANSIT_BUILD.md)"))
     if not cfg.dry and check_transit(cfg, net, SCHED)["n_missing"]: raise SystemExit("transit schedule links missing in the network; re-map the schedule (4_matsim/transit/TRANSIT_BUILD.md)")
     if not cfg.dry:
-        os.makedirs(d, exist_ok=True); r = subprocess.run(["python3", "-I", f"{ORIOLE_HOME}/assignment/transit/vehicle_types.py", SCHED, VEH, "--scale", str(sample)], capture_output=True, text=True)
+        os.makedirs(d, exist_ok=True); r = subprocess.run(["python3", "-I", f"{TERP_HOME}/assignment/transit/vehicle_types.py", SCHED, VEH, "--scale", str(sample)], capture_output=True, text=True)
         if r.returncode != 0: raise SystemExit(f"vehicle_types.py failed: {r.stdout}{r.stderr}")
         log(f"transit vehicles scaled to the sample: {r.stdout.strip()}")
     asc = json.load(open(ASC_FILE)) if os.path.exists(ASC_FILE) else ASCS; flow = sample; stor = round(sample ** 0.75, 4)   # storage = flow^0.75 (I695_pricing/config.py rule)
@@ -365,14 +365,14 @@ def transit_skims(cfg, net_year):
     d = f"{cfg.R}/skims/transit_{net_year}"; t0 = time.time(); tr = TRANSIT[net_year]
     if is_done(cfg, d): return d
     os.makedirs(d, exist_ok=True)
-    cmd = ["python3", f"{ORIOLE_HOME}/pipeline/transit_skim.py", tr["network"], tr["schedule"], tr["vehicles"], d] + TRANSIT_SKIM_ARGS + ["--threads", str(min(cfg.threads, 6)), "--xmx", "6g"]
+    cmd = ["python3", f"{TERP_HOME}/pipeline/transit_skim.py", tr["network"], tr["schedule"], tr["vehicles"], d] + TRANSIT_SKIM_ARGS + ["--threads", str(min(cfg.threads, 6)), "--xmx", "6g"]
     rc = run(cfg, cmd, f"{LOGS}/skims_transit_{net_year}.log")
     if cfg.dry: return d
     outs = [f"{d}/{f}.csv.gz" for f in ["transit_peak_time"] + TRANSIT_SKIMS]
     if rc != 0 or not all(os.path.exists(o) for o in outs): raise SystemExit(f"transit_skim.py failed for network {net_year}; see logs/skims_transit_{net_year}.log")
     st = json.load(open(f"{d}/transit_skim_stats.json"))
     log(f"transit skims {net_year}: reachable on-network pairs all {st['reachable_share_on_network']['all']:.1%} / bus {st['reachable_share_on_network']['bus']:.1%}, mean {st['mean_min_reachable']['all']:.1f} min, prior {st['pairs_from_prior']:.1%}")
-    mark_done(cfg, "transit-skims", str(net_year), d, [tr["network"], tr["schedule"], tr["vehicles"], f"{ORIOLE_HOME}/pipeline/transit_skim.py", f"{ORIOLE_HOME}/pipeline/TransitSkim.java"], outs, t0,
+    mark_done(cfg, "transit-skims", str(net_year), d, [tr["network"], tr["schedule"], tr["vehicles"], f"{TERP_HOME}/pipeline/transit_skim.py", f"{TERP_HOME}/pipeline/TransitSkim.java"], outs, t0,
               {"network_year": net_year, "args": TRANSIT_SKIM_ARGS, "stats": {kk: st[kk] for kk in ["off_network_zones", "pairs_from_prior", "reachable_share_on_network", "mean_min_reachable", "compare_base_bmr_internal"]}})
     return d
 def skims(cfg, y, k=0, seeds=None, net=None):
@@ -391,7 +391,7 @@ def skims(cfg, y, k=0, seeds=None, net=None):
         s = r.rsplit("_s", 1)[1]; pre = f"{d}/seed{s}/auto_peak_time"
         if not os.path.exists(pre + ".csv.gz") or cfg.force:
             # prior for zone pairs beyond the network or without a path: the 2016 base skim (the MSTM zone system covers six states, the network the Baltimore region)
-            rc = run(cfg, ["python3", f"{ORIOLE_HOME}/pipeline/skims_from_matsim.py", net, f"{r}/output_events.xml.gz", pre, "7", "9", f"{S}/input/skims/auto_peak_time.csv.gz"], f"{LOGS}/skims_{tag}.log")
+            rc = run(cfg, ["python3", f"{TERP_HOME}/pipeline/skims_from_matsim.py", net, f"{r}/output_events.xml.gz", pre, "7", "9", f"{S}/input/skims/auto_peak_time.csv.gz"], f"{LOGS}/skims_{tag}.log")
             if cfg.dry: continue
             if rc != 0: raise SystemExit(f"matsim_to_skim failed for seed {s}; see logs/skims_{tag}.log")
         per_seed.append(pre + ".csv.gz")

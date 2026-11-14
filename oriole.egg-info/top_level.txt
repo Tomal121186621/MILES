@@ -1,2 +1,2 @@
-oriole_cli
-oriole_env
+terp_cli
+terp_env

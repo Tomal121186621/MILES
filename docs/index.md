@@ -4,13 +4,13 @@ hide:
   - toc
 ---
 
-<div class="oriole-hero" markdown>
+<div class="terp-hero" markdown>
 
 <div class="eyebrow">Agent-based modelling platform · Maryland</div>
 
 # From census records to <span>cars on the road</span>
 
-<p class="lead">ORIOLE synthesises every household of the region, moves it through the housing and job markets year by year, plans each person's weekday, and simulates the
+<p class="lead">TERP synthesises every household of the region, moves it through the housing and job markets year by year, plans each person's weekday, and simulates the
 resulting traffic on the road and transit networks.</p>
 
 [Get started](get-started/index.md){ .md-button .md-button--primary }
@@ -20,7 +20,7 @@ resulting traffic on the road and transit networks.</p>
 
 </div>
 
-<div class="oriole-numbers">
+<div class="terp-numbers">
 <div><b>12.5 M</b><span>synthetic persons</span></div>
 <div><b>1,588</b><span>zones, six states</span></div>
 <div><b>28</b><span>estimated choice models</span></div>
@@ -28,7 +28,7 @@ resulting traffic on the road and transit networks.</p>
 <div><b>2,308</b><span>mainline count stations tested</span></div>
 </div>
 
-## Why ORIOLE
+## Why TERP
 
 <div class="grid cards" markdown>
 
@@ -57,7 +57,7 @@ resulting traffic on the road and transit networks.</p>
 
     ---
 
-    ORIOLE-Day draws activities from survey distributions, schedules them, locates them with estimated logit models
+    TERP-Day draws activities from survey distributions, schedules them, locates them with estimated logit models
     and chooses tour modes with household car allocation and joint tours.
 
 -   :material-road-variant:{ .lg .middle } **Dynamic traffic**
@@ -81,7 +81,7 @@ resulting traffic on the road and transit networks.</p>
 Each stage hands its output to the next. Land use runs year by year; activities and traffic are simulated for a
 weekday of 2024. [Full model design](model-design/index.md)
 
-<div class="oriole-flow">
+<div class="terp-flow">
 <div><span class="in">ACS microdata · Census blocks</span><b>Population</b><span class="out">4.7 M households, 2016</span></div>
 <div><span class="in">Population estimates · jobs · permits</span><b>Land use</b><span class="out">households, jobs, dwellings 2017–2024</span></div>
 <div><span class="in">School directories · boundaries</span><b>Schools</b><span class="out">a school for every student</span></div>
@@ -91,7 +91,7 @@ weekday of 2024. [Full model design](model-design/index.md)
 
 ## What you can do with it
 
-<div class="grid cards oriole-four" markdown>
+<div class="grid cards terp-four" markdown>
 
 -   :material-cash-multiple: **Road pricing**
 
@@ -114,7 +114,7 @@ weekday of 2024. [Full model design](model-design/index.md)
 
 ## Start here
 
-<div class="grid cards oriole-four" markdown>
+<div class="grid cards terp-four" markdown>
 
 -   :material-download: **[Install](get-started/installation.md)**
 
@@ -138,7 +138,7 @@ weekday of 2024. [Full model design](model-design/index.md)
 
 </div>
 
-<div class="oriole-credit" markdown>
+<div class="terp-credit" markdown>
 <img class="logo" src="assets/img/cmmm-logo.png" alt="Center for MultiModal Mobility in Urban, Rural and Tribal Areas">
 <span class="faces"><img src="assets/img/team/raas-sarker-tomal.jpg" alt="Raas Sarker Tomal"><img src="assets/img/team/cinzia-cirillo.jpg" alt="Dr. Cinzia Cirillo"></span>
 <p>Developed at the <b>Center for MultiModal Mobility in Urban, Rural and Tribal Areas (CMMM)</b>, University of Maryland,

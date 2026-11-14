@@ -4,9 +4,9 @@ age), the interaction of step 5, each against the current model on the estimatio
 Age form compared by BIC: member 65+, householder age linear, age + age squared, bands under 30 / 45-64 / 65+ (ref. 30-44).
 The hold-out 20 % is used once, for the final model (and for the model of record, for comparison).
     python3 estimation/development/car_ownership/s07_sequence.py   ->  s07_fit.csv, s07_coef.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os
 import numpy as np, pandas as pd
 from scipy.stats import chi2

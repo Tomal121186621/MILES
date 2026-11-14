@@ -14,9 +14,9 @@ zone x type (input/assumptions/jobControlTotals_lodes.csv, Y over 2016), renorma
 LODES jobs in 2016 keeps its base share.  The 2016 column equals the base jobs exactly.
 Output: input/assumptions/jobControlTotals_qcew.csv (the old jobControlTotals.csv is kept); data/silo_job_controls_qcew_check.csv.
 Usage: python3 landuse/inputs/build_job_controls_qcew.py"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import json, numpy as np, pandas as pd
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; S = f"{V}/2_silo"; A = f"{S}/input/assumptions"
 TYPES = ["RET", "OFF", "IND", "OTH"]; YRS = list(range(2016, 2027)); QY = list(range(2016, 2025))

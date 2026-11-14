@@ -1,6 +1,6 @@
 # Get started
 
-ORIOLE runs as five stages. Each stage can be run on its own from the outputs of the previous one, or the whole chain
+TERP runs as five stages. Each stage can be run on its own from the outputs of the previous one, or the whole chain
 can be driven by the pipeline.
 
 <div class="grid cards" markdown>

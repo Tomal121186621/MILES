@@ -1,0 +1,23 @@
+numpy
+pandas
+scipy
+pyarrow
+matplotlib
+
+[:python_version < "3.11"]
+tomli
+
+[docs]
+mkdocs-material
+
+[estimation]
+biogeme==3.3.5
+ipykernel
+nbformat
+
+[population]
+torch>=2.0
+scikit-learn
+openmatrix
+geopandas
+shapely

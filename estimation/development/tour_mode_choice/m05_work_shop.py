@@ -4,9 +4,9 @@ km on walk and bike only; walk keeps rural home only); work also TCI (cost / (in
 Work: choice-based sample weights (WESML) as in the model of record; t-statistics here are Biogeme's weighted robust ones, used only
 for screening (the WESML sandwich is in activity/lib/mode_choice/estimate_wesml.py). Hold-out: log-likelihood of the validation half
 (work: weighted with its own WESML weights).   ~/.venvs/biogeme/bin/python estimation/development/tour_mode_choice/m05_work_shop.py -> m05_fit.csv, m05_coef.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, CODE)

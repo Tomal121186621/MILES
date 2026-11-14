@@ -1,6 +1,6 @@
-# Applying ORIOLE
+# Applying TERP
 
-ORIOLE answers "what if" questions by changing an input of one stage and running the chain from that stage on.
+TERP answers "what if" questions by changing an input of one stage and running the chain from that stage on.
 
 | To test… | Change | Run from |
 |---|---|---|

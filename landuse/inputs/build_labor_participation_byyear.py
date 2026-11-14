@@ -13,9 +13,9 @@ for the engine's state-specific targets (demographics.labor.participation.file.b
 Output: input/laborParticipationRates_byYear.csv (year, age, male, female); input/laborParticipationRates_byYearState.csv (state,
 year, age, male, female); data/silo_employment_rates_byyear_summary.csv.
 Usage: python3 landuse/inputs/build_labor_participation_byyear.py"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import zipfile, numpy as np, pandas as pd
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; S = f"{V}/2_silo"
 ST = {"md": 24, "dc": 11, "de": 10, "pa": 42, "va": 51, "wv": 54}

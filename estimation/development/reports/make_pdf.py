@@ -2,9 +2,9 @@
 """Tables-only PDFs (SILO and ABIT): the article's current estimation tables in order, with est_cars replaced by the re-specified car ownership
 model (ESTIMATION_RESULTS/car_ownership/est_cars_new.tex).
 Usage: python3 estimation/development/reports/make_pdf.py   (build/ and the PDFs in <workspace>/side_experiments/respec_2026-11/final_tables)"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, re, shutil, subprocess
 
 HERE = f"{WORKSPACE}/side_experiments/respec_2026-11/final_tables"   # templates (.tex), build/ and PDFs (data)

@@ -9,9 +9,9 @@ landuse/calibration/calibrated_parameters.json (started from WORKSPACE/2_silo/ca
 landuse/calibration/calibration_log.csv, car-ownership county constants 2_silo/input/car_ownership_county_constants.csv; the files of
 the earlier models (params.json, calibration_log.csv, car_ownership_region_constants.csv, labor_participation_adjusters.csv,
 construction_region_scalers.csv in the workspace) are not written."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, subprocess, sys, os, re, json
 V = f"{WORKSPACE}"; S = f"{V}/2_silo"; R = f"{S}/run"
 ROUNDS = int(sys.argv[1]) if len(sys.argv) > 1 else 3; START = int(sys.argv[2]) if len(sys.argv) > 2 else 1; DAMP = 0.8
@@ -31,13 +31,13 @@ DEFAULTS = {"demographics.labor.participation.adjuster": 1.0, "demographics.loca
 SPEC = os.environ.get("CALIB_SPEC", "record"); assert SPEC in ("record", "respec"), SPEC
 RS = "_respec" if SPEC == "respec" else ""
 if SPEC == "respec":   # calibrated parameters and log of the re-estimated models are kept in the repository
-    PFILE = f"{ORIOLE_HOME}/landuse/calibration/calibrated_parameters.json"; LOGF = f"{ORIOLE_HOME}/landuse/calibration/calibration_log.csv"
+    PFILE = f"{TERP_HOME}/landuse/calibration/calibrated_parameters.json"; LOGF = f"{TERP_HOME}/landuse/calibration/calibration_log.csv"
     CARK = f"{S}/input/car_ownership_county_constants.csv"
 else:
     PFILE = f"{S}/calibration/params.json"; LOGF = f"{S}/calibration/calibration_log.csv"; CARK = f"{S}/input/car_ownership_region_constants.csv"
 PARAMS = dict(DEFAULTS); PARAMS.update(json.load(open(PFILE if os.path.exists(PFILE) else f"{S}/calibration/params.json")) if os.path.exists(f"{S}/calibration/params.json") else {})
 def write_props(name, params):
-    subprocess.run(["python3", f"{ORIOLE_HOME}/landuse/run/write_properties.py", name, "2016", "2020"] + (["-1", "1", "respec"] if SPEC == "respec" else []), check=True, capture_output=True)
+    subprocess.run(["python3", f"{TERP_HOME}/landuse/run/write_properties.py", name, "2016", "2020"] + (["-1", "1", "respec"] if SPEC == "respec" else []), check=True, capture_output=True)
     p = f"{R}/{name}.properties"; t = open(p).read()
     for k, v in params.items(): t = re.sub(rf"^{re.escape(k)}\s*=.*$", f"{k} = {v}", t, flags=re.M)
     open(p, "w").write(t)
@@ -47,9 +47,9 @@ for rnd in range(START, START + ROUNDS):
     print(f"round {rnd}: params {PARAMS}", flush=True)
     if os.path.exists(f"{R}/base/scenOutput/{name}/microData/futureYears/pp_2020.csv"): print(f"  {name}: SILO output exists, reusing", flush=True)
     else:
-        rc = subprocess.run(["bash", f"{ORIOLE_HOME}/landuse/run/run_silo.sh", f"{R}/{name}.properties", "24g"], env=dict(os.environ, ORIOLE_WORKSPACE=WORKSPACE)).returncode   # at most 24 GB per run (51 GB machine)
+        rc = subprocess.run(["bash", f"{TERP_HOME}/landuse/run/run_silo.sh", f"{R}/{name}.properties", "24g"], env=dict(os.environ, TERP_WORKSPACE=WORKSPACE)).returncode   # at most 24 GB per run (51 GB machine)
         if rc != 0: print("SILO failed, see run/logs"); break
-    vr = subprocess.run(["python3", f"{ORIOLE_HOME}/landuse/validation/validate_landuse.py", name, "2016", "2020"], capture_output=True, text=True)
+    vr = subprocess.run(["python3", f"{TERP_HOME}/landuse/validation/validate_landuse.py", name, "2016", "2020"], capture_output=True, text=True)
     if vr.returncode != 0: print(vr.stderr[-3000:]); break
     Rv = pd.read_parquet(f"{V}/data/silo_validation_{name}.parquet"); C = Rv[(Rv.section.isin(["C events", "D2 construction"])) & (Rv.year.between(2017, 2020))]
     new = dict(PARAMS)

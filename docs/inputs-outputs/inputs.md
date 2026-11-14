@@ -1,12 +1,12 @@
 # Data catalogue
 
-Every dataset ORIOLE uses, with its provider, the years used, what it is used for and where to get it.
+Every dataset TERP uses, with its provider, the years used, what it is used for and where to get it.
 **Use**: *estimation* (a model is estimated on it), *input* (used as given), *target* (a calibrated parameter is
 matched to it) or *test* (used only to validate). **Access**: <span class="vb ok">public</span> free download;
 <span class="vb close">request</span> released by the agency on request; <span class="vb out">project</span> produced
-by an earlier stage of ORIOLE.
+by an earlier stage of TERP.
 
-The files go into the workspace (`paths.workspace` in `oriole.toml`) under `data/raw/<source>/`; the instruction sheet
+The files go into the workspace (`paths.workspace` in `terp.toml`) under `data/raw/<source>/`; the instruction sheet
 of each model folder of the estimation package lists the exact files and variables.
 
 ## Census microdata and population
@@ -73,7 +73,7 @@ of each model folder of the estimation package lists the exact files and variabl
 | Mileage reports, vehicle-miles by county and road class | MDOT SHA | 2024 | Test of regional traffic | <span class="vb ok">public</span> | [2024 mileage report](https://www.roads.maryland.gov/OPPEN/2024_Mileage_Reports.pdf) |
 | National Transit Database, unlinked trips by mode | Federal Transit Administration | 2017/18, 2024 | Test of transit boardings | <span class="vb ok">public</span> | [NTD data](https://www.transit.dot.gov/ntd/ntd-data) |
 
-## Produced by ORIOLE
+## Produced by TERP
 
 | Dataset | Produced by | Used by |
 |---|---|---|

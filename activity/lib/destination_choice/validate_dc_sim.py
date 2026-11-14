@@ -17,13 +17,13 @@ trip distances (two-sample, Kish sizes), coincidence ratio, intrazonal share, de
 the county-to-county flow matrix (home county x destination county) with its dissimilarity index.
 Output: results/sim_summary.csv (mean and s.d. over the seeds), results/sim_tld.csv, results/sim_flows.csv.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np
 import pandas as pd
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib"); sys.path.insert(0, f"{ORIOLE_HOME}/activity/survey")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); sys.path.insert(0, f"{TERP_HOME}/activity/lib"); sys.path.insert(0, f"{TERP_HOME}/activity/survey")
 import dc_common as C
 from rts_common import RTS, ACT_PURPOSE, DIST_BINS, DIST_LABELS, ks_stat, kish_n, coincidence_ratio, load_split
 from activity_metrics import dist_matrix, zone_county

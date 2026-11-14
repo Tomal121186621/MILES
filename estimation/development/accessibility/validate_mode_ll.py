@@ -4,9 +4,9 @@ mode_logsum_new.py and the final coefficients, against the final LL of m08_fit.c
   (a) on the estimation data frames of the model scripts (m07_children.data: features as estimated)
   (b) on features rebuilt here from the raw tours (h, m, periods, person) with mode_logsum_new.los / features
     ~/.venvs/biogeme/bin/python estimation/development/accessibility/validate_mode_ll.py   ->  validate_mode_ll.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd

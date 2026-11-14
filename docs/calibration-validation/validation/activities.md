@@ -1,8 +1,8 @@
 # Activities
 
-ORIOLE-Day is run on the observed households of the **survey hold-out half** (validation) and on the **2024 population** against independent sources: ATUS time-use diaries, the ACS 2024 commute and LODES. Error bars: ten replications.
+TERP-Day is run on the observed households of the **survey hold-out half** (validation) and on the **2024 population** against independent sources: ATUS time-use diaries, the ACS 2024 commute and LODES. Error bars: ten replications.
 
-<div class="oriole-numbers">
+<div class="terp-numbers">
 <div><b>+1.2 %</b><span>activities on held-out households</span></div>
 <div><b>≤ 2 pp</b><span>start times per hour (all types but shopping)</span></div>
 <div><b>≤ 2.1 pp</b><span>tour mode shares, hold-out half</span></div>
@@ -13,10 +13,10 @@ ORIOLE-Day is run on the observed households of the **survey hold-out half** (va
 
 TASHA was estimated on the 1996 Transportation Tomorrow Survey of Toronto and validated on the 2001 survey, a
 different year (Roorda, Miller and Habib, 2008). No regional travel diary has been collected in Baltimore and Washington
-since the 2017/18 Regional Travel Survey, so ORIOLE-Day replaces the second survey year with a split of the households
+since the 2017/18 Regional Travel Survey, so TERP-Day replaces the second survey year with a split of the households
 and with independent sources for the forecast year.
 
-| | TASHA (Roorda et al., 2008) | ORIOLE-Day |
+| | TASHA (Roorda et al., 2008) | TERP-Day |
 |---|---|---|
 | Estimation data | Toronto travel survey, 1996 | Regional Travel Survey 2017/18, **estimation half** (10,889 households) |
 | Verification | Same survey, same households | Estimation half: the model run on the observed households it was estimated on |
@@ -26,7 +26,7 @@ and with independent sources for the forecast year.
 | Replications | – | Ten per test; bands show their 90 % range |
 | Measures | Start time, duration by start hour, trips per chain, distance by start hour; Kolmogorov–Smirnov D and P on hourly values | The same four, the same statistic; plus activities, distances and tour modes by type |
 
-Every distribution, frequency and coefficient of ORIOLE-Day comes from the estimation half; none is adjusted to the
+Every distribution, frequency and coefficient of TERP-Day comes from the estimation half; none is adjusted to the
 hold-out half or to 2024 data. The hold-out half was consulted more than once during the specification search of some
 models, so its fit is close to, but not fully, an independent test.
 

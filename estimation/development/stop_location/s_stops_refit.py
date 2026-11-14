@@ -7,9 +7,9 @@ validation-half LL of both.  The rows 'final' and 'record' of <name>_fit.csv / _
 as step 'final_{TAG}'; the selection rows (steps before the final) are those of the previous run (previous logsum).
     TAZ_THREADS=6 python3 estimation/development/stop_location/s_stops_refit.py [s_shop s_rec ...]
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, time, hashlib
 sys.dont_write_bytecode = True
 os.environ.setdefault("TAZ_THREADS", "6")

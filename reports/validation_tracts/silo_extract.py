@@ -13,9 +13,9 @@ Output (out/cache/):
                       income histogram 2024 (2024 $ bins of 2,500), jobs total / filled by type, new dwellings 2016->2024)
   silo_flows.parquet  seed, hzone, wzone, workers    (2024 state: employed residents of the study area, home zone -> job zone)
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, os, sys, time
 V = f"{WORKSPACE}"
 RUN = f"{V}/2_silo/run/base"; OUT = os.environ.get("TRACT_CACHE", f"{V}/5_reports/validation_tracts/out/cache")   # env: TRACT_CACHE, SILO_SEEDS (e.g. oos_respec_s), SILO_BASE (e.g. microData_v5respec)

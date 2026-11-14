@@ -11,15 +11,15 @@ input).  Model = mean and s.d. (ddof 1) over the 10 replications (ABIT seeds 1-1
 Observed: ACS 2024 1-year (commute), ATUS 2021-24 Maryland diaries, LODES 2022 OD, NHTS 2017 Baltimore CBSA, RTS 2017/18; the
 2017/18 model is the survey-household run of the temporal study (mc_base, tour mode choice; survey-population tour runs are not
 affected by the gender recode).  Chain-test comparison: data/abit_roorda_tables.csv (settings *_behav)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import glob, os, pickle, sys
 import numpy as np, pandas as pd
 V = f"{WORKSPACE}"; A3 = f"{V}/3_abit"; T24 = f"{A3}/temporal_2024"
 HERE = f"{A3}/final_2024"; RUN = f"{HERE}/run"; MD = f"{HERE}/data/measures"; TAB = f"{HERE}/tables"; FIG = f"{HERE}/figures"
 for d in (MD, TAB, FIG): os.makedirs(d, exist_ok=True)
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/reporting_2024"); sys.path.insert(0, f"{ORIOLE_HOME}/reports")
+sys.path.insert(0, f"{TERP_HOME}/activity/lib/reporting_2024"); sys.path.insert(0, f"{TERP_HOME}/reports")
 import t24common as C                                      # noqa: E402
 from measures import measure                               # noqa: E402
 SCH = f"{V}/2_silo/schoolchoice/runs/oos_s5/2024"

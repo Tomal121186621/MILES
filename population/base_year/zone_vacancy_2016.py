@@ -3,9 +3,9 @@
 2016 like the occupied units in zone_weights_2016.py). The synthetic dwelling stock contains occupied dwellings only; SILO needs the
 vacant stock for the moves, construction and pricing models.  Output: 1_vae/output/zone_vacancy_2016.csv (zone_id, county_fips,
 vacant_2010, vacant_2020, vacant_2016, occupied_2016, vacancy_rate_2016)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, geopandas as gpd, os
 from shapely import points
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; OUT = f"{V}/1_vae/output"

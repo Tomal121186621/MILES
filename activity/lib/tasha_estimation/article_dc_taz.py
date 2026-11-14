@@ -7,9 +7,9 @@
          the layout of the existing files is kept; stars from the unrounded robust t: *** p < 0.01, ** p < 0.05, * p < 0.10)
          5_reports/estimation_manual/destinations_short/figures/fig_param_corr_{a,b}.png, tables/param_corr.tex
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, pickle, re, sys
 import numpy as np
 import pandas as pd

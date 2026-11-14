@@ -5,9 +5,9 @@ Shopping, Recreation, Accompanying, Other; a coefficient shared by every purpose
 coefficient shared by a subset is repeated in its columns with a letter; coefficient with robust t below.  Compile check with
 the preamble of ../../final_tables/estimation_tables_abit.tex (tectonic): <prefix>check.tex.
     python3 estimation/development/primary_destination_pooled/t_pooled.py dp|sp"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, subprocess
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd

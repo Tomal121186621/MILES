@@ -2,9 +2,9 @@
 """Pick the SILO seed closest to the five-seed mean of the key 2024 outputs (smallest sum of squared relative deviations):
 MD county populations (24), MD households, MD employed persons, students by school band, mean commute (silo_final_tables_seeds.csv).
 Output: final_2024/seed_choice.csv, seed_choice_detail.csv."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np
 V = f"{WORKSPACE}"; S = f"{V}/2_silo"; O = f"{V}/3_abit/final_2024"
 zc = pd.read_csv(f"{ABIT_HOME}/input/maryland/zone_attributes.csv").set_index("id").countyfips.astype(int)

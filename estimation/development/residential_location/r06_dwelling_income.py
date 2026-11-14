@@ -5,9 +5,9 @@ draws).  Then, on the chosen form (collinearity/silo_notes.md): cost share below
 ln cost x ln income, t 0.16); single-family attached x household size, mobile home x household size and mobile home x children
 each dropped if BIC falls (in that order).  The validation half is used once, for the final model ('spec' column: its terms).
     python3 estimation/development/residential_location/r06_dwelling_income.py   ->  r06_fit.csv, r06_coef.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 from scipy.stats import chi2

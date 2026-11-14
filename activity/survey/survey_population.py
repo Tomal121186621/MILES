@@ -42,13 +42,13 @@ files, sample.fraction = 1, workplace.reassign.file, and zone.population.file = 
 class overlay survey_overlay/ (MarylandLosDataReader with the one optional property; 3_abit/classes is unchanged): the residents
 attractor of the destination choice is then the full population, as in the synthetic runs, and not the survey sample.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import argparse, os, re, shutil, subprocess, sys, time
 import numpy as np
 import pandas as pd
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib")
+sys.path.insert(0, f"{TERP_HOME}/activity/lib")
 from rts_common import ROOT, V, RTS, load_split, person_type, band_of
 
 A3 = f"{V}/3_abit"; OUTD = f"{A3}/survey_pop"; RUNROOT = f"{A3}/run_survey"
@@ -206,7 +206,7 @@ def run(half, seed, xmx="8g", threads=6, coef=f"{A3}/coef_calibrated", force=Fal
     if all(os.path.exists(o) for o in outs) and not force: print(f"{name}: output exists, skipped"); return d
     os.makedirs(d, exist_ok=True); rc = f"{d}/coef"; shutil.rmtree(rc, ignore_errors=True); shutil.copytree(coef, rc)
     env = dict(os.environ) | {"ABIT_RUN_ROOT": RUNROOT, "ABIT_COEF_DIR": rc}
-    r = subprocess.run([sys.executable, f"{ORIOLE_HOME}/activity/write_properties.py", name, "base", "2016", "1.0", skims], capture_output=True, text=True, env=env)
+    r = subprocess.run([sys.executable, f"{TERP_HOME}/activity/write_properties.py", name, "base", "2016", "1.0", skims], capture_output=True, text=True, env=env)
     if r.returncode != 0: raise SystemExit(f"write_properties failed: {r.stdout}{r.stderr}")
     props = f"{RUNROOT}/{name}.properties"; t = open(props).read(); od = f"{OUTD}/{half}"
     for k, v in [("households.file", f"{od}/hh.csv"), ("persons.file", f"{od}/pp.csv"), ("dwellings.file", f"{od}/dd.csv"), ("number.of.threads", str(threads))]:
@@ -214,7 +214,7 @@ def run(half, seed, xmx="8g", threads=6, coef=f"{A3}/coef_calibrated", force=Fal
     t += f"\n# survey population (survey_population.py)\nworkplace.reassign.file = {od}/workplace_reassign.csv\nzone.population.file = {zone_population()}\n"
     open(props, "w").write(t)
     java = subprocess.run(["/usr/libexec/java_home", "-v", "21"], capture_output=True, text=True).stdout.strip() + "/bin/java"
-    cp = f"{OVERLAY}:{A3}/classes:{os.path.expandvars(open(f'{ORIOLE_HOME}/activity/abit_classpath.txt').read().strip())}"
+    cp = f"{OVERLAY}:{A3}/classes:{os.path.expandvars(open(f'{TERP_HOME}/activity/abit_classpath.txt').read().strip())}"
     cmd = [java, f"-Xmx{xmx}", f"-Dabit.seed={seed}", f"-Djava.library.path={ABIT_HOME}/src/main/resources/lib/macosx64", "-cp", cp, "abm.RunAbitMarylandLos", props]
     t0 = time.time()
     with open(f"{d}/abit.log", "w") as log:

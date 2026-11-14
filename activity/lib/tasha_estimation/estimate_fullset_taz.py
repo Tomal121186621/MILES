@@ -12,9 +12,9 @@ Outputs: results/fullset_estimates_taz.csv (param, value, rob_se, rob_t, se, seg
 results/fullset_compare_taz.csv (sampled vs full, difference in sampled robust SE), results/fullset_heldout_taz.csv (predictive
 LL per record on the validation half, full set, sampled and full-set coefficients), results/dest_choice_{primary_cx,stop_seq}_fullset_taz.csv.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, time
 import numpy as np
 import pandas as pd

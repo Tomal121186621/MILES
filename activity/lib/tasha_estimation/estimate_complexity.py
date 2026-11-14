@@ -14,9 +14,9 @@ F; held-out check on the validation half (mean distance from home by tour type, 
 draw before scheduling and for the main of a single-episode chain, and 1 when the main discretionary episode of a chain with
 stops is relocated after the chains are formed (MarylandTashaGenerator.buildTourObjects, MarylandDestinationChoice.selectPrimaryZoneMnl).
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, pickle, sys
 import numpy as np
 import pandas as pd

@@ -15,9 +15,9 @@ Orchestration overrides (pipeline/run_chain.py, 2026-10-22), all optional enviro
                  <coef dir>/run_params.csv exists (key,value), its rows are appended as properties (wfh.attendance.dayfactor,
                  workplace.silo, ...), with {PARAMETERS} replaced by the coefficient directory and {WORKSPACE} by the workspace.
   ABIT_EDU_TARGETS  the education targets file (default <coef dir>/targets_education.csv if present, else 3_abit/targets_education.csv)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import sys, os
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; A = f"{ABIT_HOME}/input/maryland"
 COEF = os.environ.get("ABIT_COEF_DIR") or f"{A}/coef"

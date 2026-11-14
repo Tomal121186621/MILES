@@ -14,9 +14,9 @@ Person variables (products 'key*var'): female, young (age < 30), old (age >= 55)
   w2 (2+ workers), car0 (no car), car1 (fewer cars than workers), g1 (<40k), g3 (75-125k), g4 (>125k; 40-75k is the base),
   hva (home in Virginia), hdc (home in DC).  g1/g3/g4 and ls depend on the income group, which the likelihood mixes over.
 Size term: mu * ln(RET_j + e^g_OFF OFF_j + e^g_IND IND_j + e^g_OTH OTH_j), 2016 base jobs by type (all jobs, filled and vacant)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import numpy as np, pandas as pd
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; S = f"{V}/2_silo"
 JC = f"{S}/jobchoice"; W = f"{JC}/work_rts"; T = f"{JC}/tables_rts"; SEC = ["RET", "OFF", "IND", "OTH"]

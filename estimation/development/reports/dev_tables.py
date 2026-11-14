@@ -6,15 +6,15 @@ Inputs: ESTIMATION_RESULTS/*/s07_fit.csv, r03_fit.csv, r04_fit.csv, m08_fit.csv,
 of 2_silo/resloc/tables and 3_abit/destination_choice/work/search_*.pkl.
 Output: build/dev/dev_*.tex and model_development.pdf (in <workspace>/side_experiments/respec_2026-11/final_tables).
 Usage: python3 estimation/development/reports/dev_tables.py"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, pickle, shutil, subprocess
 import numpy as np, pandas as pd
 
 HERE = f"{WORKSPACE}/side_experiments/respec_2026-11/final_tables"   # templates (.tex), build/ and PDFs (data)
 SBS = ESTIMATION_RESULTS
-V = f"{WORKSPACE}"; sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/destination_choice")
+V = f"{WORKSPACE}"; sys.path.insert(0, f"{TERP_HOME}/activity/lib/destination_choice")
 B = os.path.join(HERE, "build"); OUT = os.path.join(B, "dev")
 
 

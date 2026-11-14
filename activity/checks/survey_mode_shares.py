@@ -13,13 +13,13 @@ Observed: work/tours_validation.parquet (3_abit/mode_choice/prep_tours.py: tour 
 mode), unweighted, the same persons as the model runs.  Model tours: output/mc_tours.csv (alt after the household stage); model
 trips: legs, assigned to the home-based chain that contains the tour's main activity.  Modes: car driver, car passenger, walk,
 bike, transit (bus + train)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 A3 = f"{WORKSPACE}/3_abit"   # data
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/survey"); sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/mode_choice")
+sys.path.insert(0, f"{TERP_HOME}/activity/survey"); sys.path.insert(0, f"{TERP_HOME}/activity/lib/mode_choice")
 SK = f"{A3}/skims/base_transit2024"; SEEDS = range(1, 6); SMOKE = f"{A3}/final_2024/run_respec_smoke/smk_respec_s01"
 GRP = {"CD": "car driver", "CP": "car passenger", "WK": "walk", "BK": "bike", "BUS": "transit", "TRAIN": "transit",
        "CAR_DRIVER": "car driver", "CAR_PASSENGER": "car passenger", "WALK": "walk", "BIKE": "bike"}
@@ -28,7 +28,7 @@ SEG = {"WORK": "work", "EDUCATION": "school", "SHOPPING": "shopping"}
 
 def run():
     import survey_population as S
-    for s in SEEDS: S.run("validation", s, coef=f"{ORIOLE_HOME}/activity/parameters", tag="respecval", skims=SK, force=True)
+    for s in SEEDS: S.run("validation", s, coef=f"{TERP_HOME}/activity/parameters", tag="respecval", skims=SK, force=True)
 
 
 def model_shares(out, name):
@@ -75,7 +75,7 @@ def compare():
     r.to_csv(f"{A3}/respec_survey_modeshares.csv", index=False)
     pd.set_option("display.width", 220); print(r.round(2).to_string(index=False))
     # population composition
-    sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib"); import replications as F
+    sys.path.insert(0, f"{TERP_HOME}/activity/lib"); import replications as F
     hh = pd.read_csv(f"{F.SCEN_DIR}/microData/futureYears/hh_2024.csv", usecols=["id", "autos"], engine="pyarrow")
     per = pd.read_parquet(f"{SMOKE}/output/persons.parquet"); hs = per.household_id.unique()
     pp = pd.read_csv(f"{F.SCH}/pp_2024.csv", usecols=["id", "hhid", "age", "driversLicense", "occupation"], engine="pyarrow")

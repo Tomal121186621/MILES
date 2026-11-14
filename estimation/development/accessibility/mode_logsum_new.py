@@ -20,18 +20,18 @@ joint, stops (0-1, means allowed), pout, pret (period index 0 AM, 1 MD, 2 PM, 3 
 orig: (N,) zone indices (dc_common.zones order); dest: (N,) or (N, J).  sk_or_features: None / the mc_common LOS (computed from
 the period skims), or a DataFrame of features (columns of features() below) to evaluate directly (then orig / dest are unused).
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd
 
 HERE = f"{ESTIMATION_RESULTS}/accessibility_new"                         # results (data)
 SBS = ESTIMATION_RESULTS; MCD = f"{SBS}/mode_choice"                      # tour mode-choice results (data)
-MCD_CODE = f"{ORIOLE_HOME}/estimation/development/tour_mode_choice"       # tour mode-choice scripts (code)
+MCD_CODE = f"{TERP_HOME}/estimation/development/tour_mode_choice"       # tour mode-choice scripts (code)
 V26 = f"{WORKSPACE}"
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/mode_choice")
+sys.path.insert(0, f"{TERP_HOME}/activity/lib/mode_choice")
 import mc_common as M     # noqa: E402
 C = M.C
 

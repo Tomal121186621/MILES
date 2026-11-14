@@ -2,9 +2,9 @@
 """Tables and figures of the short destination-model report (5_reports/estimation_manual/destinations_short/), 2026-10-29;
 outings (OTHER_wbs) and the activity-model table updated 2026-11-03.  python3 activity/lib/tasha_estimation/report_destinations_tables.py [records estimates collin seconddraw heldout roorda outing]
 TAZ re-estimate with the specification of record (results/*_taz.csv; the rows of coef_tasha_taz2)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, shutil, sys
 import numpy as np
 import pandas as pd

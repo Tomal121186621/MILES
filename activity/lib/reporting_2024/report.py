@@ -7,14 +7,14 @@
 Reads the per-replication measures (measures.py: data/measures/<setting>_s<NN>.pkl) and the observed benchmarks (bench_acs.py,
 bench_atus.py, bench_lodes.py, obs_surveys.py).  Model = mean and standard deviation (ddof = 1) over the replications present.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import glob, os, pickle, shutil, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np, pandas as pd
 import t24common as C
-sys.path.insert(0, f"{ORIOLE_HOME}/reports")
+sys.path.insert(0, f"{TERP_HOME}/reports")
 import paperstyle as ps                                    # noqa: E402
 import matplotlib.pyplot as plt                            # noqa: E402
 from matplotlib.patches import Patch                       # noqa: E402
@@ -112,7 +112,7 @@ def ptxt(p): return "P < 0.001" if p < 0.001 else f"P = {p:.3f}"
 
 
 def clear_space(fig, ax, artists, grow=1.12, tries=16):
-    sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import tasha_stage3 as TS
+    sys.path.insert(0, f"{TERP_HOME}/reports"); import tasha_stage3 as TS
     return TS.clear_space(fig, ax, artists, grow, tries)
 
 

@@ -1,10 +1,10 @@
 """Runs the MATSim validation scripts (assignment/validation) on the given run folders and writes everything into a work directory.
 No file outside the work directory is written."""
 import glob, os, re, subprocess, sys
-from common import V, ROOT, ORIOLE_HOME
+from common import V, ROOT, TERP_HOME
 
 VAL = f"{V}/4_matsim/validation"                    # validation data (workspace): link hours of the runs
-VALC = f"{ORIOLE_HOME}/assignment/validation"       # validation scripts (repository)
+VALC = f"{TERP_HOME}/assignment/validation"       # validation scripts (repository)
 
 
 def link_hours_for(run, seed, workdir):

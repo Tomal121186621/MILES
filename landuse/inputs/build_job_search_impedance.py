@@ -4,9 +4,9 @@ f(t) = share of base-year commutes (employed persons of input/microData, home zo
        / share of all home-job pairs (base-year workers by home zone x jobs by zone) with travel time t,
 by whole minute 0-299, both shares smoothed over 5 minutes, scaled to max 1. A destination choice over vacant jobs with this
 impedance reproduces the base-year commute-time distribution. Output: input/job_search_impedance.csv (minutes, weight, shares)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, pyarrow.csv as pc
 S = f"{WORKSPACE}/2_silo"; M = f"{S}/input/microData"
 rd = lambda p, c: pc.read_csv(p, convert_options=pc.ConvertOptions(include_columns=c)).to_pandas()

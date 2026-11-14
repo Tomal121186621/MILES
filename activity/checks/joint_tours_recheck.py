@@ -4,14 +4,14 @@ labels (household, joint episode) from the tours file, probabilities from the ut
 the representative's group mode drawn from the group model's probabilities (inverse CDF, not random utilities), no car
 allocation (C differs from B by < 0.7 pp).  Compares with respec_decompose.csv and respec_joint_coherence.csv.
     ~/.venvs/biogeme/bin/python activity/checks/joint_tours_recheck.py   -> respec_joint_recheck.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 sys.dont_write_bytecode = True
 import numpy as np, pandas as pd
 A3 = f"{WORKSPACE}/3_abit"; SBS = ESTIMATION_RESULTS   # data
-sys.path.insert(0, f"{ORIOLE_HOME}/estimation/development/tour_mode_choice"); sys.path.insert(0, f"{ORIOLE_HOME}/estimation/development/accessibility"); sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/mode_choice")
+sys.path.insert(0, f"{TERP_HOME}/estimation/development/tour_mode_choice"); sys.path.insert(0, f"{TERP_HOME}/estimation/development/accessibility"); sys.path.insert(0, f"{TERP_HOME}/activity/lib/mode_choice")
 import m07_children as K7, m10_car_availability as CA, mode_logsum_new as LN, mc_common as M   # noqa: E402
 ALTS = ["CD", "WK", "BK", "CP", "BUS", "TRAIN"]; HALF = "validation"
 

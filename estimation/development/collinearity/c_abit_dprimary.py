@@ -7,9 +7,9 @@ columns, per-purpose and pooled VIF, robust estimate correlations of the pooled 
     POOL_THREADS=3 python3 estimation/development/collinearity/c_abit_dprimary.py
     -> dp_shop|rec|acc|oth_var_corr.png/.csv (per purpose), dp_pooled_var_corr.png (the four side by side),
        dp_pooled_var_corr_pooled.csv, dp_pooled_est_corr.png/.csv, dp_pooled_pairs.csv, dp_pooled_facts.json, dp_pooled.log"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 sys.dont_write_bytecode = True
 os.environ.setdefault("TAZ_THREADS", "4")

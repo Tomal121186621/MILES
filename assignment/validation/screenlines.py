@@ -42,16 +42,16 @@ Usage: python3 assignment/validation/screenlines.py <validate_counts data dir> <
        -> <out>/data/screenlines_definition.geojson, screenline_crossings.csv, screenline_table.csv, screenline_by_seed.csv;
           <article>/sections/tab_net_screenlines.tex, <article>/figures/fig_net_screenlines.pdf|png
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, re, glob, json, argparse, warnings
 import numpy as np, pandas as pd, geopandas as gpd, shapely
 from shapely.geometry import LineString, Point, Polygon
 from shapely.ops import linemerge, unary_union
 warnings.filterwarnings("ignore")
 V = f"{WORKSPACE}"; H = f"{V}/4_matsim/validation"; ROOT = f"{PROJECT_ROOT}"   # H: validation data and outputs (workspace)
-sys.path.insert(0, f"{ORIOLE_HOME}/assignment/network"); sys.path.insert(0, f"{ORIOLE_HOME}/reports")
+sys.path.insert(0, f"{TERP_HOME}/assignment/network"); sys.path.insert(0, f"{TERP_HOME}/reports")
 import netio, paperstyle as ps
 
 CRS = 26985; EXP = 10

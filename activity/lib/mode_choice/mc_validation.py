@@ -16,9 +16,9 @@ Groups: purpose of the main activity, one-way home - main distance band (car-dis
 car sufficiency (0 cars / fewer cars than drivers / cars >= drivers), household income group, home county, all.
 The observed-tour test (mode choice isolated) is mc_apply.py observed -> results/obs_validation.csv.
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, CODE)
@@ -115,7 +115,7 @@ PLAB = {"WORK": "Work", "EDUCATION": "School", "SHOPPING": "Shopping", "RECREATI
 
 
 def figures():
-    sys.path.insert(0, f"{ORIOLE_HOME}/reports"); import paperstyle as ps; import matplotlib.pyplot as plt
+    sys.path.insert(0, f"{TERP_HOME}/reports"); import paperstyle as ps; import matplotlib.pyplot as plt
     OUT = f"{V}/5_reports/figures"; ART = f"{V}/5_reports/article/figures"
     obs = pd.read_csv(f"{M.RES}/obs_validation.csv"); ab = pd.read_csv(f"{M.RES}/abit_mode_validation.csv")
     tests = [("validation", obs[(obs.setting == "validation") & (obs.variant == "behavioural")], "obs"), ("chain", ab[(ab.setting == "chain") & (ab.variant == "behav")], "chain")]

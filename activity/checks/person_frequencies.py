@@ -3,13 +3,13 @@
 (mode_choice/work/tours_validation.parquet; persons of survey_pop/validation), ABIT on the hold-out survey population (seed 1) and the
 1 % SILO 2024 smoke (mc_tours.csv).  Types: child < 16; 16-64 worker; 16-64 non-worker; 65+; persons 16+ by licence.  Unweighted.
     python3 activity/checks/person_frequencies.py -> respec_person_freq.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 A3 = f"{WORKSPACE}/3_abit"   # data
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib")
+sys.path.insert(0, f"{TERP_HOME}/activity/lib")
 import replications as F
 
 

@@ -68,9 +68,9 @@ FINAL STAGE (revision 2026-11-09, collinearity/abit_notes.md; steps R1, R2, ...;
   re-estimated 2026-11-09) and then the final stage; the current specification is re-estimated with the same logsum.
     TAZ_THREADS=4 python3 estimation/development/stop_location/s_stops.py s_shop [s_rec ...]
 Outputs <name>_fit.csv, <name>_coef.csv, <name>.log in ESTIMATION_RESULTS/dest_stop."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, time
 sys.dont_write_bytecode = True
 os.environ.setdefault("TAZ_THREADS", "4")
@@ -81,7 +81,7 @@ from scipy.optimize import minimize
 CODE = os.path.dirname(os.path.abspath(__file__))
 HERE = f"{ESTIMATION_RESULTS}/dest_stop"   # results of this step (data); CODE = this folder
 TE = f"{WORKSPACE}/3_abit/tasha_estimation"                     # data (work/, results/)
-sys.path.insert(0, f"{ORIOLE_HOME}/activity/lib/tasha_estimation")
+sys.path.insert(0, f"{TERP_HOME}/activity/lib/tasha_estimation")
 import estimate_fullset_taz as F_       # noqa: E402  (records, full-set chunks; wraps dc_model)
 import dc_taz_engine as X               # noqa: E402
 import dc_model as M                    # noqa: E402

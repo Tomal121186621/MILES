@@ -4,13 +4,13 @@ own steps 05 (workplaces and jobs) and 06 (dwellings, SILO schema; population/cv
 directory redirected to WORKSPACE/1_vae/vae_outputs (01_preprocessed linked from the original run, 04_generated = corrected hh/pp).
 The workplace step needs the MSTM peak travel-time skim; the original OMX is not on this Mac, the equivalent 1,588-zone
 skim of the activity model (traveltime_auto.omx, matrix mat1) is used.  Output: vae_outputs/06_silo_input/{hh,pp,dd,jj}_2016.csv"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, shutil, runpy
 from pathlib import Path
 ROOT = Path(PROJECT_ROOT); VAE = Path(VAE_HOME); V = Path(WORKSPACE) / "1_vae"   # VAE = generator data (outputs/)
-CODE = Path(ORIOLE_HOME) / "population" / "cvae"                                    # generator code (vaelib, steps)
+CODE = Path(TERP_HOME) / "population" / "cvae"                                    # generator code (vaelib, steps)
 OUTS = V / "vae_outputs"; OUTS.mkdir(exist_ok=True)
 for d in ["00_raw_analysis", "01_preprocessed", "02_targets"]:
     if not (OUTS / d).exists(): os.symlink(VAE / "outputs" / d, OUTS / d)

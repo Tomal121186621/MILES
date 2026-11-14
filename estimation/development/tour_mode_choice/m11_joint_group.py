@@ -18,9 +18,9 @@ of the mode-choice estimation data), estimated on the estimation half, validatio
 Segments shopping (JS) and other (JO_REC, JO_OTH; rec flag).  Engine: MarylandTourNestedModeChoice, mc.joint.model = group,
 coefficient segments shopping_joint / other_joint of tour_mode_choice.csv.
     ~/.venvs/biogeme/bin/python estimation/development/tour_mode_choice/m11_joint_group.py   ->  m11_joint_fit.csv, m11_joint_coef.csv, m11_joint.log"""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys
 import numpy as np, pandas as pd
 CODE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, CODE)

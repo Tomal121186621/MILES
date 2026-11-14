@@ -6,9 +6,9 @@
   C. joint tables (Maryland): household size x autos, income x autos, workers x autos vs PUMS; SRMSE
   D. jobs by county vs LODES 2016 (filled jobs; vacancies excluded)
 Every number is written to data/stage1_validation.parquet (long table) and a short text summary is printed."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import pandas as pd, numpy as np, zipfile, os, gzip
 ROOT = f"{PROJECT_ROOT}"; V = f"{WORKSPACE}"; MD = f"{V}/2_silo/input/microData"
 z = pd.read_csv(f"{V}/2_silo/input/zoneSystem.csv").set_index("ZoneId"); rows = []

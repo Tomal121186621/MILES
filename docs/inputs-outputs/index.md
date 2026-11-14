@@ -12,7 +12,7 @@
 
 -   :material-cog: **[Configuration](configuration.md)**
 
-    Properties files and the keys that switch on ORIOLE's models.
+    Properties files and the keys that switch on TERP's models.
 
 -   :material-database-export: **[Outputs](outputs.md)**
 

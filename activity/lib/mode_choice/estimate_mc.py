@@ -22,9 +22,9 @@ Weights: none (the RTS samples households exogenously; maximum likelihood withou
 standard errors.  Outputs in results/: mc_<seg>_<model>.html / .yaml (Biogeme), mc_<seg>_<model>.csv (parameters),
 mc_<seg>_<model>_cov.csv (robust covariance), mc_summary.csv (fit statistics of every model).
 """
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import json, os, sys
 import numpy as np, pandas as pd
 

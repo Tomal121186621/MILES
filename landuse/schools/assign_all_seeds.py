@@ -7,9 +7,9 @@ Outputs: schoolchoice/runs/oos_s<k>/<Y>/ (assignment, alignment, convergence, re
 only for 2024: pp_2024.csv, schools_2024.csv in SILO's futureYears/schools_2024.csv structure), tables/assignment_<Y>_oos_s<k>_*.csv.
 Usage: python landuse/schools/assign_all_seeds.py 1 3 5
 2026-11-09: SCHOOL_SPEC=respec uses the SILO runs oos_respec_s<k> and apply/school_choice_coefficients_respec.csv (outputs runs/oos_respec_s<k>)."""
-import os as _os, sys as _sys  # ORIOLE: configured locations (oriole.toml)
+import os as _os, sys as _sys  # TERP: configured locations (terp.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
-from oriole_env import ORIOLE_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
+from terp_env import TERP_HOME, WORKSPACE, ESTIMATION_RESULTS, ABIT_HOME, MATSIM_HOME, VAE_HOME, PRICING_HOME, PROJECT_ROOT  # noqa: E402,F401
 import os, sys, time, subprocess
 S = f"{WORKSPACE}/2_silo"; HERE = f"{S}/schoolchoice"; RUN = f"{S}/run/base/scenOutput"   # HERE: school-choice data and outputs (workspace)
 SPEC = os.environ.get("SCHOOL_SPEC", "record"); assert SPEC in ("record", "respec"), SPEC; TAG = "oos_respec_s" if SPEC == "respec" else "oos_s"
@@ -28,10 +28,10 @@ for k in sys.argv[1:]:
         O = f"{HERE}/runs/{TAG}{k}/{y}"; os.makedirs(O, exist_ok=True)
         if os.path.exists(f"{O}/school_assignment_{y}.parquet") and (y < 2024 or os.path.exists(f"{O}/pp_{y}.csv")): lam = f"{O}/school_lambda_{y}.csv"; continue
         pp = f"{F}/pp_2024.csv" if y == 2024 else f"{M}/pp_{y}.csv"; dd = f"{F}/dd_2024.csv" if y == 2024 else f"{M}/dd_{y}.csv"
-        cmd = [sys.executable, f"{ORIOLE_HOME}/landuse/schools/assign_schools.py", "--pp", pp, "--hh", f"{F}/hh_{y}.csv", "--dd", dd, "--schools", f"{S}/input/schools_2016.csv", "--year", str(y),
+        cmd = [sys.executable, f"{TERP_HOME}/landuse/schools/assign_schools.py", "--pp", pp, "--hh", f"{F}/hh_{y}.csv", "--dd", dd, "--schools", f"{S}/input/schools_2016.csv", "--year", str(y),
                "--out", O, "--write-pp", "1" if y == 2024 else "0"] + (["--lam-in", lam] if lam else []) + (["--schools-template", f"{F}/schools_2024.csv"] if y == 2024 else []) + COEF
         with open(f"{O}/assign.log", "w") as lg: r = subprocess.run(cmd, stdout=lg, stderr=subprocess.STDOUT)
         if r.returncode: print(f"seed {k} year {y} FAILED (see {O}/assign.log)", flush=True); break
-        subprocess.run([sys.executable, f"{ORIOLE_HOME}/landuse/schools/test_assignment.py", "--dir", O, "--year", str(y), "--tag", f"_{TAG}{k}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        subprocess.run([sys.executable, f"{TERP_HOME}/landuse/schools/test_assignment.py", "--dir", O, "--year", str(y), "--tag", f"_{TAG}{k}"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         lam = f"{O}/school_lambda_{y}.csv"; print(f"seed {k} year {y} done", flush=True)
     print(f"seed {k} finished", flush=True)
