@@ -1,0 +1,231 @@
+{% extends "main.html" %}
+
+{% block tabs %}
+{{ super() }}
+<div class="mh">
+
+  <!-- hero -->
+  <section class="mh-hero">
+    <canvas id="mh-roads" aria-hidden="true" data-src="{{ 'assets/data/roads.json' | url }}"></canvas>
+    <div class="mh-hero__shade"></div>
+    <div class="mh-wrap mh-hero__body">
+      <p class="mh-eyebrow">Maryland Integrated Land-use and Everyday-travel Simulator</p>
+      <h1>From census records<br>to <span>cars on the road</span></h1>
+      <p class="mh-lead">MILES is an agent-based modelling platform for Maryland. It synthesises every household of the
+        region, moves it through the housing and job markets year by year, plans each person's weekday and simulates
+        the resulting traffic on the road and transit networks.</p>
+      <div class="mh-cta">
+        <a class="mh-btn mh-btn--primary" href="{{ 'get-started/' | url }}">Get started {% include ".icons/material/arrow-right.svg" %}</a>
+        <a class="mh-btn" href="{{ 'model-design/' | url }}">How it works</a>
+        <a class="mh-btn mh-btn--ghost" href="https://github.com/Tomal121186621/MILES">{% include ".icons/material/github.svg" %} GitHub</a>
+      </div>
+      <p class="mh-caption">Background: major roads of the Baltimore region in the MILES network.</p>
+    </div>
+  </section>
+
+  <!-- numbers -->
+  <section class="mh-stats">
+    <div class="mh-wrap mh-stats__grid">
+      <div><b data-count="12.5" data-dec="1" data-suffix=" M">12.5 M</b><span>synthetic persons</span></div>
+      <div><b data-count="1588">1,588</b><span>zones in six states</span></div>
+      <div><b data-count="28">28</b><span>estimated choice models</span></div>
+      <div><b data-count="3946">3,946</b><span>activity distributions</span></div>
+      <div><b data-count="2308">2,308</b><span>count stations tested</span></div>
+    </div>
+  </section>
+
+  <!-- pipeline explorer -->
+  <section class="mh-section">
+    <div class="mh-wrap">
+      <p class="mh-kicker">The platform</p>
+      <h2>Five models, one chain</h2>
+      <p class="mh-sub">Each stage hands its output to the next. Land use runs year by year from 2016 to 2024; activities
+        and traffic are simulated for a weekday of 2024. Select a stage.</p>
+
+      <div class="mh-pipe" role="tablist">
+        <button role="tab" class="is-on" data-stage="0"><i>1</i>Population</button>
+        <button role="tab" data-stage="1"><i>2</i>Land use</button>
+        <button role="tab" data-stage="2"><i>3</i>Schools</button>
+        <button role="tab" data-stage="3"><i>4</i>Activities</button>
+        <button role="tab" data-stage="4"><i>5</i>Traffic</button>
+        <span class="mh-pipe__bar"><span></span></span>
+      </div>
+
+      <div class="mh-panels">
+        <article class="mh-panel is-on">
+          <div>
+            <h3>Synthetic population</h3>
+            <p>A conditional variational autoencoder generates households and persons of 2016, including combinations of
+              attributes that the sample does not contain, then places them in zones and dwellings and gives workers a job.</p>
+            <dl>
+              <dt>Engine</dt><dd>Conditional VAE, Python and PyTorch</dd>
+              <dt>Trained on</dt><dd>ACS PUMS 2012–16, 253,029 households in 96 PUMAs</dd>
+              <dt>Produces</dt><dd>Households, persons, dwellings, jobs and workplaces of 2016</dd>
+            </dl>
+            <p class="mh-links"><a href="{{ 'model-design/population/' | url }}">Model design</a><a href="{{ 'calibration-validation/validation/population/' | url }}">Validation</a></p>
+          </div>
+          <aside class="mh-score" data-ok="25" data-close="3" data-out="3"><h4>Validation</h4></aside>
+        </article>
+        <article class="mh-panel">
+          <div>
+            <h3>Land use</h3>
+            <p>SILO moves the population through time: births, deaths, marriages, residential moves, job changes and car
+              ownership, with MILES's estimated residential-location, workplace and car-ownership models.</p>
+            <dl>
+              <dt>Engine</dt><dd>SILO, Java, yearly steps 2016 → 2024</dd>
+              <dt>Sensitive to</dt><dd>Car times and accessibility, housing prices and supply, jobs, incomes</dd>
+              <dt>Produces</dt><dd>Population, dwellings and jobs of every year</dd>
+            </dl>
+            <p class="mh-links"><a href="{{ 'model-design/landuse/' | url }}">Model design</a><a href="{{ 'calibration-validation/estimates/landuse/' | url }}">Estimates</a><a href="{{ 'calibration-validation/validation/landuse/' | url }}">Validation</a></p>
+          </div>
+          <aside class="mh-score" data-ok="27" data-close="6" data-out="3"><h4>Validation</h4></aside>
+        </article>
+        <article class="mh-panel">
+          <div>
+            <h3>School location</h3>
+            <p>Every student is assigned a school after each SILO year with three multinomial logits, respecting
+              attendance boundaries, enrolment and capacity.</p>
+            <dl>
+              <dt>Engine</dt><dd>Python, after every SILO year</dd>
+              <dt>Models</dt><dd>K–8, high school, college</dd>
+              <dt>Produces</dt><dd>The school of every student</dd>
+            </dl>
+            <p class="mh-links"><a href="{{ 'model-design/schools/' | url }}">Model design</a><a href="{{ 'calibration-validation/estimates/schools/' | url }}">Estimates</a><a href="{{ 'calibration-validation/validation/schools/' | url }}">Validation</a></p>
+          </div>
+          <aside class="mh-score" data-ok="2" data-close="4" data-out="2"><h4>Validation</h4></aside>
+        </article>
+        <article class="mh-panel">
+          <div>
+            <h3>Activities: MILES-Day</h3>
+            <p>Each person receives a full weekday: activities drawn from survey distributions, scheduled, located with
+              estimated logit models, and tour modes chosen with household car allocation and joint tours.</p>
+            <dl>
+              <dt>Engine</dt><dd>MILES-Day on the ABIT engine, Java</dd>
+              <dt>Estimated on</dt><dd>2017/18 Regional Travel Survey, estimation half</dd>
+              <dt>Produces</dt><dd>One weekday plan per person: activities, locations, times, modes</dd>
+            </dl>
+            <p class="mh-links"><a href="{{ 'model-design/activity/' | url }}">Model design</a><a href="{{ 'calibration-validation/estimates/modes/' | url }}">Estimates</a><a href="{{ 'calibration-validation/validation/activities/' | url }}">Validation</a></p>
+          </div>
+          <aside class="mh-score" data-ok="25" data-close="13" data-out="5"><h4>Validation</h4></aside>
+        </article>
+        <article class="mh-panel">
+          <div>
+            <h3>Traffic</h3>
+            <p>MATSim routes every trip and shifts departure times on an OpenStreetMap network with the region's transit
+              timetables and values of time by income.</p>
+            <dl>
+              <dt>Engine</dt><dd>MATSim 2024, Java</dd>
+              <dt>Network</dt><dd>OpenStreetMap roads 2024; GTFS transit</dd>
+              <dt>Produces</dt><dd>Routes, link volumes by hour, travel times, boardings</dd>
+            </dl>
+            <p class="mh-links"><a href="{{ 'model-design/assignment/' | url }}">Model design</a><a href="{{ 'calibration-validation/validation/traffic/' | url }}">Validation</a><a href="{{ 'calibration-validation/validation/map/' | url }}">Map</a></p>
+          </div>
+          <aside class="mh-kpi"><h4>Against 2024 counts</h4><b>0.81</b><span>model ÷ count, passenger vehicles, 2,308 mainline stations</span><b>0.90</b><span>R² across stations</span></aside>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- features -->
+  <section class="mh-section mh-section--alt">
+    <div class="mh-wrap">
+      <p class="mh-kicker">Why MILES</p>
+      <h2>Built for policy questions at the level of the person</h2>
+      <div class="mh-feat">
+        <div class="mh-reveal">{% include ".icons/material/account-group.svg" %}<h3>Every person is an agent</h3><p>Households, persons, dwellings, jobs and schools are simulated individually, so results split by income, age or place of residence.</p></div>
+        <div class="mh-reveal">{% include ".icons/material/brain.svg" %}<h3>Deep generative population</h3><p>A conditional VAE generates households beyond the combinations seen in the sample, conditioned on PUMA and household size.</p></div>
+        <div class="mh-reveal">{% include ".icons/material/home-city.svg" %}<h3>Land use that evolves</h3><p>Moves, job changes, births, deaths, marriages and car ownership update the population every year from 2016 to 2024.</p></div>
+        <div class="mh-reveal">{% include ".icons/material/calendar-clock.svg" %}<h3>A full weekday for everyone</h3><p>Activities, schedules, locations and tour modes, with household car allocation and joint tours.</p></div>
+        <div class="mh-reveal">{% include ".icons/material/road-variant.svg" %}<h3>Dynamic traffic</h3><p>Every trip routed in MATSim with departure-time shifts, transit timetables and income-based values of time.</p></div>
+        <div class="mh-reveal">{% include ".icons/material/check-decagram.svg" %}<h3>Estimated and tested, not tuned</h3><p>28 choice models estimated with Biogeme; every stage tested on data it never saw. Counts play no role in estimation or calibration.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- validation band -->
+  <section class="mh-section mh-dark">
+    <div class="mh-wrap mh-split">
+      <div>
+        <p class="mh-kicker">Validation</p>
+        <h2>Tested on data it never saw</h2>
+        <p class="mh-sub">The travel survey is split into an estimation half and a hold-out half; land use is calibrated on
+          2017–20 and tested on 2021–24; traffic is compared with 2024 counts that enter no step of the model.</p>
+        <p class="mh-cta"><a class="mh-btn mh-btn--primary" href="{{ 'calibration-validation/validation/' | url }}">Validation results</a>
+          <a class="mh-btn" href="{{ 'calibration-validation/validation/map/' | url }}">{% include ".icons/material/map-marker-radius.svg" %} Interactive count map</a></p>
+      </div>
+      <div class="mh-bars" id="mh-bars">
+        <div data-name="Synthetic population" data-ok="25" data-close="3" data-out="3"></div>
+        <div data-name="Land use" data-ok="27" data-close="6" data-out="3"></div>
+        <div data-name="School location" data-ok="2" data-close="4" data-out="2"></div>
+        <div data-name="Activities" data-ok="25" data-close="13" data-out="5"></div>
+        <div data-name="County view" data-ok="282" data-close="51" data-out="3"></div>
+        <p class="mh-legend"><i class="ok"></i>Within limit <i class="close"></i>Within twice the limit <i class="out"></i>Outside</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- applications -->
+  <section class="mh-section">
+    <div class="mh-wrap">
+      <p class="mh-kicker">Applications</p>
+      <h2>What you can do with it</h2>
+      <div class="mh-apps">
+        <a class="mh-reveal" href="{{ 'applying/i695/' | url }}">{% include ".icons/material/cash-multiple.svg" %}<h3>Road pricing</h3><p>Toll schemes on the Baltimore Beltway (I-695): who pays, who diverts and where traffic goes.</p><span>Case study →</span></a>
+        <a class="mh-reveal" href="{{ 'applying/scenarios/' | url }}">{% include ".icons/material/bus-multiple.svg" %}<h3>Transit service</h3><p>Changes to timetables or routes, with door-to-door transit times feeding mode choice.</p><span>Scenarios →</span></a>
+        <a class="mh-reveal" href="{{ 'applying/scenarios/' | url }}">{% include ".icons/material/office-building-marker.svg" %}<h3>Land-use change</h3><p>New housing or jobs in a zone, and how households and workers re-sort over the years.</p><span>Scenarios →</span></a>
+        <a class="mh-reveal" href="{{ 'applying/scenarios/' | url }}">{% include ".icons/material/chart-bell-curve.svg" %}<h3>Equity analysis</h3><p>Effects by household income, car ownership or home location, person by person.</p><span>Scenarios →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- quick start -->
+  <section class="mh-section mh-section--alt">
+    <div class="mh-wrap mh-split">
+      <div>
+        <p class="mh-kicker">Command line</p>
+        <h2>Install and run</h2>
+        <p class="mh-sub">MILES installs as a Python package with one command, <code>miles</code>, for every step of the
+          chain. Java engines and data paths are set once in <code>miles.toml</code>.</p>
+        <p class="mh-cta"><a class="mh-btn mh-btn--primary" href="{{ 'get-started/installation/' | url }}">Installation</a>
+          <a class="mh-btn mh-btn--light" href="{{ 'get-started/running/' | url }}">Running the chain</a></p>
+      </div>
+      <div class="mh-term">
+        <div class="mh-term__bar"><i></i><i></i><i></i><button class="mh-copy" title="Copy">{% include ".icons/material/content-copy.svg" %}</button></div>
+<pre><code><span class="c"># get the code</span>
+<span class="p">$</span> git clone https://github.com/Tomal121186621/MILES.git
+<span class="p">$</span> cd MILES && pip install -e .
+
+<span class="c"># point MILES to the data and engines</span>
+<span class="p">$</span> cp miles.example.toml miles.toml
+<span class="p">$</span> miles config
+
+<span class="c"># run the chain, stage by stage</span>
+<span class="p">$</span> miles population all
+<span class="p">$</span> miles landuse run
+<span class="p">$</span> miles activity run
+<span class="p">$</span> miles assignment run</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- team -->
+  <section class="mh-section mh-team">
+    <div class="mh-wrap mh-team__row">
+      <img class="mh-team__logo" src="{{ 'assets/img/cmmm-logo.png' | url }}" alt="Center for MultiModal Mobility in Urban, Rural and Tribal Areas">
+      <div class="mh-team__text">
+        <p class="mh-kicker">Developed at</p>
+        <h2>Center for MultiModal Mobility in Urban, Rural and Tribal Areas</h2>
+        <p>University of Maryland, College Park</p>
+      </div>
+      <div class="mh-people">
+        <a href="{{ 'about/team/' | url }}"><img src="{{ 'assets/img/team/raas-sarker-tomal.jpg' | url }}" alt=""><b>Raas Sarker Tomal</b><span>PhD student and Graduate Research Assistant</span></a>
+        <a href="{{ 'about/team/' | url }}"><img src="{{ 'assets/img/team/cinzia-cirillo.jpg' | url }}" alt=""><b>Dr. Cinzia Cirillo</b><span>Director of CMMM, PhD supervisor</span></a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}
+
+{% block content %}{% endblock %}
+{% block site_nav %}{% endblock %}

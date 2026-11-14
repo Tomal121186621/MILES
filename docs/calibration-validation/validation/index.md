@@ -4,6 +4,15 @@ Every stage is tested on data it was neither estimated nor calibrated on. **Veri
 estimation data; **validation** with data used in no estimation or calibration step. Each stage page shows the same
 things: headline numbers, the main figure, every comparison in detail, and a scorecard.
 
+<div class="miles-bars">
+<div data-name="Synthetic population" data-ok="25" data-close="3" data-out="3"></div>
+<div data-name="Land use" data-ok="27" data-close="6" data-out="3"></div>
+<div data-name="School location" data-ok="2" data-close="4" data-out="2"></div>
+<div data-name="Activities" data-ok="25" data-close="13" data-out="5"></div>
+<div data-name="County view (all variables, 24 counties)" data-ok="282" data-close="51" data-out="3"></div>
+<p class="mh-legend"><i class="ok"></i>Within limit <i class="close"></i>Within twice the limit <i class="out"></i>Outside</p>
+</div>
+
 | Stage | Tested against | Comparisons | Result |
 |---|---|---:|---|
 | [Synthetic population](population.md) | ACS PUMS 2014–18, held-out PUMS test split, LODES, travel survey | 31 | <span class="vb ok">25 within</span> <span class="vb close">3 close</span> <span class="vb out">3 outside</span> |
