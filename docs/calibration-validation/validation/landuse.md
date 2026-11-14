@@ -96,43 +96,43 @@ that is in no input. By 2024 the two are close again (5.5 against 5.1 %).
 
 ## Scorecard
 
-<div class="vsum"><b>36</b> comparisons · <span class="vb ok">27 within</span> <span class="vb close">6 close</span> <span class="vb out">3 outside</span></div>
+<p class="vsum">36 comparisons: 27 within the limit, 6 close, 3 outside.</p>
 
 | Compared variable | Fit | Result | Note |
 |---|---:|:---:|---|
-| Household size, 2024 | TVD 3.5 pp | <span class="vb ok">within</span> |  |
-| Cars, 2024 | TVD 1.5 pp | <span class="vb ok">within</span> |  |
-| Age, 2024 | TVD 2.1 pp | <span class="vb ok">within</span> |  |
-| Household income, 2024 | TVD 3.7 pp | <span class="vb ok">within</span> |  |
-| Demographic events, 2021–24 | MAPE 6.4 % | <span class="vb close">close</span> |  |
-| Mobility and commuting, 2021–24 | MAD 1.3 pp | <span class="vb ok">within</span> |  |
-| Car time to school, 2024 | MAPE 12 % | <span class="vb out">outside</span> |  |
-| Persons who moved, by year | MAPE 9.7 % | <span class="vb close">close</span> |  |
-| Sex, 2024 | TVD 0.5 pp | <span class="vb ok">within</span> |  |
-| Employed 16+, 2024 | TVD 0.9 pp | <span class="vb ok">within</span> |  |
-| Age, 2024 | TVD 2.1 pp | <span class="vb ok">within</span> |  |
-| Household size, 2024 | TVD 3.5 pp | <span class="vb ok">within</span> |  |
-| Cars, 2024 | TVD 1.5 pp | <span class="vb ok">within</span> |  |
-| Household income, 2024 | TVD 3.7 pp | <span class="vb ok">within</span> |  |
-| Workers per household, 2024 | TVD 3.1 pp | <span class="vb ok">within</span> |  |
-| Living arrangements of adults 18–34, 2024 | MAD 3.0 pp | <span class="vb ok">within</span> |  |
-| Employed share by sex and age, 2024 | MAD 1.0 pp | <span class="vb ok">within</span> |  |
-| Births per woman 15–50 | MAPE 1.7 % | <span class="vb ok">within</span> |  |
-| Deaths per person | MAPE 8.7 % | <span class="vb close">close</span> |  |
-| Marriages per adult | MAPE 4.0 % | <span class="vb ok">within</span> |  |
-| Divorces per married person | MAPE 2.9 % | <span class="vb ok">within</span> |  |
-| Persons who moved | MAPE 9.7 % | <span class="vb close">close</span> |  |
-| Job changes per employed | MAPE 4.5 % | <span class="vb ok">within</span> |  |
-| Employed share 16+ (imposed) | MAD 1.1 pp | <span class="vb ok">within</span> |  |
-| Vacant share of jobs (imposed) | MAD 1.2 pp | <span class="vb ok">within</span> | imposed; follows the inputs with a one-year lag |
-| Residents working in maryland | MAD 0.9 pp | <span class="vb ok">within</span> |  |
-| Same-county workplace | MAD 0.8 pp | <span class="vb ok">within</span> |  |
-| Movers staying in their county | MAD 2.0 pp | <span class="vb ok">within</span> |  |
-| Time to work | MAPE 5.3 % | <span class="vb close">close</span> |  |
-| Population by county, 2024 | MAPE 0.7 % | <span class="vb ok">within</span> |  |
-| Filled jobs by county, 2024 | MAPE 11 % | <span class="vb out">outside</span> |  |
-| New dwellings by county, 2021–24 (imposed) | MAPE 0.1 % | <span class="vb ok">within</span> |  |
-| Home-county workplace share by county, 2024 | MAD 18.6 pp | <span class="vb out">outside</span> | LODES counts jobs, not workers; against the ACS the share agrees (County view) |
-| Dwelling vacancy by county, 2024 | MAD 2.1 pp | <span class="vb ok">within</span> | model weakness, see below |
-| Filled jobs by type, 2024 | MAPE 6.3 % | <span class="vb close">close</span> |  |
-| Movers leaving maryland, 2024 | MAD 1.0 pp | <span class="vb ok">within</span> |  |
+| Household size, 2024 | TVD 3.5 pp | Within |  |
+| Cars, 2024 | TVD 1.5 pp | Within |  |
+| Age, 2024 | TVD 2.1 pp | Within |  |
+| Household income, 2024 | TVD 3.7 pp | Within |  |
+| Demographic events, 2021–24 | MAPE 6.4 % | Close |  |
+| Mobility and commuting, 2021–24 | MAD 1.3 pp | Within |  |
+| Car time to school, 2024 | MAPE 12 % | Outside |  |
+| Persons who moved, by year | MAPE 9.7 % | Close |  |
+| Sex, 2024 | TVD 0.5 pp | Within |  |
+| Employed 16+, 2024 | TVD 0.9 pp | Within |  |
+| Age, 2024 | TVD 2.1 pp | Within |  |
+| Household size, 2024 | TVD 3.5 pp | Within |  |
+| Cars, 2024 | TVD 1.5 pp | Within |  |
+| Household income, 2024 | TVD 3.7 pp | Within |  |
+| Workers per household, 2024 | TVD 3.1 pp | Within |  |
+| Living arrangements of adults 18–34, 2024 | MAD 3.0 pp | Within |  |
+| Employed share by sex and age, 2024 | MAD 1.0 pp | Within |  |
+| Births per woman 15–50 | MAPE 1.7 % | Within |  |
+| Deaths per person | MAPE 8.7 % | Close |  |
+| Marriages per adult | MAPE 4.0 % | Within |  |
+| Divorces per married person | MAPE 2.9 % | Within |  |
+| Persons who moved | MAPE 9.7 % | Close |  |
+| Job changes per employed | MAPE 4.5 % | Within |  |
+| Employed share 16+ (imposed) | MAD 1.1 pp | Within |  |
+| Vacant share of jobs (imposed) | MAD 1.2 pp | Within | imposed; follows the inputs with a one-year lag |
+| Residents working in maryland | MAD 0.9 pp | Within |  |
+| Same-county workplace | MAD 0.8 pp | Within |  |
+| Movers staying in their county | MAD 2.0 pp | Within |  |
+| Time to work | MAPE 5.3 % | Close |  |
+| Population by county, 2024 | MAPE 0.7 % | Within |  |
+| Filled jobs by county, 2024 | MAPE 11 % | Outside |  |
+| New dwellings by county, 2021–24 (imposed) | MAPE 0.1 % | Within |  |
+| Home-county workplace share by county, 2024 | MAD 18.6 pp | Outside | LODES counts jobs, not workers; against the ACS the share agrees (County view) |
+| Dwelling vacancy by county, 2024 | MAD 2.1 pp | Within | model weakness, see below |
+| Filled jobs by type, 2024 | MAPE 6.3 % | Close |  |
+| Movers leaving maryland, 2024 | MAD 1.0 pp | Within |  |

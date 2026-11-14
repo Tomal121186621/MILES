@@ -187,50 +187,50 @@ drawn start times, and stays at home between tours are long.
 
 ## Scorecard
 
-<div class="vsum"><b>43</b> comparisons · <span class="vb ok">25 within</span> <span class="vb close">13 close</span> <span class="vb out">5 outside</span></div>
+<p class="vsum">43 comparisons: 25 within the limit, 13 close, 5 outside.</p>
 
 | Compared variable | Fit | Result | Note |
 |---|---:|:---:|---|
-| Activities per person, hold-out half | MAPE 2.8 % | <span class="vb ok">within</span> |  |
-| Mean distance, hold-out half | MAPE 2.6 % | <span class="vb ok">within</span> |  |
-| Tour mode, hold-out half | TVD 2.6 pp | <span class="vb ok">within</span> |  |
-| Car-driver trip length, hold-out half | MAD 0.6 pp | <span class="vb ok">within</span> |  |
-| Activities per person, 2024 | MAPE 24 % | <span class="vb out">outside</span> | ATUS: 279 Maryland diaries |
-| Persons with the activity, 2024 | MAD 8.4 pp | <span class="vb close">close</span> | ATUS: 279 Maryland diaries |
-| Commute mode, 2024 | TVD 7.8 pp | <span class="vb close">close</span> |  |
-| Own-county work share, 2024 | MAD 2.8 pp | <span class="vb ok">within</span> |  |
-| Activities per person, hold-out half | MAPE 2.7 % | <span class="vb ok">within</span> |  |
-| Mean distance, hold-out half | MAPE 2.6 % | <span class="vb ok">within</span> |  |
-| Activities per person by person type, hold-out half | MAPE 3.2 % | <span class="vb ok">within</span> |  |
-| Activities per person by home area, hold-out half | MAPE 1.6 % | <span class="vb ok">within</span> |  |
-| Mean distance by person type, hold-out half | MAPE 7.1 % | <span class="vb close">close</span> |  |
-| Mean distance by home area, hold-out half | MAPE 6.1 % | <span class="vb close">close</span> |  |
-| Activity start time, hold-out half | TVD 4.0 pp | <span class="vb ok">within</span> |  |
-| Mean activity duration, hold-out half | MAPE 11 % | <span class="vb out">outside</span> |  |
-| Trips per person, hold-out half | MAPE 0.7 % | <span class="vb ok">within</span> |  |
-| Mean trip length, hold-out half | MAPE 5.2 % | <span class="vb close">close</span> |  |
-| Tour mode, work, hold-out half | TVD 6.4 pp | <span class="vb close">close</span> |  |
-| Tour mode, school, hold-out half | TVD 1.8 pp | <span class="vb ok">within</span> |  |
-| Tour mode, shopping, hold-out half | TVD 5.1 pp | <span class="vb close">close</span> |  |
-| Tour mode, recreation, hold-out half | TVD 2.5 pp | <span class="vb ok">within</span> |  |
-| Tour mode, accompanying, hold-out half | TVD 5.0 pp | <span class="vb ok">within</span> |  |
-| Tour mode, other errands, hold-out half | TVD 1.5 pp | <span class="vb ok">within</span> |  |
-| Car-driver share of tours by household cars | MAD 1.7 pp | <span class="vb ok">within</span> |  |
-| Car-driver share of tours by distance | MAD 2.2 pp | <span class="vb ok">within</span> |  |
-| Car-driver trip length, hold-out half | MAD 0.6 pp | <span class="vb ok">within</span> |  |
-| Discretionary activities of workers on workdays, hold-out half | TVD 3.1 pp | <span class="vb ok">within</span> |  |
-| Discretionary activities on separate tours, hold-out half | MAD 0.7 pp | <span class="vb ok">within</span> |  |
-| Activities per person, 2024 | MAPE 24 % | <span class="vb out">outside</span> | ATUS: 279 Maryland diaries |
-| Persons with the activity, 2024 | MAD 8.4 pp | <span class="vb close">close</span> | ATUS: 279 Maryland diaries |
-| Mean activity duration, 2024 | MAPE 9.6 % | <span class="vb close">close</span> |  |
-| Activity start time, 2024 | TVD 4.5 pp | <span class="vb ok">within</span> |  |
-| Trip mode, all trips, 2024 | TVD 2.5 pp | <span class="vb ok">within</span> |  |
-| Commute mode, 2024 | TVD 7.8 pp | <span class="vb close">close</span> |  |
-| Departure from home to work, 2024 | TVD 7.7 pp | <span class="vb close">close</span> |  |
-| Travel time to work, 2024 | TVD 16.1 pp | <span class="vb out">outside</span> | ACS: self-reported door-to-door time, rounded |
-| Commute shares, 2024 | MAD 8.5 pp | <span class="vb close">close</span> |  |
-| Travel time to work, 2024 | MAPE 14 % | <span class="vb out">outside</span> | ACS: self-reported door-to-door time, rounded |
-| Own-county work share, 2024 | MAD 3.6 pp | <span class="vb ok">within</span> |  |
-| Activities per person, baltimore area, 2024 | MAPE 3.5 % | <span class="vb ok">within</span> |  |
-| Mean distance, baltimore area, 2024 | MAPE 9.6 % | <span class="vb close">close</span> |  |
-| Trips per home-based chain, 2024 | MAD 1.7 pp | <span class="vb ok">within</span> |  |
+| Activities per person, hold-out half | MAPE 2.8 % | Within |  |
+| Mean distance, hold-out half | MAPE 2.6 % | Within |  |
+| Tour mode, hold-out half | TVD 2.6 pp | Within |  |
+| Car-driver trip length, hold-out half | MAD 0.6 pp | Within |  |
+| Activities per person, 2024 | MAPE 24 % | Outside | ATUS: 279 Maryland diaries |
+| Persons with the activity, 2024 | MAD 8.4 pp | Close | ATUS: 279 Maryland diaries |
+| Commute mode, 2024 | TVD 7.8 pp | Close |  |
+| Own-county work share, 2024 | MAD 2.8 pp | Within |  |
+| Activities per person, hold-out half | MAPE 2.7 % | Within |  |
+| Mean distance, hold-out half | MAPE 2.6 % | Within |  |
+| Activities per person by person type, hold-out half | MAPE 3.2 % | Within |  |
+| Activities per person by home area, hold-out half | MAPE 1.6 % | Within |  |
+| Mean distance by person type, hold-out half | MAPE 7.1 % | Close |  |
+| Mean distance by home area, hold-out half | MAPE 6.1 % | Close |  |
+| Activity start time, hold-out half | TVD 4.0 pp | Within |  |
+| Mean activity duration, hold-out half | MAPE 11 % | Outside |  |
+| Trips per person, hold-out half | MAPE 0.7 % | Within |  |
+| Mean trip length, hold-out half | MAPE 5.2 % | Close |  |
+| Tour mode, work, hold-out half | TVD 6.4 pp | Close |  |
+| Tour mode, school, hold-out half | TVD 1.8 pp | Within |  |
+| Tour mode, shopping, hold-out half | TVD 5.1 pp | Close |  |
+| Tour mode, recreation, hold-out half | TVD 2.5 pp | Within |  |
+| Tour mode, accompanying, hold-out half | TVD 5.0 pp | Within |  |
+| Tour mode, other errands, hold-out half | TVD 1.5 pp | Within |  |
+| Car-driver share of tours by household cars | MAD 1.7 pp | Within |  |
+| Car-driver share of tours by distance | MAD 2.2 pp | Within |  |
+| Car-driver trip length, hold-out half | MAD 0.6 pp | Within |  |
+| Discretionary activities of workers on workdays, hold-out half | TVD 3.1 pp | Within |  |
+| Discretionary activities on separate tours, hold-out half | MAD 0.7 pp | Within |  |
+| Activities per person, 2024 | MAPE 24 % | Outside | ATUS: 279 Maryland diaries |
+| Persons with the activity, 2024 | MAD 8.4 pp | Close | ATUS: 279 Maryland diaries |
+| Mean activity duration, 2024 | MAPE 9.6 % | Close |  |
+| Activity start time, 2024 | TVD 4.5 pp | Within |  |
+| Trip mode, all trips, 2024 | TVD 2.5 pp | Within |  |
+| Commute mode, 2024 | TVD 7.8 pp | Close |  |
+| Departure from home to work, 2024 | TVD 7.7 pp | Close |  |
+| Travel time to work, 2024 | TVD 16.1 pp | Outside | ACS: self-reported door-to-door time, rounded |
+| Commute shares, 2024 | MAD 8.5 pp | Close |  |
+| Travel time to work, 2024 | MAPE 14 % | Outside | ACS: self-reported door-to-door time, rounded |
+| Own-county work share, 2024 | MAD 3.6 pp | Within |  |
+| Activities per person, baltimore area, 2024 | MAPE 3.5 % | Within |  |
+| Mean distance, baltimore area, 2024 | MAPE 9.6 % | Close |  |
+| Trips per home-based chain, 2024 | MAD 1.7 pp | Within |  |

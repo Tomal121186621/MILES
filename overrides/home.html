@@ -6,8 +6,11 @@
 
   <!-- hero -->
   <section class="mh-hero">
-    <canvas id="mh-roads" aria-hidden="true" data-src="{{ 'assets/data/roads.json' | url }}"></canvas>
+    <video class="mh-video" autoplay muted playsinline preload="auto" poster="{{ 'assets/video/miles_traffic_poster.jpg' | url }}" aria-hidden="true">
+      <source src="{{ 'assets/video/miles_traffic.mp4' | url }}" type="video/mp4">
+    </video>
     <div class="mh-hero__shade"></div>
+    <div class="mh-clock" aria-hidden="true"><b>08:00</b><span>simulated weekday, 2024</span></div>
     <div class="mh-wrap mh-hero__body">
       <p class="mh-eyebrow">Maryland Integrated Land-use and Everyday-travel Simulator</p>
       <h1>From census records<br>to <span>cars on the road</span></h1>
@@ -19,7 +22,8 @@
         <a class="mh-btn" href="{{ 'model-design/' | url }}">How it works</a>
         <a class="mh-btn mh-btn--ghost" href="https://github.com/Tomal121186621/MILES">{% include ".icons/material/github.svg" %} GitHub</a>
       </div>
-      <p class="mh-caption">Background: major roads of the Baltimore region in the MILES network.</p>
+      <p class="mh-caption">Background: simulated cars of a 2024 weekday in the Baltimore region, 04:00 to midnight, from the MILES
+        MATSim run (10 % sample). Each car follows its simulated route, departure time and travel time.</p>
     </div>
   </section>
 
@@ -64,7 +68,7 @@
             </dl>
             <p class="mh-links"><a href="{{ 'model-design/population/' | url }}">Model design</a><a href="{{ 'calibration-validation/validation/population/' | url }}">Validation</a></p>
           </div>
-          <aside class="mh-score" data-ok="25" data-close="3" data-out="3"><h4>Validation</h4></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>Held-out 10 % of ACS PUMS records; ACS 2014–18 by PUMA</p></aside>
         </article>
         <article class="mh-panel">
           <div>
@@ -78,7 +82,7 @@
             </dl>
             <p class="mh-links"><a href="{{ 'model-design/landuse/' | url }}">Model design</a><a href="{{ 'calibration-validation/estimates/landuse/' | url }}">Estimates</a><a href="{{ 'calibration-validation/validation/landuse/' | url }}">Validation</a></p>
           </div>
-          <aside class="mh-score" data-ok="27" data-close="6" data-out="3"><h4>Validation</h4></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>Movers 2019–21; ACS and Census 2021–24, years not used in calibration</p></aside>
         </article>
         <article class="mh-panel">
           <div>
@@ -92,7 +96,7 @@
             </dl>
             <p class="mh-links"><a href="{{ 'model-design/schools/' | url }}">Model design</a><a href="{{ 'calibration-validation/estimates/schools/' | url }}">Estimates</a><a href="{{ 'calibration-validation/validation/schools/' | url }}">Validation</a></p>
           </div>
-          <aside class="mh-score" data-ok="2" data-close="4" data-out="2"><h4>Validation</h4></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>Survey hold-out half; ACS enrolment</p></aside>
         </article>
         <article class="mh-panel">
           <div>
@@ -106,7 +110,7 @@
             </dl>
             <p class="mh-links"><a href="{{ 'model-design/activity/' | url }}">Model design</a><a href="{{ 'calibration-validation/estimates/modes/' | url }}">Estimates</a><a href="{{ 'calibration-validation/validation/activities/' | url }}">Validation</a></p>
           </div>
-          <aside class="mh-score" data-ok="25" data-close="13" data-out="5"><h4>Validation</h4></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>Survey hold-out half (10,899 households); ATUS, ACS and LODES 2024</p></aside>
         </article>
         <article class="mh-panel">
           <div>
@@ -120,7 +124,7 @@
             </dl>
             <p class="mh-links"><a href="{{ 'model-design/assignment/' | url }}">Model design</a><a href="{{ 'calibration-validation/validation/traffic/' | url }}">Validation</a><a href="{{ 'calibration-validation/validation/map/' | url }}">Map</a></p>
           </div>
-          <aside class="mh-kpi"><h4>Against 2024 counts</h4><b>0.81</b><span>model ÷ count, passenger vehicles, 2,308 mainline stations</span><b>0.90</b><span>R² across stations</span></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>2024 traffic counts at 2,308 mainline stations, continuous counters and screenlines</p></aside>
         </article>
       </div>
     </div>
@@ -153,13 +157,14 @@
         <p class="mh-cta"><a class="mh-btn mh-btn--primary" href="{{ 'calibration-validation/validation/' | url }}">Validation results</a>
           <a class="mh-btn" href="{{ 'calibration-validation/validation/map/' | url }}">{% include ".icons/material/map-marker-radius.svg" %} Interactive count map</a></p>
       </div>
-      <div class="mh-bars" id="mh-bars">
-        <div data-name="Synthetic population" data-ok="25" data-close="3" data-out="3"></div>
-        <div data-name="Land use" data-ok="27" data-close="6" data-out="3"></div>
-        <div data-name="School location" data-ok="2" data-close="4" data-out="2"></div>
-        <div data-name="Activities" data-ok="25" data-close="13" data-out="5"></div>
-        <div data-name="County view" data-ok="282" data-close="51" data-out="3"></div>
-        <p class="mh-legend"><i class="ok"></i>Within limit <i class="close"></i>Within twice the limit <i class="out"></i>Outside</p>
+      <div>
+      <dl class="mh-tested">
+        <dt>Synthetic population</dt><dd>Held-out 10 % of ACS PUMS records; ACS 2014–18 by PUMA</dd>
+        <dt>Land use</dt><dd>Calibrated on 2017–20; tested on ACS and Census 2021–24</dd>
+        <dt>School location</dt><dd>Survey hold-out half; ACS enrolment</dd>
+        <dt>Activities</dt><dd>Survey hold-out half; ATUS, ACS and LODES 2024</dd>
+        <dt>Traffic</dt><dd>2024 counts at 2,308 mainline stations, continuous counters, screenlines</dd>
+      </dl>
       </div>
     </div>
   </section>

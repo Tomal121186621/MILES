@@ -70,38 +70,38 @@ The 2016 synthetic population against the ACS PUMS 2014–2018 of Maryland, the 
 
 ## Scorecard
 
-<div class="vsum"><b>31</b> comparisons · <span class="vb ok">25 within</span> <span class="vb close">3 close</span> <span class="vb out">3 outside</span></div>
+<p class="vsum">31 comparisons: 25 within the limit, 3 close, 3 outside.</p>
 
 | Compared variable | Fit | Result | Note |
 |---|---:|:---:|---|
-| Persons by age | TVD 0.1 pp | <span class="vb ok">within</span> |  |
-| Employment status | TVD 5.3 pp | <span class="vb close">close</span> |  |
-| Household size | TVD 5.0 pp | <span class="vb ok">within</span> |  |
-| Cars | TVD 2.2 pp | <span class="vb ok">within</span> |  |
-| Household income (2016 $) | TVD 3.5 pp | <span class="vb ok">within</span> |  |
-| Dwelling type | TVD 2.4 pp | <span class="vb ok">within</span> |  |
-| Tenure | TVD 1.0 pp | <span class="vb ok">within</span> |  |
-| Home–work car time, 2016 | TVD 16.0 pp | <span class="vb out">outside</span> |  |
-| Persons by 5-year age | TVD 2.9 pp | <span class="vb ok">within</span> |  |
-| Sex | TVD 0.5 pp | <span class="vb ok">within</span> |  |
-| Employed (16+) | TVD 2.5 pp | <span class="vb ok">within</span> |  |
-| Race and ethnicity | TVD 3.2 pp | <span class="vb ok">within</span> |  |
-| Nationality | TVD 1.8 pp | <span class="vb ok">within</span> |  |
-| Relationship | TVD 1.4 pp | <span class="vb ok">within</span> |  |
-| Household size (detail) | TVD 5.0 pp | <span class="vb ok">within</span> |  |
-| Cars (detail) | TVD 2.3 pp | <span class="vb ok">within</span> |  |
-| Household income, detail (2016 $) | TVD 3.8 pp | <span class="vb ok">within</span> |  |
-| Person income (2016 $) | TVD 1.7 pp | <span class="vb ok">within</span> |  |
-| Dwelling type | TVD 2.4 pp | <span class="vb ok">within</span> |  |
-| Tenure | TVD 1.0 pp | <span class="vb ok">within</span> |  |
-| Bedrooms | TVD 1.3 pp | <span class="vb ok">within</span> |  |
-| Year built | TVD 2.5 pp | <span class="vb ok">within</span> |  |
-| Monthly housing cost (2016 $) | TVD 2.2 pp | <span class="vb ok">within</span> |  |
-| Persons by county | MAPE 5.0 % | <span class="vb ok">within</span> |  |
-| Filled jobs by county | MAPE 7.2 % | <span class="vb close">close</span> |  |
-| Home–work car time, 2016 | TVD 16.0 pp | <span class="vb out">outside</span> |  |
-| Home–work distance, 2016 | TVD 11.4 pp | <span class="vb out">outside</span> |  |
-| Household size × cars | TVD 5.0 pp | <span class="vb ok">within</span> |  |
-| Household income × cars | TVD 5.4 pp | <span class="vb close">close</span> |  |
-| Households by puma (larger half) | MAPE 1.4 % | <span class="vb ok">within</span> |  |
-| Households by puma (smaller half) | MAPE 1.2 % | <span class="vb ok">within</span> |  |
+| Persons by age | TVD 0.1 pp | Within |  |
+| Employment status | TVD 5.3 pp | Close |  |
+| Household size | TVD 5.0 pp | Within |  |
+| Cars | TVD 2.2 pp | Within |  |
+| Household income (2016 $) | TVD 3.5 pp | Within |  |
+| Dwelling type | TVD 2.4 pp | Within |  |
+| Tenure | TVD 1.0 pp | Within |  |
+| Home–work car time, 2016 | TVD 16.0 pp | Outside |  |
+| Persons by 5-year age | TVD 2.9 pp | Within |  |
+| Sex | TVD 0.5 pp | Within |  |
+| Employed (16+) | TVD 2.5 pp | Within |  |
+| Race and ethnicity | TVD 3.2 pp | Within |  |
+| Nationality | TVD 1.8 pp | Within |  |
+| Relationship | TVD 1.4 pp | Within |  |
+| Household size (detail) | TVD 5.0 pp | Within |  |
+| Cars (detail) | TVD 2.3 pp | Within |  |
+| Household income, detail (2016 $) | TVD 3.8 pp | Within |  |
+| Person income (2016 $) | TVD 1.7 pp | Within |  |
+| Dwelling type | TVD 2.4 pp | Within |  |
+| Tenure | TVD 1.0 pp | Within |  |
+| Bedrooms | TVD 1.3 pp | Within |  |
+| Year built | TVD 2.5 pp | Within |  |
+| Monthly housing cost (2016 $) | TVD 2.2 pp | Within |  |
+| Persons by county | MAPE 5.0 % | Within |  |
+| Filled jobs by county | MAPE 7.2 % | Close |  |
+| Home–work car time, 2016 | TVD 16.0 pp | Outside |  |
+| Home–work distance, 2016 | TVD 11.4 pp | Outside |  |
+| Household size × cars | TVD 5.0 pp | Within |  |
+| Household income × cars | TVD 5.4 pp | Close |  |
+| Households by puma (larger half) | MAPE 1.4 % | Within |  |
+| Households by puma (smaller half) | MAPE 1.2 % | Within |  |

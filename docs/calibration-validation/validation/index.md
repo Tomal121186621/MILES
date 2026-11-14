@@ -4,27 +4,21 @@ Every stage is tested on data it was neither estimated nor calibrated on. **Veri
 estimation data; **validation** with data used in no estimation or calibration step. Each stage page shows the same
 things: headline numbers, the main figure, every comparison in detail, and a scorecard.
 
-<div class="miles-bars">
-<div data-name="Synthetic population" data-ok="25" data-close="3" data-out="3"></div>
-<div data-name="Land use" data-ok="27" data-close="6" data-out="3"></div>
-<div data-name="School location" data-ok="2" data-close="4" data-out="2"></div>
-<div data-name="Activities" data-ok="25" data-close="13" data-out="5"></div>
-<div data-name="County view (all variables, 24 counties)" data-ok="282" data-close="51" data-out="3"></div>
-<p class="mh-legend"><i class="ok"></i>Within limit <i class="close"></i>Within twice the limit <i class="out"></i>Outside</p>
-</div>
+| Stage | Tested against | Comparisons | Within | Close | Outside |
+|---|---|---:|---:|---:|---:|
+| [Synthetic population](population.md) | ACS PUMS 2014–18, held-out PUMS test split, LODES, travel survey | 31 | 25 | 3 | 3 |
+| [Land use](landuse.md) | ACS, Census estimates, JOLTS, permits, county flows; out of sample 2021–24 | 36 | 27 | 6 | 3 |
+| [School location](schools.md) | Survey students, ACS enrolment | 8 | 2 | 4 | 2 |
+| [Activities](activities.md) | Survey hold-out half; ATUS, ACS 2024, LODES | 43 | 25 | 13 | 5 |
+| [County view](county.md) | Every variable by county, all 24 Maryland counties | 336 | 282 | 51 | 3 |
 
-| Stage | Tested against | Comparisons | Result |
-|---|---|---:|---|
-| [Synthetic population](population.md) | ACS PUMS 2014–18, held-out PUMS test split, LODES, travel survey | 31 | <span class="vb ok">25 within</span> <span class="vb close">3 close</span> <span class="vb out">3 outside</span> |
-| [Land use](landuse.md) | ACS, Census estimates, JOLTS, permits, county flows; out of sample 2021–24 | 36 | <span class="vb ok">27 within</span> <span class="vb close">6 close</span> <span class="vb out">3 outside</span> |
-| [School location](schools.md) | Survey students, ACS enrolment | 8 | <span class="vb ok">2 within</span> <span class="vb close">4 close</span> <span class="vb out">2 outside</span> |
-| [Activities](activities.md) | Survey hold-out half; ATUS, ACS 2024, LODES | 43 | <span class="vb ok">25 within</span> <span class="vb close">13 close</span> <span class="vb out">5 outside</span> |
-| [County view](county.md) | Every variable by county, all 24 Maryland counties | 336 | <span class="vb ok">282 within</span> <span class="vb close">51 close</span> <span class="vb out">3 outside</span> |
-| [Traffic](traffic.md) | 2,308 count stations, 21 continuous counters, 7 screenlines, mileage | — | model ÷ count 0.81 (passenger vehicles), R² 0.90 |
+Traffic is compared as a ratio rather than counted against a limit, because the model carries residents only: simulated
+passenger-vehicle volumes are 0.81 of the 2024 counts at 2,308 mainline stations (R² 0.90 across stations); see
+[Traffic](traffic.md).
 
 **Within:** a distribution within 5 percentage points (total variation distance), a set of shares within 5 points on
 average (mean absolute difference) or a rate within 5 % (mean absolute percentage error) of the observed value, the acceptance limits of the land-use and activity tests. **Close:** within twice
-that. **Outside:** beyond. Traffic is compared as a ratio, because the model carries residents only.
+that. **Outside:** beyond. 
 
 ## Strategy
 
