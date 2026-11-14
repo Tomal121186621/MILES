@@ -34,7 +34,7 @@ migration across the regional boundary are represented. Land use runs with open 
 
 <figure markdown>
   ![](../assets/img/net_study_area.png)
-  <figcaption>Study area, major roads and the screenlines S1–S7 used in the validation. Cross: Key Bridge, closed since March 2024. Roads: OpenStreetMap.</figcaption>
+  <figcaption>Study area: the six counties of the Baltimore region and the major roads. Inset: location in Maryland.</figcaption>
 </figure>
 
 ## Level of service
