@@ -9,7 +9,7 @@ Students assigned to schools in every simulated year, against the survey student
 </div>
 
 !!! info "How to read the figures"
-    Orange: model; dark grey: observed; light grey: a second observed source. Error bars: range of the five land-use seeds or of the ten activity-model replications. Each panel shows one fit measure: for a distribution the total variation distance (TVD, percentage points of the population that would have to change class), otherwise the mean absolute percentage error (MAPE).
+    Orange: model; dark grey: observed; light grey: a second observed source. Error bars: range of the five land-use seeds or of the ten activity-model replications. Each panel shows one fit measure: for a distribution the total variation distance (TVD, percentage points of the population that would have to change class); for shares that are not one distribution, the mean absolute difference (MAD, percentage points); otherwise the mean absolute percentage error (MAPE).
 
 <figure markdown>
   ![](../../assets/img/validation/fig_s_val_stage2_schools.png)
@@ -27,15 +27,15 @@ so the 2024 comparison also carries seven years of change in where students live
 
 ## Scorecard
 
-<div class="vsum"><b>8</b> comparisons · <span class="vb ok">1 within</span> <span class="vb close">5 close</span> <span class="vb out">2 outside</span></div>
+<div class="vsum"><b>8</b> comparisons · <span class="vb ok">2 within</span> <span class="vb close">4 close</span> <span class="vb out">2 outside</span></div>
 
-| Compared variable | Fit | Result |
-|---|---:|:---:|
-| Students by age, 2024 | MAPE 2.0 % | <span class="vb ok">within</span> |
-| Car time to school, 2024 | MAPE 12 % | <span class="vb out">outside</span> |
-| Car time to school, 2016 | MAPE 8.3 % | <span class="vb close">close</span> |
-| School in home county, 2024 | MAPE 8.3 % | <span class="vb close">close</span> |
-| School zone holds the attendance-zone school, 2024 | MAPE 8.2 % | <span class="vb close">close</span> |
-| Car time to school, k–8, 2024 | TVD 6.7 pp | <span class="vb close">close</span> |
-| Car time to school, high school, 2024 | TVD 6.2 pp | <span class="vb close">close</span> |
-| Car time to school, college, 2024 | TVD 11.8 pp | <span class="vb out">outside</span> |
+| Compared variable | Fit | Result | Note |
+|---|---:|:---:|---|
+| Students by age, 2024 | MAPE 2.0 % | <span class="vb ok">within</span> |  |
+| Car time to school, 2024 | MAPE 12 % | <span class="vb out">outside</span> |  |
+| Car time to school, 2016 | MAPE 8.3 % | <span class="vb close">close</span> |  |
+| School in home county, 2024 | MAD 5.6 pp | <span class="vb close">close</span> |  |
+| School zone holds the attendance-zone school, 2024 | MAD 4.0 pp | <span class="vb ok">within</span> |  |
+| Car time to school, k–8, 2024 | TVD 6.7 pp | <span class="vb close">close</span> |  |
+| Car time to school, high school, 2024 | TVD 6.2 pp | <span class="vb close">close</span> |  |
+| Car time to school, college, 2024 | TVD 11.8 pp | <span class="vb out">outside</span> |  |
