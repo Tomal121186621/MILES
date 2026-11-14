@@ -108,6 +108,18 @@ nav:
   - Inputs and outputs:
       - inputs-outputs/index.md
       - Data: inputs-outputs/inputs.md
+      - Input data in detail:
+          - inputs-outputs/data/index.md
+          - ACS microdata: inputs-outputs/data/acs-pums.md
+          - Regional Travel Survey: inputs-outputs/data/travel-survey.md
+          - Employment: inputs-outputs/data/employment.md
+          - Population and housing controls: inputs-outputs/data/landuse-controls.md
+          - Schools: inputs-outputs/data/schools.md
+          - Zones, skims and geography: inputs-outputs/data/zones-geography.md
+          - Road network: inputs-outputs/data/road-network.md
+          - Transit: inputs-outputs/data/transit.md
+          - Traffic counts: inputs-outputs/data/traffic-counts.md
+          - Validation benchmarks: inputs-outputs/data/benchmarks.md
       - Zone system and networks: inputs-outputs/zones-networks.md
       - Configuration: inputs-outputs/configuration.md
       - Outputs: inputs-outputs/outputs.md
@@ -133,6 +145,7 @@ nav:
           - School location: calibration-validation/validation/schools.md
           - Activities: calibration-validation/validation/activities.md
           - Traffic: calibration-validation/validation/traffic.md
+          - Interstates by station: calibration-validation/validation/interstates.md
           - County view: calibration-validation/validation/county.md
           - Validation map: calibration-validation/validation/map.md
       - Against standard methods: calibration-validation/baselines.md

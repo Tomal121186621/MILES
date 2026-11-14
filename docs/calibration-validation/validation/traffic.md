@@ -19,6 +19,9 @@ Model: mean of five seeds.
 
 ## Counts at every station
 
+Every interstate station, including the Baltimore Beltway (I-695) and the Capital Beltway (I-495), is listed in
+[Interstates by station](interstates.md).
+
 <figure markdown>
   ![](../../assets/img/validation/fig_traffic_scatter.png)
   <figcaption>Modelled against counted daily traffic at the 2,308 mainline stations: (a) all vehicles, (b) passenger vehicles, by road
