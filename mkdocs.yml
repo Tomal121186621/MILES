@@ -112,6 +112,7 @@ nav:
       - Estimation: calibration-validation/estimation.md
       - Calibration: calibration-validation/calibration.md
       - Validation: calibration-validation/validation.md
+      - Validation map: calibration-validation/validation-map.md
       - Against standard methods: calibration-validation/baselines.md
       - Known limitations: calibration-validation/limitations.md
   - Developers:

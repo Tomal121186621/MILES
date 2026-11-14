@@ -31,7 +31,7 @@ resulting traffic on the road and transit networks.</p>
 <div><b>1,588</b><span>zones, six states</span></div>
 <div><b>28</b><span>estimated choice models</span></div>
 <div><b>3,946</b><span>activity distributions</span></div>
-<div><b>3,437</b><span>count stations tested</span></div>
+<div><b>2,308</b><span>mainline count stations tested</span></div>
 </div>
 
 ## Why ORIOLE
@@ -132,6 +132,10 @@ resulting traffic on the road and transit networks.</p>
 -   :material-function-variant: **[Re-estimate a model](developers/estimation-package.md)**
 
     Notebooks that rebuild every estimate with Biogeme.
+
+-   :material-map-marker-radius: **[Validation map](calibration-validation/validation-map.md)**
+
+    Every count station against the simulated 2024 traffic.
 
 </div>
 

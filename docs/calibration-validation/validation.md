@@ -145,6 +145,9 @@ residents have a work activity than in the ATUS, and discretionary activities do
 
 ## Traffic, 2024
 
+!!! tip "Interactive map"
+    Every count station with its observed and simulated volumes and matched links: [Validation map](validation-map.md).
+
 The assignment carries residents only, so the ratios below are expected to stay below 1.
 
 **Daily counts.** Over 2,308 mainline count stations the model carries **0.77 of all counted vehicles and 0.81 of

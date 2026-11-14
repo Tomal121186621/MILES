@@ -14,6 +14,10 @@
 
     Every stage against data it never saw.
 
+-   :material-map-marker-radius: **[Validation map](validation-map.md)**
+
+    Interactive map of every count station against the simulated traffic.
+
 -   :material-scale-balance: **[Against standard methods](baselines.md)**
 
     CVAE vs IPF and IPU, against the original land-use and activity models.

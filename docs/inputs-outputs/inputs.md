@@ -35,7 +35,7 @@ component tested.
 | MSTM car skims (1,588 zones) | MDOT, base year | Input: car times |
 | OpenStreetMap road network | OSM 2026 | Input: roads, lanes, posted speeds |
 | GTFS transit timetables | 18 operators, 2026 | Input: transit network and skims |
-| Traffic counts (3,437 stations) | MDOT SHA 2024 | Test of daily volumes |
+| Traffic counts (3,797 stations; 3,437 matched to links, 2,308 on the mainline) | MDOT SHA 2024 | Test of daily volumes |
 | TMAS hourly counts (21 stations) | FHWA 2024 | Test of hourly volumes |
 
 ## The travel survey and its two halves
