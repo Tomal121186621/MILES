@@ -2,6 +2,8 @@
 
 <h1 align="center">TERP</h1>
 
+<p align="center"><b>Travel, Employment, Residence and Population</b></p>
+
 <p align="center"><b>From census records to cars on the road.</b><br>
 An agent-based platform of population, land use, daily activities and traffic for Maryland.</p>
 

@@ -6,11 +6,11 @@ hide:
 
 <div class="terp-hero" markdown>
 
-<div class="eyebrow">Agent-based modelling platform · Maryland</div>
+<div class="eyebrow">TERP · Travel, Employment, Residence and Population</div>
 
 # From census records to <span>cars on the road</span>
 
-<p class="lead">TERP synthesises every household of the region, moves it through the housing and job markets year by year, plans each person's weekday, and simulates the
+<p class="lead"><b>TERP</b> (<b>T</b>ravel, <b>E</b>mployment, <b>R</b>esidence and <b>P</b>opulation) is an agent-based modelling platform for Maryland. It synthesises every household of the region, moves it through the housing and job markets year by year, plans each person's weekday, and simulates the
 resulting traffic on the road and transit networks.</p>
 
 [Get started](get-started/index.md){ .md-button .md-button--primary }
