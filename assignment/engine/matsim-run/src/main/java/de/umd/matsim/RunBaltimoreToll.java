@@ -81,8 +81,16 @@ public class RunBaltimoreToll {
         config.transit().setTransitScheduleFile(schedule);
         config.transit().setVehiclesFile(vehicles);
         config.transit().setTransitModes(Set.of("pt"));
-        config.transitRouter().setSearchRadius(4000.0);
-        config.transitRouter().setExtensionRadius(2000.0);
+        // stop search (defaults = all earlier runs). -Dpt.search.radius / -Dpt.extension.radius in metres.
+        config.transitRouter().setSearchRadius(Double.parseDouble(System.getProperty("pt.search.radius", "4000.0")));
+        config.transitRouter().setExtensionRadius(Double.parseDouble(System.getProperty("pt.extension.radius", "2000.0")));
+        // transfer penalty of the SwissRailRaptor in utils per transfer (-Dpt.transfer.penalty; default 0 = all earlier runs).
+        // The router costs in-vehicle time at (performing - marginal utility of pt travel) = 0.78 + 1.02 = 1.80 utils/h, so
+        // 0.30 utils = 10 minutes of in-vehicle time.
+        {
+            ch.sbb.matsim.config.SwissRailRaptorConfigGroup srr = ConfigUtils.addOrGetModule(config, ch.sbb.matsim.config.SwissRailRaptorConfigGroup.class);
+            srr.setTransferPenaltyBaseCost(Double.parseDouble(System.getProperty("pt.transfer.penalty", "0.0")));
+        }
 
         // --- controller ---
         config.controller().setOutputDirectory(outDir);
@@ -197,6 +205,10 @@ public class RunBaltimoreToll {
         // Global: car-anchored money utility + performing carries the (normalized-away) car time cost.
         config.scoring().setMarginalUtlOfWaiting_utils_hr(0.0);
         config.scoring().setPerforming_utils_hr(0.78);
+        // waiting at a transit stop (-Dpt.waiting, utils/h). Unset = MATSim's default, the pt travel value (-1.02), as in all
+        // earlier runs. -2.82 makes the routing cost of waiting (2.82 + 0.78 = 3.60 utils/h) twice that of in-vehicle time.
+        if (System.getProperty("pt.waiting") != null)
+            config.scoring().setMarginalUtlOfWaitingPt_utils_hr(Double.parseDouble(System.getProperty("pt.waiting")));
         // base (median-person) money utility anchored to Lin, Spissu & Cirillo (2024, TR-A 182):
         // pre-pandemic Express Lanes WTP $26-28/h -> $27/h in early-2020 dollars, expressed in
         // NOMINAL 2023 DOLLARS (CPI 2020->2023 ~ +17.8%) for unit consistency with the 2023 toll

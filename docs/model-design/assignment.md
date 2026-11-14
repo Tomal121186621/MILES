@@ -27,8 +27,21 @@ The sections below follow the order of the build: [demand](#1-demand), [road net
 | Persons | Residents of the six counties and workers commuting into them: 209,401 resident and 28,151 in-commuting persons, plus 25,290 residents working outside, in the 10 % sample |
 | Sample | 10 % of households |
 | Modes | Car, car passenger (ride), transit, walk, bike, fixed by MILES-Day; MATSim does not change them |
-| Activity locations | Snapped to the nearest link of the car network that belongs to the strongly connected component |
+| Activity locations | Point locations from OpenStreetMap, inside the zone chosen by MILES-Day (see below) |
 | Not modelled | Trucks, commercial vehicles, visitors and through traffic |
+
+**Placing activities.** MILES-Day chooses zones; the bridge to MATSim (`pipeline/activities_to_matsim.py`) gives each
+activity a point:
+
+| Activity | Point | 2024 run |
+|---|---|---|
+| Home | An OpenStreetMap residential building of the home zone, the same one for all members of a household (a residential street point where the zone has no building) | all homes |
+| Work, school, shopping, recreation, escort, other | An OpenStreetMap point of interest of the matching category inside the chosen zone, drawn at random among the zone's points of that category. Categories: work → work; school → education, else other; escort → education, else other; shopping → shopping; recreation → recreation, else other; other → other. Any POI of the zone if none of the category exists | 590,509 activities, all those inside the study area |
+| Outside the six counties | The coordinate written by MILES-Day | 82,891 activities |
+
+MATSim then attaches each activity to its nearest car link. Seven short dead-end links (pieces of the I-95 Express Toll
+Lanes at the network edge) cannot be reached by any route; the 1,036 activities (0.08 %) whose nearest link was one of
+them are attached to the nearest connected link instead (`pipeline/snap_to_network.py`). Coordinates are not changed.
 
 ## 2. Road network
 

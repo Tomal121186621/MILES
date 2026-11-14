@@ -348,13 +348,17 @@ def matsim(cfg, y, net, seed, k=0, iterations=None, sample=None, toll="NONE", pl
     asc = json.load(open(ASC_FILE)) if os.path.exists(ASC_FILE) else ASCS; flow = sample; stor = round(sample ** 0.75, 4)   # storage = flow^0.75 (I695_pricing/config.py rule)
     # disk (2026-11-02): events and plans written only at iteration 0 and the last one; link stats at the last one, averaged over its last 5 iterations
     opts = [f"-Dseed={seed}", f"-Dthreads={cfg.threads}", f"-Dwrite.events.interval={iterations}", f"-Dwrite.plans.interval={iterations}", f"-Dlinkstats.interval={iterations}", f"-Dlinkstats.average={min(5, iterations)}"] + [f"-D{kk}={vv}" for kk, vv in {**MATSIM_JVM, **MATSIM_STRAT}.items()] + [f"-Dasc.{m}={asc[m]}" for m in ["car", "pt", "ride", "walk", "bike"]]
+    # extra JVM properties of a variant run (2026-11-14, transit routing test): MATSIM_EXTRA_D="key=value,key=value"; unset = no change
+    extra = [kv.strip() for kv in os.environ.get("MATSIM_EXTRA_D", "").split(",") if kv.strip()]
+    opts += [f"-D{kv}" for kv in extra]
+    if extra: log(f"matsim extra properties: {extra}")
     cmd = [JAVA, f"-Xmx{cfg.xmx}"] + opts + ["-cp", MATSIM_JAR, MATSIM_MAIN, net, plans, SCHED, VEH, d, str(iterations), str(flow), str(stor), toll]
     log(f"matsim {tag} seed {seed}: network {os.path.basename(net)} (car links of {os.path.basename(net_base)}), {iterations} iterations, sample {sample} (flow {flow}, storage {stor}), transit {os.path.basename(SCHED)}, toll {toll}")
     rc = run(cfg, cmd, f"{LOGS}/matsim_{tag}_s{seed}.log")
     if cfg.dry: return d
     ev = f"{d}/output_events.xml.gz"
     if rc != 0 or not os.path.exists(ev): raise SystemExit(f"MATSim {tag} seed {seed} failed (rc {rc}); see logs/matsim_{tag}_s{seed}.log")
-    mark_done(cfg, "matsim", f"{tag}_s{seed}", d, [net, plans, SCHED, VEH, MATSIM_JAR], [ev, f"{d}/output_plans.xml.gz"], t0, {"year": y, "seed": seed, "iterations": iterations, "sample": sample, "network": net, "network_base": net_base, "network_year": net_year, "schedule": SCHED, "vehicles": VEH, "vehicles_unscaled": VEH_FULL, "vehicle_scale": sample, "toll": toll, "jvm": {**MATSIM_JVM, **MATSIM_STRAT}, "asc": asc})
+    mark_done(cfg, "matsim", f"{tag}_s{seed}", d, [net, plans, SCHED, VEH, MATSIM_JAR], [ev, f"{d}/output_plans.xml.gz"], t0, {"year": y, "seed": seed, "iterations": iterations, "sample": sample, "network": net, "network_base": net_base, "network_year": net_year, "schedule": SCHED, "vehicles": VEH, "vehicles_unscaled": VEH_FULL, "vehicle_scale": sample, "toll": toll, "jvm": {**MATSIM_JVM, **MATSIM_STRAT}, "extra": os.environ.get("MATSIM_EXTRA_D", ""), "asc": asc})
     return d
 
 # ---------------------------------------------------------------- stage: skims
