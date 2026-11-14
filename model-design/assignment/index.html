@@ -3434,7 +3434,7 @@ time. After 100 iterations the network loads have settled and the link volumes a
 </tr>
 <tr>
 <td>Activity locations</td>
-<td>Snapped to the nearest link of the car network that belongs to the strongly connected component</td>
+<td>Point locations from OpenStreetMap, inside the zone chosen by MILES-Day (see below)</td>
 </tr>
 <tr>
 <td>Not modelled</td>
@@ -3442,6 +3442,37 @@ time. After 100 iterations the network loads have settled and the link volumes a
 </tr>
 </tbody>
 </table>
+<p><strong>Placing activities.</strong> MILES-Day chooses zones; the bridge to MATSim (<code>pipeline/activities_to_matsim.py</code>) gives each
+activity a point:</p>
+<table>
+<thead>
+<tr>
+<th>Activity</th>
+<th>Point</th>
+<th>2024 run</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Home</td>
+<td>An OpenStreetMap residential building of the home zone, the same one for all members of a household (a residential street point where the zone has no building)</td>
+<td>all homes</td>
+</tr>
+<tr>
+<td>Work, school, shopping, recreation, escort, other</td>
+<td>An OpenStreetMap point of interest of the matching category inside the chosen zone, drawn at random among the zone's points of that category. Categories: work → work; school → education, else other; escort → education, else other; shopping → shopping; recreation → recreation, else other; other → other. Any POI of the zone if none of the category exists</td>
+<td>590,509 activities, all those inside the study area</td>
+</tr>
+<tr>
+<td>Outside the six counties</td>
+<td>The coordinate written by MILES-Day</td>
+<td>82,891 activities</td>
+</tr>
+</tbody>
+</table>
+<p>MATSim then attaches each activity to its nearest car link. Seven short dead-end links (pieces of the I-95 Express Toll
+Lanes at the network edge) cannot be reached by any route; the 1,036 activities (0.08 %) whose nearest link was one of
+them are attached to the nearest connected link instead (<code>pipeline/snap_to_network.py</code>). Coordinates are not changed.</p>
 <h2 id="2-road-network">2. Road network<a class="headerlink" href="#2-road-network" title="Permanent link">¶</a></h2>
 <h3 id="21-conversion-from-openstreetmap">2.1 Conversion from OpenStreetMap<a class="headerlink" href="#21-conversion-from-openstreetmap" title="Permanent link">¶</a></h3>
 <p>The road network is built from the Geofabrik OpenStreetMap extract of Maryland (<code>maryland-latest.osm.pbf</code>,
@@ -3509,7 +3540,7 @@ replication timestamp 2026-06-11), clipped to the network area (<code>bmr.osm.gz
 </tr>
 </tbody>
 </table>
-<p>Default values per OSM class, used where a way has no tag of its own:</p>
+<p>Converter defaults per OSM class, used only where a way has no tag of its own (most motorways carry a 65 mph <code>maxspeed</code> tag and run at 105 km/h):</p>
 <table>
 <thead>
 <tr>
@@ -3586,7 +3617,7 @@ replication timestamp 2026-06-11), clipped to the network area (<code>bmr.osm.gz
 </tr>
 </tbody>
 </table>
-<p>For roads, these defaults are replaced by the rules of 2.2 and 2.3.</p>
+<p>For roads, capacities and speeds are then replaced by the rules of 2.2 and 2.3. In the 2024 network the capacity per lane is 2,000 veh/h on motorways other than I-695, 1,500 on trunk roads and mostly 2,100 on ramps.</p>
 <h3 id="22-cleaning-and-reconciliation-with-mdot">2.2 Cleaning and reconciliation with MDOT<a class="headerlink" href="#22-cleaning-and-reconciliation-with-mdot" title="Permanent link">¶</a></h3>
 <table>
 <thead>
@@ -3608,28 +3639,28 @@ replication timestamp 2026-06-11), clipped to the network area (<code>bmr.osm.gz
 <td>MDOT SHA AADT station inventory</td>
 </tr>
 <tr>
-<td>Freeway capacity</td>
-<td>HCM 7th edition: basic segment 2,350 pc/h/lane × heavy-vehicle factor 0.935 = 2,197 veh/h/lane; merge, diverge and lane-drop sections 2,043 veh/h/lane (queue-discharge factor 0.93); weaving sections by the HCM weaving formula</td>
+<td>I-695 capacity</td>
+<td>All 604 mainline links of the Baltimore Beltway, by one geometric rule: basic segment 2,350 pc/h/lane × heavy-vehicle factor 0.935 = 2,197 veh/h/lane; merge, diverge and lane-drop sections 2,043 veh/h/lane (queue-discharge factor 0.93); weaving sections by the HCM weaving formula. Other motorways keep 2,000 veh/h/lane</td>
 <td>Highway Capacity Manual</td>
 </tr>
 <tr>
 <td>Ramp capacity</td>
-<td>HCM ramp-roadway capacity by free speed: 2,200 (&gt; 50 mph), 2,100 (40–50), 2,000 (30–40), 1,900 (20–30), 1,800 pc/h/lane (&lt; 20 mph)</td>
-<td>Highway Capacity Manual</td>
+<td>Every motorway and trunk ramp, by its free speed: 2,200 (&gt; 50 mph), 2,100 (40–50), 2,000 (30–40), 1,900 (20–30), 1,800 per lane (&lt; 20 mph)</td>
+<td>Highway Capacity Manual, ramp roadways</td>
 </tr>
 <tr>
 <td>Exit storage</td>
 <td>The first link of each exit ramp gets the storage of a 300 m deceleration lane, so a queue on the ramp does not block the freeway at once</td>
-<td>HCM, off-ramp spillback</td>
+<td>HCM 7th edition, ch. 38 (off-ramp spillback)</td>
 </tr>
 <tr>
-<td>Isolated links</td>
-<td>Links outside the strongly connected car network are removed; 754 transit-only links left from an earlier mapping are dropped before transit mapping</td>
+<td>Connectivity</td>
+<td>The converter keeps the routable car and bus sub-networks; 7 short dead-end links (I-95 Express Toll Lanes at the network edge) remain outside the strongly connected car network (activities near them: section 1). 754 transit-only links left from an earlier mapping are dropped before transit mapping</td>
 <td>pt2matsim, <code>clean_network.py</code></td>
 </tr>
 <tr>
 <td>2024 changes</td>
-<td>Francis Scott Key Bridge closed (March 2024); I-95 northbound Express Toll Lanes extension MD 43 – MD 152 open (December 2024)</td>
+<td>Francis Scott Key Bridge removed (closed since March 2024). I-95 northbound Express Toll Lanes extension MD 43 – MD 152 removed: it opened in December 2024 and is in the 2026 network only</td>
 <td>MDTA, MDOT SHA project portal</td>
 </tr>
 </tbody>
@@ -3665,8 +3696,9 @@ replication timestamp 2026-06-11), clipped to the network area (<code>bmr.osm.gz
 the MDOT inventories; the audit and the speed recoding are documented in <code>assignment/network/NETWORK_AUDIT.md</code> and
 <code>SPEED_CAPACITY.md</code>.</p>
 <h3 id="24-tolls">2.4 Tolls<a class="headerlink" href="#24-tolls" title="Permanent link">¶</a></h3>
-<p>The 2024 tolls of the Baltimore Harbor and Fort McHenry tunnels are applied with the MATSim road-pricing module
-(<code>roadpricing_HARB_2024.xml</code>, enforcement 100 %).</p>
+<p>The 2024 tolls of the Baltimore Harbor and Fort McHenry tunnels, $3.00 per passage in both directions (two-axle
+vehicle, E-ZPass Maryland), are applied on six tunnel links with the MATSim road-pricing module
+(<code>roadpricing_HARB_2024.xml</code>).</p>
 <h2 id="3-transit-network">3. Transit network<a class="headerlink" href="#3-transit-network" title="Permanent link">¶</a></h2>
 <h3 id="31-feeds-and-representative-day">3.1 Feeds and representative day<a class="headerlink" href="#31-feeds-and-representative-day" title="Permanent link">¶</a></h3>
 <p>Eighteen GTFS feeds are merged: MTA local bus, Light RailLink, Metro SubwayLink, MARC, commuter bus; Charm City
@@ -3720,12 +3752,12 @@ County TheBus; Amtrak.</p>
 <tr>
 <td><code>nLinkThreshold</code></td>
 <td>6</td>
-<td>Number of candidate links per stop</td>
+<td>Candidate links searched per stop</td>
 </tr>
 <tr>
 <td><code>candidateDistanceMultiplier</code></td>
 <td>1.2</td>
-<td>Candidates up to 1.2 × the distance of the nearest link</td>
+<td>After 6 candidates, further links within 1.2 × the distance of the 6th are added</td>
 </tr>
 <tr>
 <td><code>routingWithCandidateDistance</code></td>
@@ -3735,17 +3767,17 @@ County TheBus; Amtrak.</p>
 <tr>
 <td><code>maxTravelCostFactor</code></td>
 <td>5.0</td>
-<td>Paths longer than 5 × the schedule time become artificial links</td>
+<td>If every path between two stops takes more than 5 × the scheduled time, an artificial link is created</td>
 </tr>
 <tr>
 <td><code>scheduleFreespeedModes</code></td>
 <td>artificial, rail, subway</td>
-<td>Free speed of these links set from the schedule</td>
+<td>Free speed of these links set to the lowest value the schedule needs</td>
 </tr>
 <tr>
-<td>Shapes</td>
-<td>GTFS shapes, 300 m and 100 m corridors</td>
-<td>Candidate links restricted to the shape of the route</td>
+<td>GTFS shapes</td>
+<td>300 m, 100 m</td>
+<td>Routes with a shape are routed only on links within 300 m of it; a link's cost grows with its distance from the shape (scale 100 m)</td>
 </tr>
 </tbody>
 </table>
@@ -3819,45 +3851,46 @@ sample rate (0.1) in each run.</p>
 <td>MTA Light RailLink</td>
 <td style="text-align: right;">170 + 200</td>
 <td style="text-align: right;">58 m</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: right;">5.2</td>
 </tr>
 <tr>
 <td>Metro, 4 cars</td>
 <td>MTA Metro SubwayLink</td>
 <td style="text-align: right;">304 + 360</td>
 <td style="text-align: right;">92 m</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: right;">4.4</td>
 </tr>
 <tr>
 <td>Metrorail, 8 cars</td>
 <td>WMATA</td>
 <td style="text-align: right;">512 + 880</td>
 <td style="text-align: right;">183 m</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: right;">4.4</td>
 </tr>
 <tr>
 <td>Commuter rail</td>
 <td>MARC</td>
 <td style="text-align: right;">780</td>
 <td style="text-align: right;">180 m</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: right;">27.1</td>
 </tr>
 <tr>
 <td>Intercity rail</td>
 <td>Amtrak</td>
 <td style="text-align: right;">550</td>
 <td style="text-align: right;">200 m</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: right;">27.1</td>
 </tr>
 <tr>
 <td>Ferry</td>
 <td>Harbor Connector</td>
 <td style="text-align: right;">50</td>
 <td style="text-align: right;">15 m</td>
-<td style="text-align: right;">—</td>
+<td style="text-align: right;">1.0</td>
 </tr>
 </tbody>
 </table>
+<p>Rail and ferry vehicles run on their own or artificial links, so their PCE does not affect road traffic.</p>
 <h2 id="4-simulation-set-up">4. Simulation set-up<a class="headerlink" href="#4-simulation-set-up" title="Permanent link">¶</a></h2>
 <p>The values below are those of the 2024 validation runs (MATSim output configuration).</p>
 <h3 id="41-controller-and-simulation">4.1 Controller and simulation<a class="headerlink" href="#41-controller-and-simulation" title="Permanent link">¶</a></h3>
@@ -4090,7 +4123,7 @@ sample rate (0.1) in each run.</p>
 <tr>
 <td>Activity types</td>
 <td>home 12 h, work 8 h, education 6 h, shopping 2 h, other 2 h, escort 15 min, eat 45 min, errand 30 min, social and recreation 1.5 h</td>
-<td>Typical durations; home, work, shopping and other are split into duration classes of 10 minutes</td>
+<td>Typical durations. Home, work, shopping and other also have 162 duration classes of 10 minutes (10 min to 27 h), so each activity is scored against its own planned duration; work types carry the planned arrival time (5,184 types), which is what the late-arrival penalty refers to. Opening times: work 06:00–21:00, shopping 08:00–20:00</td>
 </tr>
 </tbody>
 </table>
