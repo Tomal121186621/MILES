@@ -1,0 +1,31 @@
+column,definition,unit,source
+row_index,row label of the source data frame (episode / pair index),id,estimation code
+const,constant,1,estimation code
+sp_0_4,"work-episode duration, piece 0-4 h",hours,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+sp_4_7,piece 4-7 h,hours,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+sp_7_inf,piece above 7 h,hours,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+arr_early,arrival at work before 7:00,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+arr_late,arrival at work from 10:00,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+sw,secondary work episode (arrival at the usual workplace from 15:00),0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+age_u30,age under 30,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+age_55p,age 55 or over,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+female,female,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+inc_low,household income below $50k (sum of the members' incomes),0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+inc_high,household income $100k or more,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+car0,no car in the household,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+carshort,fewer cars than licensed drivers (at least one car),0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+kids,household member under 16,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+lnacc2,ln(1 + retail and other jobs within 2 km of the workplace zone),ln jobs,zone table (00_shared_data/zones)
+cbd_w,"workplace zone with >= 10,000 jobs per km2",0/1,zone table (00_shared_data/zones)
+lncomm,ln(1 + car km home zone -> workplace zone),ln km,"car distance skim 2016, intrazonal 0.5 sqrt(area) (00_shared_data/skims/abit_base_2016)"
+y,1 = at least one outing from the usual workplace during the work episode,0/1 or alternative,survey
+nsub,number of outings in the work episode,count,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+w,survey weight (not used: unweighted estimation),weight,RTS
+person_id,survey person id,id,RTS
+arr,arrival at work,minutes after midnight,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+span,duration of the (merged) work episode,minutes,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+km_comm,home-workplace car km,km,"car distance skim 2016, intrazonal 0.5 sqrt(area) (00_shared_data/skims/abit_base_2016)"
+age10,age / 10,decades,survey population (00_shared_data/rts_2017_18/survey_pop)
+lic,driving licence,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+dur_h,work-episode duration,hours,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+lndur,ln work-episode duration (h),ln hours,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"

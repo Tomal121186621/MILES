@@ -1,0 +1,176 @@
+{
+ "half": "validation",
+ "N": 14177,
+ "parts": [
+  {
+   "file": "biogeme_part00.parquet",
+   "purpose": "SHOPPING",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part01.parquet",
+   "purpose": "SHOPPING",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part02.parquet",
+   "purpose": "SHOPPING",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part03.parquet",
+   "purpose": "SHOPPING",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part04.parquet",
+   "purpose": "SHOPPING",
+   "n_cfg": 1,
+   "N": 544
+  },
+  {
+   "file": "biogeme_part05.parquet",
+   "purpose": "SHOPPING",
+   "n_cfg": 2,
+   "N": 344
+  },
+  {
+   "file": "biogeme_part06.parquet",
+   "purpose": "SHOPPING",
+   "n_cfg": 3,
+   "N": 45
+  },
+  {
+   "file": "biogeme_part07.parquet",
+   "purpose": "SHOPPING",
+   "n_cfg": 4,
+   "N": 5
+  },
+  {
+   "file": "biogeme_part08.parquet",
+   "purpose": "RECREATION",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part09.parquet",
+   "purpose": "RECREATION",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part10.parquet",
+   "purpose": "RECREATION",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part11.parquet",
+   "purpose": "RECREATION",
+   "n_cfg": 1,
+   "N": 807
+  },
+  {
+   "file": "biogeme_part12.parquet",
+   "purpose": "RECREATION",
+   "n_cfg": 2,
+   "N": 295
+  },
+  {
+   "file": "biogeme_part13.parquet",
+   "purpose": "RECREATION",
+   "n_cfg": 3,
+   "N": 34
+  },
+  {
+   "file": "biogeme_part14.parquet",
+   "purpose": "RECREATION",
+   "n_cfg": 4,
+   "N": 1
+  },
+  {
+   "file": "biogeme_part15.parquet",
+   "purpose": "ACCOMPANY",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part16.parquet",
+   "purpose": "ACCOMPANY",
+   "n_cfg": 1,
+   "N": 377
+  },
+  {
+   "file": "biogeme_part17.parquet",
+   "purpose": "ACCOMPANY",
+   "n_cfg": 2,
+   "N": 126
+  },
+  {
+   "file": "biogeme_part18.parquet",
+   "purpose": "ACCOMPANY",
+   "n_cfg": 3,
+   "N": 13
+  },
+  {
+   "file": "biogeme_part19.parquet",
+   "purpose": "OTHER",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part20.parquet",
+   "purpose": "OTHER",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part21.parquet",
+   "purpose": "OTHER",
+   "n_cfg": 1,
+   "N": 1000
+  },
+  {
+   "file": "biogeme_part22.parquet",
+   "purpose": "OTHER",
+   "n_cfg": 1,
+   "N": 265
+  },
+  {
+   "file": "biogeme_part23.parquet",
+   "purpose": "OTHER",
+   "n_cfg": 2,
+   "N": 282
+  },
+  {
+   "file": "biogeme_part24.parquet",
+   "purpose": "OTHER",
+   "n_cfg": 3,
+   "N": 36
+  },
+  {
+   "file": "biogeme_part25.parquet",
+   "purpose": "OTHER",
+   "n_cfg": 4,
+   "N": 3
+  }
+ ],
+ "n_cfg_max": 4,
+ "n_cand_max": 4,
+ "zones": 1588,
+ "purposes": [
+  "SHOPPING",
+  "RECREATION",
+  "ACCOMPANY",
+  "OTHER"
+ ],
+ "form": "primary",
+ "vars": [
+  "imp",
+  "cgt"
+ ]
+}

@@ -1,0 +1,16 @@
+estimation half: 23,770 persons (4,780 imputed rows), 81,732 trips, 54,198 typed episodes
+episodes by type (unweighted): {'WB': 2950, 'WAHB': 375, 'PW': 9435, 'SW': 634, 'RHW': 244, 'SCH': 3232, 'JO_REC': 3308, 'JO_OTH': 3034, 'JS': 2722, 'IO_REC': 6687, 'IO_ACC': 5363, 'IO_OTH': 9504, 'IS': 6710}
+
+frequency distributions: 874 (person 847, household 27)
+start-time distributions: 561; duration distributions: 769; participants 12; location 5
+start cells by level: {0: 179, 1: 170, 2: 101, 3: 63, 4: 35, 5: 13}  duration cells by level: {0: 231, 1: 249, 2: 165, 3: 110, 4: 14}
+minimum at-home slack (p10 of the at-home episodes between out-of-home episodes): 15.0 min (7,413 episodes)
+workplace-type shares by age band:
+seg   worker_home  worker_none  worker_usual
+wage                                        
+0           0.015        0.045         0.939
+1           0.070        0.064         0.866
+2           0.077        0.066         0.857
+3           0.134        0.099         0.767
+episodes per person 5+ by type: {'WB': 0.1207, 'WAHB': 0.0165, 'PW': 0.3796, 'SW': 0.0271, 'RHW': 0.0108, 'SCH': 0.1808, 'JO_REC': 0.136, 'JO_OTH': 0.1261, 'JS': 0.1113, 'IO_REC': 0.2476, 'IO_ACC': 0.2647, 'IO_OTH': 0.351, 'IS': 0.2461}
+joint propensity: {'worker_usual': 0.576, 'worker_home': 0.722, 'worker_none': 0.565, 'student_elementary': 0.663, 'student_middle': 0.564, 'student_high': 0.474, 'student_postsec': 0.632, 'nonworker': 0.825, 'retiree': 0.872, 'toddler': 0.804}

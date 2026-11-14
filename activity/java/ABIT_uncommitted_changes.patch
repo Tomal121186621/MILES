@@ -1,0 +1,954 @@
+diff --git a/src/main/java/abm/models/maryland/MarylandDestinationChoice.java b/src/main/java/abm/models/maryland/MarylandDestinationChoice.java
+index 7f1ef86..8f5456a 100644
+--- a/src/main/java/abm/models/maryland/MarylandDestinationChoice.java
++++ b/src/main/java/abm/models/maryland/MarylandDestinationChoice.java
+@@ -123,6 +123,7 @@ public class MarylandDestinationChoice implements DestinationChoice {
+             attrByPurpose.put(e.getKey(), a);
+         }
+         if (mnlActive()) buildMnlArrays();
++        if (mnlActive()) for (MnlSegment s : mnl.values()) for (int t : s.type) if (t == T_LSTOUR) { MarylandTourNestedModeChoice.ensureLoaded(dataSet); break; }
+     }
+ 
+     private static void loadAttractionAndBands() {
+@@ -367,16 +368,27 @@ public class MarylandDestinationChoice implements DestinationChoice {
+     // =============================================================================================================================
+     // multi (2026-10-23): the primary destination of a tour with at least one stop (TASHA generator: a main discretionary episode of a
+     // chain of two or more episodes, relocated after the chains are formed); 0 in every other call
+-    private static final String[] FLAGS = {"inc0", "inc2", "car0", "car1", "child", "kid", "senior", "worker", "am", "pm", "ev", "nonauto", "worktour", "inbound", "multi"};
++    // re-specified models (2026-11-09, 3_abit/coef_respec): male, hh1 (one-person household) and hhsize (persons, a count, not a flag)
++    // for the interactions lnd_<x> / lndt_<x>; variable lstour = logsum of the re-specified tour mode models
++    // (MarylandTourNestedModeChoice.logsum, accessibility_new/mode_logsum_new.py): round trip between the two zones of a leg, both
++    // halves in the period of the time of day of the choice (the flags am / pm / ev), stops = 1 (stop segments; primary segments: the
++    // multi flag), joint = 0, model of the purpose of the segment (shopping -> shopping; recreation, accompany, other -> other with
++    // rec / acc; work -> work; education -> school); stops: LS(a, j) + LS(j, b) - LS(a, b), primary and anchored: LS(a, j).
++    private static final String[] FLAGS = {"inc0", "inc2", "car0", "car1", "child", "kid", "senior", "worker", "am", "pm", "ev", "nonauto", "worktour", "inbound", "multi",
++            "male", "hh1", "hhsize"};
+     private static final String[] ZVARS = {"bc", "dcz", "va", "othst", "cbd", "lnretden", "mix"};
+     private static final String[] SIZE = {"pop", "ret", "off", "oth", "stu"};
+     private static final double[] KNOTS = {1, 2, 5, 10, 20, 50}, DKNOTS = {1, 2, 5, 10, 20};
+     private static final int T_PIECE = 1, T_LIN = 2, T_LN = 3, T_LNX = 4, T_CTIME = 5, T_LS = 6, T_INTRA = 7, T_INTRA_A = 8, T_INTRA_B = 9,
+-            T_ZONE = 10, T_XCOUNTY = 11, T_XSTATE = 12, T_PTAV_CAR0 = 13, T_PTAV = 14, T_CGT = 15;
++            T_ZONE = 10, T_XCOUNTY = 11, T_XSTATE = 12, T_PTAV_CAR0 = 13, T_PTAV = 14, T_CGT = 15, T_LSTOUR = 16;
+     private static String dcModel = "gravity";
+     private static Set<String> debugSegs = null;                               // dest.mnl.debug.segments: only these segments (2026-10-23)
+     private static String debugFile = null;                                   // dest.mnl.debug.file: utilities of the first 30 choices
+     private static final java.util.concurrent.atomic.AtomicInteger debugCount = new java.util.concurrent.atomic.AtomicInteger(), debugCountStop = new java.util.concurrent.atomic.AtomicInteger();
++    // dest.mnl.debug.per.segment (2026-11-09): the first dest.mnl.debug.n choices of EVERY segment (default: the first 30 primary and
++    // 30 stop choices over all segments, as before); the line then also carries the flags nonauto, worktour, inbound, multi
++    private static boolean debugPerSeg = false; private static int debugN = 30;
++    private static final Map<String, java.util.concurrent.atomic.AtomicInteger> debugBySeg = new java.util.concurrent.ConcurrentHashMap<>();
+     private static final Map<String, MnlSegment> mnl = new LinkedHashMap<>();
+     private static final Map<Purpose, double[][]> mcCoef = new HashMap<>();   // purpose -> [variable][mode] of MarylandFullModeChoice
+     private static final String[] MC_VARS = {"ASC", "age", "male", "license", "hhsize", "hhautos", "coreCity", "medCity", "rural", "gc", "tripLength"};
+@@ -406,6 +418,8 @@ public class MarylandDestinationChoice implements DestinationChoice {
+         if (!"mnl".equalsIgnoreCase(dcModel)) return;
+         try { debugFile = AbitResources.instance.getString("dest.mnl.debug.file"); if (debugFile != null && debugFile.isBlank()) debugFile = null; } catch (Exception ignored) {}
+         try { String ds = AbitResources.instance.getString("dest.mnl.debug.segments"); if (ds != null && !ds.isBlank()) debugSegs = new HashSet<>(Arrays.asList(ds.trim().split(";"))); } catch (Exception ignored) {}
++        try { debugPerSeg = Boolean.parseBoolean(AbitResources.instance.getString("dest.mnl.debug.per.segment")); } catch (Exception ignored) {}
++        try { String dn = AbitResources.instance.getString("dest.mnl.debug.n"); if (dn != null && !dn.isBlank()) debugN = Integer.parseInt(dn.trim()); } catch (Exception ignored) {}
+         String f = AbitResources.instance.getString("dest.mnl.file");
+         if (f == null || f.isBlank()) throw new RuntimeException("dest.choice.model = mnl requires dest.mnl.file");
+         Map<String, List<String[]>> rows = new LinkedHashMap<>();
+@@ -442,6 +456,7 @@ public class MarylandDestinationChoice implements DestinationChoice {
+                 } else if (v.equals("ctime")) s.type[k] = T_CTIME;
+                 else if (v.equals("cgt")) s.type[k] = T_CGT;
+                 else if (v.equals("ls")) s.type[k] = T_LS;
++                else if (v.equals("lstour")) s.type[k] = T_LSTOUR;
+                 else if (v.equals("intra")) s.type[k] = T_INTRA;
+                 else if (v.equals("intra_a")) s.type[k] = T_INTRA_A;
+                 else if (v.equals("intra_b")) s.type[k] = T_INTRA_B;
+@@ -583,6 +598,7 @@ public class MarylandDestinationChoice implements DestinationChoice {
+         f[4] = child ? 1 : 0; f[5] = person.getAge() < 18 ? 1 : 0; f[6] = person.getAge() >= 65 ? 1 : 0;
+         f[7] = person.getOccupation() == de.tum.bgu.msm.data.person.Occupation.EMPLOYED ? 1 : 0;
+         f[8] = h >= 6 && h < 9 ? 1 : 0; f[9] = h >= 15 && h < 19 ? 1 : 0; f[10] = (h < 6 || h >= 19) ? 1 : 0;
++        f[15] = person.getGender() == de.tum.bgu.msm.data.person.Gender.MALE ? 1 : 0; f[16] = hh.getPersons().size() == 1 ? 1 : 0; f[17] = hh.getPersons().size();
+         if (tour != null) {
+             f[11] = (tourMode != Mode.CAR_DRIVER && tourMode != Mode.CAR_PASSENGER) ? 1 : 0;
+             Purpose tp = tour.getMainActivity().getPurpose(); f[12] = (tp == Purpose.WORK || tp == Purpose.EDUCATION) ? 1 : 0;
+@@ -606,6 +622,14 @@ public class MarylandDestinationChoice implements DestinationChoice {
+         boolean needG = false; for (int t : s.type) if (t == T_CGT) needG = true;
+         double votHh = needG ? MarylandFullModeChoice.VOT[0] * votFactor(person) : 1.0, toll = MarylandFullModeChoice.getToll();
+         double gAB = needG && s.stop ? gt(a, b, votHh, toll) : 0;
++        boolean needLt = false; for (int t : s.type) if (t == T_LSTOUR) needLt = true;
++        MarylandTourNestedModeChoice.PA lpa = null; String lseg = null; int lper = 1; double lstops = 0, lacc = 0, lrec = 0, ltAB = 0;
++        if (needLt) {
++            lpa = MarylandTourNestedModeChoice.personAttrs(person); lseg = MarylandTourNestedModeChoice.logsumSegment(s.purpose);
++            lper = MarylandTourNestedModeChoice.period(startMin); lstops = s.stop ? 1 : fl[14];
++            lacc = s.purpose == Purpose.ACCOMPANY ? 1 : 0; lrec = s.purpose == Purpose.RECREATION ? 1 : 0;
++            if (s.stop) ltAB = MarylandTourNestedModeChoice.logsum(lseg, lpa, zoneIds[a], zoneIds[b], lper, lper, lstops, 0, lacc, lrec);
++        }
+         double[] V = new double[n]; double mx = Double.NEGATIVE_INFINITY;
+         for (int j = 0; j < n; j++) {
+             double imp = s.stop ? Math.max(0.0, mDkm[a * n + j] + mDkm[j * n + b] - dAB) : mDkm[a * n + j];
+@@ -621,6 +645,9 @@ public class MarylandDestinationChoice implements DestinationChoice {
+                     case T_CTIME: x = s.stop ? Math.max(0.0, mTcar[a * n + j] + mTcar[j * n + b] - tAB) : mTcar[a * n + j]; break;
+                     case T_CGT: x = s.stop ? Math.max(0.0, gt(a, j, votHh, toll) + gt(j, b, votHh, toll) - gAB) : gt(a, j, votHh, toll); break;
+                     case T_LS: x = s.stop ? logsum(mp, a, j) + logsum(mp, j, b) - lsAB : logsum(mp, a, j); break;
++                    case T_LSTOUR: x = s.stop ? MarylandTourNestedModeChoice.logsum(lseg, lpa, zoneIds[a], zoneIds[j], lper, lper, lstops, 0, lacc, lrec)
++                            + MarylandTourNestedModeChoice.logsum(lseg, lpa, zoneIds[j], zoneIds[b], lper, lper, lstops, 0, lacc, lrec) - ltAB
++                            : MarylandTourNestedModeChoice.logsum(lseg, lpa, zoneIds[a], zoneIds[j], lper, lper, lstops, 0, lacc, lrec); break;
+                     case T_INTRA: case T_INTRA_A: x = j == a ? 1 : 0; break;
+                     case T_INTRA_B: x = j == b ? 1 : 0; break;
+                     case T_XCOUNTY: x = (zCounty[j] != zCounty[a] && (!s.stop || zCounty[j] != zCounty[b])) ? 1 : 0; break;
+@@ -633,11 +660,14 @@ public class MarylandDestinationChoice implements DestinationChoice {
+             }
+             V[j] = u; if (u > mx) mx = u;
+         }
+-        if (debugFile != null && (debugSegs == null || debugSegs.contains(s.key)) && (s.stop ? debugCountStop : debugCount).getAndIncrement() < 30) {
++        if (debugFile != null && (debugSegs == null || debugSegs.contains(s.key))
++                && (debugPerSeg ? debugBySeg.computeIfAbsent(s.key, k -> new java.util.concurrent.atomic.AtomicInteger()).getAndIncrement() < debugN
++                                : (s.stop ? debugCountStop : debugCount).getAndIncrement() < 30)) {
+             synchronized (MarylandDestinationChoice.class) {
+                 try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(debugFile, true))) {
+                     for (int j = 0; j < n; j++) pw.println(s.key + "," + person.getId() + "," + zoneIds[a] + "," + (b >= 0 ? zoneIds[b] : -1) + "," + startMin + ","
+-                            + (tourMode == null ? "" : tourMode) + "," + inbound + "," + (tour == null ? "" : tour.getMainActivity().getPurpose()) + "," + zoneIds[j] + "," + V[j]);
++                            + (tourMode == null ? "" : tourMode) + "," + inbound + "," + (tour == null ? "" : tour.getMainActivity().getPurpose()) + "," + zoneIds[j] + "," + V[j]
++                            + (debugPerSeg ? "," + fl[11] + "," + fl[12] + "," + fl[13] + "," + fl[14] : ""));
+                 } catch (Exception ignored) { }
+             }
+         }
+diff --git a/src/main/java/abm/models/maryland/MarylandTashaGenerator.java b/src/main/java/abm/models/maryland/MarylandTashaGenerator.java
+index 674f624..da21726 100644
+--- a/src/main/java/abm/models/maryland/MarylandTashaGenerator.java
++++ b/src/main/java/abm/models/maryland/MarylandTashaGenerator.java
+@@ -124,7 +124,37 @@ public class MarylandTashaGenerator {
+     private final AtomicLong nMainReloc = new AtomicLong(), nRegenBand = new AtomicLong(), nJointReloc = new AtomicLong(), nRegenCond = new AtomicLong(), nRegenNoWindow = new AtomicLong(), nRhLogit = new AtomicLong(), nRhInfeasible = new AtomicLong(), nLocMnl = new AtomicLong();
+     static final String[] RH_VARS = {"const", "sl_0_05", "sl_05_1", "sl_1_2", "sl_2_4", "sl_4_inf", "lnslack", "detour_km", "lndetour", "dhome_km",
+             "a_work", "a_school", "a_acc", "a_shop", "a_joint", "e_work", "e_school", "e_acc", "e_shop", "e_joint",
+-            "worker", "stud_k12", "stud_ps", "retiree", "toddler", "nep3", "nep4", "nep5", "am", "pm", "ev", "jj", "jmand"};
++            "worker", "stud_k12", "stud_ps", "retiree", "toddler", "nep3", "nep4", "nep5", "am", "pm", "ev", "jj", "jmand",
++            // re-specified return-home logit (2026-11-09, respec_2026-11/step_by_step/activity/a03_return.py, 3_abit/coef_respec): female,
++            // driving licence, household size, a household member under 16, no car, fewer cars than licensed drivers, household
++            // income < $50k / >= $100k (12 x the members' monthly incomes), number of out-of-home episodes of the day
++            "female", "lic", "hhsize", "kids", "car0", "carshort", "inc_low", "inc_high", "nep"};
++    // tasha.debug.file (2026-11-09, unit check of the re-specified models): the inputs and utilities of the first tasha.debug.n
++    // (default 200) evaluations of the return-home logit (RH), the outing logit (WBSGEN) and the outing-mode logit (WBSMODE)
++    /** types whose person frequency has licence cells first (tasha_params freq.licence.types, ';'-separated; default IO_ACC as
++     *  before; coef_respec 2026-11-10: IO_ACC;IS;IO_REC;IO_OTH) */
++    private final Set<String> licTypes = new HashSet<>(Collections.singletonList("IO_ACC"));
++    private boolean jointFreqMand = false; private final Map<String, AtomicLong> nJointBand = new java.util.concurrent.ConcurrentHashMap<>();
++    private boolean jointMembersMand = false; private final Map<String, Double> propMand = new HashMap<>();
++    private void loadPropMand(String f) {
++        try (BufferedReader br = new BufferedReader(new FileReader(f))) {
++            Map<String, Integer> h = header(br.readLine()); String line;
++            while ((line = br.readLine()) != null) { if (line.isBlank()) continue; String[] r = line.split(","); propMand.put(r[h.get("seg")].trim(), Double.parseDouble(r[h.get("propensity")].trim())); }
++        } catch (Exception e) { throw new RuntimeException("joint.propensity.mand.file: " + f, e); }
++    }
++    private boolean jointStartCond = false; static final Set<String> MANDT = new HashSet<>(Arrays.asList("WB", "WAHB", "PW", "SW", "SCH"));
++    private final AtomicLong nJointStartM = new AtomicLong(), nJointStartN = new AtomicLong(), nJointStartCell = new AtomicLong();
++    private String dbgFile = null; private int dbgN = 200; private final Map<String, AtomicLong> dbgCount = new java.util.concurrent.ConcurrentHashMap<>();
++    private void dbg(String tag, String line) {
++        if (dbgFile == null || dbgCount.computeIfAbsent(tag, k -> new AtomicLong()).getAndIncrement() >= dbgN) return;
++        synchronized (this) { try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter(dbgFile, true))) { pw.println(tag + "," + line); } catch (Exception ignored) { } }
++    }
++    /** household attributes of the re-specified activity models: {female, lic, hhsize, kids (a member under 16), cars, licensed drivers, annual income} */
++    private static double[] hhAttrs(Person p) {
++        Household hh = p.getHousehold(); int d = 0; boolean u16 = false; double inc = 0;
++        for (Person q : hh.getPersons()) { if (q.isHasLicense()) d++; if (q.getAge() < 16) u16 = true; inc += q.getMonthlyIncome_eur(); }
++        return new double[]{p.getGender() == de.tum.bgu.msm.data.person.Gender.FEMALE ? 1 : 0, p.isHasLicense() ? 1 : 0, hh.getPersons().size(), u16 ? 1 : 0, hh.getNumberOfCars(), d, 12 * inc};
++    }
+ 
+     // counters: fallback level used per family (frequency person 0..5, household 0..2, start 0..4, duration 0..3)
+     private final AtomicLongArray fbFreq = new AtomicLongArray(9), fbFreqH = new AtomicLongArray(3), fbStart = new AtomicLongArray(6), fbDur = new AtomicLongArray(5);
+@@ -236,6 +266,13 @@ public class MarylandTashaGenerator {
+                     case "joint.common.draws": jointCommonDraws = Boolean.parseBoolean(v); break;
+                     case "home.return.honor": rhHonor = Boolean.parseBoolean(v); break;
+                     case "subtour.file": if (!v.isBlank()) loadSubtours(new java.io.File(f).getParent() + "/" + v); break;
++                    case "debug.file": dbgFile = v.isBlank() ? null : v; break;
++                    case "joint.start.conditional": jointStartCond = Boolean.parseBoolean(v); break;
++                    case "joint.members.mandatory": jointMembersMand = Boolean.parseBoolean(v); break;
++                    case "joint.freq.mandatory": jointFreqMand = Boolean.parseBoolean(v); break;
++                    case "joint.propensity.mand.file": if (!v.isBlank()) loadPropMand(new java.io.File(f).getParent() + "/" + v); break;
++                    case "freq.licence.types": licTypes.clear(); for (String q : v.split(";")) if (!q.isBlank()) licTypes.add(q.trim()); break;
++                    case "debug.n": dbgN = (int) Double.parseDouble(v); break;
+                     case "transit.legmode.file": if (!v.isBlank()) loadTransitLegs(new java.io.File(f).getParent() + "/" + v); break;
+                     case "relocate.joint.mode": jointAnyStop = v.trim().equalsIgnoreCase("anystop"); break;
+                     case "duration.edges": durEdges = parse(v); break;
+@@ -294,6 +331,10 @@ public class MarylandTashaGenerator {
+     // usual workplace during a work episode, distributions of the outings, stops, purposes, departures and stop durations, binary
+     // logit of walking on the outing against keeping the mode of the work tour
+     static final String[] WBS_PURP = {"IS", "IO_REC", "IO_OTH", "IO_ACC"};
++    /** person / household terms of the outing-mode logit evaluated with wbsVar (2026-11-09); multi and km separately */
++    static final String[] WBS_MODE_HH = {"car0", "carshort", "age_u30", "age_55p", "female", "inc_low", "inc_high", "kids"};
++    static final Set<String> WBS_MODE_KEYS = new HashSet<>(Arrays.asList("const", "lnkm", "km", "cbd_w", "lnretden_w", "tm_cd", "tm_cp", "multi",
++            "car0", "carshort", "age_u30", "age_55p", "female", "inc_low", "inc_high", "kids"));
+     private final Map<String, Double> wbsGen = new HashMap<>(), wbsMode = new HashMap<>();
+     private double[] wbsNOut, wbsNStops, wbsLeave, wbsDurEdges; private final Map<String, double[]> wbsPurp = new HashMap<>(), wbsDur = new HashMap<>();
+     private int wbsMinBefore = 45, wbsMinAfter = 45; private double wbsAccKm = 2; private boolean wbsOn = false;
+@@ -319,6 +360,7 @@ public class MarylandTashaGenerator {
+             }
+         } catch (Exception e) { throw new RuntimeException("subtour.file load failed: " + f, e); }
+         wbsOn = !wbsGen.isEmpty();
++        for (String k : wbsMode.keySet()) if (!WBS_MODE_KEYS.contains(k)) throw new RuntimeException("unknown outing-mode variable mode." + k + " in " + f);
+     }
+ 
+     /** zone variables of the workplace (lazy): cbd = at least 10,000 jobs per km2, ln(1 + retail jobs per km2) */
+@@ -386,6 +428,8 @@ public class MarylandTashaGenerator {
+         for (Ep w0 : roots) {
+             nWbsEp.incrementAndGet();
+             double v = 0; for (Map.Entry<String, Double> en : wbsGen.entrySet()) v += en.getValue() * wbsVar(en.getKey(), p, hh, w0, home, work);
++            if (dbgFile != null) { double[] ha = hhAttrs(p); dbg("WBSGEN", p.getId() + "," + w0.type + "," + w0.start + "," + w0.dur() + "," + home.getZoneId() + "," + work.getZoneId() + ","
++                    + p.getAge() + "," + ha[0] + "," + ha[6] + "," + ha[4] + "," + ha[5] + "," + ha[3] + "," + v); }
+             if (r.nextDouble() >= 1.0 / (1.0 + Math.exp(-v))) continue;
+             int nOut = 1 + (wbsNOut == null ? 0 : drawIndex(wbsNOut, r));
+             Ep w = w0;
+@@ -418,9 +462,14 @@ public class MarylandTashaGenerator {
+                 double km1 = km(work, loc[0]); zoneDensity();
+                 double wv = wbsMode.getOrDefault("const", 0.0) + wbsMode.getOrDefault("lnkm", 0.0) * Math.log1p(km1)
+                         + wbsMode.getOrDefault("cbd_w", 0.0) * (wi == null ? 0 : zoneCbd[wi]) + wbsMode.getOrDefault("lnretden_w", 0.0) * (wi == null ? 0 : zoneRetDen[wi]);
++                // re-specified outing-mode logit (2026-11-09, activity/a02_outing_mode.py): household cars and more than one stop on the outing
++                for (String k2 : WBS_MODE_HH) { Double b2 = wbsMode.get(k2); if (b2 != null) wv += b2 * wbsVar(k2, p, hh, w, home, work); }
++                if (wbsMode.containsKey("multi")) wv += wbsMode.get("multi") * (ns > 1 ? 1 : 0);
++                if (wbsMode.containsKey("km")) wv += wbsMode.get("km") * km1;
+                 int cur = leave; int idx = sc.indexOf(w) + 1;
+                 for (int k = 0; k < ns; k++) {
+                     cur += tts[k]; Ep s = new Ep(ty[k], cur, du[k], loc[k], 0); s.sub = true; s.outing = id; s.walkV0 = wv; s.src = "wbs_" + (k == 0 ? "first_stop" : "seq_stop");
++                    if (dbgFile != null) s.dbg = p.getId() + "," + work.getZoneId() + "," + loc[0].getZoneId() + "," + ns;
+                     sc.add(idx++, s); cur += du[k]; nWbsStops.incrementAndGet();
+                 }
+                 cur += tts[ns];
+@@ -497,7 +546,7 @@ public class MarylandTashaGenerator {
+      *  (IO_ACC) has licence cells first (tasha_distributions.py), then the cells without the licence */
+     private int drawFreq(String ty, String seg, String hhc, int prior, int mand, String lic, Random r) {
+         String pb = String.valueOf(Math.min(prior, 2)), g = group(seg), mb = (mand > 0 ? "M" : "N") + Math.min(Math.max(0, prior - mand), 2);
+-        if (!lic.isEmpty() && ty.equals("IO_ACC")) {
++        if (!lic.isEmpty() && licTypes.contains(ty)) {
+             String sl = seg + lic, gl = g + lic;
+             String[] lk = {ty + "|" + sl + "|" + hhc + "|" + mb, ty + "|" + sl + "|*|" + mb, ty + "|" + gl + "|*|" + mb, ty + "|" + sl + "|*|" + pb, ty + "|" + gl + "|*|" + pb, ty + "|" + sl + "|*|*", ty + "|" + gl + "|*|*"};
+             for (String k : lk) { double[] c = freqP.get(k); if (c != null) { nFreqLic.incrementAndGet(); return drawIndex(c, r); } }
+@@ -511,6 +560,13 @@ public class MarylandTashaGenerator {
+         return 0;
+     }
+ 
++    /** household joint frequency conditional on the members' work / school that day (band MN / MS / MA; joint.freq.mandatory), then
++     *  the cells without the band */
++    private int drawFreqHhBand(String ty, String comp, String wk, String band, Random r) {
++        for (String k : new String[]{ty + "|" + comp + "|" + wk + "|" + band, ty + "|" + comp + "|*|" + band, ty + "|*|*|" + band}) { double[] c = freqH.get(k); if (c != null) return drawIndex(c, r); }
++        return drawFreqHh(ty, comp, wk, r);
++    }
++
+     private int drawFreqHh(String ty, String comp, String wk, Random r) {
+         String[] keys = {ty + "|" + comp + "|" + wk + "|*", ty + "|" + comp + "|*|*", ty + "|*|*|*"};
+         for (int l = 0; l < keys.length; l++) {
+@@ -537,6 +593,11 @@ public class MarylandTashaGenerator {
+ 
+     /** the start-time cdf of the cell (with fallback; the level used is counted) */
+     private double[] startCdf(String ty, String seg, int f, int i, int prior) {
++        if (prior >= 10) {   // joint episode, conditional on the participants' work / school that day (JM / JN), then the cells below
++            String jp = prior == 11 ? "JM" : "JN", fs = String.valueOf(Math.min(f, 3)), is = String.valueOf(Math.min(i, 3));
++            for (String k : new String[]{ty + "|" + seg + "|" + fs + "|" + is + "|" + jp, ty + "|*|" + fs + "|" + is + "|" + jp, ty + "|*|*|*|" + jp}) { double[] c = startD.get(k); if (c != null) { nJointStartCell.incrementAndGet(); return c; } }
++            prior = 0;
++        }
+         String fs = String.valueOf(Math.min(f, 3)), is = String.valueOf(Math.min(i, 3)), g = group(seg), pb = prior >= 2 ? "M" : prior == 1 ? "O" : "0";
+         String[] keys = {ty + "|" + seg + "|" + fs + "|" + is + "|" + pb, ty + "|" + seg + "|" + fs + "|" + is + "|*", ty + "|" + g + "|" + fs + "|" + is + "|*",
+                 ty + "|*|" + fs + "|" + is + "|*", ty + "|*|" + fs + "|*|*", ty + "|*|*|*|*"};
+@@ -681,12 +742,12 @@ public class MarylandTashaGenerator {
+         // work-based subtour (2026-11-03): sub = stop of an outing from the workplace, cont = the return to the workplace, root =
+         // the work episode the outing leaves from; outing = id of the outing within the household; walkV0 = the part of the
+         // outing-mode utility known at scheduling (constant, distance to the first stop, workplace density)
+-        boolean sub = false, cont = false, root = false; int outing = 0; double walkV0 = 0;
++        boolean sub = false, cont = false, root = false; int outing = 0; double walkV0 = 0; String dbg = null;
+         Ep(String type, int start, int dur, Location loc, int jointId) { this.type = type; this.purpose = PURPOSE.get(type); this.start = start; this.end = start + dur; this.orig = dur; this.start0 = start; this.loc = loc; this.jointId = jointId; }
+         int dur() { return end - start; }
+         boolean fixed() { return sub || cont || root; }
+         Ep(Ep o) { type = o.type; purpose = o.purpose; start = o.start; end = o.end; orig = o.orig; start0 = o.start0; loc = o.loc; jointId = o.jointId; src = o.src; regen = o.regen; first = o.first;
+-                   sub = o.sub; cont = o.cont; root = o.root; outing = o.outing; walkV0 = o.walkV0; }
++                   sub = o.sub; cont = o.cont; root = o.root; outing = o.outing; walkV0 = o.walkV0; dbg = o.dbg; }
+     }
+ 
+     private int tt(Location a, Location b, int t) {
+@@ -823,10 +884,65 @@ public class MarylandTashaGenerator {
+         if (attFile != null) for (Person p : ps) if (workLoc.get(p) != null) {
+             nAttWorkers.incrementAndGet(); boolean at = r.nextDouble() < attendProb(home); attend.put(p, at); if (!at) nAttHome.incrementAndGet();
+         }
++        boolean jointsRedrawn = false;
+         for (String ty : TYPES) {
+             if (JOINT.contains(ty)) {
++                if (jointFreqMand && !jointsRedrawn && ps.size() >= 2) {
++                    // joint.freq.mandatory (2026-11-10, coef_respec): the joint episodes of the household are generated now, after the
++                    // members' mandatory episodes, with the frequency conditional on how many members have a work or school episode
++                    // that day (MN none, MS some, MA all; household rows of tasha_frequency.csv with prior = the band); start,
++                    // duration, number of participants and the participants as before (the participants then again by
++                    // joint.members.mandatory, the start by joint.start.conditional)
++                    int nm = 0; for (Person p : ps) { boolean m = false; for (Ep x : sched.get(p)) if (MANDT.contains(x.type)) m = true; if (m) nm++; }
++                    String band = nm == 0 ? "MN" : nm == ps.size() ? "MA" : "MS";
++                    joints.clear(); int jid2 = 0;
++                    for (String jt : new String[]{"JO_REC", "JO_OTH", "JS"}) {
++                        int n0 = drawFreqHhBand(jt, comp, wk, band, r);
++                        int n = scaled(n0, jt, "household", () -> drawFreqHhBand(jt, comp, wk, band, r), r);
++                        for (int i = 1; i <= n; i++) {
++                            nGen.incrementAndGet(); genByType.computeIfAbsent(jt, k -> new AtomicLong()).incrementAndGet();
++                            Joint j = new Joint(); j.ty = jt; j.n = n; j.i = i; j.id = ++jid2;
++                            j.st = drawStart(jt, comp, n, i, 0, r); j.du = drawDuration(jt, "*", j.st, n, r);
++                            double[] kc = partK.get(jt + "|" + Math.min(5, ps.size()));
++                            int k = Math.min(ps.size(), 2 + (kc == null ? 0 : drawIndex(kc, r)));
++                            for (int q = 0; q < k; q++) j.who.add(ps.get(q));   // placeholders: drawn below (joint.members.mandatory)
++                            Activity probe = new Activity(j.who.get(0), PURPOSE.get(jt)); probe.setStartTime_min(off + j.st); probe.setEndTime_min(off + j.st + j.du); probe.setDayOfWeek(day);
++                            setup.getDestinationChoice().selectMainActivityDestination(j.who.get(0), probe); j.loc = probe.getLocation();
++                            joints.add(j);
++                        }
++                    }
++                    jointsRedrawn = true; nJointBand.computeIfAbsent(band, b -> new AtomicLong()).incrementAndGet();
++                }
+                 for (Joint j : joints) {
+                     if (!j.ty.equals(ty)) continue;
++                    // joint.start.conditional (2026-11-10, coef_respec): the start is drawn now, after the participants' mandatory
++                    // episodes are placed, from the start distribution conditional on whether any participant has a work or school
++                    // episode that day (cells JM / JN of tasha_start.csv, tasha_distributions.py); the common location again for it
++                    // joint.members.mandatory (2026-11-10, coef_respec): the participants are drawn again now, with the number drawn
++                    // before, by the propensity of their segment and whether they have a work or school episode that day
++                    // (tasha_joint_propensity_mand.csv: segment|M, segment|N; a missing cell takes the segment's propensity)
++                    if (jointMembersMand && !propMand.isEmpty()) {
++                        int k = j.who.size(); List<Person> pool = new ArrayList<>(ps); j.who.clear();
++                        Map<Person, Double> pw = new HashMap<>();
++                        for (Person p : pool) {
++                            boolean m = false; for (Ep x : sched.get(p)) if (MANDT.contains(x.type)) m = true;
++                            pw.put(p, propMand.getOrDefault(seg.get(p) + "|" + (m ? "M" : "N"), propensity.getOrDefault(seg.get(p), 0.5)));
++                        }
++                        for (int q = 0; q < k && !pool.isEmpty(); q++) {
++                            double sm = 0; for (Person p : pool) sm += pw.get(p);
++                            double u = r.nextDouble() * sm; Person sel = pool.get(pool.size() - 1);
++                            for (Person p : pool) { u -= pw.get(p); if (u < 0) { sel = p; break; } }
++                            j.who.add(sel); pool.remove(sel);
++                        }
++                    }
++                    int jpc = 0;
++                    if (jointStartCond) {
++                        boolean jm = false; for (Person p : j.who) for (Ep x : sched.get(p)) if (MANDT.contains(x.type)) jm = true;
++                        jpc = jm ? 11 : 10; j.st = drawStart(ty, comp, j.n, j.i, jpc, r); j.du = drawDuration(ty, "*", j.st, j.n, r);
++                        Activity probe = new Activity(j.who.get(0), PURPOSE.get(ty)); probe.setStartTime_min(off + j.st); probe.setEndTime_min(off + j.st + j.du); probe.setDayOfWeek(day);
++                        setup.getDestinationChoice().selectMainActivityDestination(j.who.get(0), probe); j.loc = probe.getLocation();
++                        if (jm) nJointStartM.incrementAndGet(); else nJointStartN.incrementAndGet();
++                    }
+                     boolean ok = false; int first = j.st, used = 0;
+                     for (int a = 0; a <= maxRegen && !ok; a++) {
+                         if (a > 0) {
+@@ -834,11 +950,11 @@ public class MarylandTashaGenerator {
+                             if (regenCond) {   // conditional on the free windows common to all participants
+                                 List<int[]> rooms = new ArrayList<>(); for (Person p : j.who) rooms.add(freeRoom(sched.get(p), j.loc, home, dayEnd));
+                                 int dmin = Math.max(5, (int) Math.ceil(shortenFrac * Math.min(j.du, 60))); int[] sd = null;
+-                                if (regenBand && a == 1) { int[] bd = bandRange(first); sd = drawInWindows(rooms, ty, comp, "*", j.n, j.i, 0, dmin, r, bd[0], bd[1]); if (sd != null) nRegenBand.incrementAndGet(); }
+-                                if (sd == null) sd = drawInWindows(rooms, ty, comp, "*", j.n, j.i, 0, dmin, r);
++                                if (regenBand && a == 1) { int[] bd = bandRange(first); sd = drawInWindows(rooms, ty, comp, "*", j.n, j.i, jpc, dmin, r, bd[0], bd[1]); if (sd != null) nRegenBand.incrementAndGet(); }
++                                if (sd == null) sd = drawInWindows(rooms, ty, comp, "*", j.n, j.i, jpc, dmin, r);
+                                 if (sd == null) { nRegenNoWindow.incrementAndGet(); break; }
+                                 nRegenCond.incrementAndGet(); j.st = sd[0]; j.du = sd[1];
+-                            } else { j.st = drawStart(ty, comp, j.n, j.i, 0, r); j.du = drawDuration(ty, "*", j.st, j.n, r); }
++                            } else { j.st = drawStart(ty, comp, j.n, j.i, jpc, r); j.du = drawDuration(ty, "*", j.st, j.n, r); }
+                         }
+                         Map<Person, List<Ep>> trial = new HashMap<>(); boolean all = true;
+                         for (Person p : j.who) {
+@@ -1002,7 +1118,7 @@ public class MarylandTashaGenerator {
+      *  ln(1 + km); d(a, home); purpose of a and e (work incl. work business, school, accompany, shopping; joint; base: other
+      *  individual discretionary); person segment (base: non-worker); out-of-home episodes of the day (3, 4, 5+; base 2); time of
+      *  day of the end of a (am < 9:00, pm 15-19, ev >= 19; base midday). */
+-    private double returnHomeProb(Ep a, Ep e, String sg, Location home, int nEp, int slack) {
++    private double returnHomeProb(Ep a, Ep e, String sg, Location home, int nEp, int slack, Person person) {
+         double h = slack / 60.0, dah = km(a.loc, home), dhe = km(home, e.loc), dae = km(a.loc, e.loc), det = Math.max(0.0, dah + dhe - dae);
+         boolean aw = WORKT.contains(a.type), ew = WORKT.contains(e.type);
+         double[] x = new double[RH_VARS.length]; int k = 0;
+@@ -1017,7 +1133,13 @@ public class MarylandTashaGenerator {
+         // 2026-11-03: two joint episodes; a joint episode next to a work or school episode
+         boolean aj = a.jointId != 0, ej = e.jointId != 0, am = aw || a.type.equals("SCH"), em = ew || e.type.equals("SCH");
+         x[k++] = aj && ej ? 1 : 0; x[k++] = (aj && em) || (ej && am) ? 1 : 0;
++        double[] ha = hhAttrs(person);
++        x[k++] = ha[0]; x[k++] = ha[1]; x[k++] = ha[2]; x[k++] = ha[3]; x[k++] = ha[4] <= 0 ? 1 : 0; x[k++] = ha[4] > 0 && ha[4] < ha[5] ? 1 : 0;
++        x[k++] = ha[6] < 50000 ? 1 : 0; x[k++] = ha[6] >= 100000 ? 1 : 0; x[k++] = nEp;
+         double v = 0; for (int q = 0; q < RH_VARS.length; q++) { Double b = rhCoef.get(RH_VARS[q]); if (b != null) v += b * x[q]; }
++        if (dbgFile != null) dbg("RH", person.getId() + "," + a.type + "," + a.purpose + "," + (a.jointId != 0 ? 1 : 0) + "," + a.end + "," + a.loc.getZoneId() + ","
++                + e.type + "," + e.purpose + "," + (e.jointId != 0 ? 1 : 0) + "," + e.loc.getZoneId() + "," + home.getZoneId() + "," + sg + "," + nEp + "," + slack + ","
++                + ha[0] + "," + ha[1] + "," + ha[2] + "," + ha[3] + "," + ha[4] + "," + ha[5] + "," + ha[6] + "," + v);
+         return 1.0 / (1.0 + Math.exp(-v));
+     }
+ 
+@@ -1049,7 +1171,7 @@ public class MarylandTashaGenerator {
+                     if (slack < rhMinSlack || (WORKT.contains(a.type) && WORKT.contains(e.type))) {
+                         goHome = false; nRhInfeasible.incrementAndGet();
+                         if (!(WORKT.contains(a.type) && WORKT.contains(e.type))) {
+-                            double pr = returnHomeProb(a, e, sg, home, nEp, Math.max(1, slack)); nRhTight.incrementAndGet(); rhTightP.add(pr);
++                            double pr = returnHomeProb(a, e, sg, home, nEp, Math.max(1, slack), person); nRhTight.incrementAndGet(); rhTightP.add(pr);
+                             // (2026-11-03, home.return.honor) the logit is estimated on every pair whatever its gap: a drawn return home
+                             // is kept by moving the next episode later (by at most max.shift.min from its drawn start, before the next
+                             // episode) and, for the rest, ending the previous one earlier (to shorten.min.frac of its duration); joint
+@@ -1073,7 +1195,7 @@ public class MarylandTashaGenerator {
+                     else {
+                         double u = ju != null && e.jointId != 0 && ju.containsKey(e.jointId) ? ju.get(e.jointId)[0]
+                                  : ju != null && a.jointId != 0 && ju.containsKey(a.jointId) ? ju.get(a.jointId)[1] : r.nextDouble();
+-                        goHome = u < returnHomeProb(a, e, sg, home, nEp, slack); nRhLogit.incrementAndGet();
++                        goHome = u < returnHomeProb(a, e, sg, home, nEp, slack, person); nRhLogit.incrementAndGet();
+                     }
+                 } else {
+                     // the person goes home when an at-home stay drawn from the observed at-home durations between two out-of-home
+@@ -1224,6 +1346,7 @@ public class MarylandTashaGenerator {
+                 Boolean wk = walk.get(s.outing);
+                 if (wk == null) {
+                     double v = s.walkV0 + wbsMode.getOrDefault("tm_cd", 0.0) * (tm == Mode.CAR_DRIVER ? 1 : 0) + wbsMode.getOrDefault("tm_cp", 0.0) * (tm == Mode.CAR_PASSENGER ? 1 : 0);
++                    if (dbgFile != null && s.dbg != null) dbg("WBSMODE", s.dbg + "," + tm + "," + v);
+                     wk = tm != Mode.WALK && r.nextDouble() < 1.0 / (1.0 + Math.exp(-v)); walk.put(s.outing, wk); nWbsOutMode.incrementAndGet(); if (wk) nWbsWalk.incrementAndGet();
+                 }
+                 if (wk) l.setLegMode(Mode.WALK);
+@@ -1355,6 +1478,8 @@ public class MarylandTashaGenerator {
+           .append("wbs_work_episodes,").append(nWbsEp.get()).append('\n').append("wbs_outings,").append(nWbsOut.get()).append('\n').append("wbs_stops,").append(nWbsStops.get()).append('\n')
+           .append("wbs_outings_not_fitting,").append(nWbsNoFit.get()).append('\n').append("wbs_outings_walk,").append(nWbsWalk.get()).append('\n').append("wbs_outings_mode_drawn,").append(nWbsOutMode.get()).append('\n')
+           .append("freq_licence_cells,").append(nFreqLic.get()).append('\n')
++          .append(jointFreqMand ? "joint_households_band_MN," + nJointBand.getOrDefault("MN", new AtomicLong()).get() + "\njoint_households_band_MS," + nJointBand.getOrDefault("MS", new AtomicLong()).get() + "\njoint_households_band_MA," + nJointBand.getOrDefault("MA", new AtomicLong()).get() + "\n" : "")
++          .append(jointStartCond ? "joint_start_with_mandatory," + nJointStartM.get() + "\njoint_start_without_mandatory," + nJointStartN.get() + "\njoint_start_conditional_cells," + nJointStartCell.get() + "\n" : "")
+           .append("transit_leg_tours,").append(nTlTours.get()).append('\n').append("transit_legs_drawn,").append(nTlLegs.get()).append('\n')
+           .append("transit_legs_outing_skipped,").append(nTlOuting.get()).append('\n').append("transit_legs_zone_outside_los,").append(nTlNoZone.get()).append('\n')
+           .append("transit_tours_no_free_car,").append(nTlNoCar.get()).append('\n')
+diff --git a/src/main/java/abm/models/maryland/MarylandTourNestedModeChoice.java b/src/main/java/abm/models/maryland/MarylandTourNestedModeChoice.java
+index cbf05cd..6482bb1 100644
+--- a/src/main/java/abm/models/maryland/MarylandTourNestedModeChoice.java
++++ b/src/main/java/abm/models/maryland/MarylandTourNestedModeChoice.java
+@@ -46,6 +46,20 @@ import java.util.zip.GZIPInputStream;
+  * ({@link #resolveHousehold}): joint tours travel together (one mode from the summed utilities, one driver), then the household's
+  * cars are allocated to overlapping car-driver tours by their utility advantage; within-household ride sharing is not modelled.
+  *
++ * <p>Re-specified models (2026-11-09, side_experiments/respec_2026-11/step_by_step/mode_choice m08_sequence.py / m09_school.py,
++ * coefficient set 3_abit/coef_respec): terms switched on only by their keys in the coefficient file, so a file without them
++ * (coef_tasha) gives the earlier utilities unchanged:
++ * <pre>
++ *   time, cost      generic minutes and $ of CD, CP, BUS, TRAIN (time + cost form: T_m and C_m of GC_m above, toll in C_CD)
++ *   kids_m          household with a person under 18 (prep_dc_data.people: children = persons under 18)
++ *   park_CD         paid-parking share of the main-activity zone's area (prep_tours.park_area: 0 Baltimore City CBD, 1 other
++ *                   Baltimore City, 2 DC CBD, 3 other DC, 4 other CBD zone, 5 elsewhere; CBD = at least 10,000 jobs per km2 of the
++ *                   run's job file; shares of property mc.park.share.file, park_area,share)
++ *   stops_CD        tour with at least one stop besides the main activity
++ * </pre>
++ * {@link #logsum} gives the logsum of these models for a round trip between two zones (stop and location models of the same set,
++ * variable {@code lstour} of MarylandDestinationChoice).
++ *
+  * <p>Properties: {@code mode.choice.model = tour_nl}, {@code mc.coef.file} (segment,parameter,value), {@code mc.los.dir},
+  * {@code mc.vot.share} (0.5), {@code mc.asc.adjust} (segment,alt,delta: calibrated variant only), {@code mc.toll.file}
+  * (FROM,TO,VALUE $ per car-driver half-tour, gzipped CSV), {@code mc.tours.out}.  Toll hook {@link #setToll(double)}: $ per
+@@ -61,7 +75,8 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+     static final int[] NEST_OF = {0, 2, 2, 0, 1, 1};
+     static final double OPC_KM = 0.179 / 1.60934, FARE_MTA = 1.80, INC_FLOOR = 5000.0, HOURS = 2080.0, DRIVE_KMH = 25.0;
+     static final double WALK_MAX = 12.0, BIKE_MAX = 50.0;
+-    static final String[] SOCIO = {"age", "male", "lic", "hhsize", "autos", "core_o", "rural_o", "core_d", "rural_d", "joint", "short", "acc", "rec"};
++    static final String[] SOCIO = {"age", "male", "lic", "hhsize", "autos", "core_o", "rural_o", "core_d", "rural_d", "joint", "short", "acc", "rec",
++            "kids", "park", "stops"};   // kids, park, stops: re-specified models (2026-11-09)
+     /** household-structure terms (2026-11-02, mode_choice/estimate_hh.py): joint = main activity a joint household episode, short =
+      *  fewer cars than licensed drivers (at least one car), acc / rec = accompanying / recreation tour of the 'other' segment.
+      *  joint and short are estimation controls applied as 0 (property mc.zero.terms): the household stage produces the joint
+@@ -79,7 +94,25 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+     private static float[] tollOd = null;
+     private static volatile double tollUsd = 0.0;
+     private static double votShare = 0.5;
+-    private static boolean toursOut = false;
++    private static boolean toursOut = false, toursFull = false, applyShort = false, applyJoint = false, cdEstimation = false;
++    /** paid-parking share by LOS zone index (mc.park.share.file; null without the property) */
++    private static double[] parkZone = null;
++    /** coefficients of a segment in arrays (index = ALT, SOCIO); absent terms are flagged, so they add nothing */
++    static final class Cf {
++        final double[] asc = new double[6], km = new double[6], gc = new double[6]; final double[][] so = new double[6][SOCIO.length];
++        final boolean[][] has = new boolean[6][SOCIO.length]; double time, cost; boolean hasTime, hasCost, nested; final double[] mu = {1, 1, 1}; final boolean[] hasAsc = new boolean[6];
++        Cf(Map<String, Double> b) {
++            for (int a = 0; a < 6; a++) {
++                asc[a] = b.getOrDefault("ASC_" + ALT[a], 0.0); km[a] = b.getOrDefault("km_" + ALT[a], 0.0); gc[a] = b.getOrDefault("gc_" + ALT[a], b.getOrDefault("gc", 0.0));
++                for (int s = 0; s < SOCIO.length; s++) { Double c = b.get(SOCIO[s] + "_" + ALT[a]); if (c != null) { so[a][s] = c; has[a][s] = true; } }
++            }
++            hasTime = b.containsKey("time"); time = b.getOrDefault("time", 0.0); hasCost = b.containsKey("cost"); cost = b.getOrDefault("cost", 0.0);
++            nested = b.containsKey("mu_auto") || b.containsKey("mu_transit") || b.containsKey("mu_nonmot");
++            for (int a = 0; a < 6; a++) hasAsc[a] = b.containsKey("ASC_" + ALT[a]);
++            for (int k = 0; k < 3; k++) mu[k] = b.getOrDefault("mu_" + NEST_NAME[k], 1.0);
++        }
++    }
++    private static final Map<String, Cf> cf = new HashMap<>();
+     private static final ConcurrentLinkedQueue<String> tourLines = new ConcurrentLinkedQueue<>();
+     private static final AtomicLong nTours = new AtomicLong(), nJointGroups = new AtomicLong(), nJointTours = new AtomicLong(), nCdTours = new AtomicLong(),
+             nRealloc = new AtomicLong(), nHhConflict = new AtomicLong(), nHh = new AtomicLong();
+@@ -87,7 +120,39 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+     private final Random rnd = AbitUtils.getRandomObject();
+ 
+     public MarylandTourNestedModeChoice(DataSet dataSet) {
+-        synchronized (MarylandTourNestedModeChoice.class) { if (!loaded) { load(); loaded = true; } }
++        synchronized (MarylandTourNestedModeChoice.class) { if (!loaded) { load(); loaded = true; } if (parkZone == null) loadPark(dataSet); }
++    }
++
++    /** the LOS matrices and coefficients without a mode-choice object (MarylandDestinationChoice, variable lstour) */
++    static synchronized void ensureLoaded(DataSet dataSet) { if (!loaded) { load(); loaded = true; } if (parkZone == null) loadPark(dataSet); }
++
++    /** paid-parking share of every LOS zone (property mc.park.share.file: park_area,share; area class of prep_tours.park_area from
++     *  the zone's county (zone.attributes.file) and its jobs per km2 (jj.retail + jj.office + jj.other of the run, area at least
++     *  0.05 km2, as MarylandDestinationChoice's cbd) */
++    private static void loadPark(DataSet dataSet) {
++        String pf = AbitResources.instance.getString("mc.park.share.file");
++        if (pf == null || pf.trim().isEmpty()) return;
++        double[] share = new double[6];
++        for (String[] r : csv(pf.trim())) share[Integer.parseInt(r[0].trim())] = Double.parseDouble(r[1].trim());
++        Map<Integer, Integer> county = new HashMap<>();
++        String zf = AbitResources.instance.getString("zone.attributes.file");
++        try (BufferedReader br = new BufferedReader(new FileReader(zf))) {
++            String[] h = br.readLine().split(","); int iId = -1, iC = -1;
++            for (int i = 0; i < h.length; i++) { if (h[i].trim().equals("id")) iId = i; if (h[i].trim().equals("countyfips")) iC = i; }
++            String l; while ((l = br.readLine()) != null) { String[] r = l.split(","); county.put(Integer.parseInt(r[iId].trim()), Integer.parseInt(r[iC].trim())); }
++        } catch (IOException e) { throw new RuntimeException("mode choice parking: zone.attributes.file " + zf, e); }
++        double[] pz = new double[n]; int[] nArea = new int[6];
++        for (Map.Entry<Integer, Integer> e : zIdx.entrySet()) {
++            abm.data.geo.Zone z = dataSet.getZones().get(e.getKey()); int i = e.getValue(), area = 5;
++            if (z != null) {
++                double jobs = 0; for (String k : new String[]{"jj.retail", "jj.office", "jj.other"}) jobs += z.getAttribute(k).map(o -> ((Number) o).doubleValue()).orElse(0.0);
++                boolean cbd = jobs / Math.max(z.getAreaKm2(), 0.05) >= 10000; int c = county.getOrDefault(e.getKey(), 0);
++                area = c == 24510 ? (cbd ? 0 : 1) : c == 11001 ? (cbd ? 2 : 3) : cbd ? 4 : 5;
++            }
++            pz[i] = share[area]; nArea[area]++;
++        }
++        parkZone = pz;
++        logger.info("Tour mode choice: paid-parking shares " + Arrays.toString(share) + " by area class; zones per class " + Arrays.toString(nArea));
+     }
+ 
+     public static void setToll(double usdPerHalfTour) { tollUsd = usdPerHalfTour; }
+@@ -139,9 +204,26 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+                 }
+             } catch (IOException e) { throw new RuntimeException("mode choice toll file " + tf, e); }
+         }
++        for (Map.Entry<String, Map<String, Double>> e : coef.entrySet()) cf.put(e.getKey(), new Cf(e.getValue()));
+         toursOut = Boolean.parseBoolean(AbitResources.instance.getString("mc.tours.out"));
++        toursFull = Boolean.parseBoolean(AbitResources.instance.getString("mc.tours.full"));
+         String zt = AbitResources.instance.getString("mc.zero.terms");
+         if (zt != null) { zeroTerms.clear(); for (String t : zt.split("[;,]")) if (!t.trim().isEmpty()) zeroTerms.add(t.trim()); }
++        // 2026-11-09 (author's choice for coef_respec): mc.apply.short = true applies 'fewer cars than drivers' as estimated;
++        // mc.apply.joint = true applies 'joint' as estimated to the tours whose main activity is a joint household episode (known at
++        // the household stage, resolveHousehold); mc.cd.availability = estimation: car driver available by the estimation rule only
++        // (licence, age 16+, a household car), the household stage does not take cars away from overlapping car-driver tours (the
++        // overlaps beyond the car count are only counted, mc_summary.csv)
++        applyShort = Boolean.parseBoolean(AbitResources.instance.getString("mc.apply.short"));
++        applyJoint = Boolean.parseBoolean(AbitResources.instance.getString("mc.apply.joint"));
++        String ca = AbitResources.instance.getString("mc.cd.availability"); cdEstimation = ca != null && ca.trim().equalsIgnoreCase("estimation");
++        if (applyShort) zeroTerms.remove("short");
++        String jmo = AbitResources.instance.getString("mc.joint.model"); jointGroupModel = jmo != null && jmo.trim().equalsIgnoreCase("group");
++        String jr = AbitResources.instance.getString("mc.joint.rule"); jointRep = jr != null && jr.trim().equalsIgnoreCase("representative");
++        String jd = AbitResources.instance.getString("mc.joint.driver"); jointDriverHH = jd != null && jd.trim().equalsIgnoreCase("household");
++        String al = AbitResources.instance.getString("mc.car.allocation"); tashaAlloc = al != null && al.trim().equalsIgnoreCase("tasha");
++        String em = AbitResources.instance.getString("mc.car.allocation.exhaustive.max"); if (em != null && !em.trim().isEmpty()) exhaustiveMax = Integer.parseInt(em.trim());
++        if (applyJoint) zeroTerms.remove("joint");
+         logger.info("Tour mode choice (estimated, GC form, VOT share " + votShare + "): " + n + " zones, segments " + coef.keySet());
+     }
+ 
+@@ -186,16 +268,13 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+     static boolean washington(int zone) { Integer i = zIdx.get(zone); return i != null && wmata[i]; }
+ 
+     // ------------------------------------------------------------------------------------------------ utilities
+-    static final class Eval { double[] v = new double[6]; boolean[] av = new boolean[6]; double[] p = new double[6]; double km; String seg; int window0, window1; }
++    static final class Eval { double[] v = new double[6]; boolean[] av = new boolean[6]; double[] p = new double[6]; double km; String seg; int window0, window1;
++        double[] gc, T, C, x; }   // kept for the group model of joint tours (mc.joint.model = group)
+ 
+-    Eval evaluate(Person person, Tour tour) {
+-        Activity main = tour.getMainActivity(); Household hh = person.getHousehold();
+-        Integer hi = zIdx.get(hh.getLocation().getZoneId()), mi = zIdx.get(main.getLocation().getZoneId());
+-        Eval e = new Eval(); e.seg = segment(main.getPurpose());
+-        if (hi == null || mi == null) { e.av[CP] = true; e.p[CP] = 1; e.window0 = main.getStartTime_min(); e.window1 = main.getEndTime_min(); return e; }
+-        int h = hi, m = mi, po = period(main.getStartTime_min()), pr = period(main.getEndTime_min());
+-        double carMin = carT[po][h * n + m] + carT[pr][m * n + h], km = dist[h * n + m] + dist[m * n + h]; e.km = km;
+-        // bus and train, per half
++    /** round-trip level of service home h -> main m (LOS indices), outbound period po, return period pr:
++     *  {car minutes, km, bus ok (1/0), bus minutes, bus $, train ok, train minutes, train $} */
++    static double[] los(int h, int m, int po, int pr) {
++        double carMin = carT[po][h * n + m] + carT[pr][m * n + h], km = dist[h * n + m] + dist[m * n + h];
+         double busT = 0, busC = 0, trT = 0, trC = 0; boolean busOk = h != m, trOk = h != m;
+         int[][] halves = {{h, m, po}, {m, h, pr}};
+         for (int[] hv : halves) {
+@@ -207,32 +286,98 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+             if (Double.isNaN(tt)) tt = priorTrain[k];
+             if (Double.isNaN(tt)) trOk = false; else { trT += tt; trC += fare(1.0, kmh, a, b, peak) + cc; }
+         }
+-        int drivers = 0; double incM = 0; for (Person q : hh.getPersons()) { if (q.isHasLicense()) drivers++; incM += q.getMonthlyIncome_eur(); }
++        return new double[]{carMin, km, busOk ? 1 : 0, busT, busC, trOk ? 1 : 0, trT, trC};
++    }
++
++    /** utilities of the six modes: ASC, km, GC (or time + cost) and the SOCIO terms present in the segment's coefficients */
++    static void utilities(Cf c, double[] adj, double km, double[] gc, double[] T, double[] C, double[] x, double[] v) {
++        for (int a = 0; a < 6; a++) {
++            double u = c.asc[a] + (adj != null ? adj[a] : 0.0) + c.km[a] * km;
++            if (a == CD || a == CP || a == BUS || a == TRAIN) {
++                u += c.gc[a] * gc[a];
++                if (c.hasTime) u += c.time * T[a];
++                if (c.hasCost) u += c.cost * C[a];
++            }
++            for (int s = 0; s < SOCIO.length; s++) if (c.has[a][s]) u += c.so[a][s] * x[s];
++            v[a] = u;
++        }
++    }
++
++    /** person and household attributes of the tour models: SOCIO values that do not depend on the zones or the tour, VOT, car-driver availability */
++    static final class PA { final double[] x = new double[SOCIO.length]; double vot; boolean cd; }
++
++    static PA personAttrs(Person person) {
++        Household hh = person.getHousehold(); PA pa = new PA();
++        int drivers = 0; double incM = 0; boolean u18 = false;
++        for (Person q : hh.getPersons()) { if (q.isHasLicense()) drivers++; incM += q.getMonthlyIncome_eur(); if (q.getAge() < 18) u18 = true; }
+         int cars = hh.getNumberOfCars(), age = person.getAge();
+-        double vot = votShare * Math.max(12.0 * incM, INC_FLOOR) / HOURS;
+-        double toll = 2 * tollUsd + (tollOd != null ? tollOd[h * n + m] + tollOd[m * n + h] : 0.0);
++        pa.vot = votShare * Math.max(12.0 * incM, INC_FLOOR) / HOURS;
++        pa.x[0] = age; pa.x[1] = person.getGender() == Gender.MALE ? 1.0 : 0.0; pa.x[2] = person.isHasLicense() ? 1.0 : 0.0;
++        pa.x[3] = hh.getPersons().size(); pa.x[4] = cars; pa.x[10] = cars > 0 && cars < drivers ? 1.0 : 0.0; pa.x[13] = u18 ? 1.0 : 0.0;
++        pa.cd = person.isHasLicense() && cars > 0 && age >= 16;
++        return pa;
++    }
++
++    /** segment of the re-specified tour models for a destination purpose (mode_logsum_new.MODEL_OF) */
++    static String logsumSegment(Purpose p) { return segment(p); }
++
++    /**
++     * Logsum of the tour model of segment seg (re-specified models, 2026-11-09; mode_logsum_new.mode_logsum_new) for a round trip
++     * from zone hZone to zone mZone, outbound period po and return period pr (0 AM, 1 MD, 2 PM, 3 NT): ln sum_m exp(V_m), nested
++     * models in Biogeme's form ln sum_k exp((1/mu_k) ln sum_{m in k} exp(mu_k V_m)).  The person terms from pa, the tour terms
++     * stops, joint, acc, rec as given (the estimation of the stop models: stops = 1, joint = 0), 'short' as estimated (not the
++     * zero terms of the mode choice, which the household stage replaces), no ASC adjustment.  NaN when a zone is outside the LOS
++     * zones.
++     */
++    static double logsum(String seg, PA pa, int hZone, int mZone, int po, int pr, double stops, double joint, double acc, double rec) {
++        Integer hi = zIdx.get(hZone), mi = zIdx.get(mZone);
++        if (hi == null || mi == null) return Double.NaN;
++        int h = hi, m = mi; Cf c = cf.get(seg);
++        double[] L = los(h, m, po, pr); double km = L[1];
++        double[] T = {L[0], 0, 0, L[0], L[2] > 0 ? L[3] : 0, L[5] > 0 ? L[6] : 0}, C = {km * OPC_KM + 2 * tollUsd + (tollOd != null ? tollOd[h * n + m] + tollOd[m * n + h] : 0.0), 0, 0, 0, L[2] > 0 ? L[4] : 0, L[5] > 0 ? L[7] : 0};
+         double[] gc = new double[6];
++        gc[CD] = T[CD] + 60.0 * C[CD] / pa.vot; gc[CP] = T[CP]; gc[BUS] = L[2] > 0 ? T[BUS] + 60.0 * C[BUS] / pa.vot : 0; gc[TRAIN] = L[5] > 0 ? T[TRAIN] + 60.0 * C[TRAIN] / pa.vot : 0;
++        double[] x = pa.x.clone();
++        x[5] = bbsr[h] == 10 ? 1.0 : 0.0; x[6] = bbsr[h] == 40 ? 1.0 : 0.0; x[7] = bbsr[m] == 10 ? 1.0 : 0.0; x[8] = bbsr[m] == 40 ? 1.0 : 0.0;
++        x[9] = joint; x[11] = acc; x[12] = rec; x[14] = parkZone != null ? parkZone[m] : 0.0; x[15] = stops;
++        boolean[] av = {pa.cd, km <= WALK_MAX, km <= BIKE_MAX, true, L[2] > 0, L[5] > 0};
++        double[] v = new double[6]; utilities(c, null, km, gc, T, C, x, v);
++        double vmax = Double.NEGATIVE_INFINITY; for (int a = 0; a < 6; a++) if (av[a]) vmax = Math.max(vmax, v[a]);
++        if (!c.nested) { double s = 0; for (int a = 0; a < 6; a++) if (av[a]) s += Math.exp(v[a] - vmax); return vmax + Math.log(s); }
++        double[] sum = new double[3]; boolean[] has = new boolean[3];
++        for (int a = 0; a < 6; a++) if (av[a]) { int k = NEST_OF[a]; sum[k] += Math.exp(c.mu[k] * (v[a] - vmax)); has[k] = true; }
++        double den = 0; for (int k = 0; k < 3; k++) if (has[k]) den += Math.exp(Math.log(sum[k]) / c.mu[k]);
++        return vmax + Math.log(den);
++    }
++
++    Eval evaluate(Person person, Tour tour) {
++        Activity main = tour.getMainActivity(); Household hh = person.getHousehold();
++        Integer hi = zIdx.get(hh.getLocation().getZoneId()), mi = zIdx.get(main.getLocation().getZoneId());
++        Eval e = new Eval(); e.seg = segment(main.getPurpose());
++        if (hi == null || mi == null) { e.av[CP] = true; e.p[CP] = 1; e.window0 = main.getStartTime_min(); e.window1 = main.getEndTime_min(); return e; }
++        int h = hi, m = mi, po = period(main.getStartTime_min()), pr = period(main.getEndTime_min());
++        double[] L = los(h, m, po, pr);
++        double carMin = L[0], km = L[1]; e.km = km;
++        boolean busOk = L[2] > 0, trOk = L[5] > 0; double busT = L[3], busC = L[4], trT = L[6], trC = L[7];
++        PA pa = personAttrs(person); double vot = pa.vot; int age = person.getAge();
++        double toll = 2 * tollUsd + (tollOd != null ? tollOd[h * n + m] + tollOd[m * n + h] : 0.0);
++        double[] gc = new double[6], T = new double[6], C = new double[6];
+         gc[CD] = carMin + 60.0 * (km * OPC_KM + toll) / vot; gc[CP] = carMin;
+         gc[BUS] = busOk ? busT + 60.0 * busC / vot : 0; gc[TRAIN] = trOk ? trT + 60.0 * trC / vot : 0;
+-        Map<String, Double> x = new HashMap<>();
+-        x.put("age", (double) age); x.put("male", person.getGender() == Gender.MALE ? 1.0 : 0.0); x.put("lic", person.isHasLicense() ? 1.0 : 0.0);
+-        x.put("hhsize", (double) hh.getPersons().size()); x.put("autos", (double) cars);
++        T[CD] = carMin; C[CD] = km * OPC_KM + toll; T[CP] = carMin; T[BUS] = busOk ? busT : 0; C[BUS] = busOk ? busC : 0; T[TRAIN] = trOk ? trT : 0; C[TRAIN] = trOk ? trC : 0;
++        double[] x = pa.x.clone();
+         Purpose mp = main.getPurpose();
+-        x.put("joint", 0.0); x.put("short", cars > 0 && cars < drivers ? 1.0 : 0.0);
+-        x.put("acc", mp == Purpose.ACCOMPANY ? 1.0 : 0.0); x.put("rec", mp == Purpose.RECREATION ? 1.0 : 0.0);
+-        for (String zt : zeroTerms) x.put(zt, 0.0);
+-        x.put("core_o", bbsr[h] == 10 ? 1.0 : 0.0); x.put("rural_o", bbsr[h] == 40 ? 1.0 : 0.0); x.put("core_d", bbsr[m] == 10 ? 1.0 : 0.0); x.put("rural_d", bbsr[m] == 40 ? 1.0 : 0.0);
++        x[9] = 0.0; x[11] = mp == Purpose.ACCOMPANY ? 1.0 : 0.0; x[12] = mp == Purpose.RECREATION ? 1.0 : 0.0;
++        x[5] = bbsr[h] == 10 ? 1.0 : 0.0; x[6] = bbsr[h] == 40 ? 1.0 : 0.0; x[7] = bbsr[m] == 10 ? 1.0 : 0.0; x[8] = bbsr[m] == 40 ? 1.0 : 0.0;
++        x[14] = parkZone != null ? parkZone[m] : 0.0; x[15] = tour.getActivities().size() > 1 ? 1.0 : 0.0;
++        for (String zt : zeroTerms) { int s = Arrays.asList(SOCIO).indexOf(zt); if (s >= 0) x[s] = 0.0; }
+         int t0 = Integer.MAX_VALUE, t1 = Integer.MIN_VALUE;
+         for (Activity a : tour.getActivities().values()) { t0 = Math.min(t0, a.getStartTime_min()); t1 = Math.max(t1, a.getEndTime_min()); }
+         e.window0 = t0 - (int) carT[po][h * n + m]; e.window1 = t1 + (int) carT[pr][m * n + h];
+-        e.av[CD] = person.isHasLicense() && cars > 0 && age >= 16; e.av[CP] = true; e.av[BUS] = busOk; e.av[TRAIN] = trOk; e.av[WK] = km <= WALK_MAX; e.av[BK] = km <= BIKE_MAX;
++        e.av[CD] = pa.cd; e.av[CP] = true; e.av[BUS] = busOk; e.av[TRAIN] = trOk; e.av[WK] = km <= WALK_MAX; e.av[BK] = km <= BIKE_MAX;
+         Map<String, Double> b = coef.get(e.seg); double[] adj = ascAdj.get(e.seg);
+-        for (int a = 0; a < 6; a++) {
+-            double v = b.getOrDefault("ASC_" + ALT[a], 0.0) + (adj != null ? adj[a] : 0.0) + b.getOrDefault("km_" + ALT[a], 0.0) * km;
+-            if (a == CD || a == CP || a == BUS || a == TRAIN) v += b.getOrDefault("gc_" + ALT[a], b.getOrDefault("gc", 0.0)) * gc[a];
+-            for (String s : SOCIO) { Double c = b.get(s + "_" + ALT[a]); if (c != null) v += c * x.get(s); }
+-            e.v[a] = v;
+-        }
++        utilities(cf.get(e.seg), adj, km, gc, T, C, x, e.v);
++        if (jointGroupModel) { e.gc = gc; e.T = T; e.C = C; e.x = x; }
+         probabilities(b, e.v, e.av, e.p);
+         return e;
+     }
+@@ -253,7 +398,206 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+     }
+ 
+     // ------------------------------------------------------------------------------------------------ choice and household stage
+-    static final class Rec { final Person person; final Tour tour; final Eval e; int alt; boolean joint, realloc; Rec(Person p, Tour t, Eval e) { person = p; tour = t; this.e = e; } }
++    static final class Rec { final Person person; final Tour tour; final Eval e; int alt; boolean joint, realloc; double[] u, uJ, vJ; boolean[] avJ; Rec(Person p, Tour t, Eval e) { person = p; tour = t; this.e = e; } }
++
++    // ------------------------------------------------------------------------------------------------ TASHA car allocation
++    // mc.car.allocation = tasha (2026-11-09, coef_respec; Miller, Roorda & Carrasco 2005): every person-tour draws random utilities
++    // of its model (kept for every alternative) and takes the best available; at the household stage the car-driver tours (the
++    // car-driver members of a joint group count as one unit, 2026-11-10) whose windows (leaving home
++    // to returning) overlap beyond the household's cars form conflict sets; per set the cars go to the feasible subset with the
++    // highest household utility (exhaustive up to mc.car.allocation.exhaustive.max tours, default 12, greedy by utility loss beyond);
++    // a tour without a car takes its best other alternative from its own drawn utilities.  Car passenger stays available as
++    // estimated; no ride-sharing facilitation step (joint tours carry the shared household rides).
++    private static boolean tashaAlloc = false, jointDriverHH = false, jointRep = false, jointGroupModel = false; static int exhaustiveMax = 12;
++    private static final AtomicLong nRepGroupModel = new AtomicLong();
++    private static final AtomicLong nRepGroups = new AtomicLong(), nRepMembers = new AtomicLong(), nRepUnavail = new AtomicLong();
++    private static final AtomicLong nHhJoint = new AtomicLong(), nHhJointCar = new AtomicLong();
++    private static final AtomicLong nConfSets = new AtomicLong(), nConfUnits = new AtomicLong(), nGreedy = new AtomicLong(), nReassigned = new AtomicLong(),
++            nCdUnits = new AtomicLong(), nViolAfter = new AtomicLong(), nReassignedTours = new AtomicLong();
++    private static final AtomicLong[] reassignedTo = {new AtomicLong(), new AtomicLong(), new AtomicLong(), new AtomicLong(), new AtomicLong(), new AtomicLong()};
++
++    /** positive stable variate with Laplace transform exp(-t^a), 0 < a < 1 (Kanter 1975) */
++    static double stable(double a, Random r) {
++        double U = Math.PI * r.nextDouble(), E = -Math.log(1.0 - r.nextDouble());
++        while (U <= 0) U = Math.PI * r.nextDouble();
++        return Math.sin(a * U) / Math.pow(Math.sin(U), 1.0 / a) * Math.pow(Math.sin((1 - a) * U) / E, (1 - a) / a);
++    }
++
++    /** random utilities of the estimated model: MNL u = V + Gumbel; nested logit (Biogeme form, mu_k >= 1 in the nest, 1 at the
++     *  root) u_m = V_m + (nu_m + ln S_k) / mu_k, nu iid Gumbel, S_k positive stable of index 1/mu_k (exact GEV draw: the maximum of
++     *  a nest is Gumbel at its inclusive value, within the nest a logit of scale mu_k); unavailable: -infinity */
++    static double[] drawU(Cf c, double[] v, boolean[] av, Random r) {
++        double[] u = new double[6], eta = new double[3];
++        if (c.nested) for (int k = 0; k < 3; k++) { double lam = 1.0 / c.mu[k]; eta[k] = lam >= 1.0 - 1e-12 ? 0.0 : lam * Math.log(stable(lam, r)); }
++        for (int a = 0; a < 6; a++) {
++            if (!av[a]) { u[a] = Double.NEGATIVE_INFINITY; continue; }
++            double nu = -Math.log(-Math.log(1.0 - r.nextDouble() * (1 - 1e-16)));
++            u[a] = c.nested ? v[a] + nu / c.mu[NEST_OF[a]] + eta[NEST_OF[a]] : v[a] + nu;
++        }
++        return u;
++    }
++
++    /** members of a representative group take the representative's mode a (car driver: the others ride as car passenger); a member
++     *  for whom a is not available takes its own best alternative other than car driver (counted) */
++    static void repAssign(List<Rec> g, Rec rp, int a) {
++        for (Rec x : g) {
++            if (x == rp) x.alt = a;
++            else if (a == CD) x.alt = CP;
++            else if (x.e.av[a]) x.alt = a;
++            else { x.alt = argmax(x.u, true); nRepUnavail.incrementAndGet(); }
++        }
++        nRepMembers.addAndGet(g.size());
++    }
++
++    /** best alternative other than car driver and car passenger (CP when no other is available) */
++    static int argmaxNonCar(double[] u) { int b = -1; for (int a = 0; a < 6; a++) if (a != CD && a != CP && u[a] > Double.NEGATIVE_INFINITY && (b < 0 || u[a] > u[b])) b = a; return b < 0 ? CP : b; }
++
++    static int argmax(double[] u, boolean noCd) { int b = -1; for (int a = 0; a < 6; a++) if (!(noCd && a == CD) && u[a] > Double.NEGATIVE_INFINITY && (b < 0 || u[a] > u[b])) b = a; return b < 0 ? CP : b; }
++
++    /** largest number of the intervals [w0, w1) of the selected units in use at one instant */
++    static int maxConcurrent(int[] w0, int[] w1, boolean[] sel) {
++        int mx = 0;
++        for (int i = 0; i < w0.length; i++) { if (!sel[i]) continue; int c = 0; for (int j = 0; j < w0.length; j++) if (sel[j] && w0[j] <= w0[i] && w0[i] < w1[j]) c++; mx = Math.max(mx, c); }
++        return mx;
++    }
++
++    /** the cars of one household: keep[i] = unit i keeps the car; the feasible assignment (at most `cars` kept units in use at
++     *  any instant) with the largest sum of gains (gain = utility of car driver - utility of the best other alternative), over
++     *  the connected sets of overlapping windows; stats[0] conflict sets, [1] units in them, [2] sets solved greedily */
++    static boolean[] allocate(int cars, int[] w0, int[] w1, double[] gain, long[] stats) {
++        int n = w0.length; boolean[] keep = new boolean[n]; Arrays.fill(keep, true);
++        Integer[] ord = new Integer[n]; for (int i = 0; i < n; i++) ord[i] = i; Arrays.sort(ord, (a, b) -> Integer.compare(w0[a], w0[b]));
++        int i0 = 0;
++        while (i0 < n) {   // connected sets of overlapping windows
++            List<Integer> comp = new ArrayList<>(); int end = w1[ord[i0]]; int k = i0;
++            while (k < n && (k == i0 || w0[ord[k]] < end)) { comp.add(ord[k]); end = Math.max(end, w1[ord[k]]); k++; }
++            i0 = k;
++            int m = comp.size(); int[] a0 = new int[m], a1 = new int[m]; double[] g = new double[m]; boolean[] all = new boolean[m]; Arrays.fill(all, true);
++            for (int q = 0; q < m; q++) { a0[q] = w0[comp.get(q)]; a1[q] = w1[comp.get(q)]; g[q] = gain[comp.get(q)]; }
++            if (maxConcurrent(a0, a1, all) <= cars) continue;
++            stats[0]++; stats[1] += m; boolean[] best = new boolean[m];
++            if (m <= exhaustiveMax) {
++                double bv = Double.NEGATIVE_INFINITY;
++                for (int mask = 0; mask < (1 << m); mask++) {
++                    boolean[] s = new boolean[m]; double v = 0; for (int q = 0; q < m; q++) if ((mask >> q & 1) == 1) { s[q] = true; v += g[q]; }
++                    if (v > bv + 1e-12 && maxConcurrent(a0, a1, s) <= cars) { bv = v; best = s; }
++                }
++            } else {
++                stats[2]++; Integer[] go = new Integer[m]; for (int q = 0; q < m; q++) go[q] = q; Arrays.sort(go, (a, b) -> Double.compare(g[b], g[a]));
++                for (int q : go) { best[q] = true; if (maxConcurrent(a0, a1, best) > cars) best[q] = false; }
++            }
++            for (int q = 0; q < m; q++) keep[comp.get(q)] = best[q];
++        }
++        return keep;
++    }
++
++    /** window of a tour for the allocation (2026-11-10): leaving home (departure of the first leg from home) to returning home
++     *  (arrival of the last leg at home), from the tour's legs of the schedule, as in the estimation data
++     *  (m10_car_availability.py: leave, arrive); the legs exist at the household stage.  Without legs: the evaluation window. */
++    private static int[] legWindow(Rec x) {
++        int w0 = Integer.MAX_VALUE, w1 = Integer.MIN_VALUE;
++        for (Map.Entry<Integer, Leg> en : x.tour.getLegs().entrySet()) {
++            Leg l = en.getValue();
++            if (l.getPreviousActivity() != null && l.getPreviousActivity().getPurpose() == Purpose.HOME) w0 = Math.min(w0, l.getPreviousActivity().getEndTime_min());
++            if (l.getNextActivity() != null && l.getNextActivity().getPurpose() == Purpose.HOME) w1 = Math.max(w1, l.getNextActivity().getStartTime_min());
++        }
++        return w0 == Integer.MAX_VALUE || w1 == Integer.MIN_VALUE ? new int[]{x.e.window0, x.e.window1} : new int[]{w0, w1};
++    }
++
++    /** household stage with the TASHA allocation (mc.car.allocation = tasha) */
++    private void resolveTasha(Household hh, Map<Tour, Integer> mainJoint, Map<Integer, List<Rec>> groups, List<Rec> recs, Random r) {
++        List<List<Rec>> units = new ArrayList<>(); List<double[]> uu = new ArrayList<>(); List<int[]> win = new ArrayList<>();
++        Map<Integer, Object[]> repUnits = new HashMap<>();
++        Set<Rec> inGroup = new HashSet<>();
++        // joint tours (2026-11-10, coef_respec): every member keeps the choice from its own drawn utilities (the joint term per person,
++        // as estimated: each member of a joint tour is a record of its own in the estimation data); no summed group draw.  The
++        // car-driver members of a joint group are ONE car unit (as in the estimation availability rule, m10_car_availability.py):
++        // window = the union of their windows, gain = the sum of their utility losses; a unit without a car: each of its members
++        // takes the best other alternative of its own utilities.
++        for (List<Rec> g : groups.values()) {
++            if (g.size() < 2) continue; nJointGroups.incrementAndGet(); nJointTours.addAndGet(g.size()); inGroup.addAll(g);
++            if (jointRep) {
++                // mc.joint.rule = representative (2026-11-10; TASHA / GTAModel V4 JointTourRep): the representative is the member with
++                // car driver available (licence, 16+, a household car), the oldest of them; without one the oldest member, and car
++                // driver is not available to the group.  The representative's own drawn choice (joint term as estimated) is the group's:
++                // car driver -> the representative drives, the others ride as car passenger; another mode -> every member takes it
++                // where available to the member, else the member's own best alternative other than car driver.  The group is one car
++                // unit (the representative's window; gain = the representative's loss); without a car the group takes the
++                // representative's best alternative other than car driver under the same rule.
++                Rec rp = null;
++                for (Rec x : g) { x.joint = true; if (x.e.av[CD] && (rp == null || x.person.getAge() > rp.person.getAge())) rp = x; }
++                if (rp == null) for (Rec x : g) if (rp == null || x.person.getAge() > rp.person.getAge()) rp = x;
++                double[] ur = rp.u;
++                Cf cj = jointGroupModel ? cf.get(rp.e.seg + "_joint") : null;
++                if (cj != null && rp.e.gc != null) {
++                    // mc.joint.model = group (2026-11-10, m11_joint_group.py): the representative applies the group-level model of the
++                    // segment (coefficients <segment>_joint): the representative's tour variables, joint = 1; car driver available when a
++                    // member has it, the other modes as for the representative; a mode without a constant in the group model is not
++                    // available (not chosen by any estimation group)
++                    double[] xj = rp.e.x.clone(); xj[9] = 1.0; double[] vj = new double[6]; boolean[] avj = rp.e.av.clone();
++                    avj[CD] = false; for (Rec x : g) avj[CD] |= x.e.av[CD];
++                    for (int a = 1; a < 6; a++) if (cj.asc[a] == 0.0 && !cj.hasAsc[a]) avj[a] = false;
++                    utilities(cj, null, rp.e.km, rp.e.gc, rp.e.T, rp.e.C, xj, vj);
++                    ur = drawU(cj, vj, avj, r); rp.vJ = vj; rp.avJ = avj; nRepGroupModel.incrementAndGet();
++                }
++                rp.uJ = ur;
++                int a0 = ur[CD] > Double.NEGATIVE_INFINITY ? argmax(ur, false) : argmax(ur, true); repAssign(g, rp, a0); nRepGroups.incrementAndGet();
++                if (a0 == CD) {
++                    double[] U = new double[6]; Arrays.fill(U, Double.NEGATIVE_INFINITY); U[CD] = ur[CD] - ur[argmax(ur, true)]; U[CP] = 0.0;
++                    repUnits.put(units.size(), new Object[]{g, rp}); units.add(Collections.singletonList(rp)); uu.add(U); win.add(legWindow(rp));
++                }
++                continue;
++            }
++            if (jointDriverHH) {
++                // mc.joint.driver = household (2026-11-10): car or not drawn once per group with the probability that at least one
++                // member drives, 1 - prod(1 - p_CD,m) (one common uniform); car: the member with car driver available and the
++                // largest drawn advantage u_CD - max(other u) drives, the members whose own choice is a car mode ride as car
++                // passenger, the others keep their choices; non-car (or nobody can drive): the members whose own choice is a car mode
++                // take their best non-car alternative.  The group is one car unit (the driver's window; gain = the driver's loss).
++                double q = 1; Rec drv = null; double best = Double.NEGATIVE_INFINITY;
++                for (Rec x : g) { x.joint = true; q *= 1 - x.e.p[CD]; if (x.e.av[CD]) { double adv = x.u[CD] - x.u[argmax(x.u, true)]; if (adv > best) { best = adv; drv = x; } } }
++                boolean car = drv != null && r.nextDouble() < 1 - q; nHhJoint.incrementAndGet(); if (car) nHhJointCar.incrementAndGet();
++                for (Rec x : g) {
++                    boolean carUser = x.alt == CD || x.alt == CP;
++                    if (car) { if (x == drv) x.alt = CD; else if (carUser) x.alt = CP; }
++                    else if (carUser) x.alt = argmaxNonCar(x.u);
++                }
++                if (car) {
++                    int[] w = legWindow(drv); double[] U = new double[6]; Arrays.fill(U, Double.NEGATIVE_INFINITY); U[CD] = best; U[CP] = 0.0;
++                    units.add(Collections.singletonList(drv)); uu.add(U); win.add(w);
++                }
++                continue;
++            }
++            List<Rec> cdm = new ArrayList<>(); for (Rec x : g) { x.joint = true; if (x.alt == CD) cdm.add(x); }
++            if (cdm.isEmpty()) continue;
++            int w0 = Integer.MAX_VALUE, w1 = Integer.MIN_VALUE; double gn = 0;
++            for (Rec x : cdm) { int[] w = legWindow(x); w0 = Math.min(w0, w[0]); w1 = Math.max(w1, w[1]); gn += x.u[CD] - x.u[argmax(x.u, true)]; }
++            double[] U = new double[6]; Arrays.fill(U, Double.NEGATIVE_INFINITY); U[CD] = gn; U[CP] = 0.0;   // gain carrier
++            units.add(cdm); uu.add(U); win.add(new int[]{w0, w1});
++        }
++        for (Rec x : recs) if (!inGroup.contains(x) && x.alt == CD) { units.add(Collections.singletonList(x)); uu.add(x.u); win.add(legWindow(x)); }
++        int n = units.size(); nCdUnits.addAndGet(n); nCdTours.addAndGet(n);
++        int[] w0 = new int[n], w1 = new int[n]; double[] gain = new double[n];
++        for (int i = 0; i < n; i++) { w0[i] = win.get(i)[0]; w1[i] = win.get(i)[1]; double[] U = uu.get(i); gain[i] = U[CD] - U[argmax(U, true)]; }
++        long[] st = new long[3]; int cars = hh.getNumberOfCars();
++        boolean[] keep = allocate(cars, w0, w1, gain, st);
++        nConfSets.addAndGet(st[0]); nConfUnits.addAndGet(st[1]); nGreedy.addAndGet(st[2]); if (st[0] > 0) nHhConflict.incrementAndGet();
++        for (int i = 0; i < n; i++) {
++            if (keep[i]) continue;
++            Object[] gr = repUnits.get(i);
++            if (gr != null) {   // representative group without a car: the representative's best alternative other than car driver
++                @SuppressWarnings("unchecked") List<Rec> g = (List<Rec>) gr[0]; Rec rp = (Rec) gr[1]; int a = argmax(rp.uJ != null ? rp.uJ : rp.u, true);
++                repAssign(g, rp, a); nReassigned.incrementAndGet(); nRealloc.incrementAndGet();
++                for (Rec x : g) { x.realloc = true; nReassignedTours.incrementAndGet(); reassignedTo[x.alt].incrementAndGet(); }
++                continue;
++            }
++            nReassigned.incrementAndGet(); nRealloc.incrementAndGet();
++            for (Rec x : units.get(i)) { x.alt = argmax(x.u, true); x.realloc = true; nReassignedTours.incrementAndGet(); reassignedTo[x.alt].incrementAndGet(); }
++        }
++        if (maxConcurrent(w0, w1, keep) > cars) nViolAfter.incrementAndGet();   // check: no instant with more car-driver tours than cars
++        for (Rec x : recs) apply(x);
++        if (toursOut) for (Rec x : recs) line(x, mainJoint.getOrDefault(x.tour, 0));
++    }
+     private static final ThreadLocal<List<Rec>> pending = ThreadLocal.withInitial(ArrayList::new);
+ 
+     private static int draw(double[] p, boolean[] av, Random r) {
+@@ -279,7 +623,9 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+ 
+     /** person-level choice, before the stops of the tour are located; the household stage may revise it */
+     public void chooseMode(Person person, Tour tour, Random r) {
+-        Eval e = evaluate(person, tour); Rec x = new Rec(person, tour, e); x.alt = draw(e.p, e.av, r); apply(x);
++        Eval e = evaluate(person, tour); Rec x = new Rec(person, tour, e);
++        if (tashaAlloc) { x.u = drawU(cf.get(e.seg), e.v, e.av, r); x.alt = argmax(x.u, false); } else x.alt = draw(e.p, e.av, r);
++        apply(x);
+         pending.get().add(x); nTours.incrementAndGet();
+     }
+ 
+@@ -298,6 +644,18 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+         nHh.incrementAndGet();
+         Map<Integer, List<Rec>> groups = new LinkedHashMap<>();
+         for (Rec x : recs) { Integer j = mainJoint.get(x.tour); if (j != null && j != 0) groups.computeIfAbsent(j, k -> new ArrayList<>()).add(x); }
++        if (applyJoint) {   // joint household tour: the estimated joint terms, then the person-level draw again
++            int sj = Arrays.asList(SOCIO).indexOf("joint"); Cf c0;
++            for (List<Rec> g : groups.values()) for (Rec x : g) {
++                c0 = cf.get(x.e.seg); boolean any = false;
++                for (int a = 0; a < 6; a++) if (c0.has[a][sj]) { x.e.v[a] += c0.so[a][sj]; if (x.u != null) x.u[a] += c0.so[a][sj]; any = true; }
++                if (!any) continue;
++                probabilities(coef.get(x.e.seg), x.e.v, x.e.av, x.e.p);
++                if (tashaAlloc) x.alt = argmax(x.u, false); else x.alt = draw(x.e.p, x.e.av, r);
++                apply(x);
++            }
++        }
++        if (tashaAlloc) { resolveTasha(hh, mainJoint, groups, recs, r); return; }
+         for (List<Rec> g : groups.values()) if (g.size() >= 2) { jointChoice(g, false, r); nJointGroups.incrementAndGet(); nJointTours.addAndGet(g.size()); }
+         int cars = hh.getNumberOfCars();
+         List<Rec> cd = new ArrayList<>(); for (Rec x : recs) if (x.alt == CD) cd.add(x);
+@@ -308,6 +666,7 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+             if (x.alt != CD) continue;
+             if (maxOverlap(held, x.e.window0, x.e.window1) < cars) { held.add(new int[]{x.e.window0, x.e.window1}); continue; }
+             conflict = true; nRealloc.incrementAndGet();
++            if (cdEstimation) continue;   // counted, not reallocated
+             Integer j = mainJoint.get(x.tour); List<Rec> g = j != null && j != 0 ? groups.get(j) : null;
+             if (g != null && g.size() >= 2) { jointChoice(g, true, r); for (Rec y : g) y.realloc = true; }
+             else { x.alt = draw(withoutCar(x), noCar(x.e.av), r); x.realloc = true; apply(x); }
+@@ -352,6 +711,11 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+           .append(main.getEndTime_min()).append(',').append(tour.getActivities().size()).append(',').append(String.format(Locale.US, "%.3f", e.km)).append(',')
+           .append(ALT[x.alt]).append(',').append(tour.getTourMode()).append(',').append(x.joint ? 1 : 0).append(',').append(x.realloc ? 1 : 0).append(',').append(jointId);
+         for (int a = 0; a < 6; a++) sb.append(',').append(String.format(Locale.US, "%.5f", e.p[a]));
++        if (toursFull) {   // unit check of the re-specified models (mc.tours.full): utilities, availability, full-precision probabilities
++            for (int a = 0; a < 6; a++) sb.append(',').append(e.av[a] ? Double.toString(e.v[a]) : "");
++            for (int a = 0; a < 6; a++) sb.append(',').append(Double.toString(e.p[a]));
++            if (jointGroupModel) for (int a = 0; a < 6; a++) sb.append(',').append(x.vJ != null && x.avJ[a] ? Double.toString(x.vJ[a]) : "");
++        }
+         tourLines.add(sb.toString());
+     }
+ 
+@@ -367,15 +731,26 @@ public class MarylandTourNestedModeChoice implements TourModeChoice {
+         new File(out).mkdirs();
+         if (toursOut) {
+             try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(out + "mc_tours.csv"), 1 << 20))) {
+-                pw.println("person_id,household_id,purpose,segment,home_zone,main_zone,start,end,n_act,km,alt,mode,joint,realloc,joint_id,p_CD,p_WK,p_BK,p_CP,p_BUS,p_TRAIN");
++                pw.println("person_id,household_id,purpose,segment,home_zone,main_zone,start,end,n_act,km,alt,mode,joint,realloc,joint_id,p_CD,p_WK,p_BK,p_CP,p_BUS,p_TRAIN"
++                        + (toursFull ? ",V_CD,V_WK,V_BK,V_CP,V_BUS,V_TRAIN,pf_CD,pf_WK,pf_BK,pf_CP,pf_BUS,pf_TRAIN" + (jointGroupModel ? ",VJ_CD,VJ_WK,VJ_BK,VJ_CP,VJ_BUS,VJ_TRAIN" : "") : ""));
+                 for (String l : tourLines) pw.println(l);
+             } catch (IOException e) { logger.warn("could not write mc_tours.csv", e); }
+         }
+         try (PrintWriter pw = new PrintWriter(out + "mc_summary.csv")) {
+             pw.println("measure,value"); pw.println("tours," + nTours.get()); pw.println("households," + nHh.get());
+             pw.println("joint_groups," + nJointGroups.get()); pw.println("joint_tours," + nJointTours.get());
+-            pw.println("car_driver_tours_before_allocation," + nCdTours.get()); pw.println("car_driver_tours_reallocated," + nRealloc.get());
++            pw.println("car_driver_tours_before_allocation," + nCdTours.get());
++            pw.println((cdEstimation ? "car_driver_tours_beyond_car_count_not_reallocated," : "car_driver_tours_reallocated,") + nRealloc.get());
+             pw.println("households_with_a_car_conflict," + nHhConflict.get());
++            if (tashaAlloc) {
++                pw.println("tasha_car_driver_units," + nCdUnits.get()); pw.println("tasha_conflict_sets," + nConfSets.get()); pw.println("tasha_units_in_conflict_sets," + nConfUnits.get());
++                pw.println("tasha_conflict_sets_greedy," + nGreedy.get()); pw.println("tasha_units_reassigned," + nReassigned.get()); pw.println("tasha_tours_reassigned," + nReassignedTours.get());
++                for (int a = 0; a < 6; a++) pw.println("tasha_reassigned_to_" + ALT[a] + "," + reassignedTo[a].get());
++                pw.println("tasha_households_overlap_beyond_cars_after," + nViolAfter.get());
++                if (jointRep) { pw.println("joint_groups_representative," + nRepGroups.get()); pw.println("joint_members_representative," + nRepMembers.get());
++                    pw.println("joint_members_group_mode_unavailable," + nRepUnavail.get()); if (jointGroupModel) pw.println("joint_groups_group_model," + nRepGroupModel.get()); }
++                if (jointDriverHH) { pw.println("joint_groups_household_driver," + nHhJoint.get()); pw.println("joint_groups_by_car," + nHhJointCar.get()); }
++            }
+         } catch (IOException e) { logger.warn("could not write mc_summary.csv", e); }
+     }
+ }

@@ -1,0 +1,12 @@
+parameter,article_section,article_label,coefficient,robust_se,p,coefficient_full_precision,note
+MU_size,Size,size coefficient mu,0.6788,0.0613,<0.001,0.6788215115145436,
+G_in_boundary_public,Size,"in-boundary public enrolment, log weight",4.215,0.4252,<0.001,4.214964291967456,
+G_private,Size,"private enrolment, log weight",0.2471,0.2737,0.366,0.2471284129456218,
+B_time,Car time,car time (min),-0.1044,0.0071,<0.001,-0.1043683830552908,
+B_other_county_x_public_share,Boundaries,other county x public share,-2.5167,0.3076,<0.001,-2.516728435635139,
+N,fit statistics (article),N,668.0,,,,model statistic
+K,fit statistics (article),K,5.0,,,,model statistic
+alternatives,fit statistics (article),alternatives,719.0,,,,model statistic
+LL(0) (overview table),fit statistics (article),LL(0) (overview table),-4394.0,,,,model statistic
+"LL(beta), full set",fit statistics (article),"LL(beta), full set",-1243.3,,,,model statistic
+validation LL,fit statistics (article),validation LL,-1236.2,,,,model statistic

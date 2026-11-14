@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 2026-10-26: same console output as before, but the per-person "No jobs remaining" warnings of JobDataManagerImpl
+     (about 1.1 million lines per 4-year run, about 90 % of each log) are dropped; logging only, no effect on the simulation -->
+<Configuration status="WARN">
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="%d{ISO8601} %5p %C{1}:%L %m%n"/></Console>
+  </Appenders>
+  <Loggers>
+    <Logger name="de.tum.bgu.msm.data.job.JobDataManagerImpl" level="error"/>
+    <Root level="info"><AppenderRef ref="Console"/></Root>
+  </Loggers>
+</Configuration>

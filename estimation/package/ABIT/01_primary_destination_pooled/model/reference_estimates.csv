@@ -1,0 +1,76 @@
+parameter,project_name,article_group,article_label,coefficient,robust_se,p_value,article_coefficient,article_robust_se,article_p
+B_dist_0_1km_shared,shared|d_0_1,Distance and impedance,"distance 0--1\,km (per km)",-3.948929224064595,0.2517480933642093,1.8846807922903785e-55,-3.9489,0.2517,<0.001
+B_dist_1_2km_shared,shared|d_1_2,Distance and impedance,"distance 1--2\,km",-1.027951458790748,0.0778818095192795,8.906738300943978e-40,-1.028,0.0779,<0.001
+B_dist_2_5km_shared,shared|d_2_5,Distance and impedance,"distance 2--5\,km",-0.5404519434733112,0.0217405108240087,2.055991442457203e-136,-0.5405,0.0217,<0.001
+B_dist_5_10km_shared,shared|d_5_10,Distance and impedance,"distance 5--10\,km",-0.229509337622557,0.0106999744212,4.613677027528311e-102,-0.2295,0.0107,<0.001
+B_dist_10_20km_shared,shared|d_10_20,Distance and impedance,"distance 10--20\,km",-0.1545920829907571,0.0057779687172371,1.0673839946246768e-157,-0.1546,0.0058,<0.001
+B_dist_20_50km_shared,shared|d_20_50,Distance and impedance,"distance 20--50\,km",-0.0827366757619662,0.0044019137043237,8.202366340682129e-79,-0.0827,0.0044,<0.001
+B_intrazonal_SHOPPING,SHOPPING|intra,Same zone,intrazonal (destination = home zone),-1.037762208125605,0.0603364662231572,2.6743783529601854e-66,-1.0378,0.0603,<0.001
+B_baltimore_city_SHOPPING,SHOPPING|bc,Area,Baltimore City,-1.1351011090329783,0.1175160367642195,4.497249202116622e-22,-1.1351,0.1175,<0.001
+B_washington_dc_SHOPPING,SHOPPING|dcz,Area,Washington DC,0.0063916446268932,0.1513813097425845,0.9663216037887187,0.0064,0.1514,0.966
+B_cbd_SHOPPING,SHOPPING|cbd,Area,central business district,-0.6452693419535663,0.0938093645338378,6.047868385972766e-12,-0.6453,0.0938,<0.001
+B_virginia_SHOPPING,SHOPPING|va,Area,Virginia,0.3272778383611859,0.1047465344435326,0.0017812317666712934,0.3273,0.1047,0.002
+B_de_pa_wv_SHOPPING,SHOPPING|othst,Area,"Delaware, Pennsylvania, West Virginia",1.3423326780235534,0.1715797741929222,5.142618539941404e-15,1.3423,0.1716,<0.001
+B_retail_density_SHOPPING,SHOPPING|lnretden,Land use,ln(1 + retail jobs per km$^2$),-0.2153320561912329,0.0241586836406218,4.9564192618441145e-19,-0.2153,0.0242,<0.001
+B_landuse_mix_SHOPPING,SHOPPING|mix,Land use,land-use mix (entropy),0.0546380468658783,0.125347491557617,0.6629146377715786,0.0546,0.1253,0.663
+B_outside_home_county_shared,shared|xcounty,Boundaries,outside the origin county,-0.5530848573234144,0.0369347991027237,1.0756888040292763e-50,-0.5531,0.0369,<0.001
+B_outside_home_state_shared,shared|xstate,Boundaries,outside the origin state,-0.6450742437877339,0.062050668699663,2.5875750710423336e-25,-0.6451,0.0621,<0.001
+B_lndist_x_no_car_shared,shared|lnd_car0,Interactions with ln(distance),ln(distance) $\times$ no car,-0.380055615852704,0.053699526289246,1.4683304560069734e-12,-0.3801,0.0537,<0.001
+B_lndist_x_fewer_cars_than_drivers_shared,shared|lnd_car1,Interactions with ln(distance),ln(distance) $\times$ cars $<$ drivers,-0.1523643321516792,0.032937820257083,3.73124463248236e-06,-0.1524,0.0329,<0.001
+B_lndist_x_worker_shared,shared|lnd_worker,Interactions with ln(distance),ln(distance) $\times$ worker,-0.0504223626499732,0.0285404563897297,0.07727884535380954,-0.0504,0.0285,0.077
+B_lndist_x_person_under18_shared,shared|lnd_kid,Interactions with ln(distance),ln(distance) $\times$ person $<$ 18,-0.003858158666799,0.0417065921149769,0.9262950974826822,-0.0039,0.0417,0.926
+B_lndist_x_person_65plus_shared,shared|lnd_senior,Interactions with ln(distance),ln(distance) $\times$ person 65+,-0.0741889845228921,0.0306849975110111,0.01561633814426742,-0.0742,0.0307,0.016
+B_lndist_x_household_with_children_shared,shared|lnd_child,Interactions with ln(distance),ln(distance) $\times$ household with children,-0.2064420805981032,0.0303964760871087,1.1086193393040649e-11,-0.2064,0.0304,<0.001
+B_lndist_x_male_shared,shared|lnd_male,Interactions with ln(distance),ln(distance) $\times$ male,-0.0081091930424164,0.0225050758520554,0.7186023919414288,-0.0081,0.0225,0.719
+B_lndist_x_one_person_household_shared,shared|lnd_hh1,Interactions with ln(distance),ln(distance) $\times$ one-person household,-0.0795051220083536,0.0326816093494113,0.014985989246096416,-0.0795,0.0327,0.015
+B_lndist_x_arrival_AM_shared,shared|lnd_am,Interactions with ln(distance),ln(distance) $\times$ AM 6--9,-0.2486810392683678,0.0404269187101344,7.681522674982438e-10,-0.2487,0.0404,<0.001
+B_lndist_x_arrival_PM_shared,shared|lnd_pm,Interactions with ln(distance),ln(distance) $\times$ PM 15--19,-0.1231149308516716,0.0269050202855877,4.741560955645393e-06,-0.1231,0.0269,<0.001
+B_lndist_x_arrival_evening_shared,shared|lnd_ev,Interactions with ln(distance),ln(distance) $\times$ evening 19--6,-0.0002341182942877,0.035769479610912,0.9947777255716626,-0.0002,0.0358,0.995
+B_lndist_x_tour_with_stops_shared,shared|lnd_multi,Interactions with ln(distance),ln(distance) $\times$ tour with at least one stop,0.4725667468141169,0.0259400731292625,3.739823788858795e-74,0.4726,0.0259,<0.001
+B_car_gen_time_SO,S+O|cgt,Distance and impedance,car generalised time (min),-0.0397576039285374,0.0023654937449115,2.1571515841438234e-63,-0.0398,0.0024,<0.001
+THETA_population_SHOPPING,SHOPPING|theta_pop,Size,$\theta$ population (ln weight),-7.081760268304765,0.9938614118099114,1.0370294200559097e-12,-7.0818,0.9939,<0.001
+THETA_office_jobs_SHOPPING,SHOPPING|theta_off,Size,$\theta$ office jobs (ln weight),-7.015804571604837,1.9882470321877812,0.00041770366567997984,-7.0158,1.9882,<0.001
+MU_size_SRO,S+R+O|mu_size,Size,"$\mu$, ln size",1.248464190774725,0.0246299595867239,0.0,1.2485,0.0246,<0.001
+B_intrazonal_RECREATION,RECREATION|intra,Same zone,intrazonal (destination = home zone),-0.5626859983688349,0.0739177039582165,2.6919694234739502e-14,-0.5627,0.0739,<0.001
+B_baltimore_city_RECREATION,RECREATION|bc,Area,Baltimore City,-0.2226209562139481,0.1524665309420214,0.14425434831997033,-0.2226,0.1525,0.144
+B_washington_dc_RECREATION,RECREATION|dcz,Area,Washington DC,0.6920105931026316,0.1625036305446299,2.058662028363558e-05,0.692,0.1625,<0.001
+B_cbd_RECREATION,RECREATION|cbd,Area,central business district,0.4297701242785531,0.1198669323873154,0.0003365702909639841,0.4298,0.1199,<0.001
+B_virginia_RECREATION,RECREATION|va,Area,Virginia,0.3425979103250564,0.1158980239023624,0.0031162787042098906,0.3426,0.1159,0.003
+B_de_pa_wv_RECREATION,RECREATION|othst,Area,"Delaware, Pennsylvania, West Virginia",0.0966865352715247,0.244621320806474,0.6926585217080176,0.0967,0.2446,0.693
+B_retail_density_RECREATION,RECREATION|lnretden,Land use,ln(1 + retail jobs per km$^2$),-0.4192018813690986,0.0427787438979376,1.1336497302766723e-22,-0.4192,0.0428,<0.001
+B_landuse_mix_RECREATION,RECREATION|mix,Land use,land-use mix (entropy),1.432493546762048,0.2690357529998396,1.0120485984703082e-07,1.4325,0.269,<0.001
+B_car_gen_time_RECREATION,RECREATION|cgt,Distance and impedance,car generalised time (min),-0.0303343344953324,0.0027514398263469,2.898573730921793e-28,-0.0303,0.0028,<0.001
+THETA_population_RECREATION,RECREATION|theta_pop,Size,$\theta$ population (ln weight),-3.509440124345005,0.3861689569665814,1.010298427671131e-19,-3.5094,0.3862,<0.001
+THETA_office_jobs_RECREATION,RECREATION|theta_off,Size,$\theta$ office jobs (ln weight),-3.861387190399733,0.3620071453456139,1.4585886174312935e-26,-3.8614,0.362,<0.001
+THETA_school_enrolment_RECREATION,RECREATION|theta_stu,Size,$\theta$ school enrolment (ln weight),-3.83064755698828,0.3262424457250829,7.788582519123097e-32,-3.8306,0.3262,<0.001
+B_intrazonal_ACCOMPANY,ACCOMPANY|intra,Same zone,intrazonal (destination = home zone),-0.2062954455032855,0.1283018898296546,0.1078590677132821,-0.2063,0.1283,0.108
+B_baltimore_city_ACCOMPANY,ACCOMPANY|bc,Area,Baltimore City,-0.5607930923089637,0.28102789774731,0.04598762884373132,-0.5608,0.281,0.046
+B_washington_dc_ACCOMPANY,ACCOMPANY|dcz,Area,Washington DC,0.5288221015356089,0.2435736395593895,0.02992380869162246,0.5288,0.2436,0.030
+B_cbd_ACCOMPANY,ACCOMPANY|cbd,Area,central business district,0.3718703996740697,0.2181600772293149,0.08827355809300416,0.3719,0.2182,0.088
+B_virginia_ACCOMPANY,ACCOMPANY|va,Area,Virginia,0.8901816217096836,0.2712494302738558,0.0010315315393080217,0.8902,0.2712,0.001
+B_de_pa_wv_ACCOMPANY,ACCOMPANY|othst,Area,"Delaware, Pennsylvania, West Virginia",0.3095834313746138,0.8643794475099252,0.7202259270997122,0.3096,0.8644,0.720
+B_retail_density_ACCOMPANY,ACCOMPANY|lnretden,Land use,ln(1 + retail jobs per km$^2$),-0.1441333538991004,0.0949198295550658,0.12889478818225983,-0.1441,0.0949,0.129
+B_landuse_mix_ACCOMPANY,ACCOMPANY|mix,Land use,land-use mix (entropy),0.5789526664349871,0.4587657826084116,0.20695643486250637,0.579,0.4588,0.207
+B_car_gen_time_ACCOMPANY,ACCOMPANY|cgt,Distance and impedance,car generalised time (min),-0.0633789249024757,0.0108482505220363,5.147954105550476e-09,-0.0634,0.0108,<0.001
+THETA_population_ACCOMPANY,ACCOMPANY|theta_pop,Size,$\theta$ population (ln weight),-3.5912089718919207,1.3939421078451006,0.009986480504762626,-3.5912,1.3939,0.010
+THETA_office_jobs_ACCOMPANY,ACCOMPANY|theta_off,Size,$\theta$ office jobs (ln weight),-1.602268195775105,1.2258229247651833,0.19118012232957626,-1.6023,1.2258,0.191
+THETA_other_jobs_ACCOMPANY,ACCOMPANY|theta_oth,Size,$\theta$ other jobs (ln weight),-1.0426011463506732,1.1138492403544562,0.3492555037317213,-1.0426,1.1138,0.349
+THETA_school_enrolment_ACCOMPANY,ACCOMPANY|theta_stu,Size,$\theta$ school enrolment (ln weight),0.1792191114161901,1.4900495686881974,0.9042635001885527,0.1792,1.49,0.904
+MU_size_ACCOMPANY,ACCOMPANY|mu_size,Size,"$\mu$, ln size",0.7107864678340277,0.1350425898116405,1.4139663366994064e-07,0.7108,0.135,<0.001
+B_intrazonal_OTHER,OTHER|intra,Same zone,intrazonal (destination = home zone),-0.6165918970163199,0.0830872087572185,1.162211390759492e-13,-0.6166,0.0831,<0.001
+B_baltimore_city_OTHER,OTHER|bc,Area,Baltimore City,-0.0981540223551755,0.1542423428964721,0.5245402638595611,-0.0982,0.1542,0.525
+B_washington_dc_OTHER,OTHER|dcz,Area,Washington DC,-0.2852705115954659,0.1565616244822575,0.06844022495107698,-0.2853,0.1566,0.068
+B_cbd_OTHER,OTHER|cbd,Area,central business district,-0.5147082299189862,0.1407661595945408,0.0002557053073224449,-0.5147,0.1408,<0.001
+B_virginia_OTHER,OTHER|va,Area,Virginia,0.3924145362201822,0.1121169309208657,0.000465176000321913,0.3924,0.1121,<0.001
+B_de_pa_wv_OTHER,OTHER|othst,Area,"Delaware, Pennsylvania, West Virginia",0.1252969598645917,0.2606190572107377,0.6306823313411762,0.1253,0.2606,0.631
+B_retail_density_OTHER,OTHER|lnretden,Land use,ln(1 + retail jobs per km$^2$),-0.2385461180538005,0.0328028771366305,3.5391622735360613e-13,-0.2385,0.0328,<0.001
+B_landuse_mix_OTHER,OTHER|mix,Land use,land-use mix (entropy),-1.233507822866988,0.1793571927972053,6.096273520052211e-12,-1.2335,0.1794,<0.001
+THETA_office_jobs_OTHER,OTHER|theta_off,Size,$\theta$ office jobs (ln weight),-1.9295109197385003,0.1747748727728893,2.4509052220448043e-28,-1.9295,0.1748,<0.001
+THETA_other_jobs_OTHER,OTHER|theta_oth,Size,$\theta$ other jobs (ln weight),-1.1888223391641484,0.1646311500214071,5.155871078037632e-13,-1.1888,0.1646,<0.001
+SCALE_RECREATION,scale|RECREATION,Scale,scale $\mu_p$ ($p$ against 1),0.8003000655546854,0.0180155196270393,0.0,0.8003,0.018,<0.001
+SCALE_ACCOMPANY,scale|ACCOMPANY,Scale,scale $\mu_p$ ($p$ against 1),0.7808376504659327,0.037962016570767,5.211451727970903e-94,0.7808,0.038,<0.001
+SCALE_OTHER,scale|OTHER,Scale,scale $\mu_p$ ($p$ against 1),0.7429688764914139,0.0108223912457657,0.0,0.743,0.0108,<0.001
+LL0,,,LL(0): equal shares of the available alternatives (article Table 2),,,,-105696.5,,
+LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-49122.499157920865,,,-49122.5,,
+N,,,observations,,,,14341.0,,
+K,,,estimated parameters,,,,71.0,,

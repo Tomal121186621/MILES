@@ -1,0 +1,16 @@
+{
+ "half": "estimation",
+ "N": 5064,
+ "parts": 6,
+ "n_cfg_max": 4,
+ "n_cand_max": 4,
+ "zones": 1588,
+ "purposes": [
+  "RECREATION"
+ ],
+ "form": "stop",
+ "vars": [
+  "imp",
+  "ls"
+ ]
+}

@@ -1,0 +1,260 @@
+{
+ "model": "Residential location: dwelling",
+ "article_table": "est_dwelling",
+ "purpose": "Lower level of the residential location model: which dwelling a moving household chooses within its destination PUMA.",
+ "depends_on": [],
+ "data_sources": [
+  {
+   "name": "ACS PUMS 2014-2018 5-year, household and person files",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www2.census.gov/programs-surveys/acs/data/pums/2018/5-Year/",
+   "how": "Download csv_h<st>.zip and csv_p<st>.zip for st = dc, de, md, pa, va, wv from the 2018 5-Year folder (CSV, not SAS). Variables used: SERIALNO, ST, PUMA, MIGPUMA, MIGSP, POWPUMA, POWSP, MIG, MV, RELP, AGEP, ESR, JWMNP, SCHG, NP, TYPE, BDSP, BLD, TEN, GRNTP, SMOCP, VALP, HINCP, VEH, YBL, WGTP; ADJINC (income adjustment) and ADJHSG (housing-cost adjustment) are columns of the same files.",
+   "place_in": "00_shared_data/raw/acs_pums_2014_2018_5yr/",
+   "files": [
+    "csv_hdc.zip",
+    "csv_hde.zip",
+    "csv_hmd.zip",
+    "csv_hpa.zip",
+    "csv_hva.zip",
+    "csv_hwv.zip",
+    "csv_pdc.zip",
+    "csv_pde.zip",
+    "csv_pmd.zip",
+    "csv_ppa.zip",
+    "csv_pva.zip",
+    "csv_pwv.zip"
+   ],
+   "notes": [
+    "URL: the folder of the documented 2019 and 2024 5-Year files (2_silo/data_sources.md) with the year 2018: verify.",
+    "The package copy is 00_shared_data/acs_pums_2014_2018_5yr/ (project: ../inputs/pums_2018_5yr/). The package scripts read the package copy; replace its files by your download."
+   ]
+  },
+  {
+   "name": "2010 Census tract to 2010 PUMA relationship file",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www2.census.gov/geo/docs/maps-data/data/rel/2010_Census_Tract_to_2010_PUMA.txt",
+   "how": "Download the national text file.",
+   "place_in": "00_shared_data/raw/geo/",
+   "files": [
+    "2010_Census_Tract_to_2010_PUMA.txt"
+   ],
+   "notes": [
+    "Project location: data/raw/resloc/ (read by s01_geography.py through RAW).",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/geo/\" ../../../data/raw/resloc (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "PUMA to MIGPUMA and POWPUMA crosswalk (2010 geography)",
+   "provider": "IPUMS USA",
+   "url": "https://usa.ipums.org/usa/resources/volii/puma_migpuma1_pwpuma00.xls",
+   "how": "Download the xls.",
+   "place_in": "00_shared_data/raw/geo/",
+   "files": [
+    "puma_migpuma1_pwpuma00.xls"
+   ],
+   "notes": [
+    "Project location: data/raw/resloc/.",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/geo/\" ../../../data/raw/resloc (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "Census Gazetteer, national tract file (land area, internal points)",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html",
+   "how": "Gazetteer files, census tracts, national file (the project uses Gaz_tracts_national.txt).",
+   "place_in": "00_shared_data/raw/geo/",
+   "files": [
+    "Gaz_tracts_national.txt"
+   ],
+   "notes": [
+    "verify: URL not documented in the project; landing page given.",
+    "Project location: ../I695_pricing/data/census/ (rc.GAZ)."
+   ]
+  },
+  {
+   "name": "MSTM zone system, zone polygons and peak car skim (Maryland Statewide Transportation Model)",
+   "provider": "Maryland Department of Transportation State Highway Administration (MDOT SHA), provided to the project",
+   "url": "https://roads.maryland.gov",
+   "how": "Not a public download: the 1,588-zone MSTM system (zoneSystem.csv), zone polygons (SMZ_RMZ_02152011inMSTM_EPSG26918.shp) and the AM-peak auto travel-time skim were provided by MDOT. Request them from MDOT SHA (MSTM / travel forecasting).",
+   "place_in": "00_shared_data/raw/mstm/",
+   "files": [
+    "zoneSystem.csv",
+    "SMZ_RMZ_02152011inMSTM_EPSG26918.shp/.shx/.dbf/.prj",
+    "auto_peak_time.csv.gz"
+   ],
+   "notes": [
+    "verify: landing page only; the data are MDOT-provided.",
+    "Project copies: 2_silo/input/zoneSystem.csv, ../ABIT/input/mito_los/Zonal/*.shp, 2_silo/input/skims/auto_peak_time.csv.gz; package copies in 00_shared_data/zone_system and 00_shared_data/skims (used by the package scripts)."
+   ]
+  },
+  {
+   "name": "CPI-U, U.S. city average, all items (annual averages 2014-2023)",
+   "provider": "U.S. Bureau of Labor Statistics",
+   "url": "https://data.bls.gov/timeseries/CUUR0000SA0",
+   "how": "Series CUUR0000SA0, annual averages; the values are typed in rc.py (CPI dict) and used to express incomes in 2016 dollars.",
+   "place_in": "00_shared_data/raw/cpi/",
+   "files": [],
+   "notes": [
+    "verify: landing page of the series; no file is read (constants in rc.py)."
+   ]
+  }
+ ],
+ "steps": [
+  {
+   "step": 1,
+   "what": "SILO base-year microdata (upstream project stage; output provided (redo only for a rebuild from raw data; writes into the project folders: back them up first))",
+   "cwd": "../../../2_silo/input_build",
+   "command": "/opt/homebrew/anaconda3/bin/python3 build_microdata.py && /opt/homebrew/anaconda3/bin/python3 build_base_v2.py",
+   "reads": [
+    "1_vae outputs"
+   ],
+   "creates": [
+    "2_silo/input/microData/{hh,pp,dd,jj}_2016*.csv; copy dd_2016.csv and hh_2016.csv to 00_shared_data/synthetic_population_2016/"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 2,
+   "what": "Geography: zone / PUMA / MIGPUMA tables (package copy; writes 00_shared_data/resloc_work/geo_*.csv). Needs jj_2016.csv in 00_shared_data/synthetic_population_2016 (copy it from 2_silo/input/microData), the tract-PUMA file in 00_shared_data/county_attributes (rc.RAW) and the Gazetteer file at rc.GAZ",
+   "cwd": "input/code",
+   "command": "/opt/homebrew/anaconda3/bin/python3 s01_geography.py",
+   "reads": [
+    "tract_puma_2010",
+    "gazetteer_tracts",
+    "ipums_migpuma (read through geo_puma_mig)",
+    "synthetic population"
+   ],
+   "creates": [
+    "../../../00_shared_data/resloc_work/geo_zone.csv, geo_puma_region.csv, geo_puma_zone.csv, geo_puma_mig.csv, geo_mig_zone.csv"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 3,
+   "what": "ACS PUMS movers and the year's dwelling market, estimation file 2014-2018 (package copy; writes 00_shared_data/resloc_work/pums_*_est.parquet)",
+   "cwd": "input/code",
+   "command": "/opt/homebrew/anaconda3/bin/python3 s03_pums.py est",
+   "reads": [
+    "pums5_2018",
+    "geo_*.csv"
+   ],
+   "creates": [
+    "../../../00_shared_data/resloc_work/pums_movers_est.parquet, pums_pool_est.parquet"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 4,
+   "what": "input_check, part 1: keep a copy of the provided estimation and hold-out tables",
+   "cwd": "input/data",
+   "command": "rm -rf provided_estimation provided_holdout && cp -R estimation provided_estimation && cp -R holdout provided_holdout",
+   "reads": [],
+   "creates": [
+    "input/data/provided_estimation/",
+    "input/data/provided_holdout/"
+   ],
+   "output_provided": false,
+   "minutes": 0.1,
+   "memory_gb": 0.1
+  },
+  {
+   "step": 5,
+   "what": "Build the estimation and hold-out tables from the inputs (same calls and random draws as the original run; asserts that the LL at the original estimates is reproduced)",
+   "cwd": "input/code",
+   "command": "~/.venvs/biogeme/bin/python build_estimation_data.py",
+   "reads": [
+    "00_shared_data/resloc_work/pums_movers_est.parquet, pums_pool_est.parquet",
+    "../data/raw/r06_*.csv"
+   ],
+   "creates": [
+    "../data/estimation/*",
+    "../data/holdout/*"
+   ],
+   "output_provided": true,
+   "minutes": 0.5,
+   "memory_gb": 1.5
+  },
+  {
+   "step": 6,
+   "what": "input_check, part 2: compare the rebuilt tables with the provided ones (rows, column sums, largest difference); must print ALL TABLES MATCH",
+   "cwd": "input/code",
+   "command": "~/.venvs/biogeme/bin/python check_against_provided.py",
+   "reads": [
+    "../data/provided_*",
+    "../data/estimation",
+    "../data/holdout"
+   ],
+   "creates": [],
+   "output_provided": false,
+   "minutes": 0.5,
+   "memory_gb": 1
+  },
+  {
+   "step": 7,
+   "what": "Log-likelihood at the article coefficients (no estimation, nothing written)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_residential_dwelling.py --check",
+   "reads": [
+    "../input/data/estimation/*"
+   ],
+   "creates": [],
+   "output_provided": false,
+   "minutes": 0.1,
+   "memory_gb": 1.4
+  },
+  {
+   "step": 8,
+   "what": "Biogeme estimation, start values = article estimates",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_residential_dwelling.py",
+   "reads": [
+    "../input/data/estimation/*"
+   ],
+   "creates": [
+    "../output/<model>.html",
+    "../output/<model>.yaml",
+    "../output/<model>_estimates.csv",
+    "../output/biogeme.toml"
+   ],
+   "output_provided": false,
+   "minutes": 1,
+   "memory_gb": 2
+  },
+  {
+   "step": 9,
+   "what": "Compare the estimates with the article (reference_estimates.csv)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python compare_with_reference.py",
+   "reads": [
+    "../output/<model>_estimates.csv",
+    "reference_estimates.csv"
+   ],
+   "creates": [
+    "../output/comparison_with_article.csv"
+   ],
+   "output_provided": false,
+   "minutes": 0.1,
+   "memory_gb": 0.2
+  }
+ ],
+ "check": {
+  "article_LL": -47688.2,
+  "biogeme_LL_at_article_coefficients": -47688.1973,
+  "biogeme_LL_at_full_precision_estimates": -47688.1973,
+  "N": 15163,
+  "K": 38
+ },
+ "notes": [
+  "Sampled alternatives: the exact 30-dwelling sets of the original estimation (generator seed 20261022, first draw), in the data; uniform sampling, no correction term.",
+  "Structure type SFD is the reference; age band 35-49 of the oldest member is the reference of the age interactions.",
+  "Steps with output_provided = true can be skipped: their results are in input/data or 00_shared_data. Upstream project stages were not re-run for this package; their runtimes are not measured.",
+  "Measured here: --check 6 s, 1.4 GB; estimation about 50 s in a test run (coefficients and robust s.e. equal to the article's to 4 decimals).",
+  "Environment: Biogeme scripts and package build scripts run with ~/.venvs/biogeme/bin/python (Biogeme 3.3.5); project scripts with /opt/homebrew/anaconda3/bin/python3 (needs geopandas)."
+ ]
+}

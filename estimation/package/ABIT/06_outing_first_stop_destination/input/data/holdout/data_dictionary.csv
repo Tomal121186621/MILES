@@ -1,0 +1,50 @@
+column,definition,unit,source
+records.parquet: tripid,survey trip id of the trip to the activity,id,RTS 2017/18 rts_trips_clean.csv
+records.parquet: person_id,survey person id,id,RTS
+records.parquet: household_id,survey household id,id,RTS
+records.parquet: segment,model segment,label,estimation code
+records.parquet: purpose,activity purpose,label,estimation code
+records.parquet: type,TASHA activity type of the episode,label,tasha_distributions.py
+records.parquet: seg,TASHA person segment,label,tasha_distributions.py
+records.parquet: home_zone_idx,home zone (index 0..1587 of the zone table),zone index,survey population
+records.parquet: work_idx,usual workplace zone (index; -1 none),zone index,RTS workplace tract
+records.parquet: dzone_pt,zone of the destination tract's internal point (-1 unknown); not used by the likelihood,zone index,survey_population.tract_zone
+records.parquet: tod,"time of day of the arrival: 0 AM 6-9, 1 midday 9-15, 2 PM 15-19, 3 evening/night",class,RTS arr_min
+records.parquet: mode_auto,"1 if the tour mode is car (driver, passenger, shared ride)",0/1,RTS tours
+records.parquet: tour_purpose,purpose of the tour the stop is on,label,RTS tours
+records.parquet: position,out: stop before the primary destination; in: after,label,RTS tours
+records.parquet: anchor_b,anchor b (second anchor of the detour form; -1 none),zone index,estimation code
+records.parquet: w,survey trip weight (not used: unweighted estimation),weight,RTS wttrdfin
+records.parquet: geoid,destination census tract (2010 GEOID),id,RTS
+records.parquet: km_rep,reported trip distance (not used),km,RTS
+records.parquet: arr_min,arrival time,minutes after midnight,RTS
+records.parquet: age,age,years,survey population pp.csv
+records.parquet: male,1 male (see README: coding of the record file),0/1,survey population
+records.parquet: lic,driving licence,0/1,survey population
+records.parquet: occ,SILO occupation code (1 worker),code,survey population
+records.parquet: hhsize,household size,persons,survey population
+records.parquet: children,household members under 18,persons,survey population
+records.parquet: autos,household cars,cars,survey population
+records.parquet: drivers,household members with a licence,persons,survey population
+records.parquet: inc_month,household income as ABIT sums it (sum of int(annual/12)),USD per month,survey population
+records.parquet: inc_year,12 x inc_month,USD per year,survey population
+records.parquet: home_idx,"anchor a of the record (home, previous location or workplace; see configurations)",zone index,estimation code
+records.parquet: inc_cls,"income class: 0 < $50k, 1 $50-100k, 2 >= $100k",class,prep_dc_data.chooser_cols
+records.parquet: car_cls,"0 no car, 1 cars < drivers, 2 cars >= drivers",class,prep_dc_data.chooser_cols
+records.parquet: rec,record id (key of candidates and configurations),id,estimation code
+records.parquet: kind,primary: one anchor; stop: two anchors (detour form),label,estimation code
+candidates.parquet: rec,record id,id,estimation tables
+candidates.parquet: zidx,possible chosen zone of the record's destination (index),zone index,tract-to-zone crosswalk
+candidates.parquet: b,weight of the zone in the destination mixture (sum over a record's zones may differ from 1: tract-to-zone overlay uses overlap area / zone area),weight,tract-to-zone crosswalk
+"configurations.parquet: rec, home_idx, anchor_b, w","anchor configuration (anchor a, anchor b) of the record with weight w (sum 1 per record)",zone index / weight,estimation tables
+"biogeme_part*.parquet: rec, purpose_id, n_cfg, n_cand","record id, purpose index (pooled), number of configurations and of candidate zones",id / count,build_biogeme_data.py
+biogeme_part*.parquet: f_<flag>,"chooser flags: inc0 income < $50k, inc2 >= $100k, car0 no car, car1 cars < drivers, child household with children, kid person < 18, senior 65+, worker, am / pm / ev arrival period, nonauto tour mode not car (stops), worktour work or school tour (stops), inbound stop after the primary destination, multi tour with stops (primaries), male, hh1 one-person household, hhsize persons",0/1 (hhsize persons),dc_model.chooser + estimation scripts
+biogeme_part*.parquet: w_<c>,weight of configuration c (0 = padding),weight,configurations
+"biogeme_part*.parquet: za_<c>, zb_<c>",anchor zones a and b of configuration c (zb -1: none),zone index,configurations
+"biogeme_part*.parquet: cnty_a_<c>, st_a_<c>, cnty_b_<c>, st_b_<c>",county FIPS and state FIPS of the anchors,FIPS,zone table
+"biogeme_part*.parquet: cz_<k>, b_<k>",candidate zone k of the destination and its weight (0 = padding),zone index / weight,candidates
+biogeme_part*.parquet: cand_<attr>_<k>,"zone attribute of candidate zone k (bc Baltimore City, dcz Washington DC, cbd >= 10,000 jobs/km2, va Virginia, othst DE/PA/WV, lnretden ln(1 + retail jobs/km2), mix land-use entropy, pop persons 2016, ret / off / oth jobs 2016 by type, stu school enrolment, cnty county FIPS, st state FIPS)",see 00_shared_data/zones,zones_model_attributes.csv
+biogeme_part*.parquet: imp_<c>_<j>,"impedance from the anchors of configuration c to zone j: primary form car distance d(a,j) (km; intrazonal 0.5 sqrt(area), capped at 300 km); detour form max(0, d(a,j) + d(j,b) - d(a,b))",km,car distance skim 2016 (00_shared_data/skims/abit_base_2016)
+biogeme_part*.parquet: cgt_<c>_<j>,"car generalised time of the same legs: time + (0.12 $/km x distance) x 60 / VOT, VOT = 30 $/h x household income factor (detour form: detour of it, >= 0)",minutes,dc_common.car_gt; car time skim 2016
+biogeme_part*.parquet: ls_<c>_<j>,"mode-choice logsum of the re-estimated tour mode models (detour form: LS(a,j) + LS(j,b) - LS(a,b))",utils,mode_logsum_new.py; 00_shared_data/mode_choice_logsums
+biogeme_part*.parquet: c<var>_<c>_<k>,"the record x zone variable var (imp, cgt, ls) of configuration c at candidate zone k",as var,build_biogeme_data.py

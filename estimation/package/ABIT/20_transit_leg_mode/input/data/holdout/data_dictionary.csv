@@ -1,0 +1,39 @@
+column,definition,unit,source
+first,leg from home (first leg),0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+last,leg back home (last leg),0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+mid,intermediate leg (not in the model),0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+main,leg starts or ends at the main activity of the tour,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+lnkm,ln(1 + car km); model 12: workplace -> first stop of the outing; model 20: between the zones of the leg,ln km,"car distance skim 2016, intrazonal 0.5 sqrt(area) (00_shared_data/skims/abit_base_2016)"
+km,car km; model 12: workplace -> first stop; model 20: of the leg,km,"car distance skim 2016, intrazonal 0.5 sqrt(area) (00_shared_data/skims/abit_base_2016)"
+ttr,"transit minutes of the leg / 10 (walk access, period of the departure; 0 if no path)",10 minutes,period transit skims (00_shared_data/skims/mode_choice_periods)
+nopath,no transit path for the leg (or same zone),0/1,period transit skims
+peak,departure in AM 6-9 or PM 15-19,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+wash,home zone in the Washington region (WMATA counties),0/1,zone table (00_shared_data/zones)
+work,main activity of the tour is work,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+school,main activity of the tour is school,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+cars0,no car in the household,0/1,tours (prep_tours.py)
+carshort,fewer cars than licensed drivers (at least one car),0/1,tours (prep_tours.py)
+lic,driving licence,0/1,tours (prep_tours.py)
+age_u18,age under 18,0/1,tours
+age_65p,age 65+,0/1,tours
+stops,tour with more than two legs (not in the model),0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+rail,train tour (not in the final model),0/1,tours
+prevCD,previous leg of the tour by car driver,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+prevCP,previous leg car passenger,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+prevWK,previous leg walk,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+firstCD,last leg of a tour whose first leg was car driver,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+av_TR,availability transit (always 1),0/1,estimation rule
+av_WK,availability walk: leg km <= 8,0/1,estimation rule
+av_BK,availability bike: leg km <= 30,0/1,estimation rule
+av_CP,availability car passenger (always 1),0/1,estimation rule
+av_CD,"availability car driver: licence, age 16+, household car",0/1,estimation rule
+y,"leg mode 1 TR transit, 2 WK walk, 3 CP car passenger, 4 CD car driver, 5 BK bike",0/1 or alternative,survey
+mode,chosen leg mode TR WK CP CD BK (y = 1..5 in this order),label,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+w,survey weight (not used: unweighted estimation),weight,RTS
+tour,tour id within the half,id,estimation code
+q,leg number in the tour (0 = first),index,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+n,legs of the tour,count,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+county,home county FIPS,FIPS,tours
+tour_choice,"tour mode class of the tour (TW transit walk access, TD transit drive access)",label,tours
+segment,"tour purpose segment (work, school, shopping, other)",label,tours
+chosen_av,chosen mode available (all rows 1: the estimation kept only these),bool,estimation rule

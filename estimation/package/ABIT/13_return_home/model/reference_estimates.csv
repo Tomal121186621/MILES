@@ -1,0 +1,38 @@
+parameter,project_name,article_group,article_label,coefficient,robust_se,p_value,article_coefficient,article_robust_se,article_p
+ASC_return_home,const,Constant,Constant,0.2859570387791253,0.1207088586806528,0.017837151367053973,0.286,0.1207,0.018
+B_detour_via_home_km,detour_km,Detour and distance,Detour via home (km),-0.0079504263426818,0.0033609818477462,0.018005399222869024,-0.008,0.0034,0.018
+B_ln_detour_via_home,lndetour,Detour and distance,"ln(1 + detour via home, km)",-0.4645095895037827,0.040980232465071,8.80651173410754e-30,-0.4645,0.041,<0.001
+B_distance_from_home_km,dhome_km,Detour and distance,Distance from home (km),0.0067415868355682,0.001306134980016,2.450078172215632e-07,0.0067,0.0013,<0.001
+B_preceding_work,a_work,Episodes,Preceding episode: work,-0.2370390334479936,0.0525945141792549,6.577679937836156e-06,-0.237,0.0526,<0.001
+B_preceding_school,a_school,Episodes,Preceding episode: school,-0.0491064030462368,0.0888471776269533,0.5804644752276864,-0.0491,0.0888,0.580
+B_preceding_accompanying,a_acc,Episodes,Preceding episode: accompanying,-0.0477515361590675,0.0553653937741464,0.3884235202709654,-0.0478,0.0554,0.388
+B_preceding_shopping,a_shop,Episodes,Preceding episode: shopping,0.165340774932569,0.0414983726004918,6.768750844922954e-05,0.1653,0.0415,<0.001
+B_preceding_joint,a_joint,Episodes,Preceding episode: joint,0.6575943469513891,0.0762816444603105,6.659806807424451e-18,0.6576,0.0763,<0.001
+B_following_work,e_work,Episodes,Following episode: work,-0.8090490446136595,0.0697669475653029,4.295197074794366e-31,-0.809,0.0698,<0.001
+B_following_school,e_school,Episodes,Following episode: school,-0.2001384349678871,0.1063707554391729,0.059901560688800905,-0.2001,0.1064,0.060
+B_following_accompanying,e_acc,Episodes,Following episode: accompanying,0.4621783906755712,0.0503720765752769,4.5036224262826057e-20,0.4622,0.0504,<0.001
+B_following_shopping,e_shop,Episodes,Following episode: shopping,-0.706399067311092,0.0392335688200973,1.7810954296687238e-72,-0.7064,0.0392,<0.001
+B_following_joint,e_joint,Episodes,Following episode: joint,1.2098092015318616,0.0598501826242219,7.37838890288067e-91,1.2098,0.0599,<0.001
+B_both_episodes_joint,jj,Joint episodes,Both episodes joint,-2.2242171765164045,0.1080632233366822,3.9339473535536494e-94,-2.2242,0.1081,<0.001
+B_joint_next_to_work_or_school,jmand,Joint episodes,Joint episode next to a work or school episode,0.5146224737830323,0.0822326094562905,3.8961753574157716e-10,0.5146,0.0822,<0.001
+B_worker,worker,Person,Person type: worker,-0.2404513032704533,0.0561452953154405,1.8467087527940392e-05,-0.2405,0.0561,<0.001
+B_student_k12,stud_k12,Person,Person type: K--12 student,-0.1929331046574924,0.1098762940497234,0.07910343344688538,-0.1929,0.1099,0.079
+B_student_postsecondary,stud_ps,Person,Person type: post-secondary student,-0.1477999627257598,0.1093137424216844,0.17635253990844446,-0.1478,0.1093,0.176
+B_retiree,retiree,Person,Person type: retiree,-0.1698233842991244,0.0594130065383517,0.004258454893386888,-0.1698,0.0594,0.004
+B_child_under_5,toddler,Person,Person type: child under 5,-0.2725088912174608,0.1248893787716425,0.029109375100995857,-0.2725,0.1249,0.029
+B_female,female,Person,Female,-0.120179112319566,0.0305486223195854,8.353431046542036e-05,-0.1202,0.0305,<0.001
+B_driving_licence,lic,Person,Driving licence,0.4136891472794104,0.0848065267060032,1.0714828801282249e-06,0.4137,0.0848,<0.001
+B_household_size,hhsize,Household,Household size (persons),0.1266972031647982,0.0167041191779117,3.330310704157873e-14,0.1267,0.0167,<0.001
+B_income_below_50k,inc_low,Household,Household income below \$50k,-0.1886028925868654,0.0490632351798328,0.00012100662113304777,-0.1886,0.0491,<0.001
+B_income_100k_or_more,inc_high,Household,Household income \$100k or more,0.1125012206573955,0.0348021190355495,0.001226705423713243,0.1125,0.0348,0.001
+B_no_car,car0,Household,No car in the household,0.0650098469697181,0.0744704066852372,0.3826837039825808,0.065,0.0745,0.383
+B_fewer_cars_than_drivers,carshort,Household,Fewer cars than drivers in the household,-0.1199886806245843,0.0447552049912618,0.007340263335810108,-0.12,0.0448,0.007
+B_child_under_16_in_household,kids,Household,Child under 16 in the household,-0.2205295129857691,0.0486701086699347,5.867516376865258e-06,-0.2205,0.0487,<0.001
+B_number_of_out_of_home_episodes,nep,Day pattern,Number of out-of-home episodes in the day,-0.149677713009125,0.0086704461569778,8.938158120113493e-67,-0.1497,0.0087,<0.001
+B_end_before_9,am,Time of day,End of the preceding episode before 9:00,-0.0792567729525366,0.0582545931174738,0.17366415847431138,-0.0793,0.0583,0.174
+B_end_15_19,pm,Time of day,End of the preceding episode 15--19,-0.3433041020505798,0.0362793453772113,2.998123631270199e-21,-0.3433,0.0363,<0.001
+B_end_after_19,ev,Time of day,End of the preceding episode after 19:00,-1.3199274364551594,0.0822783578765747,6.479712388502867e-58,-1.3199,0.0823,<0.001
+LL0,,,LL(0): equal shares of the available alternatives (article Table 2),,,,-19650.0,,
+LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-13696.95113588121,,,-13697.0,,
+N,,,observations,,,,28349.0,,
+K,,,estimated parameters,,,,33.0,,

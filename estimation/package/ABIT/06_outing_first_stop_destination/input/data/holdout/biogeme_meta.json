@@ -1,0 +1,16 @@
+{
+ "half": "validation",
+ "N": 1155,
+ "parts": 2,
+ "n_cfg_max": 1,
+ "n_cand_max": 13,
+ "zones": 1588,
+ "purposes": [
+  "OTHER"
+ ],
+ "form": "primary",
+ "vars": [
+  "imp",
+  "cgt"
+ ]
+}

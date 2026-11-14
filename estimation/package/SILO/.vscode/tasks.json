@@ -1,0 +1,108 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "SILO: run all models in order",
+      "type": "shell",
+      "command": "./run_all.sh",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "SILO: 03_residential_dwelling",
+      "type": "shell",
+      "command": "./run_model.sh 03_residential_dwelling",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "SILO: 02_residential_zone_structure_type",
+      "type": "shell",
+      "command": "./run_model.sh 02_residential_zone_structure_type",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "SILO: 01_residential_county",
+      "type": "shell",
+      "command": "./run_model.sh 01_residential_county",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "SILO: 04_car_ownership",
+      "type": "shell",
+      "command": "./run_model.sh 04_car_ownership",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "SILO: 05_workplace_choice",
+      "type": "shell",
+      "command": "./run_model.sh 05_workplace_choice",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "SILO: 06_school_location_K8",
+      "type": "shell",
+      "command": "./run_model.sh 06_school_location_K8",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "SILO: 07_school_location_high_school",
+      "type": "shell",
+      "command": "./run_model.sh 07_school_location_high_school",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "SILO: 08_school_location_college",
+      "type": "shell",
+      "command": "./run_model.sh 08_school_location_college",
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": []
+    }
+  ]
+}

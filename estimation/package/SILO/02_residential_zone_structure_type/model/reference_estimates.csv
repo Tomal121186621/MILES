@@ -1,0 +1,22 @@
+parameter,article_section,article_label,coefficient,robust_se,p,coefficient_full_precision,note
+B_size_ln_dwellings_of_type_theta,Size,ln dwellings of the structure type in the zone (theta),1.0875,0.0164,<0.001,1.0875070464772671,
+B_acc_nonwork,Accessibility (logsum of the household's segment),Non-work accessibility,0.5123,0.0738,<0.001,0.5123376112618349,
+,Accessibility (logsum of the household's segment),Non-work accessibility x oldest member 35-49,,,,,reference category (no parameter)
+B_acc_nonwork_x_oldest_under35,Accessibility (logsum of the household's segment),Non-work accessibility x oldest member under 35,0.4388,0.087,<0.001,0.4388377811712072,
+B_acc_nonwork_x_oldest_50_64,Accessibility (logsum of the household's segment),Non-work accessibility x oldest member 50-64,-0.3431,0.0627,<0.001,-0.3431308235167485,
+B_acc_nonwork_x_oldest_65plus,Accessibility (logsum of the household's segment),Non-work accessibility x oldest member 65+,-0.1515,0.0671,0.024,-0.1515188925698733,
+B_acc_nonwork_x_hhsize_minus1,Accessibility (logsum of the household's segment),"Non-work accessibility x (household size - 1, at most 5)",-0.1441,0.0226,<0.001,-0.1440946818890116,
+B_commute_sum_ln1p_time,Commute,Commute: sum_workers ln(1+t),-1.3012,0.0495,<0.001,-1.301162004264063,
+B_ln_zone_cost,Zone price level,ln mean monthly housing cost of the zone,-0.5048,0.1552,0.001,-0.5048125494436236,
+B_ln_zone_cost_x_lninc,Zone price level,ln zone cost x ln income,1.2163,0.209,<0.001,1.216270572610561,
+B_ln_zone_cost_x_hhsize_minus1,Zone price level,"ln zone cost x (household size - 1, at most 5)",-0.3643,0.0871,<0.001,-0.3643386292257936,
+B_share_same_income_group,Neighbours,Share of same-income households in the zone,1.7169,0.4655,<0.001,1.7169325274732123,
+B_ln_dwellings_per_acre,Land use of the zone,ln dwellings per acre,-0.3847,0.0317,<0.001,-0.3846792353089572,
+B_ln_dwellings_per_acre_x_nocar,Land use of the zone,ln dwellings per acre x no car,0.5085,0.1018,<0.001,0.5085192747261106,
+B_ln_dwellings_per_acre_x_children,Land use of the zone,ln dwellings per acre x children,-0.0569,0.0349,0.103,-0.0568913370183742,
+B_ln1p_retail_jobs_per_km2,Land use of the zone,ln(1 + retail jobs per km^2),0.0305,0.0134,0.023,0.0305341505726597,
+N,fit statistics (article),N,10655.0,,,,model statistic
+K,fit statistics (article),K,15.0,,,,model statistic
+LL(0) (weighted; overview table),fit statistics (article),LL(0) (weighted; overview table),-36223.4,,,,model statistic
+LL(beta) (weighted),fit statistics (article),LL(beta) (weighted),-28089.7,,,,model statistic
+"validation LL, full choice set (unweighted)",fit statistics (article),"validation LL, full choice set (unweighted)",-49873.8,,,,model statistic

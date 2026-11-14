@@ -1,0 +1,38 @@
+column,definition,unit,source
+household,PUMS household serial number,,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+puma7,destination PUMA (state x 100000 + PUMA),,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+income_2016usd,household income,2016 $,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+persons,household size,persons,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+children_any,1 if any person under 18,,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+age_oldest,age of the oldest member,years,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+choice,observed alternative (always 0),,
+av_<j>,availability (all 1: every PUMA has at least 29 other dwellings); j = 0..29 (0 = the mover's own dwelling),,
+cost_<j>,"monthly housing cost (GRNTP renters, SMOCP owners, x ADJHSG)",2016 $,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+bedrooms_<j>,bedrooms (BDSP),,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+type_<j>,"structure type: SFD, SFA, MF234, MF5plus, MH",,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+bur_lo_<j>,"cost share b = min(12 cost / max(income, 5000), 3); part below 0.3: min(b, 0.3)",share,s04_dwelling.build_X
+bur_mid_<j>,"part 0.3-0.5: min(max(b - 0.3, 0), 0.2)",share,
+bur_hi_<j>,"part above 0.5: max(b - 0.5, 0)",share,
+lncost_<j>,"ln(max(cost, 100))",,
+bed_short_<j>,"max(0, need - bedrooms); need = 1 for one person, else min(size - 1, 4)",bedrooms,
+bed_extra_<j>,"max(0, bedrooms - need)",bedrooms,
+new5_<j>,1 if built in the last 5 years,,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+"SFA_<j>, MF234_<j>, MF5plus_<j>, MH_<j>",structure-type dummies (reference SFD),,
+SFA_x_size_<j>,SFA x (persons - 1),,
+SFA_x_child_<j>,SFA x children_any,,
+"SFA_x_ageU35_<j>, SFA_x_age50_64_<j>, SFA_x_age65_<j>",SFA x age band of the oldest member (reference 35-49),,
+SFA_x_lninc_<j>,"SFA x ln(max(household income, 5000) / 50000), income in 2016 $",,
+MF234_x_size_<j>,MF234 x (persons - 1),,
+MF234_x_child_<j>,MF234 x children_any,,
+"MF234_x_ageU35_<j>, MF234_x_age50_64_<j>, MF234_x_age65_<j>",MF234 x age band of the oldest member (reference 35-49),,
+MF234_x_lninc_<j>,"MF234 x ln(max(household income, 5000) / 50000), income in 2016 $",,
+MF5plus_x_size_<j>,MF5plus x (persons - 1),,
+MF5plus_x_child_<j>,MF5plus x children_any,,
+"MF5plus_x_ageU35_<j>, MF5plus_x_age50_64_<j>, MF5plus_x_age65_<j>",MF5plus x age band of the oldest member (reference 35-49),,
+MF5plus_x_lninc_<j>,"MF5plus x ln(max(household income, 5000) / 50000), income in 2016 $",,
+MH_x_size_<j>,MH x (persons - 1),,
+MH_x_child_<j>,MH x children_any,,
+"MH_x_ageU35_<j>, MH_x_age50_64_<j>, MH_x_age65_<j>",MH x age band of the oldest member (reference 35-49),,
+MH_x_lninc_<j>,"MH x ln(max(household income, 5000) / 50000), income in 2016 $",,
+<term>_x_lninc_<j>,"bur_mid, bur_hi, lncost, bed_short, bed_extra, new5 x ln(max(household income, 5000) / 50000), income in 2016 $",,r06_dwelling_income.build_X
+note,"design columns not in the final model are absent (bur_lo_x_lninc, SFA_x_size, MH_x_size, MH_x_child); list in design_columns.csv",,

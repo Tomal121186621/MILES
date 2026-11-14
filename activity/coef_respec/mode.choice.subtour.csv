@@ -1,0 +1,7 @@
+variable,switchToWalk
+log(distanceKm+1),0.0
+isOccupation_Employed,0.0
+isOccupation_Halftime,0.0
+isTourMainMode_CarD,0.0
+isTourPurpose_Education,0.0
+calibration,0.0

@@ -1,0 +1,778 @@
+{
+ "note": "Shared preparation chain of the ABIT models, from raw data to the files in 00_shared_data. cwd is relative to a model folder (manual_estimation/ABIT/<model>). Outputs go to 00_shared_data/rebuilt (env ABIT_REBUILT), raw inputs are read from 00_shared_data/raw (env ABIT_RAW); provided files are never overwritten. 'provided' says whether the output already ships, so a step can be skipped. Runtimes and memory measured on 2026-11-13 where 'verified' is given, otherwise estimated.",
+ "steps": [
+  {
+   "id": "S00",
+   "step_group": "download",
+   "what": "Download / request the raw data (DATA_SOURCES.json) into 00_shared_data/raw/<folder> (one README per folder says what goes there)",
+   "cwd": "../00_shared_prep/code",
+   "command": "sh fetch_gtfs.sh && sh fetch_gtfs_regional.sh   # the GTFS feeds; the other sources are manual downloads or requests",
+   "inputs": [
+    "DATA_SOURCES.json"
+   ],
+   "creates": [
+    "00_shared_data/raw/*"
+   ],
+   "minutes": 30,
+   "memory_gb": 0.1,
+   "provided": {
+    "provided": false,
+    "note": "raw data are not shipped (except the survey files in 00_shared_data/rts_2017_18/raw)"
+   },
+   "needed_by": [
+    "00_tasha_distributions",
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled",
+    "11_outing_generation",
+    "12_outing_mode",
+    "13_return_home",
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "20_transit_leg_mode"
+   ],
+   "python": "sh"
+  },
+  {
+   "id": "S01",
+   "step_group": "survey",
+   "what": "Survey cleaning: rts_trips_clean.csv and rts_tours.csv from the RTS flat file (01_clean_rts.py of the tour-based MITO project)",
+   "cwd": "../00_shared_prep/code",
+   "command": "none: the cleaning script is not on this machine; use the provided files",
+   "inputs": [
+    "RTS_raw_flat_data.csv"
+   ],
+   "creates": [
+    "00_shared_data/rts_2017_18/raw/rts_trips_clean.csv.gz",
+    "00_shared_data/rts_2017_18/raw/rts_tours.csv.gz"
+   ],
+   "minutes": null,
+   "memory_gb": null,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/raw"
+   },
+   "needed_by": [
+    "00_tasha_distributions",
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled",
+    "11_outing_generation",
+    "12_outing_mode",
+    "13_return_home",
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "20_transit_leg_mode"
+   ],
+   "python": "-"
+  },
+  {
+   "id": "S02",
+   "step_group": "survey",
+   "what": "Estimation / hold-out split of the survey households (seed 2026, stratified by county x household size)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python make_rts_split.py",
+   "inputs": [
+    "00_shared_data/rts_2017_18/raw/RTS_raw_flat_data.csv.gz"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/split/rts_split.csv"
+   ],
+   "minutes": 0.1,
+   "memory_gb": 1.6,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/split/rts_split.csv",
+    "verified": "rebuilt identical (2026-11-13)"
+   },
+   "needed_by": [
+    "00_tasha_distributions",
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled",
+    "11_outing_generation",
+    "12_outing_mode",
+    "13_return_home",
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "20_transit_leg_mode"
+   ],
+   "python": "biogeme venv"
+  },
+  {
+   "id": "S03",
+   "step_group": "survey",
+   "what": "Tract internal point -> model zone (tract_zone.csv) and persons per zone in 2016 (zone_population_2016.csv)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 build_survey_population.py --rebuild-zone-files   # also runs S04; needs geopandas (project Python)",
+   "inputs": [
+    "00_shared_data/raw/census_gazetteer_2010/Gaz_tracts_national.txt",
+    "00_shared_data/raw/mstm_zone_system/SMZ_RMZ_02152011inMSTM_EPSG26918.shp",
+    "00_shared_data/raw/synthetic_population_2016/pp_2016.csv",
+    "00_shared_data/raw/synthetic_population_2016/dd_2016.csv"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/survey_pop/tract_zone.csv",
+    "00_shared_data/rebuilt/rts_2017_18/survey_pop/zone_population_2016.csv"
+   ],
+   "minutes": 0.2,
+   "memory_gb": 1.0,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/survey_pop/tract_zone.csv, 00_shared_data/zones/zone_population_2016.csv",
+    "verified": "rebuilt identical"
+   },
+   "needed_by": [
+    "00_tasha_distributions",
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled",
+    "11_outing_generation",
+    "12_outing_mode",
+    "13_return_home",
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "20_transit_leg_mode"
+   ],
+   "python": "project python3 (geopandas)"
+  },
+  {
+   "id": "S04",
+   "step_group": "survey",
+   "what": "Survey population of both halves in the ABIT input format (households, persons, dwellings, person map, workplaces)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_survey_population.py   # uses the provided tract_zone.csv / zone_population_2016.csv; add --rebuild-zone-files for S03",
+   "inputs": [
+    "00_shared_data/rts_2017_18/raw/RTS_raw_flat_data.csv.gz",
+    "00_shared_data/rts_2017_18/split/rts_split.csv",
+    "00_shared_data/zones/schools_2016.csv",
+    "tract_zone.csv"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/survey_pop/<half>/{hh,pp,dd,persons_map,workplace_reassign,build_log}.csv"
+   ],
+   "minutes": 0.3,
+   "memory_gb": 1.7,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/survey_pop",
+    "verified": "rebuilt identical"
+   },
+   "needed_by": [
+    "00_tasha_distributions",
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled",
+    "11_outing_generation",
+    "12_outing_mode",
+    "13_return_home",
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "20_transit_leg_mode"
+   ],
+   "python": "biogeme venv"
+  },
+  {
+   "id": "S05",
+   "step_group": "survey",
+   "what": "Typed survey episodes of both halves (TASHA activity types, person segments, zones of the trip ends)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_episodes.py",
+   "inputs": [
+    "00_shared_data/rts_2017_18/raw/*.csv.gz",
+    "00_shared_data/rts_2017_18/survey_pop",
+    "split"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/episodes/episodes_<half>.parquet"
+   ],
+   "minutes": 0.2,
+   "memory_gb": 1.7,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/episodes",
+    "verified": "rebuilt identical"
+   },
+   "needed_by": [
+    "00_tasha_distributions",
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled",
+    "11_outing_generation",
+    "12_outing_mode",
+    "13_return_home",
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "20_transit_leg_mode"
+   ],
+   "python": "biogeme venv"
+  },
+  {
+   "id": "S06",
+   "step_group": "skims",
+   "what": "MSTM 2016 skims OMX -> csv.gz (car time, car distance, MSTM bus and rail time)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python convert_mstm_skims.py",
+   "inputs": [
+    "00_shared_data/raw/mstm_skims_2016/*.omx"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/skims/abit_base_2016/{traveltime_auto,distance_auto,bus_tt,rail_tt00}.csv.gz"
+   ],
+   "minutes": 0.6,
+   "memory_gb": 0.4,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/skims/abit_base_2016",
+    "verified": "rebuilt identical (distance within 1e-4 m: 4-decimal rounding; compare with --tol 1e-4)"
+   },
+   "needed_by": [
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled",
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "11_outing_generation",
+    "12_outing_mode",
+    "13_return_home",
+    "20_transit_leg_mode"
+   ],
+   "python": "biogeme venv"
+  },
+  {
+   "id": "S07",
+   "step_group": "skims",
+   "what": "Merge the 18 GTFS feeds (service day Wednesday 2026-10-21, every stop kept) for the transit period skims",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 merge_gtfs_full.py ../../00_shared_data/raw/gtfs <network_2024_pt.xml.gz> ../../00_shared_data/rebuilt/gtfs_full   # needs pyproj; the raw dir layout is mta_gtfs/ + one folder per agency",
+   "inputs": [
+    "00_shared_data/raw/gtfs/*",
+    "00_shared_data/raw/matsim_network_2024/network_2024_pt.xml.gz"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/gtfs_full/*.txt",
+    "manifest.json"
+   ],
+   "minutes": 5,
+   "memory_gb": 3,
+   "provided": {
+    "provided": false,
+    "note": "not shipped; the skims built from it are"
+   },
+   "needed_by": [
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other"
+   ],
+   "python": "project python3"
+  },
+  {
+   "id": "S08",
+   "step_group": "skims",
+   "what": "GTFS -> unmapped MATSim schedule (pt2matsim 24.4 Gtfs2TransitSchedule, date 20261021, EPSG:26985)",
+   "cwd": "../00_shared_prep/code",
+   "command": "java -Xmx8g -cp pt2matsim-24.4-shaded.jar org.matsim.pt2matsim.run.Gtfs2TransitSchedule ../../00_shared_data/rebuilt/gtfs_full/ 20261021 EPSG:26985 ../../00_shared_data/rebuilt/gtfs_full/schedule_unmapped.xml.gz ../../00_shared_data/rebuilt/gtfs_full/vehicles.xml.gz   # as 4_matsim/transit/build_transit.sh (not run in this package)",
+   "inputs": [
+    "00_shared_data/rebuilt/gtfs_full"
+   ],
+   "creates": [
+    "schedule_unmapped.xml.gz",
+    "vehicles.xml.gz"
+   ],
+   "minutes": 10,
+   "memory_gb": 8,
+   "provided": {
+    "provided": false
+   },
+   "needed_by": [
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other"
+   ],
+   "python": "java 21"
+  },
+  {
+   "id": "S09",
+   "step_group": "skims",
+   "what": "Transit level of service by period (AM, MD, PM, NT) and access (walk, drive): SwissRailRaptor (TransitSkim.java)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 transit_period_skims.py --periods AM,MD,PM,NT --access walk,drive --threads 6   # Java 21 + MATSim jar (raw/matsim_tools)",
+   "inputs": [
+    "schedule_unmapped.xml.gz",
+    "00_shared_data/raw/matsim_network_2024/network_2024_pt.xml.gz",
+    "00_shared_data/skims/transit_2024_door_to_door/centroids.csv"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/skims/mode_choice_periods/raptor_<walk|drive>_<P>.csv.gz"
+   ],
+   "minutes": 480,
+   "memory_gb": 6,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/skims/mode_choice_periods/raptor_*.csv.gz"
+   },
+   "needed_by": [
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other"
+   ],
+   "python": "project python3 + java 21"
+  },
+  {
+   "id": "S10",
+   "step_group": "skims",
+   "what": "Car travel time by period: AM-peak MSTM skim x MATSim time profile of the period (clip 0.5-1.5)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 car_period_skims.py ../../00_shared_data/raw/matsim_resident_run_2023/output_events.xml.gz ../../00_shared_data/raw/matsim_resident_run_2023/output_network.xml.gz",
+   "inputs": [
+    "00_shared_data/raw/matsim_resident_run_2023/*",
+    "00_shared_data/skims/abit_base_2016/traveltime_auto.csv.gz"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/skims/mode_choice_periods/car_time_<P>.csv.gz",
+    "car_period_stats.json"
+   ],
+   "minutes": 60,
+   "memory_gb": 8,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/skims/mode_choice_periods/car_time_*.csv.gz"
+   },
+   "needed_by": [
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other"
+   ],
+   "python": "project python3 (geopandas)"
+  },
+  {
+   "id": "S11",
+   "step_group": "skims",
+   "what": "2024 AM-peak door-to-door transit skims (walk access 1,600 m; all operators and bus only): transit_peak_time, bus_tt, rail_tt00",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 transit_skim.py ../../00_shared_data/raw/matsim_network_2024/network_2024_pt.xml.gz ../../00_shared_data/raw/matsim_network_2024/transitSchedule_2024.xml.gz ../../00_shared_data/raw/matsim_network_2024/transitVehicles_2024.xml.gz ../../00_shared_data/rebuilt/skims/transit_2024_door_to_door --peak 7 9 --step 15 --radius 1600 --threads 6   # Java 21 + MATSim jar",
+   "inputs": [
+    "00_shared_data/raw/matsim_network_2024/*",
+    "00_shared_data/raw/mstm_zone_system/*",
+    "00_shared_data/raw/matsim_tools/*"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/skims/transit_2024_door_to_door/{transit_peak_time,bus_tt,rail_tt00,transit_peak_time_ivtwait,raptor_pairs}.csv.gz",
+    "centroids.csv",
+    "transit_skim_stats.json"
+   ],
+   "minutes": 2,
+   "memory_gb": 6,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/skims/transit_2024_door_to_door",
+    "note": "the project run (pipeline/test/skims/transit_2024/.done.json, 2026-10-22, 90 s) read 4_matsim/transit/{network_2024_pt,transitSchedule_2024,transitVehicles_2024}.xml.gz as of 2026-10-22 15:45; check the sha256 in that marker if you copy them later"
+   },
+   "needed_by": [
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled",
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other"
+   ],
+   "python": "project python3 (geopandas) + java 21"
+  },
+  {
+   "id": "S12",
+   "step_group": "zones",
+   "what": "Tract-to-zone overlay of the location models (b = overlap area / zone area)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 build_tract_zone_overlay.py",
+   "inputs": [
+    "00_shared_data/raw/tiger_tracts_2010/*",
+    "00_shared_data/raw/mstm_zone_system/SMZ_RMZ_02152011inMSTM_EPSG26918.shp"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/zones/tract_zone_overlay.parquet"
+   ],
+   "minutes": 0.2,
+   "memory_gb": 1.4,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/zones/tract_zone_overlay.parquet",
+    "verified": "rebuilt identical"
+   },
+   "needed_by": [
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled"
+   ],
+   "python": "project python3 (geopandas)"
+  },
+  {
+   "id": "S13",
+   "step_group": "zones",
+   "what": "Zone table of the location models (population, jobs by type, school enrolment, area dummies, retail density, land-use mix) and the jobs extract",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_zone_tables.py --jobs-from-raw",
+   "inputs": [
+    "00_shared_data/raw/synthetic_population_2016/jj_2016.csv",
+    "00_shared_data/zones/{zone_attributes.csv,zone_population_2016.csv,schools_2016.csv}"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/zones/jobs_2016_zone_type.parquet",
+    "00_shared_data/rebuilt/zones/zones_model_attributes.csv"
+   ],
+   "minutes": 0.5,
+   "memory_gb": 2.5,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/zones",
+    "verified": "rebuilt identical"
+   },
+   "needed_by": [
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled",
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other"
+   ],
+   "python": "biogeme venv"
+  },
+  {
+   "id": "S14",
+   "step_group": "zones",
+   "what": "RTS TAZ -> model zone crosswalks (BMC and TPB TAZ; area, housing-unit and job weights)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 taz_crosswalk.py",
+   "inputs": [
+    "00_shared_data/raw/taz_bmc",
+    "00_shared_data/raw/taz_tpb",
+    "00_shared_data/raw/census2010",
+    "00_shared_data/raw/census2020_pl_dc_va_wv",
+    "00_shared_data/raw/lodes_wac",
+    "00_shared_data/raw/lodes_wac_2017_extra",
+    "00_shared_data/raw/tiger_tracts_2010",
+    "00_shared_data/raw/silo_workplace_work",
+    "00_shared_data/raw/mstm_zone_system"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/taz_crosswalks/taz_bmc_to_mstm.csv",
+    "taz_tpb_to_mstm.csv",
+    "tables_taz/*"
+   ],
+   "minutes": 10,
+   "memory_gb": 4,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/taz_crosswalks",
+    "verified": "not re-run here"
+   },
+   "needed_by": [
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other"
+   ],
+   "python": "project python3 (geopandas)"
+  },
+  {
+   "id": "S15",
+   "step_group": "zones",
+   "what": "Tract splits over zones by housing units (homes) and LODES jobs (workplaces), used where a record has no TAZ",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 rts_11_data_v2.py   # after S14",
+   "inputs": [
+    "S14 outputs",
+    "00_shared_data/raw/census2010",
+    "00_shared_data/raw/lodes_wac*",
+    "00_shared_data/raw/tiger_tracts_2010",
+    "00_shared_data/raw/silo_workplace_work"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/taz_crosswalks/tract_split_home.parquet",
+    "tract_split_work.parquet",
+    "workers_v2.parquet"
+   ],
+   "minutes": 10,
+   "memory_gb": 4,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/taz_crosswalks/tract_split_*.parquet",
+    "verified": "not re-run here"
+   },
+   "needed_by": [
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other"
+   ],
+   "python": "project python3 (geopandas)"
+  },
+  {
+   "id": "S16",
+   "step_group": "mode choice inputs",
+   "what": "Home-based survey tours with level of service, and the paid-parking share by destination area",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python prep_tours.py",
+   "inputs": [
+    "episodes",
+    "survey_pop",
+    "00_shared_data/skims/*",
+    "00_shared_data/rts_2017_18/raw/RTS_raw_flat_data.csv.gz"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/mode_choice_work/tours_<half>.parquet",
+    "00_shared_data/rebuilt/mode_choice_inputs/parking_paid_share.csv",
+    "tour_build_<half>.csv"
+   ],
+   "minutes": 1,
+   "memory_gb": 2.7,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/mode_choice_inputs/parking_paid_share.csv; tours: 14-19 input/data/raw/tours_<half>.parquet",
+    "verified": "rebuilt identical"
+   },
+   "needed_by": [
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other"
+   ],
+   "python": "biogeme venv"
+  },
+  {
+   "id": "S17",
+   "step_group": "mode choice inputs",
+   "what": "WESML choice-based weights of the work tours (ACS 2017-19 commute-mode shares by county group)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python wesml_targets.py   # reads the work tours of 14_tour_mode_work/input/data/raw (gc_bio/gc_hold_work_s50.parquet; env WESML_TOURS overrides)",
+   "inputs": [
+    "00_shared_data/raw/acs_pums_2015_2019_5yr/csv_p{dc,md,va,wv}.zip",
+    "00_shared_data/raw/census_tract_to_puma_2010/2010_Census_Tract_to_2010_PUMA.txt",
+    "14_tour_mode_work/input/data/raw/gc_*_work_s50.parquet"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/mode_choice_inputs/wesml/{wesml_targets.csv,wesml_strata.csv,wesml_est.parquet,wesml_hold.parquet}"
+   ],
+   "minutes": 0.3,
+   "memory_gb": 1.8,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/mode_choice_inputs/wesml; 14_tour_mode_work/input/data/raw/wesml_*.parquet",
+    "verified": "rebuilt identical"
+   },
+   "needed_by": [
+    "14_tour_mode_work"
+   ],
+   "python": "biogeme venv"
+  },
+  {
+   "id": "S18",
+   "step_group": "mode choice inputs",
+   "what": "Mode-choice logsum coefficients of the stop models: final rows of the tour mode models (m08_coef.csv: work, shopping, other; m09_coef.csv: school)",
+   "cwd": "..",
+   "command": "run the estimations of 14_tour_mode_work, 16_tour_mode_shopping, 17_tour_mode_other (and 15_tour_mode_school); the project files are m08_sequence.py / m09_school.py outputs",
+   "inputs": [
+    "14-17 model folders"
+   ],
+   "creates": [
+    "00_shared_data/mode_choice_logsums/m08_coef.csv",
+    "m09_coef.csv"
+   ],
+   "minutes": null,
+   "memory_gb": null,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/mode_choice_logsums",
+    "note": "the stop models' ls data were built with these; new coefficients require rebuilding the stop data"
+   },
+   "needed_by": [
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other"
+   ],
+   "python": "biogeme venv"
+  },
+  {
+   "id": "S19",
+   "step_group": "input_check",
+   "what": "Compare any rebuilt file with the provided one (row counts, columns, sums, max abs difference; exit 1 on mismatch)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python check_against_provided.py ../../00_shared_data/rebuilt/<file> ../../00_shared_data/<file> [--key col ...] [--tol 1e-9]",
+   "inputs": [
+    "a rebuilt file and its provided counterpart"
+   ],
+   "creates": [
+    "printed table"
+   ],
+   "minutes": 0.1,
+   "memory_gb": 0.5,
+   "provided": {
+    "provided": null
+   },
+   "needed_by": [
+    "00_tasha_distributions",
+    "01_primary_destination_pooled",
+    "02_stop_shopping",
+    "03_stop_recreation",
+    "04_stop_accompanying",
+    "05_stop_other",
+    "06_outing_first_stop_destination",
+    "07_work_business_usual_workplace",
+    "08_work_business_other_persons",
+    "09_work_trips_home_workers",
+    "10_school_daycare_without_record_pooled",
+    "11_outing_generation",
+    "12_outing_mode",
+    "13_return_home",
+    "14_tour_mode_work",
+    "15_tour_mode_school",
+    "16_tour_mode_shopping",
+    "17_tour_mode_other",
+    "18_tour_mode_joint_shopping",
+    "19_tour_mode_joint_other",
+    "20_transit_leg_mode"
+   ],
+   "python": "biogeme venv"
+  }
+ ]
+}

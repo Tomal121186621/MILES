@@ -1,0 +1,70 @@
+{
+ "network": "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/4_matsim/transit/network_2024_pt.xml.gz",
+ "schedule": "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/4_matsim/transit/transitSchedule_2024.xml.gz",
+ "vehicles": "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/4_matsim/transit/transitVehicles_2024.xml.gz",
+ "peak_h": [
+  7.0,
+  9.0
+ ],
+ "step_min": 15.0,
+ "search_radius_m": 1600.0,
+ "extension_radius_m": 0.0,
+ "max_tt_min": 180.0,
+ "zones": 1588,
+ "off_network_zones": 554,
+ "pairs_from_prior": 0.5761683006924968,
+ "raptor_log_tail": [
+  "origins done 1400/1588 after 60 s",
+  "origins done 1500/1588 after 60 s",
+  "routing finished in 61 s",
+  "pairs reachable: full schedule 234447, bus only 167523 of 2520156; written /Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/pipeline/test/skims/transit_2024/raptor_pairs.csv.gz"
+ ],
+ "on_network_pairs": 1068122,
+ "reachable_share_on_network": {
+  "all": 0.2194945895693563,
+  "bus": 0.15683882552742104,
+  "rail_used": 0.12234557475644169
+ },
+ "mean_min_reachable": {
+  "all": 114.21626090331716,
+  "bus": 107.22931346740448,
+  "access_walk": 14.754648641270736,
+  "egress_walk": 11.365081617593741
+ },
+ "compare_base_bmr_internal": {
+  "transit_peak_time": {
+   "share_unreachable_new": 0.6975393772229077,
+   "share_unreachable_base": 0.5141679834283449,
+   "mean_new": 100.44343255616475,
+   "mean_base": 25.251013239401008,
+   "pairs_reachable_both": 94063,
+   "corr_both": 0.5875331044254155,
+   "mean_new_both": 99.86647300213686,
+   "mean_base_both": 17.89469865940912,
+   "median_ratio_both": 6.093297587131368
+  },
+  "bus_tt": {
+   "share_unreachable_new": 0.7263918124410249,
+   "share_unreachable_base": 0.5141679834283449,
+   "mean_new": 102.39851888130438,
+   "mean_base": 25.251013239401008,
+   "pairs_reachable_both": 85763,
+   "corr_both": 0.5623491337863855,
+   "mean_new_both": 100.79183622307988,
+   "mean_base_both": 16.974216853421638,
+   "median_ratio_both": 6.475051975051976
+  },
+  "rail_tt00": {
+   "share_unreachable_new": 0.8718572202276927,
+   "share_unreachable_base": 0.8253443587696327,
+   "mean_new": 111.62445959783012,
+   "mean_base": 27.387467791950385,
+   "pairs_reachable_both": 19800,
+   "corr_both": 0.3319526828968009,
+   "mean_new_both": 114.60327272727272,
+   "mean_base_both": 21.285080303030306,
+   "median_ratio_both": 5.887598882277834
+  }
+ },
+ "duration_s": 89.2
+}

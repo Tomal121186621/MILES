@@ -1,0 +1,87 @@
+{
+ "model": "Stop location, recreation stops: multinomial logit over 1,588 zones, sequential anchors, location mixture (article table est_stop_RECREATION_stop)",
+ "purpose": "Re-estimate the location choice of recreation stops on tours and check it against the article.",
+ "depends_on": [
+  "14_tour_mode_work, 16_tour_mode_shopping, 17_tour_mode_other (and 15_tour_mode_school): the variable ls is the log-sum of the re-estimated tour mode models, read from 00_shared_data/mode_choice_logsums/m08_coef.csv (work, shopping, other; m09_coef.csv for school). The provided Biogeme data already contains ls at the published mode coefficients; re-estimated mode coefficients require rebuilding the ls data (step 2) with the new m08_coef.csv."
+ ],
+ "steps": [
+  {
+   "step": 1,
+   "what": "optional (data already provided in input/data/estimation and input/data/holdout): estimation tables of the stops from the raw TAZ record files",
+   "cwd": "input/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 build_estimation_tables.py",
+   "creates": [
+    "input/data/estimation/{records,candidates,configurations}.parquet",
+    "input/data/holdout/{records,candidates,configurations}.parquet"
+   ],
+   "minutes": 0.5,
+   "memory_gb": 1
+  },
+  {
+   "step": 2,
+   "what": "optional (data already provided): wide Biogeme data: detour and mode-choice logsum of every anchor configuration to every zone",
+   "cwd": "input/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 build_biogeme_data.py",
+   "creates": [
+    "input/data/estimation/biogeme_part*.parquet",
+    "input/data/estimation/biogeme_meta.json",
+    "input/data/holdout/biogeme_part*.parquet",
+    "input/data/holdout/biogeme_meta.json"
+   ],
+   "minutes": 2.0,
+   "memory_gb": 2.1
+  },
+  {
+   "step": 3,
+   "what": "check: log-likelihood at the article estimates, without estimating (writes nothing)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_stop_recreation.py --evaluate --at article",
+   "creates": [],
+   "minutes": 31.9,
+   "memory_gb": 1.5
+  },
+  {
+   "step": 4,
+   "what": "Biogeme estimation (robust standard errors)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_stop_recreation.py",
+   "creates": [
+    "output/stop_recreation.html",
+    "output/stop_recreation.yaml",
+    "output/estimated_parameters.csv",
+    "output/estimated_fit.csv",
+    "output/biogeme.toml"
+   ],
+   "minutes": "unknown: see notes",
+   "memory_gb": "see notes (expected beyond the free memory of this machine)"
+  },
+  {
+   "step": 5,
+   "what": "compare the estimates with reference_estimates.csv",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python compare_with_reference.py",
+   "creates": [
+    "output/comparison.csv"
+   ],
+   "minutes": 0.1,
+   "memory_gb": 0.2
+  }
+ ],
+ "check": {
+  "article_LL": -15801.1,
+  "biogeme_LL_at_article_coefficients": null,
+  "biogeme_LL_at_full_precision_coefficients": -15801.1085,
+  "basis": "full estimation half, all 5064 records (eager evaluation, rows grouped by number of anchor configurations); project likelihood -15801.1085 (full precision) / -15801.1087 (article)",
+  "N": 5064,
+  "K": 22
+ },
+ "notes": [
+  "Steps 1-2 need the project Python with numpy, pandas, pyarrow and torch (python3); the Biogeme venv has no torch. Their output is already in input/data.",
+  "Full choice set of 1,588 zones, no sampling of alternatives; location mixture over up to 4 anchor configurations and up to 4 possible zones of the stop (padding configurations / zones have weight 0).",
+  "Size term: base retail jobs; components population, office jobs, school pupils; MU_size held at 1 (fixed Beta: the estimate was on the bound 1 and the bound was adopted). Bounds: THETA in [-30, 15], MU_size in [0, 3].",
+  "Detour pieces start at 1 km where the article has no 0-1 km piece (slope 0 below 1 km); the top piece is detour above 20 km.",
+  "ls (mode-choice logsum of the detour) comes from the tour mode models (00_shared_data/mode_choice_logsums/m08_coef.csv).",
+  "Unweighted; robust (sandwich) standard errors.",
+  "Estimation memory: Measured (shopping stops, Biogeme 3.3.5 default JIT): compiling and evaluating the log-likelihood, its gradient and the BHHH matrix on 20 records with ONE anchor configuration took 29 min and 6.1 GB peak memory (compile dominated; the machine was under memory pressure). The estimation expression has up to 4 configurations (4 x 1,588 utilities plus the candidate zones, about 4 times larger), so compiling alone is expected to need about 25 GB or more and several hours, and the reverse-mode intermediates at run time about (expression nodes x records x 8 bytes), i.e. roughly 10-30 GB more (4,000-8,000 records); with the default analytical Hessian more again. Expected total: about 30-50 GB. This does not fit on this machine (48 GB, about 45 GB used by other jobs): the exact full-set mixture estimation in Biogeme is infeasible here and was not run. It needs a machine with about 64 GB free; in biogeme.toml set calculating_second_derivatives = \"never\" (BHHH) or analytical_hessian_mode = \"chunked\" to limit the Hessian. The likelihood is not changed or approximated. The evaluation at given coefficients (--evaluate, use_jit=False) needs under 2 GB."
+ ]
+}

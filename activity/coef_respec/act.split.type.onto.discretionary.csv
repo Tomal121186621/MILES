@@ -1,0 +1,10 @@
+variable,accompany_on_accompany,shop_on_accompany,shop_on_shop,other_on_accompany,other_on_shop,other_on_other,recreation_on_accompany,recreation_on_shop,recreation_on_other,recreation_on_recreation
+(Intercept),0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+p.acts_accompany_disc,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+p.acts_accompany_main,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+p.acts_shop_disc,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+p.acts_shop_main,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+p.acts_other_disc,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+p.acts_other_main,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+p.acts_recreation_disc,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+calibration,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0

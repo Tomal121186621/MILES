@@ -1,0 +1,17 @@
+{
+ "half": "validation",
+ "N": 8010,
+ "parts": 9,
+ "n_cfg_max": 4,
+ "n_cand_max": 4,
+ "zones": 1588,
+ "purposes": [
+  "OTHER"
+ ],
+ "form": "stop",
+ "vars": [
+  "imp",
+  "cgt",
+  "ls"
+ ]
+}

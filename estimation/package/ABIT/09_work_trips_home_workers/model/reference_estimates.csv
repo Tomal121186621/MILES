@@ -1,0 +1,11 @@
+parameter,project_name,article_group,article_label,coefficient,robust_se,p_value,article_coefficient,article_robust_se,article_p
+B_distance_km,d,Distance and impedance,distance (km),-0.0180029633825228,0.004859353879701,0.00021155258719061807,-0.018,0.0049,<0.001
+B_ln_distance,lnd,Distance and impedance,"ln(distance, km)",-1.405865117459279,0.1380229003056741,2.296107042964907e-24,-1.4059,0.138,<0.001
+B_intrazonal,intra,Same zone,intrazonal (destination = home zone),1.2091872607402303,0.2608773597744516,3.5680060209223966e-06,1.2092,0.2609,<0.001
+B_outside_home_county,xcounty,Boundaries,outside the origin county,-0.4478374158780155,0.1899963722632354,0.018419078071416482,-0.4478,0.19,0.018
+THETA_population,theta_pop,Size,$\theta$ population (ln weight),-2.0455725520113215,0.4009077080630861,3.3545671138501596e-07,-2.0456,0.4009,<0.001
+MU_size,mu_size,Size,"$\mu$, ln size",0.7476712916397316,0.0778370641108189,7.57195338358783e-22,0.7477,0.0778,<0.001
+LL0,,,LL(0): equal shares of the available alternatives (article Table 2),,,,-2885.7,,
+LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-1634.6358257626955,,,-1634.6,,
+N,,,observations,,,,366.0,,
+K,,,estimated parameters,,,,6.0,,

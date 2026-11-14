@@ -1,0 +1,13 @@
+parameter,project_name,article_group,article_label,coefficient,robust_se,p_value,article_coefficient,article_robust_se,article_p
+ASC_outing,const,Constant,Constant,-4.6091680555151315,0.525095924109757,1.6675685400461892e-18,-4.6092,0.5251,<0.001
+B_work_duration_0_4h,sp_0_4,Work episode,"Work duration, 0--4\,h (per h)",0.4033236254124726,0.1438921214717207,0.005063620589182633,0.4033,0.1439,0.005
+B_work_duration_4_7h,sp_4_7,Work episode,"Work duration, 4--7\,h (per h)",0.5861929695102948,0.066763099377056,1.6319281741578703e-18,0.5862,0.0668,<0.001
+B_secondary_work_episode,sw,Work episode,Secondary work episode (arrival from 15:00),-2.015609170957,0.7206950593096894,0.005161829134768052,-2.0156,0.7207,0.005
+B_arrival_before_7,arr_early,Time of day,Arrival at work before 7:00,-0.7451955389238941,0.115485993413821,1.098805788765992e-10,-0.7452,0.1155,<0.001
+B_arrival_from_10,arr_late,Time of day,Arrival at work from 10:00,0.0869700963650717,0.1027466669102915,0.3973007777962483,0.087,0.1027,0.397
+B_workplace_zone_10000_jobs_per_km2,cbd_w,Workplace and commute,"Workplace zone with at least 10,000 jobs per km$^2$",0.549673643673588,0.0704748716673842,6.2118832298342545e-15,0.5497,0.0705,<0.001
+B_ln_home_workplace_distance,lncomm,Workplace and commute,"ln(1 + home--workplace distance, km)",-0.1785762170399283,0.0373274959525131,1.7180685319575062e-06,-0.1786,0.0373,<0.001
+LL0,,,LL(0): equal shares of the available alternatives (article Table 2),,,,-5970.1,,
+LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-3061.493572214086,,,-3061.5,,
+N,,,observations,,,,8613.0,,
+K,,,estimated parameters,,,,8.0,,

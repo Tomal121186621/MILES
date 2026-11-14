@@ -1,0 +1,304 @@
+{
+ "model": "Outings from the usual workplace: generation (binary logit)",
+ "purpose": "Re-estimate the model with Biogeme and check it against the article (est_subtour.tex, first table (tab:est_subtour_gen)).",
+ "depends_on": [],
+ "data_sources": [
+  {
+   "id": "rts_2017_18",
+   "name": "2017/18 Regional Travel Survey (Baltimore and Washington regions), household travel survey, weekday travel day",
+   "provider": "Baltimore Metropolitan Council (BMC) and the National Capital Region Transportation Planning Board (TPB) at the Metropolitan Washington Council of Governments (MWCOG)",
+   "url": "https://www.baltometro.org/ and https://www.mwcog.org/ (verify: no download page is documented in the project; the data are released on request)",
+   "how": "Request the 2017/18 Regional Travel Survey public-use files from BMC (Baltimore region) or MWCOG/TPB (Washington region). The project used one flat file in which every trip row carries its household and person fields (household, person, trip and vehicle tables joined): RTS_raw_flat_data.csv, with the codebook RTS_codebook_data_dictionary.xlsx (sheets Household, Person, Trip, Vehicle). The two cleaned files rts_trips_clean.csv (163,290 trips, deduplicated) and rts_tours.csv (57,627 home-based tours) were made by 01_clean_rts.py of the tour-based MITO project; that script is not on this machine, so these two files are shipped and cannot be rebuilt here. Survey weights: wthhfin, wtperfin, wttrdfin. If you receive separate household / person / trip / vehicle tables instead, join them on household_id, person_id (persno) and tripid to the flat layout of the codebook.",
+   "place_in": "00_shared_data/raw/rts_2017_18 (the project's copies are provided in 00_shared_data/rts_2017_18/raw as .csv.gz)",
+   "files": [
+    "RTS_raw_flat_data.csv",
+    "RTS_codebook_data_dictionary.xlsx",
+    "rts_trips_clean.csv",
+    "rts_tours.csv"
+   ],
+   "notes": "Status: provided (copies). Licence: survey data of the MPOs; do not redistribute without their agreement.",
+   "status": "verify (no public URL)"
+  },
+  {
+   "id": "mstm_skims_2016",
+   "name": "Maryland Statewide Transportation Model (MSTM) 2016 skims, 1,588 SMZ/RMZ zones",
+   "provider": "Maryland Department of Transportation (MDOT SHA), via the project's ABIT Maryland set-up (ABIT/input/mito_los/skims)",
+   "url": "https://www.roads.maryland.gov/ (verify: MSTM data are provided by MDOT on request; no download page is documented)",
+   "how": "Obtain the MSTM 2016 skims in OMX format (matrix mat1, lookups origins / destinations): traveltime_auto.omx (AM-peak car time, min), distance_auto.omx (car distance, m), bus_tt.omx (bus time, min; 1000 = no path, 5 intrazonal), rail_tt00.omx (rail time, min; 0 = no rail path). convert_mstm_skims.py turns them into the csv.gz files the models read.",
+   "place_in": "00_shared_data/raw/mstm_skims_2016",
+   "files": [
+    "traveltime_auto.omx",
+    "distance_auto.omx",
+    "bus_tt.omx",
+    "rail_tt00.omx"
+   ],
+   "notes": "Status: the converted csv.gz are provided in 00_shared_data/skims/abit_base_2016 (bus_tt and rail_tt00 there are the 2016 MSTM transit skims; the location models read the 2024 door-to-door transit skims instead).",
+   "status": "verify (MDOT-provided)"
+  },
+  {
+   "id": "mstm_zone_system",
+   "name": "MSTM zone system: SMZ/RMZ polygons, zone table, ABIT zone attributes",
+   "provider": "MDOT (MSTM), via ABIT/input/mito_los/Zonal and 2_silo/input/zoneSystem.csv; ABIT/input/maryland/zone_attributes.csv (ABIT Maryland set-up)",
+   "url": "https://www.roads.maryland.gov/ (verify: provided with the MSTM)",
+   "how": "Zone polygons SMZ_RMZ_02152011inMSTM_EPSG26918.shp (+ .dbf .shx .prj; field id / SMZRMZ, 1,588 zones), zoneSystem.csv (ZoneId, COUNTYFIPS, ...), zone_attributes.csv (id, centroid x/y EPSG:26985, countyfips, region types, bbsr, area_km2; built for ABIT from mstm_26985.shp and zoneSystem.csv, see 3_abit/coef_respec/PROVENANCE.md, script not in the project).",
+   "place_in": "00_shared_data/raw/mstm_zone_system",
+   "files": [
+    "SMZ_RMZ_02152011inMSTM_EPSG26918.shp/.dbf/.shx/.prj",
+    "zoneSystem.csv",
+    "zone_attributes.csv"
+   ],
+   "notes": "zone_attributes.csv is provided in 00_shared_data/zones; the shapefile is needed only to rebuild tract_zone.csv, the tract-to-zone overlay, the TAZ crosswalks and the transit skims.",
+   "status": "verify (MDOT-provided)"
+  },
+  {
+   "id": "census_gazetteer_2010",
+   "name": "Census 2010 Gazetteer file of census tracts (internal points)",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html (verify: the project copy I695_pricing/data/census/Gaz_tracts_national.txt has no download log)",
+   "how": "2010 Gazetteer, Census Tracts, national file Gaz_tracts_national.txt (GEOID, INTPTLAT, INTPTLONG). Used by survey_population.tract_zone: zone of each tract's internal point.",
+   "place_in": "00_shared_data/raw/census_gazetteer_2010",
+   "files": [
+    "Gaz_tracts_national.txt"
+   ],
+   "notes": "tract_zone.csv is provided (00_shared_data/rts_2017_18/survey_pop).",
+   "status": "verify"
+  }
+ ],
+ "steps": [
+  {
+   "step": 1,
+   "shared_step_id": "S00",
+   "what": "shared preparation S00: Download / request the raw data (DATA_SOURCES.json) into 00_shared_data/raw/<folder> (one README per folder says what goes there)",
+   "cwd": "../00_shared_prep/code",
+   "command": "sh fetch_gtfs.sh && sh fetch_gtfs_regional.sh   # the GTFS feeds; the other sources are manual downloads or requests",
+   "reads": [
+    "DATA_SOURCES.json"
+   ],
+   "creates": [
+    "00_shared_data/raw/*"
+   ],
+   "minutes": 30,
+   "memory_gb": 0.1,
+   "provided": {
+    "provided": false,
+    "note": "raw data are not shipped (except the survey files in 00_shared_data/rts_2017_18/raw)"
+   },
+   "python": "sh"
+  },
+  {
+   "step": 2,
+   "shared_step_id": "S01",
+   "what": "shared preparation S01: Survey cleaning: rts_trips_clean.csv and rts_tours.csv from the RTS flat file (01_clean_rts.py of the tour-based MITO project)",
+   "cwd": "../00_shared_prep/code",
+   "command": "none: the cleaning script is not on this machine; use the provided files",
+   "reads": [
+    "RTS_raw_flat_data.csv"
+   ],
+   "creates": [
+    "00_shared_data/rts_2017_18/raw/rts_trips_clean.csv.gz",
+    "00_shared_data/rts_2017_18/raw/rts_tours.csv.gz"
+   ],
+   "minutes": null,
+   "memory_gb": null,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/raw"
+   },
+   "python": "-"
+  },
+  {
+   "step": 3,
+   "shared_step_id": "S02",
+   "what": "shared preparation S02: Estimation / hold-out split of the survey households (seed 2026, stratified by county x household size)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python make_rts_split.py",
+   "reads": [
+    "00_shared_data/rts_2017_18/raw/RTS_raw_flat_data.csv.gz"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/split/rts_split.csv"
+   ],
+   "minutes": 0.1,
+   "memory_gb": 1.6,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/split/rts_split.csv",
+    "verified": "rebuilt identical (2026-11-13)"
+   },
+   "python": "biogeme venv"
+  },
+  {
+   "step": 4,
+   "shared_step_id": "S03",
+   "what": "shared preparation S03: Tract internal point -> model zone (tract_zone.csv) and persons per zone in 2016 (zone_population_2016.csv)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 build_survey_population.py --rebuild-zone-files   # also runs S04; needs geopandas (project Python)",
+   "reads": [
+    "00_shared_data/raw/census_gazetteer_2010/Gaz_tracts_national.txt",
+    "00_shared_data/raw/mstm_zone_system/SMZ_RMZ_02152011inMSTM_EPSG26918.shp",
+    "00_shared_data/raw/synthetic_population_2016/pp_2016.csv",
+    "00_shared_data/raw/synthetic_population_2016/dd_2016.csv"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/survey_pop/tract_zone.csv",
+    "00_shared_data/rebuilt/rts_2017_18/survey_pop/zone_population_2016.csv"
+   ],
+   "minutes": 0.2,
+   "memory_gb": 1.0,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/survey_pop/tract_zone.csv, 00_shared_data/zones/zone_population_2016.csv",
+    "verified": "rebuilt identical"
+   },
+   "python": "project python3 (geopandas)"
+  },
+  {
+   "step": 5,
+   "shared_step_id": "S04",
+   "what": "shared preparation S04: Survey population of both halves in the ABIT input format (households, persons, dwellings, person map, workplaces)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_survey_population.py   # uses the provided tract_zone.csv / zone_population_2016.csv; add --rebuild-zone-files for S03",
+   "reads": [
+    "00_shared_data/rts_2017_18/raw/RTS_raw_flat_data.csv.gz",
+    "00_shared_data/rts_2017_18/split/rts_split.csv",
+    "00_shared_data/zones/schools_2016.csv",
+    "tract_zone.csv"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/survey_pop/<half>/{hh,pp,dd,persons_map,workplace_reassign,build_log}.csv"
+   ],
+   "minutes": 0.3,
+   "memory_gb": 1.7,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/survey_pop",
+    "verified": "rebuilt identical"
+   },
+   "python": "biogeme venv"
+  },
+  {
+   "step": 6,
+   "shared_step_id": "S05",
+   "what": "shared preparation S05: Typed survey episodes of both halves (TASHA activity types, person segments, zones of the trip ends)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_episodes.py",
+   "reads": [
+    "00_shared_data/rts_2017_18/raw/*.csv.gz",
+    "00_shared_data/rts_2017_18/survey_pop",
+    "split"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/episodes/episodes_<half>.parquet"
+   ],
+   "minutes": 0.2,
+   "memory_gb": 1.7,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/episodes",
+    "verified": "rebuilt identical"
+   },
+   "python": "biogeme venv"
+  },
+  {
+   "step": 7,
+   "shared_step_id": "S06",
+   "what": "shared preparation S06: MSTM 2016 skims OMX -> csv.gz (car time, car distance, MSTM bus and rail time)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python convert_mstm_skims.py",
+   "reads": [
+    "00_shared_data/raw/mstm_skims_2016/*.omx"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/skims/abit_base_2016/{traveltime_auto,distance_auto,bus_tt,rail_tt00}.csv.gz"
+   ],
+   "minutes": 0.6,
+   "memory_gb": 0.4,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/skims/abit_base_2016",
+    "verified": "rebuilt identical (distance within 1e-4 m: 4-decimal rounding; compare with --tol 1e-4)"
+   },
+   "python": "biogeme venv"
+  },
+  {
+   "step": 8,
+   "what": "optional (data already provided in input/data/estimation and input/data/holdout): rebuild the estimation tables from input/data/raw",
+   "cwd": "input/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 build_estimation_tables.py",
+   "creates": [
+    "input/data/estimation/estimation_table.parquet",
+    "input/data/holdout/estimation_table.parquet"
+   ],
+   "minutes": 0.5,
+   "memory_gb": 1,
+   "provided": {
+    "provided": true,
+    "path": "input/data/estimation, input/data/holdout"
+   }
+  },
+  {
+   "step": 9,
+   "what": "input_check: compare your rebuilt estimation data with the provided data (row counts, columns, column sums, max abs difference; Biogeme parts by column statistics)",
+   "cwd": ".",
+   "command": "~/.venvs/biogeme/bin/python input/code/check_against_provided.py",
+   "reads": [
+    "input/data/estimation",
+    "input/data/holdout",
+    "input/data/provided_reference"
+   ],
+   "creates": [],
+   "minutes": 1,
+   "memory_gb": 2
+  },
+  {
+   "step": 10,
+   "what": "check: log-likelihood at the reference estimates, without estimating (writes nothing)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_outing_generation.py --evaluate --at article",
+   "creates": [],
+   "minutes": 0.2,
+   "memory_gb": 0.6
+  },
+  {
+   "step": 11,
+   "what": "Biogeme estimation (robust standard errors)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_outing_generation.py",
+   "creates": [
+    "output/outing_generation.html",
+    "output/outing_generation.yaml",
+    "output/estimated_parameters.csv",
+    "output/estimated_fit.csv",
+    "output/biogeme.toml"
+   ],
+   "minutes": 0.2,
+   "memory_gb": 0.7
+  },
+  {
+   "step": 12,
+   "what": "compare the estimates with reference_estimates.csv",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python compare_with_reference.py",
+   "creates": [
+    "output/comparison.csv"
+   ],
+   "minutes": 0.1,
+   "memory_gb": 0.2
+  }
+ ],
+ "check": {
+  "article_LL": -3061.5,
+  "reference_LL": -3061.4936,
+  "biogeme_LL_at_article_coefficients": -3061.4936,
+  "biogeme_LL_at_reference_coefficients": -3061.4936,
+  "basis": "full estimation half, all 8,613 observations (hold-out half: Biogeme -3093.2372, reference -3093.2)",
+  "N": 8613,
+  "K": 8
+ },
+ "notes": [
+  "Unweighted; robust (sandwich) standard errors.",
+  "Step 1 needs only numpy, pandas and pyarrow; its output is already in input/data.",
+  "A test estimation into a scratch folder reproduced the reference estimates and LL (then deleted; output/ is empty).",
+  "Shared preparation steps (cwd ../00_shared_prep/code) write to 00_shared_data/rebuilt/ and never overwrite the provided files; compare with check_against_provided.py (step S19) and, to use your rebuilt files, copy them over the provided paths in 00_shared_data before the model's own preparation steps."
+ ]
+}

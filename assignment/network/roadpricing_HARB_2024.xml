@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<!DOCTYPE roadpricing SYSTEM "http://www.matsim.org/files/dtd/roadpricing_v1.dtd">
+<!-- MDTA harbor-crossing tolls on network_2024 (validation study, written 2026-11-02 from I695_pricing/01_designs/designs/roadpricing_HARB.xml).
+     The Francis Scott Key Bridge (I-695) collapsed on 2024-03-26 and is absent from network_2024 (no link crosses the Patapsco at
+     39.217 N, -76.528 W; checked by name and geometry): its two links (keybridge_eb / keybridge_wb) are removed; the other six link ids
+     of the source file exist in network_2024 and are the tunnel links named below.
+     Rate: $3.00 per crossing per direction = 2-axle E-ZPass Maryland rate, as in the source file (MDTA schedule effective 2021-04-29,
+     unchanged through 2024; MDTA toll-rate table https://mdta.maryland.gov/TollRatesTables, 2-axle E-ZPass MD $3 at the Baltimore Harbor
+     and Fort McHenry tunnels; pay-by-plate $4, video $6 are minority classes for residents). Flat 24 h, both directions.
+       I-895 Baltimore Harbor Tunnel: 53478 / 41878 (one link per tube and direction)
+       I-95 Fort McHenry Tunnel: 355067 (bore 1), 373985 (bore 2), 373989 (bore 3), 236094 (bore 4); a vehicle uses one bore -->
+<roadpricing type="link" name="mdta_harbor_2024">
+    <description>MDTA harbor-crossing tolls 2024 (Fort McHenry and Baltimore Harbor tunnels; Key Bridge closed), $3.00 2-axle E-ZPass MD, both directions</description>
+    <links>
+        <link id="53478"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="41878"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="355067"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="373985"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="373989"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+        <link id="236094"><cost start_time="00:00:00" end_time="36:00:00" amount="3.0"/></link>
+    </links>
+</roadpricing>

@@ -1,0 +1,636 @@
+diff --git a/siloCore/src/main/java/de/tum/bgu/msm/data/job/JobDataManagerImpl.java b/siloCore/src/main/java/de/tum/bgu/msm/data/job/JobDataManagerImpl.java
+index ca4179f..0e2d4d3 100644
+--- a/siloCore/src/main/java/de/tum/bgu/msm/data/job/JobDataManagerImpl.java
++++ b/siloCore/src/main/java/de/tum/bgu/msm/data/job/JobDataManagerImpl.java
+@@ -88,6 +88,7 @@ public class JobDataManagerImpl implements UpdateListener, JobDataManager {
+ 
+     @Override
+     public void prepareYear(int year) {
++        if (jcRespec) loadAccw(year);   // Baltimore 2026 (respec): accessibility of the latest year <= year
+         final String verify = System.getProperty("silo.jobchoice.verify");
+         if (verify != null && !verify.isBlank()) verifyRts(verify);
+         calculateJobDensityByZone();
+@@ -756,11 +757,18 @@ public class JobDataManagerImpl implements UpdateListener, JobDataManager {
+     // 2026-10-28 (rts3, jobchoice/job_choice_rts3_spec.md): bases hiearn (share of the zone's jobs earning > $3,333 a month, fixed,
+     // zone attribute file) and off_sh, ret_sh, ind_sh (office / retail / industrial share of all the zone's jobs, recomputed every year
+     // from the job list); person variables lic (driving licence), hhs (household size, capped at 8), rurh (rural home zone, attribute file)
+-    private static final String[] RTS_BASE = {"t", "lt", "ls", "intra", "cs", "cc", "dc", "hiearn", "off_sh", "ret_sh", "ind_sh"};
++    // 2026-11-09 (job.choice.model = respec, side_experiments/respec_2026-11/step_by_step/workplace w04 final): base accw = non-work
++    // logsum accessibility of the workplace zone for the seeker's segment (car segment against workers x income group, the indexing
++    // of the estimation data w01_data.py), read from job.choice.accessibility.file; the centred person interactions of the estimation
++    // (t x (x - mean)) are folded into b_t in the coefficient file
++    private static final String[] RTS_BASE = {"t", "lt", "ls", "intra", "cs", "cc", "dc", "hiearn", "off_sh", "ret_sh", "ind_sh", "accw"};
+     private static final List<String> RTS_VARS = Arrays.asList("female", "young", "old", "kids", "w2", "car0", "car1", "g1", "g3", "g4", "hva", "hdc", "lic", "hhs", "rurh");
+     private double[] jcHiearn = new double[0], jcOffSh = new double[0], jcRetSh = new double[0], jcIndSh = new double[0], jcRural = new double[0];
+     private boolean jcRts3;
+     private boolean jcRts;
++    private boolean jcRespec;
++    private double[][] jcAccw;       // [carSeg * 4 + incGroup - 1][zone id] (respec)
++    private String jcAccwFile;
+     private String[] jcRegionNames = new String[0];
+     private int[] jcRegion;          // region index of a zone id, -1 = base region
+     private float[][] jcLogsum;      // [carSeg * 4 + incGroup - 1][index(h) * n + index(j)]
+@@ -816,6 +824,7 @@ public class JobDataManagerImpl implements UpdateListener, JobDataManager {
+         if (e[2] != 0) v += e[2] * jcLogsum[s.carSeg * 4 + s.incGroup - 1][jcLsIndex[hz] * jcLsN + jcLsIndex[jz]];
+         if (hz == jz) v += e[3];
+         if (jcRts3 && jz < jcHiearn.length) v += e[7] * jcHiearn[jz] + e[8] * jcOffSh[jz] + e[9] * jcRetSh[jz] + e[10] * jcIndSh[jz];
++        if (e[11] != 0) v += e[11] * jcAccw[s.carSeg * 4 + s.incGroup - 1][jz];
+         if (hs != js) v += e[4];
+         if (jcCounty[hz] != jcCounty[jz]) v += e[5];
+         if (js == 11 && hs != 11) v += e[6];
+@@ -856,11 +865,12 @@ public class JobDataManagerImpl implements UpdateListener, JobDataManager {
+                         jcState[z] = Integer.parseInt(f[iS].trim()); jcCounty[z] = Integer.parseInt(f[iC].trim());
+                         if (iR >= 0) regionOf[z] = f[iR].trim();
+                     }
+-                    jcRts3 = "rts3".equals(properties.jobData.jobChoiceModel);
++                    jcRespec = "respec".equals(properties.jobData.jobChoiceModel);
++                    jcRts3 = "rts3".equals(properties.jobData.jobChoiceModel) || jcRespec;
+                     jcRts = "rts".equals(properties.jobData.jobChoiceModel) || jcRts3;
+                     if (jcRts) loadRts(c, regionOf, max);
+                     if (jcRts3) loadRts3(max);
+-                    else if (!jcRts && !"lodes".equals(properties.jobData.jobChoiceModel)) throw new IllegalArgumentException("job.choice.model must be lodes, rts or rts3: " + properties.jobData.jobChoiceModel);
++                    else if (!jcRts && !"lodes".equals(properties.jobData.jobChoiceModel)) throw new IllegalArgumentException("job.choice.model must be lodes, rts, rts3 or respec: " + properties.jobData.jobChoiceModel);
+                 } catch (java.io.IOException e) {
+                     throw new RuntimeException("Could not read the job choice files " + file, e);
+                 }
+@@ -889,6 +899,46 @@ public class JobDataManagerImpl implements UpdateListener, JobDataManager {
+         }
+         if (!Boolean.getBoolean("silo.jobchoice.verify.fileShares")) updateJobMixShares();
+         logger.info("Workplace choice (rts3): zone attributes read from " + properties.jobData.jobChoiceZoneAttributesFile);
++        if (jcRespec) {
++            jcAccw = new double[12][maxZone + 1];
++            loadAccw(properties.main.startYear);
++        }
++    }
++
++    /** Baltimore 2026 (respec): non-work logsum accessibility by segment and zone from job.choice.accessibility.file ({year}: latest <= year) */
++    private void loadAccw(int year) {
++        final String pat = properties.jobData.jobChoiceAccessibilityFile;
++        if (pat == null || pat.isBlank()) {
++            if (jcCoef != null && jcCoef.containsKey("b_accw") || jcCoef == null) throw new IllegalArgumentException("job.choice.model = respec needs job.choice.accessibility.file");
++            return;
++        }
++        final String p0 = java.nio.file.Paths.get(pat).isAbsolute() ? pat : properties.main.baseDirectory + pat;
++        int y = year;
++        while (y >= 1990 && !new java.io.File(p0.replace("{year}", String.valueOf(y))).exists()) y--;
++        if (y < 1990) throw new IllegalArgumentException("no job choice accessibility file for year <= " + year + ": " + p0);
++        final String f = p0.replace("{year}", String.valueOf(y));
++        if (f.equals(jcAccwFile)) return;
++        final String[] cars = {"nocar", "carlt", "carge"}, groups = {"LOW", "MEDIUM", "HIGH", "VERY_HIGH"};
++        for (double[] a : jcAccw) Arrays.fill(a, 0.);
++        int n = 0;
++        try {
++            final List<String> l = java.nio.file.Files.readAllLines(java.nio.file.Paths.get(f));
++            final List<String> h = Arrays.asList(l.get(0).split(","));
++            final int iZ = h.indexOf("zone"), iS = h.indexOf("segment"), iP = h.indexOf("purpose"), iA = h.indexOf("A");
++            for (String line : l.subList(1, l.size())) {
++                final String[] x = line.split(",");
++                if (!"nonwork".equals(x[iP].trim())) continue;
++                final int z = Integer.parseInt(x[iZ].trim());
++                if (z >= jcAccw[0].length) continue;
++                final String sg = x[iS].trim(); final int u = sg.lastIndexOf('_');
++                final int g = Arrays.asList(groups).indexOf(sg.substring(0, u)), c = Arrays.asList(cars).indexOf(sg.substring(u + 1));
++                if (g < 0 || c < 0) continue;
++                final double a = Double.parseDouble(x[iA].trim());
++                jcAccw[c * 4 + g][z] = Double.isNaN(a) ? 0. : a; n++;
++            }
++        } catch (java.io.IOException e) { throw new RuntimeException("Could not read " + f, e); }
++        jcAccwFile = f;
++        logger.info("Workplace choice (respec): non-work accessibility of the workplace read from " + f + " (" + n + " values)");
+     }
+ 
+     /**
+@@ -924,6 +974,8 @@ public class JobDataManagerImpl implements UpdateListener, JobDataManager {
+                     sk.female = Double.parseDouble(x[wh.indexOf("female")].trim()); sk.young = age < 30 ? 1 : 0; sk.old = age >= 55 ? 1 : 0;
+                     sk.carSeg = Integer.parseInt(x[wh.indexOf("car_segment")].trim()); sk.incGroup = Integer.parseInt(x[wh.indexOf("income_group")].trim());
+                     sk.lic = Double.parseDouble(x[wh.indexOf("driving_licence")].trim()); sk.hhs = Double.parseDouble(x[wh.indexOf("hh_size_capped_8")].trim());
++                    if (wh.contains("kids")) sk.kids = Double.parseDouble(x[wh.indexOf("kids")].trim());   // respec: children in the household (0/1)
++                    if (wh.contains("workers")) sk.w2 = Double.parseDouble(x[wh.indexOf("workers")].trim()) >= 2 ? 1 : 0;   // respec
+                     final int hz = Integer.parseInt(x[wh.indexOf("home_zone")].trim());
+                     final double[] eff = rtsCoefficients(sk, jcState[hz], hz);
+                     final double[] v = new double[nz]; double mx = Double.NEGATIVE_INFINITY;
+diff --git a/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/JobDataProperties.java b/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/JobDataProperties.java
+index 4efbb79..064e8c9 100644
+--- a/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/JobDataProperties.java
++++ b/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/JobDataProperties.java
+@@ -35,6 +35,9 @@ public final class JobDataProperties {
+     public final String jobChoiceSize;
+     /** Baltimore 2026 (2026-10-28, job.choice.model = rts3): zone attributes (zone, hiearn, off_sh, ret_sh, ind_sh, rural) */
+     public final String jobChoiceZoneAttributesFile;
++    /** Baltimore 2026 (2026-11-09, job.choice.model = respec): logsum accessibility file (zone,segment,purpose,A; pattern with {year},
++     * absolute or relative to base.directory) for the non-work accessibility of the workplace zone (base accw) */
++    public final String jobChoiceAccessibilityFile;
+     /** Baltimore 2026 (2026-10-28): yearly job-to-job change probability of a worker (JOLTS Maryland quits rate); 0 = off */
+     public final double jobChangeRate;
+     public final int jobChangeOffers;   // vacancies drawn (offers) per job-to-job search
+@@ -77,6 +80,7 @@ public final class JobDataProperties {
+         jobChoiceLogsumDir = PropertiesUtil.getStringProperty(bundle, "job.choice.logsum.dir", "input/job_choice_logsums_rts");
+         jobChoiceSize = PropertiesUtil.getStringProperty(bundle, "job.choice.size", "vacancies").trim().toLowerCase();
+         jobChoiceZoneAttributesFile = PropertiesUtil.getStringProperty(bundle, "job.choice.zone.attributes.file", "input/job_choice_zone_attributes_rts3.csv");
++        jobChoiceAccessibilityFile = PropertiesUtil.getStringProperty(bundle, "job.choice.accessibility.file", "");
+         jobChangeRate = PropertiesUtil.getDoubleProperty(bundle, "job.change.rate", 0.);
+         jobChangeOffers = PropertiesUtil.getIntProperty(bundle, "job.change.offers", 1);
+     }
+diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/CarOwnershipModelMd.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/CarOwnershipModelMd.java
+index ef030b2..6c38692 100644
+--- a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/CarOwnershipModelMd.java
++++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/CarOwnershipModelMd.java
+@@ -14,7 +14,9 @@ import org.apache.logging.log4j.Logger;
+ import java.io.BufferedReader;
+ import java.io.FileReader;
+ import java.io.IOException;
++import java.util.ArrayList;
+ import java.util.HashMap;
++import java.util.List;
+ import java.util.Map;
+ import java.util.Random;
+ 
+@@ -49,6 +51,20 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+     private final Map<Integer, long[]> lastState = new HashMap<>();             // hhId -> [size, workers]
+     private int updatedThisYear, createdThisYear;
+ 
++    // Baltimore 2026 (2026-11-09): car.ownership.spec = respec selects the re-specified model (CarOwnershipRespec); record (default)
++    // = the model above, unchanged. Location variables at the PUMA level as in the estimation (car.ownership.respec.location.file:
++    // puma,zone,hu,density_2016): ln dwelling density = ln(density_2016 x current stock / base-year stock of the PUMA, zones split
++    // between PUMAs by their housing units), accessibility gain = housing-unit weighted mean of the zones' gain; a zone in several
++    // PUMAs takes the hu-weighted mean over them; zones outside the file use their own dwellings per km2 and their own gain.
++    private final boolean respec = "respec".equalsIgnoreCase(de.tum.bgu.msm.models.resloc.ReslocProperties.get("car.ownership.spec", "record"));
++    private double densityCentre;
++    private final Map<Integer, Integer> pumaIndex = new HashMap<>();
++    private final Map<Integer, List<double[]>> zonePumas = new HashMap<>();   // zone -> {puma index, hu, share of the zone's hu}
++    private double[] pumaDensity2016, pumaStockBase;
++    private final Map<Integer, Double> zoneLnDensity = new HashMap<>();
++    private final Map<String, Double> zoneGain = new HashMap<>();             // zone|group -> gain
++    private static final String[] GROUPS = {"LOW", "MEDIUM", "HIGH", "VERY_HIGH"};
++
+     public CarOwnershipModelMd(DataContainer dataContainer, Accessibility accessibility, Properties properties, Random rnd) {
+         super(dataContainer, properties, rnd);
+         this.accessibility = accessibility;
+@@ -61,6 +77,14 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+         if (properties.householdData.carOwnershipRegionConstantsFile != null && !properties.householdData.carOwnershipRegionConstantsFile.isBlank()) {
+             readRegionConstants(base + properties.householdData.carOwnershipRegionConstantsFile);
+         }
++        if (respec) {
++            if (!coef.containsKey(0) || !coef.get(0).containsKey("ln_density_centre"))
++                throw new RuntimeException("car.ownership.spec = respec: the coefficient file needs alternative 0, variable ln_density_centre");
++            densityCentre = coef.get(0).get("ln_density_centre");
++            readPumaFile(de.tum.bgu.msm.models.resloc.ReslocProperties.path("car.ownership.respec.location.file", "input/car_ownership_puma_respec.csv"));
++            pumaStockBase = pumaStock();
++            updateLocation();
++        }
+         rememberState();
+         logger.info("Car ownership model: coefficients for " + coef.size() + " alternatives, region constants for " + regionAsc.size() + " regions");
+     }
+@@ -94,6 +118,107 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+         throw new RuntimeException("Column " + n + " missing in car ownership file");
+     }
+ 
++    private void readPumaFile(String file) {
++        final List<Double> dens = new ArrayList<>();
++        try (BufferedReader r = new BufferedReader(new FileReader(file))) {
++            String[] h = r.readLine().split(","); int iP = col(h, "puma"), iZ = col(h, "zone"), iH = col(h, "hu"), iD = col(h, "density_2016");
++            String line;
++            while ((line = r.readLine()) != null) {
++                if (line.isBlank()) continue;
++                String[] x = line.split(",");
++                final int p = Integer.parseInt(x[iP].trim());
++                Integer k = pumaIndex.get(p);
++                if (k == null) { k = dens.size(); pumaIndex.put(p, k); dens.add(Double.parseDouble(x[iD].trim())); }
++                zonePumas.computeIfAbsent(Integer.parseInt(x[iZ].trim()), q -> new ArrayList<>()).add(new double[]{k, Double.parseDouble(x[iH].trim()), 0});
++            }
++        } catch (IOException e) { throw new RuntimeException("Could not read car ownership location file " + file, e); }
++        pumaDensity2016 = dens.stream().mapToDouble(Double::doubleValue).toArray();
++        for (List<double[]> l : zonePumas.values()) {
++            double t = 0; for (double[] e : l) t += e[1];
++            for (double[] e : l) e[2] = t > 0 ? e[1] / t : 1. / l.size();
++        }
++        logger.info("Car ownership (respec): " + pumaDensity2016.length + " PUMAs, " + zonePumas.size() + " zones read from " + file);
++    }
++
++    private Map<Integer, Integer> dwellingsByZone() {
++        final Map<Integer, Integer> n = new HashMap<>();
++        for (Dwelling d : dataContainer.getRealEstateDataManager().getDwellings()) n.merge(d.getZoneId(), 1, Integer::sum);
++        return n;
++    }
++
++    /** dwellings of each PUMA, zones split by their housing-unit shares */
++    private double[] pumaStock() {
++        final double[] s = new double[pumaDensity2016.length];
++        final Map<Integer, Integer> n = dwellingsByZone();
++        for (Map.Entry<Integer, List<double[]>> e : zonePumas.entrySet()) {
++            final int dz = n.getOrDefault(e.getKey(), 0);
++            for (double[] q : e.getValue()) s[(int) q[0]] += q[2] * dz;
++        }
++        return s;
++    }
++
++    /** ln density and accessibility gain of every zone for the current stock and accessibility (respec) */
++    private void updateLocation() {
++        final double[] s = pumaStock();
++        final double[] lnD = new double[s.length];
++        for (int p = 0; p < s.length; p++) lnD[p] = Math.log(pumaDensity2016[p] * (pumaStockBase[p] > 0 ? s[p] / pumaStockBase[p] : 1));
++        final de.tum.bgu.msm.models.resloc.AccessibilityLogsumMd ls = accessibility instanceof de.tum.bgu.msm.models.resloc.AccessibilityLogsumMd
++                ? (de.tum.bgu.msm.models.resloc.AccessibilityLogsumMd) accessibility : null;
++        if (ls == null) throw new RuntimeException("car.ownership.spec = respec needs accessibility.model = logsum");
++        // PUMA gain: hu-weighted mean over the PUMA's zones of A(carge) and of A(nocar), zones without a value skipped (s01_data.puma_location)
++        final double[][] sc = new double[s.length][4], wc = new double[s.length][4], sn = new double[s.length][4], wn = new double[s.length][4];
++        for (Map.Entry<Integer, List<double[]>> e : zonePumas.entrySet()) {
++            for (int g = 0; g < 4; g++) {
++                final double ac = ls.getLogsum(e.getKey(), GROUPS[g] + "_" + ls.carLabel(2), "nonwork"), an = ls.getLogsum(e.getKey(), GROUPS[g] + "_" + ls.carLabel(0), "nonwork");
++                for (double[] q : e.getValue()) {
++                    final int p = (int) q[0];
++                    if (!Double.isNaN(ac)) { sc[p][g] += q[1] * ac; wc[p][g] += q[1]; }
++                    if (!Double.isNaN(an)) { sn[p][g] += q[1] * an; wn[p][g] += q[1]; }
++                }
++            }
++        }
++        zoneLnDensity.clear(); zoneGain.clear();
++        final Map<Integer, Integer> n = dwellingsByZone();
++        for (de.tum.bgu.msm.data.Zone z : dataContainer.getGeoData().getZones().values()) {
++            final List<double[]> l = zonePumas.get(z.getZoneId());
++            if (l != null) {
++                double d = 0; final double[] gg = new double[4];
++                for (double[] q : l) {
++                    final int p = (int) q[0]; d += q[2] * lnD[p];
++                    for (int g = 0; g < 4; g++) gg[g] += q[2] * ((wc[p][g] > 0 ? sc[p][g] / wc[p][g] : 0) - (wn[p][g] > 0 ? sn[p][g] / wn[p][g] : 0));
++                }
++                zoneLnDensity.put(z.getZoneId(), d);
++                for (int g = 0; g < 4; g++) zoneGain.put(z.getZoneId() + "|" + g, gg[g]);
++            } else {
++                final double km2 = z.getArea_sqmi() * 2.58999;
++                zoneLnDensity.put(z.getZoneId(), Math.log(Math.max(n.getOrDefault(z.getZoneId(), 0), 1) / Math.max(km2, 1e-6)));
++                for (int g = 0; g < 4; g++) {
++                    final double v = ls.getLogsum(z.getZoneId(), GROUPS[g] + "_" + ls.carLabel(2), "nonwork") - ls.getLogsum(z.getZoneId(), GROUPS[g] + "_" + ls.carLabel(0), "nonwork");
++                    zoneGain.put(z.getZoneId() + "|" + g, Double.isNaN(v) ? 0 : v);
++                }
++            }
++        }
++    }
++
++    private double[] respecProbabilities(Household hh, Dwelling dd) {
++        int p16 = 0, children = 0, amax = 0;
++        for (de.tum.bgu.msm.data.person.Person p : hh.getPersons().values()) {
++            if (p.getAge() >= 16) p16++; else children++;
++            amax = Math.max(amax, p.getAge());
++        }
++        final String gname = hh.getHouseholdType().getIncomeCategory().name();
++        int g = 0; for (int k = 0; k < 4; k++) if (GROUPS[k].equals(gname)) g = k;
++        final double[] x = CarOwnershipRespec.vars(HouseholdUtil.getNumberOfWorkers(hh), p16, children, hh.getHhSize(), HouseholdUtil.getAnnualHhIncome(hh), amax,
++                dd.getType().toString(), dd.getBedrooms(), zoneLnDensity.getOrDefault(dd.getZoneId(), 0.), zoneGain.getOrDefault(dd.getZoneId() + "|" + g, 0.), densityCentre);
++        final double[] u = CarOwnershipRespec.utilities(coef, x);
++        final int region = dataContainer.getGeoData().getZones().get(dd.getZoneId()).getRegion().getId();
++        final double[] rAsc = regionAsc.getOrDefault(region, new double[]{0, 0, 0});
++        final double[] e = new double[4]; e[0] = 1; double sum = 1;
++        for (int a = 1; a <= 3; a++) { e[a] = Math.exp(u[a - 1] + rAsc[a - 1]); sum += e[a]; }
++        for (int a = 0; a < 4; a++) e[a] /= sum;
++        return e;
++    }
++
+     private static int incomeClass(int income) {
+         for (int i = 0; i < INCOME_BOUNDS.length; i++) if (income < INCOME_BOUNDS[i]) return i + 1;
+         return INCOME_BOUNDS.length + 1;
+@@ -103,6 +228,7 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+     double[] probabilities(Household hh) {
+         final Dwelling dd = dataContainer.getRealEstateDataManager().getDwelling(hh.getDwellingId());
+         if (dd == null) return new double[]{1, 0, 0, 0};
++        if (respec) return respecProbabilities(hh, dd);
+         final int size = hh.getHhSize();
+         final int workers = HouseholdUtil.getNumberOfWorkers(hh);
+         final int inc = incomeClass(HouseholdUtil.getAnnualHhIncome(hh));
+@@ -149,7 +275,10 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+     }
+ 
+     @Override
+-    public void prepareYear(int year) { updatedThisYear = 0; createdThisYear = 0; }
++    public void prepareYear(int year) {
++        updatedThisYear = 0; createdThisYear = 0;
++        if (respec) updateLocation();
++    }
+ 
+     @Override
+     public void endYear(int year) {
+diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocModel.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocModel.java
+index a4beed1..217978d 100644
+--- a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocModel.java
++++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocModel.java
+@@ -102,6 +102,24 @@ public class ReslocModel {
+     private static final Map<Integer, double[]> gapAtEntry = new ConcurrentHashMap<>();   // household -> {tenure start year, gap}
+     private double diagGap, diagGapEff, diagLnDur, diagP; private long diagN;
+ 
++    // Baltimore 2026 (2026-11-09): resloc.spec = respec selects the re-specified model (ReslocRespecUtility); record (default) = the
++    // model above, unchanged. Under respec: the zone part reads its own accessibility file (resloc.respec.accessibility.file, pattern
++    // with {year}; the multimodal logsum A_ls of the estimation), the county part reads the school learning growth (column growth of
++    // resloc.region.attributes) and the county adjacency (resloc.region.adjacency: region_a,region_b).
++    private final boolean respec = "respec".equalsIgnoreCase(ReslocProperties.get("resloc.spec", "record"));
++    private static final String[] INC_GROUPS = {"LOW", "MEDIUM", "HIGH", "VERY_HIGH"};
++    private double[] regGrowth;
++    private boolean[][] regAdjacent;
++    private double[][] shareOwnGroup;     // zone index x income group: share of the zone's households in the group (current population)
++    private final String accRespecPattern = ReslocProperties.path("resloc.respec.accessibility.file", "");
++    private final Map<String, double[]> accRespec = new HashMap<>();   // segment|purpose -> A by zone index
++    private int accRespecYear = Integer.MIN_VALUE;
++    // Baltimore 2026 (2026-11-10, respec): land use of the zone part, recomputed in prepareYear from the current dwellings and jobs
++    // (dwelling and job density, retail density, mix); acres and the paid-parking share fixed (resloc.respec.zone.attributes:
++    // zone,acres,park); landUse[z] in the order of ReslocRespecUtility.LU_NAMES
++    private double[] zoneAcres, zonePark;
++    private double[][] landUse;
++
+     public ReslocModel(DataContainer dataContainer, AccessibilityLogsumMd accessibility) {
+         this.dataContainer = dataContainer;
+         this.geoData = dataContainer.getGeoData();
+@@ -115,13 +133,117 @@ public class ReslocModel {
+         zoneRegion = new int[zoneIds.length];
+         for (int i = 0; i < zoneIds.length; i++) zoneRegion[i] = rIdx.get(geoData.getZones().get(zoneIds[i]).getRegion().getId());
+         regionState = new int[regionIds.length]; regSchool = new double[regionIds.length]; regCrime = new double[regionIds.length];
++        regGrowth = new double[regionIds.length]; regAdjacent = new boolean[regionIds.length][regionIds.length];
+         readRegionAttributes(ReslocProperties.path("resloc.region.attributes", "input/resloc_region_attributes.csv"));
++        if (respec) readAdjacency(ReslocProperties.path("resloc.region.adjacency", "input/resloc_region_adjacency_respec.csv"));
++        if (respec) readZoneAttributes(ReslocProperties.path("resloc.respec.zone.attributes", "input/resloc_zone_attributes_respec.csv"));
+         zoneState = new int[zoneIds.length];
+         for (int i = 0; i < zoneIds.length; i++) zoneState[i] = regionState[zoneRegion[i]];
+         pt = readSkim(ReslocProperties.path("resloc.transit.skim", "skims/transit_peak_time_d2d.csv.gz"));
+         ivSample = Integer.parseInt(ReslocProperties.get("resloc.iv.dwelling.sample", "200"));
+         readTenure(ReslocProperties.path("resloc.tenure.file", "input/tenure_by_age.csv"));
+-        logger.info("Estimated residential location model: " + cDw.size() + " dwelling, " + cZone.size() + " zone, " + cReg.size() + " region coefficients");
++        logger.info("Estimated residential location model" + (respec ? " (re-specified, resloc.spec = respec)" : "") + ": " + cDw.size()
++                + " dwelling, " + cZone.size() + " zone, " + cReg.size() + " region coefficients");
++        if (respec && !cReg.containsKey("IV_A")) throw new RuntimeException("resloc.spec = respec: the county coefficient file must list IV_A (fixed at 1)");
++    }
++
++    private void readZoneAttributes(String file) {
++        zoneAcres = new double[zoneIds.length]; zonePark = new double[zoneIds.length]; Arrays.fill(zoneAcres, Double.NaN);
++        try (BufferedReader r = new BufferedReader(new FileReader(file))) {
++            String[] h = r.readLine().split(",");
++            int iZ = col(h, "zone"), iA = col(h, "acres"), iP = col(h, "park");
++            String line;
++            while ((line = r.readLine()) != null) {
++                if (line.isBlank()) continue;
++                String[] x = line.split(",");
++                Integer z = zIdx.get(Integer.parseInt(x[iZ].trim()));
++                if (z == null) continue;
++                zoneAcres[z] = Double.parseDouble(x[iA].trim()); zonePark[z] = Double.parseDouble(x[iP].trim());
++            }
++        } catch (IOException e) {
++            throw new RuntimeException("Could not read the respec zone attributes " + file, e);
++        }
++        for (int z = 0; z < zoneIds.length; z++) if (Double.isNaN(zoneAcres[z])) throw new RuntimeException("zone " + zoneIds[z] + " missing in " + file);
++    }
++
++    /** land use of every zone from the current dwelling counts (dd) and jobs */
++    private void updateLandUse(double[] dd) {
++        final int nz = zoneIds.length;
++        final double[][] jobs = new double[nz][4];   // RET, OFF, IND, OTH
++        for (Job j : dataContainer.getJobDataManager().getJobs()) {
++            final Integer z = zIdx.get(j.getZoneId());
++            if (z == null) continue;
++            final String t = j.getType() == null ? "" : j.getType().replace("\"", "");
++            jobs[z]["RET".equals(t) ? 0 : "OFF".equals(t) ? 1 : "IND".equals(t) ? 2 : 3]++;
++        }
++        landUse = new double[nz][5];
++        for (int z = 0; z < nz; z++) {
++            final double a = zoneAcres[z], ret = jobs[z][0], all = jobs[z][0] + jobs[z][1] + jobs[z][2] + jobs[z][3];
++            final double[] n = {ret, jobs[z][1], jobs[z][2] + jobs[z][3], dd[z]};
++            final double tot = n[0] + n[1] + n[2] + n[3];
++            double e = 0;
++            for (double x : n) if (x > 0) { final double p = x / tot; e -= p * Math.log(p); }
++            landUse[z][0] = Math.log(Math.max(dd[z], 1) / a);
++            landUse[z][1] = Math.log1p(all / a);
++            landUse[z][2] = Math.log1p(ret / (a * 0.00404686));
++            landUse[z][3] = e / Math.log(4);
++            landUse[z][4] = zonePark[z];
++        }
++    }
++
++    private void readAdjacency(String file) {
++        int n = 0;
++        try (BufferedReader r = new BufferedReader(new FileReader(file))) {
++            String[] h = r.readLine().split(",");
++            int iA = col(h, "region_a"), iB = col(h, "region_b");
++            String line;
++            while ((line = r.readLine()) != null) {
++                if (line.isBlank()) continue;
++                String[] x = line.split(",");
++                Integer a = rIdx.get(Integer.parseInt(x[iA].trim())), b = rIdx.get(Integer.parseInt(x[iB].trim()));
++                if (a == null || b == null || a.equals(b)) continue;
++                regAdjacent[a][b] = true; regAdjacent[b][a] = true; n++;
++            }
++        } catch (IOException e) {
++            throw new RuntimeException("Could not read the county adjacency file " + file, e);
++        }
++        logger.info("Residential location (respec): " + n + " county adjacency pairs read from " + file);
++    }
++
++    /** Baltimore 2026 (respec): accessibility of the zone part, file of the latest year <= year (pattern with {year}) */
++    private void loadRespecAccessibility(int year) {
++        if (accRespecPattern == null || accRespecPattern.isBlank()) return;
++        int y = year;
++        while (y >= 1990 && !new java.io.File(accRespecPattern.replace("{year}", String.valueOf(y))).exists()) y--;
++        if (y < 1990) throw new RuntimeException("No respec accessibility file for year <= " + year + " (" + accRespecPattern + ")");
++        if (y == accRespecYear) return;
++        accRespec.clear();
++        final String file = accRespecPattern.replace("{year}", String.valueOf(y));
++        try (BufferedReader r = new BufferedReader(new FileReader(file))) {
++            String[] h = r.readLine().split(",");
++            int iz = col(h, "zone"), is = col(h, "segment"), ip = col(h, "purpose"), ia = col(h, "A");
++            String line;
++            while ((line = r.readLine()) != null) {
++                if (line.isBlank()) continue;
++                String[] x = line.split(",");
++                Integer z = zIdx.get(Integer.parseInt(x[iz].trim()));
++                if (z == null) continue;
++                accRespec.computeIfAbsent(x[is].trim() + "|" + x[ip].trim(), k -> { double[] a = new double[zoneIds.length]; Arrays.fill(a, Double.NaN); return a; })[z]
++                        = Double.parseDouble(x[ia].trim());
++            }
++        } catch (IOException e) {
++            throw new RuntimeException("Could not read the respec accessibility file " + file, e);
++        }
++        accRespecYear = y;
++        logger.info("Residential location (respec): zone-part accessibility of year " + y + " loaded from " + file);
++    }
++
++    /** accessibility of the zone part: the respec file when given, else the engine's logsum accessibility */
++    private double acc(int z, String seg, String purpose) {
++        if (!respec || accRespec.isEmpty()) return accessibility.getLogsum(zoneIds[z], seg, purpose);
++        final double[] a = accRespec.get(seg + "|" + purpose);
++        if (a == null) throw new RuntimeException("Segment/purpose " + seg + "/" + purpose + " not in the respec accessibility file");
++        return a[z];
+     }
+ 
+     // ------------------------------------------------------------------------------------------------ input
+@@ -147,6 +269,9 @@ public class ReslocModel {
+         try (BufferedReader r = new BufferedReader(new FileReader(file))) {
+             String[] h = r.readLine().split(",");
+             int iR = col(h, "region"), iS = col(h, "state"), iSc = col(h, "school"), iC = col(h, "crime");
++            int iG = -1;   // Baltimore 2026 (respec): school learning growth (optional column)
++            for (int i = 0; i < h.length; i++) if (h[i].trim().equals("growth")) iG = i;
++            if (respec && iG < 0) throw new RuntimeException("resloc.spec = respec needs the column growth in " + file);
+             String line;
+             while ((line = r.readLine()) != null) {
+                 if (line.isBlank()) continue;
+@@ -154,6 +279,7 @@ public class ReslocModel {
+                 Integer k = rIdx.get(Integer.parseInt(x[iR].trim()));
+                 if (k == null) continue;
+                 regionState[k] = Integer.parseInt(x[iS].trim()); regSchool[k] = Double.parseDouble(x[iSc].trim()); regCrime[k] = Double.parseDouble(x[iC].trim());
++                if (iG >= 0) regGrowth[k] = Double.parseDouble(x[iG].trim());
+             }
+         } catch (IOException e) {
+             throw new RuntimeException("Could not read resloc region attributes " + file, e);
+@@ -263,12 +389,52 @@ public class ReslocModel {
+             ivDwellings.add(new ArrayList<>(v.subList(0, Math.min(ivSample, v.size()))));
+         }
+         cacheIvA.clear(); cacheIvB.clear();
++        if (respec) {
++            // share of the zone's households in each income group (estimation: 2016 synthetic population, r01_income_similarity.py)
++            final double[][] cnt = new double[nz][4];
++            for (Household hh : dataContainer.getHouseholdDataManager().getHouseholds()) {
++                final Dwelling d = dataContainer.getRealEstateDataManager().getDwelling(hh.getDwellingId());
++                if (d == null) continue;
++                final Integer i = zIdx.get(d.getZoneId());
++                if (i == null) continue;
++                cnt[i][groupIndex(hh)]++;
++            }
++            shareOwnGroup = new double[nz][4];
++            for (int i = 0; i < nz; i++) {
++                final double tot = cnt[i][0] + cnt[i][1] + cnt[i][2] + cnt[i][3];
++                for (int g = 0; g < 4; g++) shareOwnGroup[i][g] = tot > 0 ? cnt[i][g] / tot : 0;
++            }
++            loadRespecAccessibility(currentYear);
++            updateLandUse(dd);
++            final String dump = System.getProperty("silo.resloc.respec.dump");
++            if (dump != null && !dump.isBlank()) dumpZoneArrays(dump + "/resloc_respec_zones_" + currentYear + ".csv");
++        }
+         if (diagN > 0) logger.info(String.format("  Move-or-not (estimated) of the previous year: mean gap %.3f, mean gap - kappa gap0 %.3f, mean ln(1+years) %.3f, mean P %.4f over %d households",
+                 diagGap / diagN, diagGapEff / diagN, diagLnDur / diagN, diagP / diagN, diagN));
+         diagGap = diagGapEff = diagLnDur = diagP = 0; diagN = 0;
+         logger.info("Residential location model prepared for " + currentYear + ": " + (int) Arrays.stream(dd).sum() + " dwellings");
+     }
+ 
++    private static int groupIndex(Household hh) {
++        final String n = hh.getHouseholdType().getIncomeCategory().name();
++        for (int g = 0; g < INC_GROUPS.length; g++) if (INC_GROUPS[g].equals(n)) return g;
++        throw new RuntimeException("income category " + n);
++    }
++
++    /** Baltimore 2026 (respec, -Dsilo.resloc.respec.dump=<dir>): zone arrays of the year for the verification */
++    private void dumpZoneArrays(String file) {
++        try (java.io.PrintWriter w = new java.io.PrintWriter(file)) {
++            w.println("zone,D_SFD,D_SFA,D_MF,D_MH,lncost,sh_LOW,sh_MEDIUM,sh_HIGH,sh_VERY_HIGH,region,lnddens,lnjden,lnretden,mix,park");
++            for (int i = 0; i < zoneIds.length; i++)
++                w.println(zoneIds[i] + "," + D[i][0] + "," + D[i][1] + "," + D[i][2] + "," + D[i][3] + "," + lnCostZ[i] + "," + shareOwnGroup[i][0] + ","
++                        + shareOwnGroup[i][1] + "," + shareOwnGroup[i][2] + "," + shareOwnGroup[i][3] + "," + regionIds[zoneRegion[i]]
++                        + "," + landUse[i][0] + "," + landUse[i][1] + "," + landUse[i][2] + "," + landUse[i][3] + "," + landUse[i][4]);
++        } catch (IOException e) {
++            throw new RuntimeException(e);
++        }
++        logger.info("Residential location (respec): zone arrays written to " + file);
++    }
++
+     private static int cellType(String t) {
+         switch (t) {
+             case "SFD": return 0;
+@@ -285,6 +451,8 @@ public class ReslocModel {
+     private final class Hh {
+         final Household hh; final double inc, lninc, size, need, child, age65, nocar; final String group, seg;
+         final int zone, region, state; final List<Integer> jobZones = new ArrayList<>();
++        ReslocRespecUtility.HhVars v;   // Baltimore 2026 (respec): household variables of the re-specified model
++        int gi, ageMax;                 // income group index, age of the oldest member
+         Hh(Household hh, double incomeOverride) {
+             this.hh = hh;
+             inc = Math.max(incomeOverride > 0 ? incomeOverride : HouseholdUtil.getAnnualHhIncome(hh), 5000);
+@@ -325,6 +493,9 @@ public class ReslocModel {
+                     if (k != null) jobZones.add(k);
+                 }
+             }
++            ageMax = amax;
++            gi = groupIndex(hh);
++            v = new ReslocRespecUtility.HhVars(inc, (int) size, ch, amax, nocar > 0);
+         }
+     }
+ 
+@@ -335,6 +506,7 @@ public class ReslocModel {
+ 
+     // ------------------------------------------------------------------------------------------------ level 3: dwelling
+     private double vDwelling(Hh h, int cost, int bedrooms, String type, int yearBuilt) {
++        if (respec) return ReslocRespecUtility.dwelling(cDw, h.v, cost, bedrooms, type, (currentYear - yearBuilt) <= 5);
+         final double b = Math.min(12. * cost / h.inc, 3.);
+         double v = c(cDw, "bur_lo", h.group) * Math.min(b, .3) + c(cDw, "bur_mid", h.group) * Math.min(Math.max(b - .3, 0), .2)
+                 + c(cDw, "bur_hi", h.group) * Math.max(b - .5, 0) + c(cDw, "lncost", h.group) * Math.log(Math.max(cost, 100))
+@@ -351,6 +523,7 @@ public class ReslocModel {
+ 
+     // ------------------------------------------------------------------------------------------------ level 2: zone x type cell
+     private double vCellNoCommute(Hh h, int z, int t) {
++        if (respec) return ReslocRespecUtility.cell(cZone, h.v, Math.log(D[z][t]), acc(z, h.seg, "work"), acc(z, h.seg, "nonwork"), lnCostZ[z], shareOwnGroup[z][h.gi], landUse[z]);
+         final double aw = accessibility.getLogsum(zoneIds[z], h.seg, "work"), an = accessibility.getLogsum(zoneIds[z], h.seg, "nonwork");
+         return cZone.getOrDefault("lnD", 1.) * Math.log(D[z][t]) + cZone.getOrDefault("accW", 0.) * aw + cZone.getOrDefault("accN", 0.) * an
+                 + cZone.getOrDefault("accN_x_child", 0.) * an * h.child + cZone.getOrDefault("accN_x_age65", 0.) * an * h.age65
+@@ -364,6 +537,7 @@ public class ReslocModel {
+             double t = h.nocar > 0 ? pt[z][j] : dataContainer.getTravelTimes().getPeakSkim(TransportMode.car).getIndexed(zoneIds[z], zoneIds[j]);
+             s += Math.log1p(Math.max(0, Math.min(t, 300)));
+         }
++        if (respec) return ReslocRespecUtility.commute(cZone, h.v, s);
+         return cZone.getOrDefault("commute_log", 0.) * s + cZone.getOrDefault("commute_log_x_inc", 0.) * s * h.lninc;
+     }
+ 
+@@ -402,7 +576,14 @@ public class ReslocModel {
+ 
+     private double[] ivB(Household household, Hh h0) {
+         final double ib = incBin(h0.inc);
+-        final String key = h0.seg + "|" + h0.child + "|" + h0.age65 + "|" + ib;
++        final String key = h0.seg + "|" + h0.child + "|" + h0.age65 + "|" + ib + (respec ? "|" + h0.v.ageBand() + "|" + h0.v.hhs5 + "|" + h0.v.nocar : "");
++        if (respec) return cacheIvB.computeIfAbsent(key, k -> {
++            Hh h = new Hh(household, ib);
++            final int nz = zoneIds.length;
++            final double[] aw = new double[nz], an = new double[nz], sim = new double[nz];
++            for (int z = 0; z < nz; z++) { aw[z] = acc(z, h.seg, "work"); an[z] = acc(z, h.seg, "nonwork"); sim[z] = shareOwnGroup[z][h.gi]; }
++            return ReslocRespecUtility.ivB(cZone, h.v, D, lnCostZ, aw, an, sim, landUse, zoneRegion, regionIds.length);
++        });
+         return cacheIvB.computeIfAbsent(key, k -> {
+             Hh h = new Hh(household, ib);
+             double[] s = new double[regionIds.length], mx = new double[regionIds.length];
+@@ -422,7 +603,7 @@ public class ReslocModel {
+ 
+     private double[] ivA(Household household, Hh h0) {
+         final double ib = incBin(h0.inc);
+-        final String key = h0.group + "|" + ib + "|" + Math.min(h0.size, 10) + "|" + h0.child + "|" + h0.age65;
++        final String key = h0.group + "|" + ib + "|" + Math.min(h0.size, 10) + "|" + h0.child + "|" + h0.age65 + (respec ? "|" + h0.v.ageBand() : "");
+         return cacheIvA.computeIfAbsent(key, k -> {
+             Hh h = new Hh(household, ib);
+             double[] out = new double[regionIds.length];
+@@ -447,6 +628,11 @@ public class ReslocModel {
+     private double regionTerms(Hh h, int r, double com) {
+         final boolean same = r == h.region;
+         double t = (same || h.zone < 0) ? 0 : tZoneRegion[h.zone][r];
++        if (respec) {
++            final boolean adj = !same && h.region >= 0 && regAdjacent[h.region][r];
++            return ReslocRespecUtility.countyTerms(cReg, h.v, t, same ? 1 : 0, adj ? 1 : 0, h.state == regionState[r] ? 1 : 0, com, regGrowth[r], regCrime[r])
++                    + cReg.getOrDefault("asc_" + regionIds[r], 0.);
++        }
+         return c(cReg, "d1", h.group) * Math.min(t, 20) + c(cReg, "d2", h.group) * Math.min(Math.max(t - 20, 0), 40) + c(cReg, "d3", h.group) * Math.max(t - 60, 0)
+                 + c(cReg, "same_region", h.group) * (same ? 1 : 0) + c(cReg, "same_state", h.group) * (h.state == regionState[r] ? 1 : 0)
+                 + c(cReg, "commute_log", h.group) * com + c(cReg, "commute_log_x_inc", h.group) * com * h.lninc
+@@ -498,6 +684,7 @@ public class ReslocModel {
+ 
+     /** cell utility without the size term (for a dwelling whose cell is empty in the stock counts) */
+     private double vCellNoCommute0(Hh h, int z) {
++        if (respec) return ReslocRespecUtility.cell(cZone, h.v, 0, acc(z, h.seg, "work"), acc(z, h.seg, "nonwork"), lnCostZ[z], shareOwnGroup[z][h.gi], landUse[z]);
+         final double aw = accessibility.getLogsum(zoneIds[z], h.seg, "work"), an = accessibility.getLogsum(zoneIds[z], h.seg, "nonwork");
+         return cZone.getOrDefault("accW", 0.) * aw + cZone.getOrDefault("accN", 0.) * an
+                 + cZone.getOrDefault("accN_x_child", 0.) * an * h.child + cZone.getOrDefault("accN_x_age65", 0.) * an * h.age65
+diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocProperties.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocProperties.java
+index c322247..1445915 100644
+--- a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocProperties.java
++++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocProperties.java
+@@ -14,7 +14,12 @@ import java.util.Properties;
+  *   resloc.model                  mstm (default: the inherited MSTM utility scripts) | mnl (the estimated nested model)
+  *   resloc.region.coefficients    input/resloc_region_mnl.csv     (parameter,estimate[,robust_se])
+  *   resloc.dwelling.coefficients  input/resloc_dwelling_mnl.csv   (level,parameter,estimate[,robust_se]); level = zone | dwelling
+- *   resloc.region.attributes      input/resloc_region_attributes.csv  (region,state,school,crime)
++ *   resloc.region.attributes      input/resloc_region_attributes.csv  (region,state,school,crime[,growth])
++ *   resloc.spec                   record (default: the model of record) | respec (2026-11-09: the re-specified model,
++ *                                 ReslocRespecUtility; coefficient files *_respec.csv)
++ *   resloc.region.adjacency       respec: county pairs sharing a boundary (region_a,region_b)
++ *   resloc.respec.accessibility.file  respec: accessibility of the zone part (pattern with {year}; the multimodal logsum of the
++ *                                 estimation); blank = accessibility.logsum.file
+  *   resloc.transit.skim           transit door-to-door peak time (FROM,TO,VALUE csv.gz; >= 999 = no path), as in the estimation
+  *   resloc.acceptance             satisfaction (default: a searching household moves only if the found dwelling is better than its
+  *                                 current one; under mnl compared with V_A + V_B - ln D_zt, otherwise with the satisfaction utility) | none

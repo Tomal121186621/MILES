@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config SYSTEM "http://www.matsim.org/files/dtd/config_v2.dtd">
+<config>
+	<module name="PublicTransitMapping" >
+		<param name="candidateDistanceMultiplier" value="1.2" />
+		<param name="maxLinkCandidateDistance" value="90.0" />
+		<param name="maxTravelCostFactor" value="5.0" />
+		<param name="modesToKeepOnCleanUp" value="car" />
+		<param name="nLinkThreshold" value="6" />
+		<param name="numOfThreads" value="10" />
+		<param name="removeNotUsedStopFacilities" value="true" />
+		<param name="routingWithCandidateDistance" value="true" />
+		<param name="scheduleFreespeedModes" value="artificial,rail,subway" />
+		<param name="travelCostType" value="travelTime" />
+		<param name="inputNetworkFile" value="/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/4_matsim/transit/work/network_2026_clean.xml.gz" />
+		<param name="inputScheduleFile" value="/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/4_matsim/transit/work/schedule_unmapped.xml.gz" />
+		<param name="outputNetworkFile" value="/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/4_matsim/transit/network_2026_pt.xml.gz" />
+		<param name="outputScheduleFile" value="/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Validation_2026/4_matsim/transit/work/transitSchedule_2026_mapped.xml.gz" />
+		<parameterset type="transportModeAssignment" >
+			<param name="networkModes" value="car,bus" />
+			<param name="scheduleMode" value="bus" />
+		</parameterset>
+		<parameterset type="transportModeAssignment" >
+			<param name="networkModes" value="light_rail,tram" />
+			<param name="scheduleMode" value="tram" />
+		</parameterset>
+		<parameterset type="transportModeAssignment" >
+			<param name="networkModes" value="subway" />
+			<param name="scheduleMode" value="subway" />
+		</parameterset>
+		<parameterset type="transportModeAssignment" >
+			<param name="networkModes" value="rail,train" />
+			<param name="scheduleMode" value="rail" />
+		</parameterset>
+		<parameterset type="transportModeAssignment" >
+			<param name="networkModes" value="" />
+			<param name="scheduleMode" value="ferry" />
+		</parameterset>
+	</module>
+</config>

@@ -1,0 +1,45 @@
+column,definition,unit,source
+row_index,row label of the source data frame (episode / pair index),id,estimation code
+const,constant,1,estimation code
+sl_0_05,slack piece 0-0.5 h (not in the final model),hours,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+sl_05_1,slack piece,hours,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+sl_1_2,slack piece,hours,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+sl_2_4,slack piece,hours,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+sl_4_inf,slack piece,hours,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+lnslack,ln slack (not in the final model),ln minutes,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+detour_km,"detour via home: max(0, d(a,h) + d(h,e) - d(a,e)), a / e = zones of the preceding / following episode",km,"car distance skim 2016, intrazonal 0.5 sqrt(area) (00_shared_data/skims/abit_base_2016)"
+lndetour,ln(1 + detour via home),ln km,"car distance skim 2016, intrazonal 0.5 sqrt(area) (00_shared_data/skims/abit_base_2016)"
+dhome_km,"distance from home of the preceding episode d(a,h)",km,"car distance skim 2016, intrazonal 0.5 sqrt(area) (00_shared_data/skims/abit_base_2016)"
+a_work,"preceding episode work (WB, WAHB, PW, SW)",0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+a_school,preceding episode school,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+a_acc,preceding episode accompanying,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+a_shop,preceding episode shopping,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+a_joint,preceding episode joint household,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+e_work,following episode work,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+e_school,following episode school,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+e_acc,following episode accompanying,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+e_shop,following episode shopping,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+e_joint,following episode joint household,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+worker,person type worker,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+stud_k12,K-12 student,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+stud_ps,post-secondary student,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+retiree,retiree,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+toddler,child under 5,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+nep3,3 out-of-home episodes (not in the final model),0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+nep4,4 out-of-home episodes (not in the final model),0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+nep5,5+ out-of-home episodes (not in the final model),0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+am,end of the preceding episode before 9:00,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+pm,end 15:00-19:00,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+ev,end from 19:00,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+jj,both episodes joint,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+jmand,joint episode next to a work or school episode,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+nep,number of out-of-home episodes of the person-day,count,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+female,female,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+lic,driving licence,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+hhsize,household size,persons,survey population (00_shared_data/rts_2017_18/survey_pop)
+kids,household member under 16,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+car0,no car in the household,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+carshort,fewer cars than licensed drivers (at least one car),0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+inc_low,household income below $50k (sum of the members' incomes),0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+inc_high,household income $100k or more,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+y,1 = the person went home between the two episodes,0/1 or alternative,survey

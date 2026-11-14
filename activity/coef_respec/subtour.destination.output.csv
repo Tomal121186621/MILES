@@ -1,0 +1,4 @@
+variable,work,education,recreation,shopping,accompany,other
+calibration,0.0,0.0,0.0,0.0,0.0,0.0
+ALPHA,1.0,1.0,1.0,1.0,1.0,1.0
+BETA,-0.0506,-0.1309,-0.0384,-0.135,-0.135,-0.0384

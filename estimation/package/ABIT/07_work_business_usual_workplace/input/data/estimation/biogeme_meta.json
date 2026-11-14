@@ -1,0 +1,16 @@
+{
+ "half": "estimation",
+ "N": 1539,
+ "parts": 2,
+ "n_cfg_max": 1,
+ "n_cand_max": 13,
+ "zones": 1588,
+ "purposes": [
+  "WORK"
+ ],
+ "form": "stop",
+ "vars": [
+  "imp",
+  "cgt"
+ ]
+}

@@ -1,0 +1,62 @@
+FIPS,County,State,CrimeIndicator
+10001,Kent County,DE,0.548026
+10003,New Castle County,DE,0.486417
+10005,Sussex County,DE,0.457373
+11001,District of Columbia,DC,0.892372
+24001,Allegany County,MD,0.482266
+24003,Anne Arundel County,MD,0.394641
+24005,Baltimore County,MD,0.505347
+24009,Calvert County,MD,0.21783
+24011,Caroline County,MD,0.332835
+24013,Carroll County,MD,0.202371
+24015,Cecil County,MD,0.435221
+24017,Charles County,MD,0.29939
+24019,Dorchester County,MD,0.512887
+24021,Frederick County,MD,0.228498
+24023,Garrett County,MD,0.221841
+24025,Harford County,MD,0.24086
+24027,Howard County,MD,0.297269
+24029,Kent County,MD,0.22363
+24031,Montgomery County,MD,0.25159
+24033,Prince George's County,MD,0.399475
+24035,Queen Anne's County,MD,0.219668
+24037,St. Mary's County,MD,0.308429
+24039,Somerset County,MD,0.351696
+24041,Talbot County,MD,0.319013
+24043,Washington County,MD,0.363668
+24045,Wicomico County,MD,0.513593
+24047,Worcester County,MD,0.578293
+24510,Baltimore City,MD,1.0
+42001,Adams County,PA,0.147773
+42009,Bedford County,PA,0.128646
+42029,Chester County,PA,0.198971
+42051,Fayette County,PA,0.334989
+42055,Franklin County,PA,0.241605
+42057,Fulton County,PA,0.187101
+42071,Lancaster County,PA,0.232589
+42111,Somerset County,PA,0.168144
+42133,York County,PA,0.269962
+51001,Accomack County,VA,0.251495
+51013,Arlington County,VA,0.233782
+51043,Clarke County,VA,0.159243
+51061,Fauquier County,VA,0.152454
+51099,King George County,VA,0.166167
+51107,Loudoun County,VA,0.154941
+51131,Northampton County,VA,0.159862
+51133,Northumberland County,VA,0.15146
+51177,Spotsylvania County,VA,0.219042
+51179,Stafford County,VA,0.221458
+51193,Westmoreland County,VA,0.171615
+51510,Alexandria City,VA,0.295182
+51630,Fredericksburg City,VA,0.602392
+51919,Fairfax County/Fairfax City/Falls Church City,VA,0.21368
+51942,Prince William County/Manassas City/Manassas Park City,VA,0.210088
+51951,Frederick County/Winchester City,VA,0.259949
+54003,Berkeley County,WV,0.26295
+54023,Grant County,WV,0.360578
+54027,Hampshire County,WV,0.360578
+54037,Jefferson County,WV,0.180866
+54057,Mineral County,WV,0.360578
+54065,Morgan County,WV,0.360578
+54077,Preston County,WV,0.360578
+54093,Tucker County,WV,0.360578

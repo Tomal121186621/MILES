@@ -1,0 +1,170 @@
+band,metric,value,n_unweighted,note
+elementary,students_n,1170.0,1170,"survey students (travellers only), unweighted count"
+elementary,school_tour_rate,0.8046,1170,"school arrivals per student per weekday, wtperfin"
+elementary,school_day_prob,0.7776,1170,share of students with a school trip on the travel day
+elementary,no_school_trip_share,0.2224,1170,1 - school_day_prob
+elementary,attend_days_per_week,4.9011,857,"school_freq question, mean weekdays per week; /5 = attendance probability"
+elementary,mode_survey_walk,0.0843,83,"share of school trips, wttrdfin"
+elementary,mode_survey_bike,0.0255,18,"share of school trips, wttrdfin"
+elementary,mode_survey_motorcycle,0.0,0,"share of school trips, wttrdfin"
+elementary,mode_survey_auto_driver,0.0,0,"share of school trips, wttrdfin"
+elementary,mode_survey_auto_passenger,0.539,500,"share of school trips, wttrdfin"
+elementary,mode_survey_school_bus,0.3399,313,"share of school trips, wttrdfin"
+elementary,mode_survey_rail,0.0026,4,"share of school trips, wttrdfin"
+elementary,mode_survey_bus,0.0061,7,"share of school trips, wttrdfin"
+elementary,mode_survey_private_bus,0.0004,1,"share of school trips, wttrdfin"
+elementary,mode_survey_paratransit,0.0,0,"share of school trips, wttrdfin"
+elementary,mode_survey_taxi,0.0,0,"share of school trips, wttrdfin"
+elementary,mode_survey_rideshare,0.0021,2,"share of school trips, wttrdfin"
+elementary,mode_abit_CAR_DRIVER,0.0,0,school bus -> CAR_PASSENGER rule
+elementary,mode_abit_CAR_PASSENGER,0.881,815,school bus -> CAR_PASSENGER rule
+elementary,mode_abit_TRAIN,0.0026,4,school bus -> CAR_PASSENGER rule
+elementary,mode_abit_TRAM_METRO,0.0,0,school bus -> CAR_PASSENGER rule
+elementary,mode_abit_BUS,0.0066,8,school bus -> CAR_PASSENGER rule
+elementary,mode_abit_BIKE,0.0255,18,school bus -> CAR_PASSENGER rule
+elementary,mode_abit_WALK,0.0843,83,school bus -> CAR_PASSENGER rule
+elementary,escort_share_under14,0.5122,934,school trips as auto passenger with another household member on the trip
+elementary,arrival_mean_min,534.9993,934,"arrival at school, min after midnight"
+elementary,arrival_p10_min,450.0,934,
+elementary,arrival_p50_min,515.0,934,
+elementary,arrival_p90_min,570.0,934,
+elementary,school_duration_p50_min,420.0,907,arrival to next departure from school
+elementary,school_duration_mean_min,411.6217,907,
+elementary,dist_mean_km,4.5204,933,"driving distance of school trips, wttrdfin"
+elementary,dist_p50_km,2.4218,933,
+elementary,dist_mean_km_unweighted,4.6595,933,
+middle,students_n,586.0,586,"survey students (travellers only), unweighted count"
+middle,school_tour_rate,0.8739,586,"school arrivals per student per weekday, wtperfin"
+middle,school_day_prob,0.8332,586,share of students with a school trip on the travel day
+middle,no_school_trip_share,0.1668,586,1 - school_day_prob
+middle,attend_days_per_week,4.9778,429,"school_freq question, mean weekdays per week; /5 = attendance probability"
+middle,mode_survey_walk,0.0584,39,"share of school trips, wttrdfin"
+middle,mode_survey_bike,0.003,2,"share of school trips, wttrdfin"
+middle,mode_survey_motorcycle,0.0,0,"share of school trips, wttrdfin"
+middle,mode_survey_auto_driver,0.0,0,"share of school trips, wttrdfin"
+middle,mode_survey_auto_passenger,0.4432,217,"share of school trips, wttrdfin"
+middle,mode_survey_school_bus,0.4619,237,"share of school trips, wttrdfin"
+middle,mode_survey_rail,0.0147,7,"share of school trips, wttrdfin"
+middle,mode_survey_bus,0.0184,10,"share of school trips, wttrdfin"
+middle,mode_survey_private_bus,0.0005,1,"share of school trips, wttrdfin"
+middle,mode_survey_paratransit,0.0,0,"share of school trips, wttrdfin"
+middle,mode_survey_taxi,0.0,0,"share of school trips, wttrdfin"
+middle,mode_survey_rideshare,0.0,0,"share of school trips, wttrdfin"
+middle,mode_abit_CAR_DRIVER,0.0,0,school bus -> CAR_PASSENGER rule
+middle,mode_abit_CAR_PASSENGER,0.9051,454,school bus -> CAR_PASSENGER rule
+middle,mode_abit_TRAIN,0.0147,7,school bus -> CAR_PASSENGER rule
+middle,mode_abit_TRAM_METRO,0.0,0,school bus -> CAR_PASSENGER rule
+middle,mode_abit_BUS,0.0188,11,school bus -> CAR_PASSENGER rule
+middle,mode_abit_BIKE,0.003,2,school bus -> CAR_PASSENGER rule
+middle,mode_abit_WALK,0.0584,39,school bus -> CAR_PASSENGER rule
+middle,escort_share_under14,0.4149,519,school trips as auto passenger with another household member on the trip
+middle,arrival_mean_min,517.4181,519,"arrival at school, min after midnight"
+middle,arrival_p10_min,435.0,519,
+middle,arrival_p50_min,480.0,519,
+middle,arrival_p90_min,555.0,519,
+middle,school_duration_p50_min,425.0,514,arrival to next departure from school
+middle,school_duration_mean_min,411.4724,514,
+middle,dist_mean_km,6.5957,519,"driving distance of school trips, wttrdfin"
+middle,dist_p50_km,3.6379,519,
+middle,dist_mean_km_unweighted,6.5617,519,
+high,students_n,631.0,631,"survey students (travellers only), unweighted count"
+high,school_tour_rate,0.8827,631,"school arrivals per student per weekday, wtperfin"
+high,school_day_prob,0.8414,631,share of students with a school trip on the travel day
+high,no_school_trip_share,0.1586,631,1 - school_day_prob
+high,attend_days_per_week,4.9753,437,"school_freq question, mean weekdays per week; /5 = attendance probability"
+high,mode_survey_walk,0.0559,33,"share of school trips, wttrdfin"
+high,mode_survey_bike,0.0121,4,"share of school trips, wttrdfin"
+high,mode_survey_motorcycle,0.0,0,"share of school trips, wttrdfin"
+high,mode_survey_auto_driver,0.0841,50,"share of school trips, wttrdfin"
+high,mode_survey_auto_passenger,0.3399,200,"share of school trips, wttrdfin"
+high,mode_survey_school_bus,0.4766,231,"share of school trips, wttrdfin"
+high,mode_survey_rail,0.0023,3,"share of school trips, wttrdfin"
+high,mode_survey_bus,0.0274,17,"share of school trips, wttrdfin"
+high,mode_survey_private_bus,0.0013,1,"share of school trips, wttrdfin"
+high,mode_survey_paratransit,0.0,0,"share of school trips, wttrdfin"
+high,mode_survey_taxi,0.0005,1,"share of school trips, wttrdfin"
+high,mode_survey_rideshare,0.0,0,"share of school trips, wttrdfin"
+high,mode_abit_CAR_DRIVER,0.0841,50,school bus -> CAR_PASSENGER rule
+high,mode_abit_CAR_PASSENGER,0.817,432,school bus -> CAR_PASSENGER rule
+high,mode_abit_TRAIN,0.0023,3,school bus -> CAR_PASSENGER rule
+high,mode_abit_TRAM_METRO,0.0,0,school bus -> CAR_PASSENGER rule
+high,mode_abit_BUS,0.0287,18,school bus -> CAR_PASSENGER rule
+high,mode_abit_BIKE,0.0121,4,school bus -> CAR_PASSENGER rule
+high,mode_abit_WALK,0.0559,33,school bus -> CAR_PASSENGER rule
+high,arrival_mean_min,498.484,547,"arrival at school, min after midnight"
+high,arrival_p10_min,425.0,547,
+high,arrival_p50_min,468.0,547,
+high,arrival_p90_min,550.0,547,
+high,school_duration_p50_min,430.0,531,arrival to next departure from school
+high,school_duration_mean_min,429.124,531,
+high,dist_mean_km,7.4195,547,"driving distance of school trips, wttrdfin"
+high,dist_p50_km,4.5995,547,
+high,dist_mean_km_unweighted,7.5077,547,
+postsec,students_n,443.0,443,"survey students (travellers only), unweighted count"
+postsec,school_tour_rate,0.5736,443,"school arrivals per student per weekday, wtperfin"
+postsec,school_day_prob,0.5361,443,share of students with a school trip on the travel day
+postsec,no_school_trip_share,0.4639,443,1 - school_day_prob
+postsec,attend_days_per_week,3.546,315,"school_freq question, mean weekdays per week; /5 = attendance probability"
+postsec,mode_survey_walk,0.0773,26,"share of school trips, wttrdfin"
+postsec,mode_survey_bike,0.0532,8,"share of school trips, wttrdfin"
+postsec,mode_survey_motorcycle,0.0167,2,"share of school trips, wttrdfin"
+postsec,mode_survey_auto_driver,0.4042,94,"share of school trips, wttrdfin"
+postsec,mode_survey_auto_passenger,0.1951,37,"share of school trips, wttrdfin"
+postsec,mode_survey_school_bus,0.0885,18,"share of school trips, wttrdfin"
+postsec,mode_survey_rail,0.0441,25,"share of school trips, wttrdfin"
+postsec,mode_survey_bus,0.0976,22,"share of school trips, wttrdfin"
+postsec,mode_survey_private_bus,0.0133,6,"share of school trips, wttrdfin"
+postsec,mode_survey_paratransit,0.0,0,"share of school trips, wttrdfin"
+postsec,mode_survey_taxi,0.0,0,"share of school trips, wttrdfin"
+postsec,mode_survey_rideshare,0.01,3,"share of school trips, wttrdfin"
+postsec,mode_abit_CAR_DRIVER,0.4209,96,school bus -> CAR_PASSENGER rule
+postsec,mode_abit_CAR_PASSENGER,0.2936,58,school bus -> CAR_PASSENGER rule
+postsec,mode_abit_TRAIN,0.0441,25,school bus -> CAR_PASSENGER rule
+postsec,mode_abit_TRAM_METRO,0.0,0,school bus -> CAR_PASSENGER rule
+postsec,mode_abit_BUS,0.1109,28,school bus -> CAR_PASSENGER rule
+postsec,mode_abit_BIKE,0.0532,8,school bus -> CAR_PASSENGER rule
+postsec,mode_abit_WALK,0.0773,26,school bus -> CAR_PASSENGER rule
+postsec,arrival_mean_min,584.3793,242,"arrival at school, min after midnight"
+postsec,arrival_p10_min,435.0,242,
+postsec,arrival_p50_min,520.0,242,
+postsec,arrival_p90_min,840.0,242,
+postsec,school_duration_p50_min,330.0,232,arrival to next departure from school
+postsec,school_duration_mean_min,328.3824,232,
+postsec,dist_mean_km,10.9767,242,"driving distance of school trips, wttrdfin"
+postsec,dist_p50_km,5.8306,242,
+postsec,dist_mean_km_unweighted,11.095,242,
+all,students_n,2830.0,2830,"survey students (travellers only), unweighted count"
+all,school_tour_rate,0.8076,2830,"school arrivals per student per weekday, wtperfin"
+all,school_day_prob,0.7733,2830,share of students with a school trip on the travel day
+all,no_school_trip_share,0.2267,2830,1 - school_day_prob
+all,attend_days_per_week,4.7711,2038,"school_freq question, mean weekdays per week; /5 = attendance probability"
+all,mode_survey_walk,0.071,181,"share of school trips, wttrdfin"
+all,mode_survey_bike,0.0196,32,"share of school trips, wttrdfin"
+all,mode_survey_motorcycle,0.0015,2,"share of school trips, wttrdfin"
+all,mode_survey_auto_driver,0.0556,144,"share of school trips, wttrdfin"
+all,mode_survey_auto_passenger,0.4394,954,"share of school trips, wttrdfin"
+all,mode_survey_school_bus,0.3781,799,"share of school trips, wttrdfin"
+all,mode_survey_rail,0.009,39,"share of school trips, wttrdfin"
+all,mode_survey_bus,0.0221,56,"share of school trips, wttrdfin"
+all,mode_survey_private_bus,0.0018,9,"share of school trips, wttrdfin"
+all,mode_survey_paratransit,0.0,0,"share of school trips, wttrdfin"
+all,mode_survey_taxi,0.0001,1,"share of school trips, wttrdfin"
+all,mode_survey_rideshare,0.0018,5,"share of school trips, wttrdfin"
+all,mode_abit_CAR_DRIVER,0.0571,146,school bus -> CAR_PASSENGER rule
+all,mode_abit_CAR_PASSENGER,0.8194,1759,school bus -> CAR_PASSENGER rule
+all,mode_abit_TRAIN,0.009,39,school bus -> CAR_PASSENGER rule
+all,mode_abit_TRAM_METRO,0.0,0,school bus -> CAR_PASSENGER rule
+all,mode_abit_BUS,0.0239,65,school bus -> CAR_PASSENGER rule
+all,mode_abit_BIKE,0.0196,32,school bus -> CAR_PASSENGER rule
+all,mode_abit_WALK,0.071,181,school bus -> CAR_PASSENGER rule
+all,arrival_mean_min,526.6536,2242,"arrival at school, min after midnight"
+all,arrival_p10_min,435.0,2242,
+all,arrival_p50_min,490.0,2242,
+all,arrival_p90_min,590.0,2242,
+all,school_duration_p50_min,421.0,2184,arrival to next departure from school
+all,school_duration_mean_min,408.4619,2184,
+all,dist_mean_km,6.2624,2241,"driving distance of school trips, wttrdfin"
+all,dist_p50_km,3.3217,2241,
+all,dist_mean_km_unweighted,6.4902,2241,
+all,dropoff_trips_per_adult,0.3339,17451,d_activity 16 trips per adult 18+ per travel day (travellers only)
+all,escort_share_under14,0.4785,1453,school trips of students under 14 as auto passenger with a household member

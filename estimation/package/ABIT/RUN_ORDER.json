@@ -1,0 +1,26 @@
+{
+  "note": "Every folder ships its estimation data, so each model can be run on its own in any order. The order below is the order of dependence if data are rebuilt or coefficients change.",
+  "order": [
+    {"folder": "00_tasha_distributions", "reason": "not a choice model: rebuilds the TASHA frequency, start-time, duration and joint distributions from the survey; independent of the others"},
+    {"folder": "14_tour_mode_work", "reason": "tour mode models first: their coefficients define the mode-choice logsum used by the stop models (00_shared_data/mode_choice_logsums/m08_coef.csv)"},
+    {"folder": "15_tour_mode_school", "reason": "tour mode, school (coefficients also in m09_coef.csv); no published location model uses its logsum"},
+    {"folder": "16_tour_mode_shopping", "reason": "tour mode, shopping: logsum of the shopping stop model"},
+    {"folder": "17_tour_mode_other", "reason": "tour mode, other: logsum of the recreation, accompanying and other stop models"},
+    {"folder": "18_tour_mode_joint_shopping", "reason": "joint household shopping tours; no other model depends on it"},
+    {"folder": "19_tour_mode_joint_other", "reason": "joint household recreation and other tours; no other model depends on it"},
+    {"folder": "01_primary_destination_pooled", "reason": "primary destination of discretionary tours; uses car generalised time, not the logsum"},
+    {"folder": "02_stop_shopping", "reason": "stop location; reads the logsum of the tour mode models (run after 14-17 if their coefficients change, rebuilding input data)"},
+    {"folder": "03_stop_recreation", "reason": "stop location; logsum of the other-tour mode model"},
+    {"folder": "04_stop_accompanying", "reason": "stop location; logsum of the other-tour mode model"},
+    {"folder": "05_stop_other", "reason": "stop location; logsum of the other-tour mode model"},
+    {"folder": "06_outing_first_stop_destination", "reason": "location of the first stop of an outing from the workplace"},
+    {"folder": "07_work_business_usual_workplace", "reason": "work business location, workers with a usual workplace"},
+    {"folder": "08_work_business_other_persons", "reason": "work business location, other persons"},
+    {"folder": "09_work_trips_home_workers", "reason": "work trips of at-home workers"},
+    {"folder": "10_school_daycare_without_record_pooled", "reason": "school without a record and daycare, pooled"},
+    {"folder": "11_outing_generation", "reason": "outing during a work episode (binary logit)"},
+    {"folder": "12_outing_mode", "reason": "mode of the outing (binary logit)"},
+    {"folder": "13_return_home", "reason": "return home between episodes (binary logit)"},
+    {"folder": "20_transit_leg_mode", "reason": "mode of the legs of transit tours; not in the article"}
+  ]
+}

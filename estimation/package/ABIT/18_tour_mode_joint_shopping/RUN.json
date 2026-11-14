@@ -1,0 +1,600 @@
+{
+ "model": "Tour mode choice, joint shopping tours (article table est_mc_shopping_joint)",
+ "purpose": "Re-estimate the joint shopping tour mode-choice model with Biogeme and check it against the article.",
+ "depends_on": [],
+ "data_sources": [
+  {
+   "id": "rts_2017_18",
+   "name": "2017/18 Regional Travel Survey (Baltimore and Washington regions), household travel survey, weekday travel day",
+   "provider": "Baltimore Metropolitan Council (BMC) and the National Capital Region Transportation Planning Board (TPB) at the Metropolitan Washington Council of Governments (MWCOG)",
+   "url": "https://www.baltometro.org/ and https://www.mwcog.org/ (verify: no download page is documented in the project; the data are released on request)",
+   "how": "Request the 2017/18 Regional Travel Survey public-use files from BMC (Baltimore region) or MWCOG/TPB (Washington region). The project used one flat file in which every trip row carries its household and person fields (household, person, trip and vehicle tables joined): RTS_raw_flat_data.csv, with the codebook RTS_codebook_data_dictionary.xlsx (sheets Household, Person, Trip, Vehicle). The two cleaned files rts_trips_clean.csv (163,290 trips, deduplicated) and rts_tours.csv (57,627 home-based tours) were made by 01_clean_rts.py of the tour-based MITO project; that script is not on this machine, so these two files are shipped and cannot be rebuilt here. Survey weights: wthhfin, wtperfin, wttrdfin. If you receive separate household / person / trip / vehicle tables instead, join them on household_id, person_id (persno) and tripid to the flat layout of the codebook.",
+   "place_in": "00_shared_data/raw/rts_2017_18 (the project's copies are provided in 00_shared_data/rts_2017_18/raw as .csv.gz)",
+   "files": [
+    "RTS_raw_flat_data.csv",
+    "RTS_codebook_data_dictionary.xlsx",
+    "rts_trips_clean.csv",
+    "rts_tours.csv"
+   ],
+   "notes": "Status: provided (copies). Licence: survey data of the MPOs; do not redistribute without their agreement.",
+   "status": "verify (no public URL)"
+  },
+  {
+   "id": "mstm_skims_2016",
+   "name": "Maryland Statewide Transportation Model (MSTM) 2016 skims, 1,588 SMZ/RMZ zones",
+   "provider": "Maryland Department of Transportation (MDOT SHA), via the project's ABIT Maryland set-up (ABIT/input/mito_los/skims)",
+   "url": "https://www.roads.maryland.gov/ (verify: MSTM data are provided by MDOT on request; no download page is documented)",
+   "how": "Obtain the MSTM 2016 skims in OMX format (matrix mat1, lookups origins / destinations): traveltime_auto.omx (AM-peak car time, min), distance_auto.omx (car distance, m), bus_tt.omx (bus time, min; 1000 = no path, 5 intrazonal), rail_tt00.omx (rail time, min; 0 = no rail path). convert_mstm_skims.py turns them into the csv.gz files the models read.",
+   "place_in": "00_shared_data/raw/mstm_skims_2016",
+   "files": [
+    "traveltime_auto.omx",
+    "distance_auto.omx",
+    "bus_tt.omx",
+    "rail_tt00.omx"
+   ],
+   "notes": "Status: the converted csv.gz are provided in 00_shared_data/skims/abit_base_2016 (bus_tt and rail_tt00 there are the 2016 MSTM transit skims; the location models read the 2024 door-to-door transit skims instead).",
+   "status": "verify (MDOT-provided)"
+  },
+  {
+   "id": "mstm_zone_system",
+   "name": "MSTM zone system: SMZ/RMZ polygons, zone table, ABIT zone attributes",
+   "provider": "MDOT (MSTM), via ABIT/input/mito_los/Zonal and 2_silo/input/zoneSystem.csv; ABIT/input/maryland/zone_attributes.csv (ABIT Maryland set-up)",
+   "url": "https://www.roads.maryland.gov/ (verify: provided with the MSTM)",
+   "how": "Zone polygons SMZ_RMZ_02152011inMSTM_EPSG26918.shp (+ .dbf .shx .prj; field id / SMZRMZ, 1,588 zones), zoneSystem.csv (ZoneId, COUNTYFIPS, ...), zone_attributes.csv (id, centroid x/y EPSG:26985, countyfips, region types, bbsr, area_km2; built for ABIT from mstm_26985.shp and zoneSystem.csv, see 3_abit/coef_respec/PROVENANCE.md, script not in the project).",
+   "place_in": "00_shared_data/raw/mstm_zone_system",
+   "files": [
+    "SMZ_RMZ_02152011inMSTM_EPSG26918.shp/.dbf/.shx/.prj",
+    "zoneSystem.csv",
+    "zone_attributes.csv"
+   ],
+   "notes": "zone_attributes.csv is provided in 00_shared_data/zones; the shapefile is needed only to rebuild tract_zone.csv, the tract-to-zone overlay, the TAZ crosswalks and the transit skims.",
+   "status": "verify (MDOT-provided)"
+  },
+  {
+   "id": "census_gazetteer_2010",
+   "name": "Census 2010 Gazetteer file of census tracts (internal points)",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html (verify: the project copy I695_pricing/data/census/Gaz_tracts_national.txt has no download log)",
+   "how": "2010 Gazetteer, Census Tracts, national file Gaz_tracts_national.txt (GEOID, INTPTLAT, INTPTLONG). Used by survey_population.tract_zone: zone of each tract's internal point.",
+   "place_in": "00_shared_data/raw/census_gazetteer_2010",
+   "files": [
+    "Gaz_tracts_national.txt"
+   ],
+   "notes": "tract_zone.csv is provided (00_shared_data/rts_2017_18/survey_pop).",
+   "status": "verify"
+  },
+  {
+   "id": "gtfs_mta",
+   "name": "MTA Maryland GTFS static feeds: local bus, light rail, metro, MARC, commuter bus",
+   "provider": "Maryland Transit Administration",
+   "url": "https://feeds.mta.maryland.gov/gtfs/<feed> for feed = local-bus, light-rail, metro, marc, commuter-bus (listed on https://www.mta.maryland.gov/developer-resources)",
+   "how": "Run 00_shared_prep/code/fetch_gtfs.sh (curl, one zip per feed, download log). The project used the feeds of 2026-10-21 (local bus valid 2026-08-21 to 2027-02-06).",
+   "place_in": "00_shared_data/raw/gtfs/mta_gtfs",
+   "files": [
+    "mta_local-bus.zip",
+    "mta_light-rail.zip",
+    "mta_metro.zip",
+    "mta_marc.zip",
+    "mta_commuter-bus.zip"
+   ],
+   "notes": "Feeds change over time; a later download gives a different schedule (the project's service day is Wednesday 2026-10-21).",
+   "status": "documented (verified 2026-10-21)"
+  },
+  {
+   "id": "gtfs_regional",
+   "name": "GTFS of the 13 regional operators (with the 5 MTA feeds the 18 feeds merged by merge_gtfs_full.py)",
+   "provider": "each operator; Mobility Database mirror",
+   "url": "charm_city_circulator: https://transportation.baltimorecity.gov/files/cccgtfs824zip (mirror https://files.mobilitydatabase.org/tld-288_1/latest.zip ; https://files.mobilitydatabase.org/ntd-30201/latest.zip ; https://files.mobilitydatabase.org/mdb-493/latest.zip); rta_central_maryland: http://data.trilliumtransit.com/gtfs/centralmarylandrta-md-us/centralmarylandrta-md-us.zip (mirror https://files.mobilitydatabase.org/mdb-489/latest.zip); anne_arundel_transit: https://www.aacounty.org/gtfs (mirror https://files.mobilitydatabase.org/ntd-30129/latest.zip); annapolis_transit: https://www.arcgis.com/sharing/rest/content/items/c307923d57ab4871aff79491b4a1bfd3/data (mirror https://files.mobilitydatabase.org/mdb-2285/latest.zip); harford_transit_link: https://files.mobilitydatabase.org/mdb-501/latest.zip (mirror https://github.com/mobilityequity/maryland-local-gtfs/raw/master/Harford_GTFS.zip); carroll_transit: https://files.mobilitydatabase.org/mdb-500/latest.zip (mirror https://github.com/mobilityequity/maryland-local-gtfs/raw/master/Carroll_GTFS.zip); wmata_rail: https://api.wmata.com/gtfs/rail-gtfs-static.zip (API key required) (mirror https://files.mobilitydatabase.org/mdb-1847/latest.zip); wmata_bus: https://api.wmata.com/gtfs/bus-gtfs-static.zip (API key required) (mirror https://files.mobilitydatabase.org/mdb-1846/latest.zip); ride_on: https://www.montgomerycountymd.gov/DOT-Transit/Resources/Files/GTFS/RideOnGTFS.zip (mirror https://files.mobilitydatabase.org/mdb-488/latest.zip); thebus_pg: https://data.trilliumtransit.com/gtfs/princegeorgescounty-md-us/princegeorgescounty-md-us.zip (mirror https://files.mobilitydatabase.org/mdb-477/latest.zip); amtrak: https://content.amtrak.com/content/gtfs/GTFS.zip (mirror https://files.mobilitydatabase.org/mdb-11/latest.zip); harbor_connector: http://data.trilliumtransit.com/gtfs/harborconnector-md-us/harborconnector-md-us.zip (mirror https://files.mobilitydatabase.org/mdb-618/latest.zip); towson_loop: https://passio3.com/towson/passioTransit/gtfs/google_transit.zip (mirror https://files.mobilitydatabase.org/mdb-1784/latest.zip)",
+   "how": "Run 00_shared_prep/code/fetch_gtfs_regional.sh (official URL first, then the Mobility Database mirror; download log with sha256). Catalog: https://files.mobilitydatabase.org/feeds_v2.csv. The script also fetches the Bethesda Circulator (https://files.mobilitydatabase.org/mdb-231/latest.zip), which merge_gtfs_full.py does not use.",
+   "place_in": "00_shared_data/raw/gtfs/<agency>",
+   "files": [
+    "charm_city_circulator/charm_city_circulator_gtfs.zip",
+    "rta_central_maryland/rta_central_maryland_gtfs.zip",
+    "anne_arundel_transit/anne_arundel_transit_gtfs.zip",
+    "annapolis_transit/annapolis_transit_gtfs.zip",
+    "harford_transit_link/harford_transit_link_gtfs.zip",
+    "carroll_transit/carroll_transit_gtfs.zip",
+    "wmata_rail/wmata_rail_gtfs.zip",
+    "wmata_bus/wmata_bus_gtfs.zip",
+    "ride_on/ride_on_gtfs.zip",
+    "thebus_pg/thebus_pg_gtfs.zip",
+    "amtrak/amtrak_gtfs.zip",
+    "harbor_connector/harbor_connector_gtfs.zip",
+    "towson_loop/towson_loop_gtfs.zip"
+   ],
+   "notes": "Downloads of 2026-10-22; stale feeds (Charm City Circulator, Annapolis, Anne Arundel, Harford, Carroll) are used on their last Wednesday with service (merge_gtfs_full.py). WMATA official URLs need an API key; the mirror was used.",
+   "status": "documented (verified 2026-10-22)"
+  },
+  {
+   "id": "osm_maryland",
+   "name": "OpenStreetMap Maryland extract",
+   "provider": "Geofabrik",
+   "url": "https://download.geofabrik.de/north-america/us/maryland.html (verify: the project documents the file maryland-latest.osm.pbf, replication timestamp 2026-06-11, but not the URL)",
+   "how": "Download maryland-latest.osm.pbf. Used only indirectly: it is the source of the MATSim network (4_matsim/network: pt2matsim OSM converter, build_networks.py), on which the transit schedule is mapped and the period car times are measured.",
+   "place_in": "00_shared_data/raw/osm",
+   "files": [
+    "maryland-latest.osm.pbf"
+   ],
+   "notes": "Network building is the MATSim stage of the chain, outside this package.",
+   "status": "verify"
+  },
+  {
+   "id": "matsim_network_2024",
+   "name": "MATSim 2024 network with transit links and the regional transit schedule",
+   "provider": "this project: 4_matsim/network (build_networks.py) and 4_matsim/transit (build_transit.sh: pt2matsim 24.4 Gtfs2TransitSchedule + PublicTransitMapper)",
+   "url": "not downloadable: project product (pt2matsim: https://github.com/matsim-org/pt2matsim, verify)",
+   "how": "Copy 4_matsim/transit/network_2024_pt.xml.gz (and, for the door-to-door skims, the mapped schedule 4_matsim/transit/transitSchedule_2024* and vehicles) of the project.",
+   "place_in": "00_shared_data/raw/matsim_network_2024",
+   "files": [
+    "network_2024_pt.xml.gz",
+    "transitSchedule_2024.xml.gz",
+    "transitVehicles_2024.xml.gz"
+   ],
+   "notes": "Needed only to rebuild the transit skims (Java).",
+   "status": "project product"
+  },
+  {
+   "id": "matsim_resident_run_2023",
+   "name": "MATSim resident-only assignment of the chain (events and network), source of the car time profile by period",
+   "provider": "this project: Updated MATSim/I695_pricing_runs/FIT/R6 (2023 network, Key Bridge open, 20 iterations)",
+   "url": "not downloadable: project product",
+   "how": "Copy output_events.xml.gz and output_network.xml.gz of that run.",
+   "place_in": "00_shared_data/raw/matsim_resident_run_2023",
+   "files": [
+    "output_events.xml.gz",
+    "output_network.xml.gz"
+   ],
+   "notes": "Needed only to rebuild skims/mode_choice_periods/car_time_<P>.csv.gz (car_period_skims.py).",
+   "status": "project product"
+  },
+  {
+   "id": "matsim_tools",
+   "name": "MATSim 2024.0 run jar of the project and compiled TransitSkim classes",
+   "provider": "this project: Updated MATSim/code/matsim-run (baltimore-matsim-1.0.jar); pipeline/java/TransitSkim.java",
+   "url": "not downloadable: project build (MATSim: https://www.matsim.org, verify)",
+   "how": "Copy Updated MATSim/code/matsim-run/target/baltimore-matsim-1.0.jar; compile TransitSkim.java (copy in 00_shared_prep/code) against it with javac 21 into classes/ (transit_skim.py does this) and tsclasses/.",
+   "place_in": "00_shared_data/raw/matsim_tools",
+   "files": [
+    "baltimore-matsim-1.0.jar",
+    "classes/",
+    "tsclasses/"
+   ],
+   "notes": "Java 21 required.",
+   "status": "project product"
+  },
+  {
+   "id": "parking_paid_share",
+   "name": "Paid-parking share of car-driver tours by destination area",
+   "provider": "derived from the RTS (field park_pay of RTS_raw_flat_data.csv): prep_tours.py",
+   "url": "no download (survey-derived)",
+   "how": "prep_tours.py: share of estimation-half car-driver tours whose driver paid for parking, weighted, by destination area class (Baltimore City CBD / rest, DC CBD / rest, other CBD, rest).",
+   "place_in": "00_shared_data/mode_choice_inputs/parking_paid_share.csv (provided)",
+   "files": [
+    "parking_paid_share.csv"
+   ],
+   "notes": "Validation_2026/data/raw/parking/colliers_parking_rate_survey_2012.pdf is in the project but not used by these models.",
+   "status": "derived"
+  },
+  {
+   "id": "aaa_driving_costs_2017",
+   "name": "AAA 'Your Driving Costs' 2017: operating cost of the average new vehicle at 15,000 mi/yr",
+   "provider": "AAA",
+   "url": "https://newsroom.aaa.com/auto/your-driving-costs/ (verify: the project cites the 2017 edition, 0.179 $/mile = fuel 10.0 + maintenance and repair 7.9 cents, without a URL)",
+   "how": "One number, coded in mc_common.py (OPC_KM = 0.179 / 1.60934 $/km).",
+   "place_in": "none (constant in the code)",
+   "files": [],
+   "notes": "Car-driver cost of the mode models and of the logsums.",
+   "status": "verify"
+  },
+  {
+   "id": "transit_fares",
+   "name": "Transit fares 2017/18: MTA $1.80, Metrobus $2.00, WMATA Metrorail by distance and period, MARC by distance",
+   "provider": "MTA Maryland, WMATA",
+   "url": "https://www.mta.maryland.gov/ and https://www.wmata.com/ (verify: fare_rule in mc_common.py has no source URL)",
+   "how": "Coded in mc_common.fare_rule.",
+   "place_in": "none (rule in the code)",
+   "files": [],
+   "notes": "",
+   "status": "verify"
+  }
+ ],
+ "steps": [
+  {
+   "step": 1,
+   "shared_step_id": "S00",
+   "what": "shared preparation S00: Download / request the raw data (DATA_SOURCES.json) into 00_shared_data/raw/<folder> (one README per folder says what goes there)",
+   "cwd": "../00_shared_prep/code",
+   "command": "sh fetch_gtfs.sh && sh fetch_gtfs_regional.sh   # the GTFS feeds; the other sources are manual downloads or requests",
+   "reads": [
+    "DATA_SOURCES.json"
+   ],
+   "creates": [
+    "00_shared_data/raw/*"
+   ],
+   "minutes": 30,
+   "memory_gb": 0.1,
+   "provided": {
+    "provided": false,
+    "note": "raw data are not shipped (except the survey files in 00_shared_data/rts_2017_18/raw)"
+   },
+   "python": "sh"
+  },
+  {
+   "step": 2,
+   "shared_step_id": "S01",
+   "what": "shared preparation S01: Survey cleaning: rts_trips_clean.csv and rts_tours.csv from the RTS flat file (01_clean_rts.py of the tour-based MITO project)",
+   "cwd": "../00_shared_prep/code",
+   "command": "none: the cleaning script is not on this machine; use the provided files",
+   "reads": [
+    "RTS_raw_flat_data.csv"
+   ],
+   "creates": [
+    "00_shared_data/rts_2017_18/raw/rts_trips_clean.csv.gz",
+    "00_shared_data/rts_2017_18/raw/rts_tours.csv.gz"
+   ],
+   "minutes": null,
+   "memory_gb": null,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/raw"
+   },
+   "python": "-"
+  },
+  {
+   "step": 3,
+   "shared_step_id": "S02",
+   "what": "shared preparation S02: Estimation / hold-out split of the survey households (seed 2026, stratified by county x household size)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python make_rts_split.py",
+   "reads": [
+    "00_shared_data/rts_2017_18/raw/RTS_raw_flat_data.csv.gz"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/split/rts_split.csv"
+   ],
+   "minutes": 0.1,
+   "memory_gb": 1.6,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/split/rts_split.csv",
+    "verified": "rebuilt identical (2026-11-13)"
+   },
+   "python": "biogeme venv"
+  },
+  {
+   "step": 4,
+   "shared_step_id": "S03",
+   "what": "shared preparation S03: Tract internal point -> model zone (tract_zone.csv) and persons per zone in 2016 (zone_population_2016.csv)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 build_survey_population.py --rebuild-zone-files   # also runs S04; needs geopandas (project Python)",
+   "reads": [
+    "00_shared_data/raw/census_gazetteer_2010/Gaz_tracts_national.txt",
+    "00_shared_data/raw/mstm_zone_system/SMZ_RMZ_02152011inMSTM_EPSG26918.shp",
+    "00_shared_data/raw/synthetic_population_2016/pp_2016.csv",
+    "00_shared_data/raw/synthetic_population_2016/dd_2016.csv"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/survey_pop/tract_zone.csv",
+    "00_shared_data/rebuilt/rts_2017_18/survey_pop/zone_population_2016.csv"
+   ],
+   "minutes": 0.2,
+   "memory_gb": 1.0,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/survey_pop/tract_zone.csv, 00_shared_data/zones/zone_population_2016.csv",
+    "verified": "rebuilt identical"
+   },
+   "python": "project python3 (geopandas)"
+  },
+  {
+   "step": 5,
+   "shared_step_id": "S04",
+   "what": "shared preparation S04: Survey population of both halves in the ABIT input format (households, persons, dwellings, person map, workplaces)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_survey_population.py   # uses the provided tract_zone.csv / zone_population_2016.csv; add --rebuild-zone-files for S03",
+   "reads": [
+    "00_shared_data/rts_2017_18/raw/RTS_raw_flat_data.csv.gz",
+    "00_shared_data/rts_2017_18/split/rts_split.csv",
+    "00_shared_data/zones/schools_2016.csv",
+    "tract_zone.csv"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/survey_pop/<half>/{hh,pp,dd,persons_map,workplace_reassign,build_log}.csv"
+   ],
+   "minutes": 0.3,
+   "memory_gb": 1.7,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/survey_pop",
+    "verified": "rebuilt identical"
+   },
+   "python": "biogeme venv"
+  },
+  {
+   "step": 6,
+   "shared_step_id": "S05",
+   "what": "shared preparation S05: Typed survey episodes of both halves (TASHA activity types, person segments, zones of the trip ends)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_episodes.py",
+   "reads": [
+    "00_shared_data/rts_2017_18/raw/*.csv.gz",
+    "00_shared_data/rts_2017_18/survey_pop",
+    "split"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/rts_2017_18/episodes/episodes_<half>.parquet"
+   ],
+   "minutes": 0.2,
+   "memory_gb": 1.7,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/rts_2017_18/episodes",
+    "verified": "rebuilt identical"
+   },
+   "python": "biogeme venv"
+  },
+  {
+   "step": 7,
+   "shared_step_id": "S06",
+   "what": "shared preparation S06: MSTM 2016 skims OMX -> csv.gz (car time, car distance, MSTM bus and rail time)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python convert_mstm_skims.py",
+   "reads": [
+    "00_shared_data/raw/mstm_skims_2016/*.omx"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/skims/abit_base_2016/{traveltime_auto,distance_auto,bus_tt,rail_tt00}.csv.gz"
+   ],
+   "minutes": 0.6,
+   "memory_gb": 0.4,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/skims/abit_base_2016",
+    "verified": "rebuilt identical (distance within 1e-4 m: 4-decimal rounding; compare with --tol 1e-4)"
+   },
+   "python": "biogeme venv"
+  },
+  {
+   "step": 8,
+   "shared_step_id": "S07",
+   "what": "shared preparation S07: Merge the 18 GTFS feeds (service day Wednesday 2026-10-21, every stop kept) for the transit period skims",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 merge_gtfs_full.py ../../00_shared_data/raw/gtfs <network_2024_pt.xml.gz> ../../00_shared_data/rebuilt/gtfs_full   # needs pyproj; the raw dir layout is mta_gtfs/ + one folder per agency",
+   "reads": [
+    "00_shared_data/raw/gtfs/*",
+    "00_shared_data/raw/matsim_network_2024/network_2024_pt.xml.gz"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/gtfs_full/*.txt",
+    "manifest.json"
+   ],
+   "minutes": 5,
+   "memory_gb": 3,
+   "provided": {
+    "provided": false,
+    "note": "not shipped; the skims built from it are"
+   },
+   "python": "project python3"
+  },
+  {
+   "step": 9,
+   "shared_step_id": "S08",
+   "what": "shared preparation S08: GTFS -> unmapped MATSim schedule (pt2matsim 24.4 Gtfs2TransitSchedule, date 20261021, EPSG:26985)",
+   "cwd": "../00_shared_prep/code",
+   "command": "java -Xmx8g -cp pt2matsim-24.4-shaded.jar org.matsim.pt2matsim.run.Gtfs2TransitSchedule ../../00_shared_data/rebuilt/gtfs_full/ 20261021 EPSG:26985 ../../00_shared_data/rebuilt/gtfs_full/schedule_unmapped.xml.gz ../../00_shared_data/rebuilt/gtfs_full/vehicles.xml.gz   # as 4_matsim/transit/build_transit.sh (not run in this package)",
+   "reads": [
+    "00_shared_data/rebuilt/gtfs_full"
+   ],
+   "creates": [
+    "schedule_unmapped.xml.gz",
+    "vehicles.xml.gz"
+   ],
+   "minutes": 10,
+   "memory_gb": 8,
+   "provided": {
+    "provided": false
+   },
+   "python": "java 21"
+  },
+  {
+   "step": 10,
+   "shared_step_id": "S09",
+   "what": "shared preparation S09: Transit level of service by period (AM, MD, PM, NT) and access (walk, drive): SwissRailRaptor (TransitSkim.java)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 transit_period_skims.py --periods AM,MD,PM,NT --access walk,drive --threads 6   # Java 21 + MATSim jar (raw/matsim_tools)",
+   "reads": [
+    "schedule_unmapped.xml.gz",
+    "00_shared_data/raw/matsim_network_2024/network_2024_pt.xml.gz",
+    "00_shared_data/skims/transit_2024_door_to_door/centroids.csv"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/skims/mode_choice_periods/raptor_<walk|drive>_<P>.csv.gz"
+   ],
+   "minutes": 480,
+   "memory_gb": 6,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/skims/mode_choice_periods/raptor_*.csv.gz"
+   },
+   "python": "project python3 + java 21"
+  },
+  {
+   "step": 11,
+   "shared_step_id": "S10",
+   "what": "shared preparation S10: Car travel time by period: AM-peak MSTM skim x MATSim time profile of the period (clip 0.5-1.5)",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 car_period_skims.py ../../00_shared_data/raw/matsim_resident_run_2023/output_events.xml.gz ../../00_shared_data/raw/matsim_resident_run_2023/output_network.xml.gz",
+   "reads": [
+    "00_shared_data/raw/matsim_resident_run_2023/*",
+    "00_shared_data/skims/abit_base_2016/traveltime_auto.csv.gz"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/skims/mode_choice_periods/car_time_<P>.csv.gz",
+    "car_period_stats.json"
+   ],
+   "minutes": 60,
+   "memory_gb": 8,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/skims/mode_choice_periods/car_time_*.csv.gz"
+   },
+   "python": "project python3 (geopandas)"
+  },
+  {
+   "step": 12,
+   "shared_step_id": "S11",
+   "what": "shared preparation S11: 2024 AM-peak door-to-door transit skims (walk access 1,600 m; all operators and bus only): transit_peak_time, bus_tt, rail_tt00",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 python3 transit_skim.py ../../00_shared_data/raw/matsim_network_2024/network_2024_pt.xml.gz ../../00_shared_data/raw/matsim_network_2024/transitSchedule_2024.xml.gz ../../00_shared_data/raw/matsim_network_2024/transitVehicles_2024.xml.gz ../../00_shared_data/rebuilt/skims/transit_2024_door_to_door --peak 7 9 --step 15 --radius 1600 --threads 6   # Java 21 + MATSim jar",
+   "reads": [
+    "00_shared_data/raw/matsim_network_2024/*",
+    "00_shared_data/raw/mstm_zone_system/*",
+    "00_shared_data/raw/matsim_tools/*"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/skims/transit_2024_door_to_door/{transit_peak_time,bus_tt,rail_tt00,transit_peak_time_ivtwait,raptor_pairs}.csv.gz",
+    "centroids.csv",
+    "transit_skim_stats.json"
+   ],
+   "minutes": 2,
+   "memory_gb": 6,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/skims/transit_2024_door_to_door",
+    "note": "the project run (pipeline/test/skims/transit_2024/.done.json, 2026-10-22, 90 s) read 4_matsim/transit/{network_2024_pt,transitSchedule_2024,transitVehicles_2024}.xml.gz as of 2026-10-22 15:45; check the sha256 in that marker if you copy them later"
+   },
+   "python": "project python3 (geopandas) + java 21"
+  },
+  {
+   "step": 13,
+   "shared_step_id": "S13",
+   "what": "shared preparation S13: Zone table of the location models (population, jobs by type, school enrolment, area dummies, retail density, land-use mix) and the jobs extract",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_zone_tables.py --jobs-from-raw",
+   "reads": [
+    "00_shared_data/raw/synthetic_population_2016/jj_2016.csv",
+    "00_shared_data/zones/{zone_attributes.csv,zone_population_2016.csv,schools_2016.csv}"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/zones/jobs_2016_zone_type.parquet",
+    "00_shared_data/rebuilt/zones/zones_model_attributes.csv"
+   ],
+   "minutes": 0.5,
+   "memory_gb": 2.5,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/zones",
+    "verified": "rebuilt identical"
+   },
+   "python": "biogeme venv"
+  },
+  {
+   "step": 14,
+   "shared_step_id": "S16",
+   "what": "shared preparation S16: Home-based survey tours with level of service, and the paid-parking share by destination area",
+   "cwd": "../00_shared_prep/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python prep_tours.py",
+   "reads": [
+    "episodes",
+    "survey_pop",
+    "00_shared_data/skims/*",
+    "00_shared_data/rts_2017_18/raw/RTS_raw_flat_data.csv.gz"
+   ],
+   "creates": [
+    "00_shared_data/rebuilt/mode_choice_work/tours_<half>.parquet",
+    "00_shared_data/rebuilt/mode_choice_inputs/parking_paid_share.csv",
+    "tour_build_<half>.csv"
+   ],
+   "minutes": 1,
+   "memory_gb": 2.7,
+   "provided": {
+    "provided": true,
+    "path": "00_shared_data/mode_choice_inputs/parking_paid_share.csv; tours: 14-19 input/data/raw/tours_<half>.parquet",
+    "verified": "rebuilt identical"
+   },
+   "python": "biogeme venv"
+  },
+  {
+   "step": 15,
+   "what": "optional (data already provided in input/data/estimation and input/data/holdout): rebuild the estimation tables from the raw tour files",
+   "cwd": "input/code",
+   "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_estimation_tables.py",
+   "creates": [
+    "input/data/estimation/tours.parquet",
+    "input/data/holdout/tours.parquet"
+   ],
+   "minutes": 2,
+   "memory_gb": 1.5,
+   "provided": {
+    "provided": true,
+    "path": "input/data/estimation, input/data/holdout"
+   }
+  },
+  {
+   "step": 16,
+   "what": "input_check: compare your rebuilt estimation data with the provided data (row counts, columns, column sums, max abs difference; Biogeme parts by column statistics)",
+   "cwd": ".",
+   "command": "~/.venvs/biogeme/bin/python input/code/check_against_provided.py",
+   "reads": [
+    "input/data/estimation",
+    "input/data/holdout",
+    "input/data/provided_reference"
+   ],
+   "creates": [],
+   "minutes": 1,
+   "memory_gb": 2
+  },
+  {
+   "step": 17,
+   "what": "check: log-likelihood at the article estimates, without estimating (writes nothing)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_tour_mode_joint_shopping.py --evaluate --at article",
+   "creates": [],
+   "minutes": 0.2,
+   "memory_gb": 0.6
+  },
+  {
+   "step": 18,
+   "what": "Biogeme estimation (robust standard errors)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_tour_mode_joint_shopping.py",
+   "creates": [
+    "output/tour_mode_joint_shopping.html",
+    "output/tour_mode_joint_shopping.yaml",
+    "output/estimated_parameters.csv",
+    "output/estimated_fit.csv",
+    "output/biogeme.toml"
+   ],
+   "minutes": 0.2,
+   "memory_gb": 0.6
+  },
+  {
+   "step": 19,
+   "what": "compare the estimates with reference_estimates.csv",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python compare_with_reference.py",
+   "creates": [
+    "output/comparison.csv"
+   ],
+   "minutes": 0.1,
+   "memory_gb": 0.2
+  }
+ ],
+ "check": {
+  "article_LL": -112.8,
+  "biogeme_LL_at_article_coefficients": -112.8374,
+  "basis": "full estimation half, all 452 observations (hold-out half: -94.0325, article -94.0)",
+  "N": 452,
+  "K": 15
+ },
+ "notes": [
+  "Step 1 runs in the Biogeme venv (numpy, pandas, pyarrow; no torch needed) from copies of the project code; its result equals the shipped tables (checked against the project code, 2026-11-13).",
+  "One observation per joint household group (representative: the oldest member with car driver available, else the oldest); car driver chosen if a member drove and available if a member has it available.",
+  "Train not available (no estimation group chose it); 1 validation group that chose train is left out of the hold-out. Modes chosen by fewer than 20 groups keep only constant and level-of-service terms.",
+  "Reference mode car driver (no constant). Licence normalised to 0 on walk (car driver needs a licence): walk has no licence term.",
+  "Availability: columns av_<mode> (car driver also blocked when the household's cars are used by overlapping car-driver tours of other members: m10_car_availability.py).",
+  "No fixed parameters. Robust (sandwich) standard errors.",
+  "The stop-location models 02-05 use the mode-choice logsum of the work, shopping and other models through 00_shared_data/mode_choice_logsums/m08_coef.csv and m09_coef.csv; re-estimating these models changes those logsums.",
+  "Shared preparation steps (cwd ../00_shared_prep/code) write to 00_shared_data/rebuilt/ and never overwrite the provided files; compare with check_against_provided.py (step S19) and, to use your rebuilt files, copy them over the provided paths in 00_shared_data before the model's own preparation steps."
+ ]
+}

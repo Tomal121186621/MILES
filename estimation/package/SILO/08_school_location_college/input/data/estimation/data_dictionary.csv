@@ -1,0 +1,17 @@
+column,definition,unit,source
+[students] student,row number of the student,,
+"[students] person_id, household_id",RTS ids,,Regional Travel Survey 2017/18 (00_shared_data/rts_2017_18)
+[students] band,"enrolment band of the student (K-8: elementary for age <= 10, middle 11+)",,
+"[students] age, female, income_group, car0, carlow",age; woman; income group 1-4; no car; fewer cars than drivers,,Regional Travel Survey 2017/18 (00_shared_data/rts_2017_18)
+"[students] g1, g3, g4, agec, a25","income <40k, 75-125k, 125k+; age - reference age; age >= 25",,sc_03_engine.pvar
+"[students] home_zone_<h>, w_home_<h>","possible home zone h and its weight (location mixture; weights sum to 1; missing slot: zone -1, weight 0)",,school_choice_work/loc_home.parquet
+"[students] school_zone_<c>, w_school_<c>","possible school zone c and its weight (missing: -1, weight 0)",,school_choice_work/loc_school.parquet
+"[alternatives] student, home_slot, j, zone",one row per student x home slot x alternative (all zones with enrolment of the segment),,sc_03_engine.Design('full')
+[alternatives] t,"peak car time home zone -> zone (single precision, as in the original estimator)",min,00_shared_data/skims/auto_peak_time.csv.gz
+[alternatives] lt,ln(1 + t) (single precision),,
+[alternatives] intra,1 if same zone,,
+"[alternatives] cc, cs",1 if other county; 1 if other state,,
+[alternatives] ccpub,other county x public share of the zone's enrolment of the band (K-12 only),,
+"[alternatives] nk0, nk1, nk2","size components: nk0 public 4-year (IPEDS sector 1), nk1 private 4-year (sectors 2-3), nk2 2-year and less (sectors 4-9)",students,"school_choice_work/zone_size.parquet, sabs_home_school.parquet"
+[alternatives] av,1 if the zone has enrolment of the student's own band,,
+"[candidates] student, home_slot, school_slot, j, ...",the same variables at the student's possible school zone c (alternative j) for home slot h,,

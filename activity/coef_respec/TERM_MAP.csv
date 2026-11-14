@@ -1,0 +1,700 @@
+model,segment,estimated_term,engine_file,engine_variable,status,note
+tour mode choice,work,gc,tour_mode_choice.csv,gc,supported,
+tour mode choice,work,park_CD,tour_mode_choice.csv,park_CD,Java,paid-parking share of the main-activity zone's area
+tour mode choice,work,stops_CD,tour_mode_choice.csv,stops_CD,Java,tour with a stop besides the main activity
+tour mode choice,work,ASC_WK,tour_mode_choice.csv,ASC_WK,supported,
+tour mode choice,work,age_WK,tour_mode_choice.csv,age_WK,supported,
+tour mode choice,work,male_WK,tour_mode_choice.csv,male_WK,supported,
+tour mode choice,work,hhsize_WK,tour_mode_choice.csv,hhsize_WK,supported,
+tour mode choice,work,autos_WK,tour_mode_choice.csv,autos_WK,supported,
+tour mode choice,work,kids_WK,tour_mode_choice.csv,kids_WK,Java,household member under 18
+tour mode choice,work,core_d_WK,tour_mode_choice.csv,core_d_WK,supported,
+tour mode choice,work,km_WK,tour_mode_choice.csv,km_WK,supported,
+tour mode choice,work,ASC_BK,tour_mode_choice.csv,ASC_BK,supported,
+tour mode choice,work,age_BK,tour_mode_choice.csv,age_BK,supported,
+tour mode choice,work,male_BK,tour_mode_choice.csv,male_BK,supported,
+tour mode choice,work,lic_BK,tour_mode_choice.csv,lic_BK,supported,
+tour mode choice,work,hhsize_BK,tour_mode_choice.csv,hhsize_BK,supported,
+tour mode choice,work,autos_BK,tour_mode_choice.csv,autos_BK,supported,
+tour mode choice,work,kids_BK,tour_mode_choice.csv,kids_BK,Java,household member under 18
+tour mode choice,work,core_d_BK,tour_mode_choice.csv,core_d_BK,supported,
+tour mode choice,work,rural_d_BK,tour_mode_choice.csv,rural_d_BK,supported,
+tour mode choice,work,km_BK,tour_mode_choice.csv,km_BK,supported,
+tour mode choice,work,ASC_CP,tour_mode_choice.csv,ASC_CP,supported,
+tour mode choice,work,age_CP,tour_mode_choice.csv,age_CP,supported,
+tour mode choice,work,male_CP,tour_mode_choice.csv,male_CP,supported,
+tour mode choice,work,lic_CP,tour_mode_choice.csv,lic_CP,supported,
+tour mode choice,work,hhsize_CP,tour_mode_choice.csv,hhsize_CP,supported,
+tour mode choice,work,autos_CP,tour_mode_choice.csv,autos_CP,supported,
+tour mode choice,work,kids_CP,tour_mode_choice.csv,kids_CP,Java,household member under 18
+tour mode choice,work,core_d_CP,tour_mode_choice.csv,core_d_CP,supported,
+tour mode choice,work,rural_d_CP,tour_mode_choice.csv,rural_d_CP,supported,
+tour mode choice,work,km_CP,tour_mode_choice.csv,km_CP,supported,
+tour mode choice,work,ASC_BUS,tour_mode_choice.csv,ASC_BUS,supported,
+tour mode choice,work,age_BUS,tour_mode_choice.csv,age_BUS,supported,
+tour mode choice,work,male_BUS,tour_mode_choice.csv,male_BUS,supported,
+tour mode choice,work,lic_BUS,tour_mode_choice.csv,lic_BUS,supported,
+tour mode choice,work,hhsize_BUS,tour_mode_choice.csv,hhsize_BUS,supported,
+tour mode choice,work,autos_BUS,tour_mode_choice.csv,autos_BUS,supported,
+tour mode choice,work,kids_BUS,tour_mode_choice.csv,kids_BUS,Java,household member under 18
+tour mode choice,work,core_d_BUS,tour_mode_choice.csv,core_d_BUS,supported,
+tour mode choice,work,rural_d_BUS,tour_mode_choice.csv,rural_d_BUS,supported,
+tour mode choice,work,km_BUS,tour_mode_choice.csv,km_BUS,supported,
+tour mode choice,work,ASC_TRAIN,tour_mode_choice.csv,ASC_TRAIN,supported,
+tour mode choice,work,age_TRAIN,tour_mode_choice.csv,age_TRAIN,supported,
+tour mode choice,work,male_TRAIN,tour_mode_choice.csv,male_TRAIN,supported,
+tour mode choice,work,lic_TRAIN,tour_mode_choice.csv,lic_TRAIN,supported,
+tour mode choice,work,hhsize_TRAIN,tour_mode_choice.csv,hhsize_TRAIN,supported,
+tour mode choice,work,autos_TRAIN,tour_mode_choice.csv,autos_TRAIN,supported,
+tour mode choice,work,kids_TRAIN,tour_mode_choice.csv,kids_TRAIN,Java,household member under 18
+tour mode choice,work,core_d_TRAIN,tour_mode_choice.csv,core_d_TRAIN,supported,
+tour mode choice,work,rural_d_TRAIN,tour_mode_choice.csv,rural_d_TRAIN,supported,
+tour mode choice,work,km_TRAIN,tour_mode_choice.csv,km_TRAIN,supported,
+tour mode choice,shopping,time,tour_mode_choice.csv,time,Java,"generic minutes of CD, CP, BUS, TRAIN"
+tour mode choice,shopping,cost,tour_mode_choice.csv,cost,Java,"generic $ of CD, CP, BUS, TRAIN"
+tour mode choice,shopping,park_CD,tour_mode_choice.csv,park_CD,Java,paid-parking share of the main-activity zone's area
+tour mode choice,shopping,stops_CD,tour_mode_choice.csv,stops_CD,Java,tour with a stop besides the main activity
+tour mode choice,shopping,ASC_WK,tour_mode_choice.csv,ASC_WK,supported,
+tour mode choice,shopping,age_WK,tour_mode_choice.csv,age_WK,supported,
+tour mode choice,shopping,male_WK,tour_mode_choice.csv,male_WK,supported,
+tour mode choice,shopping,hhsize_WK,tour_mode_choice.csv,hhsize_WK,supported,
+tour mode choice,shopping,autos_WK,tour_mode_choice.csv,autos_WK,supported,
+tour mode choice,shopping,kids_WK,tour_mode_choice.csv,kids_WK,Java,household member under 18
+tour mode choice,shopping,joint_WK,tour_mode_choice.csv,joint_WK,Java,"applied as estimated to tours whose main activity is a joint household episode, at the household stage (mc.apply.joint; coef_tasha: 0); 0 in the stop logsum"
+tour mode choice,shopping,km_WK,tour_mode_choice.csv,km_WK,supported,
+tour mode choice,shopping,ASC_BK,tour_mode_choice.csv,ASC_BK,supported,
+tour mode choice,shopping,age_BK,tour_mode_choice.csv,age_BK,supported,
+tour mode choice,shopping,male_BK,tour_mode_choice.csv,male_BK,supported,
+tour mode choice,shopping,lic_BK,tour_mode_choice.csv,lic_BK,supported,
+tour mode choice,shopping,hhsize_BK,tour_mode_choice.csv,hhsize_BK,supported,
+tour mode choice,shopping,autos_BK,tour_mode_choice.csv,autos_BK,supported,
+tour mode choice,shopping,kids_BK,tour_mode_choice.csv,kids_BK,Java,household member under 18
+tour mode choice,shopping,joint_BK,tour_mode_choice.csv,joint_BK,Java,"applied as estimated to tours whose main activity is a joint household episode, at the household stage (mc.apply.joint; coef_tasha: 0); 0 in the stop logsum"
+tour mode choice,shopping,km_BK,tour_mode_choice.csv,km_BK,supported,
+tour mode choice,shopping,ASC_CP,tour_mode_choice.csv,ASC_CP,supported,
+tour mode choice,shopping,age_CP,tour_mode_choice.csv,age_CP,supported,
+tour mode choice,shopping,male_CP,tour_mode_choice.csv,male_CP,supported,
+tour mode choice,shopping,lic_CP,tour_mode_choice.csv,lic_CP,supported,
+tour mode choice,shopping,autos_CP,tour_mode_choice.csv,autos_CP,supported,
+tour mode choice,shopping,kids_CP,tour_mode_choice.csv,kids_CP,Java,household member under 18
+tour mode choice,shopping,joint_CP,tour_mode_choice.csv,joint_CP,Java,"applied as estimated to tours whose main activity is a joint household episode, at the household stage (mc.apply.joint; coef_tasha: 0); 0 in the stop logsum"
+tour mode choice,shopping,ASC_BUS,tour_mode_choice.csv,ASC_BUS,supported,
+tour mode choice,shopping,age_BUS,tour_mode_choice.csv,age_BUS,supported,
+tour mode choice,shopping,male_BUS,tour_mode_choice.csv,male_BUS,supported,
+tour mode choice,shopping,lic_BUS,tour_mode_choice.csv,lic_BUS,supported,
+tour mode choice,shopping,hhsize_BUS,tour_mode_choice.csv,hhsize_BUS,supported,
+tour mode choice,shopping,autos_BUS,tour_mode_choice.csv,autos_BUS,supported,
+tour mode choice,shopping,kids_BUS,tour_mode_choice.csv,kids_BUS,Java,household member under 18
+tour mode choice,shopping,joint_BUS,tour_mode_choice.csv,joint_BUS,Java,"applied as estimated to tours whose main activity is a joint household episode, at the household stage (mc.apply.joint; coef_tasha: 0); 0 in the stop logsum"
+tour mode choice,shopping,ASC_TRAIN,tour_mode_choice.csv,ASC_TRAIN,supported,
+tour mode choice,shopping,age_TRAIN,tour_mode_choice.csv,age_TRAIN,supported,
+tour mode choice,shopping,male_TRAIN,tour_mode_choice.csv,male_TRAIN,supported,
+tour mode choice,shopping,lic_TRAIN,tour_mode_choice.csv,lic_TRAIN,supported,
+tour mode choice,shopping,hhsize_TRAIN,tour_mode_choice.csv,hhsize_TRAIN,supported,
+tour mode choice,shopping,autos_TRAIN,tour_mode_choice.csv,autos_TRAIN,supported,
+tour mode choice,shopping,kids_TRAIN,tour_mode_choice.csv,kids_TRAIN,Java,household member under 18
+tour mode choice,shopping,joint_TRAIN,tour_mode_choice.csv,joint_TRAIN,Java,"applied as estimated to tours whose main activity is a joint household episode, at the household stage (mc.apply.joint; coef_tasha: 0); 0 in the stop logsum"
+tour mode choice,other,time,tour_mode_choice.csv,time,Java,"generic minutes of CD, CP, BUS, TRAIN"
+tour mode choice,other,cost,tour_mode_choice.csv,cost,Java,"generic $ of CD, CP, BUS, TRAIN"
+tour mode choice,other,park_CD,tour_mode_choice.csv,park_CD,Java,paid-parking share of the main-activity zone's area
+tour mode choice,other,stops_CD,tour_mode_choice.csv,stops_CD,Java,tour with a stop besides the main activity
+tour mode choice,other,ASC_WK,tour_mode_choice.csv,ASC_WK,supported,
+tour mode choice,other,age_WK,tour_mode_choice.csv,age_WK,supported,
+tour mode choice,other,male_WK,tour_mode_choice.csv,male_WK,supported,
+tour mode choice,other,hhsize_WK,tour_mode_choice.csv,hhsize_WK,supported,
+tour mode choice,other,autos_WK,tour_mode_choice.csv,autos_WK,supported,
+tour mode choice,other,kids_WK,tour_mode_choice.csv,kids_WK,Java,household member under 18
+tour mode choice,other,joint_WK,tour_mode_choice.csv,joint_WK,Java,"applied as estimated to tours whose main activity is a joint household episode, at the household stage (mc.apply.joint; coef_tasha: 0); 0 in the stop logsum"
+tour mode choice,other,acc_WK,tour_mode_choice.csv,acc_WK,supported,
+tour mode choice,other,rec_WK,tour_mode_choice.csv,rec_WK,supported,
+tour mode choice,other,km_WK,tour_mode_choice.csv,km_WK,supported,
+tour mode choice,other,ASC_BK,tour_mode_choice.csv,ASC_BK,supported,
+tour mode choice,other,age_BK,tour_mode_choice.csv,age_BK,supported,
+tour mode choice,other,male_BK,tour_mode_choice.csv,male_BK,supported,
+tour mode choice,other,lic_BK,tour_mode_choice.csv,lic_BK,supported,
+tour mode choice,other,hhsize_BK,tour_mode_choice.csv,hhsize_BK,supported,
+tour mode choice,other,autos_BK,tour_mode_choice.csv,autos_BK,supported,
+tour mode choice,other,kids_BK,tour_mode_choice.csv,kids_BK,Java,household member under 18
+tour mode choice,other,joint_BK,tour_mode_choice.csv,joint_BK,Java,"applied as estimated to tours whose main activity is a joint household episode, at the household stage (mc.apply.joint; coef_tasha: 0); 0 in the stop logsum"
+tour mode choice,other,acc_BK,tour_mode_choice.csv,acc_BK,supported,
+tour mode choice,other,rec_BK,tour_mode_choice.csv,rec_BK,supported,
+tour mode choice,other,km_BK,tour_mode_choice.csv,km_BK,supported,
+tour mode choice,other,ASC_CP,tour_mode_choice.csv,ASC_CP,supported,
+tour mode choice,other,age_CP,tour_mode_choice.csv,age_CP,supported,
+tour mode choice,other,male_CP,tour_mode_choice.csv,male_CP,supported,
+tour mode choice,other,lic_CP,tour_mode_choice.csv,lic_CP,supported,
+tour mode choice,other,hhsize_CP,tour_mode_choice.csv,hhsize_CP,supported,
+tour mode choice,other,autos_CP,tour_mode_choice.csv,autos_CP,supported,
+tour mode choice,other,kids_CP,tour_mode_choice.csv,kids_CP,Java,household member under 18
+tour mode choice,other,joint_CP,tour_mode_choice.csv,joint_CP,Java,"applied as estimated to tours whose main activity is a joint household episode, at the household stage (mc.apply.joint; coef_tasha: 0); 0 in the stop logsum"
+tour mode choice,other,acc_CP,tour_mode_choice.csv,acc_CP,supported,
+tour mode choice,other,rec_CP,tour_mode_choice.csv,rec_CP,supported,
+tour mode choice,other,ASC_BUS,tour_mode_choice.csv,ASC_BUS,supported,
+tour mode choice,other,age_BUS,tour_mode_choice.csv,age_BUS,supported,
+tour mode choice,other,male_BUS,tour_mode_choice.csv,male_BUS,supported,
+tour mode choice,other,lic_BUS,tour_mode_choice.csv,lic_BUS,supported,
+tour mode choice,other,hhsize_BUS,tour_mode_choice.csv,hhsize_BUS,supported,
+tour mode choice,other,autos_BUS,tour_mode_choice.csv,autos_BUS,supported,
+tour mode choice,other,kids_BUS,tour_mode_choice.csv,kids_BUS,Java,household member under 18
+tour mode choice,other,joint_BUS,tour_mode_choice.csv,joint_BUS,Java,"applied as estimated to tours whose main activity is a joint household episode, at the household stage (mc.apply.joint; coef_tasha: 0); 0 in the stop logsum"
+tour mode choice,other,acc_BUS,tour_mode_choice.csv,acc_BUS,supported,
+tour mode choice,other,rec_BUS,tour_mode_choice.csv,rec_BUS,supported,
+tour mode choice,other,ASC_TRAIN,tour_mode_choice.csv,ASC_TRAIN,supported,
+tour mode choice,other,age_TRAIN,tour_mode_choice.csv,age_TRAIN,supported,
+tour mode choice,other,male_TRAIN,tour_mode_choice.csv,male_TRAIN,supported,
+tour mode choice,other,lic_TRAIN,tour_mode_choice.csv,lic_TRAIN,supported,
+tour mode choice,other,hhsize_TRAIN,tour_mode_choice.csv,hhsize_TRAIN,supported,
+tour mode choice,other,autos_TRAIN,tour_mode_choice.csv,autos_TRAIN,supported,
+tour mode choice,other,kids_TRAIN,tour_mode_choice.csv,kids_TRAIN,Java,household member under 18
+tour mode choice,other,joint_TRAIN,tour_mode_choice.csv,joint_TRAIN,Java,"applied as estimated to tours whose main activity is a joint household episode, at the household stage (mc.apply.joint; coef_tasha: 0); 0 in the stop logsum"
+tour mode choice,other,acc_TRAIN,tour_mode_choice.csv,acc_TRAIN,supported,
+tour mode choice,other,rec_TRAIN,tour_mode_choice.csv,rec_TRAIN,supported,
+tour mode choice,other,mu_auto,tour_mode_choice.csv,mu_auto,supported,
+tour mode choice,other,mu_transit,tour_mode_choice.csv,mu_transit,supported,
+tour mode choice,school,park_CD,tour_mode_choice.csv,park_CD,Java,paid-parking share of the main-activity zone's area
+tour mode choice,school,ASC_WK,tour_mode_choice.csv,ASC_WK,supported,
+tour mode choice,school,age_PT,tour_mode_choice.csv,age_WK,coefficient file,bus and train share the term: written to both
+tour mode choice,school,male_PT,tour_mode_choice.csv,male_WK,coefficient file,bus and train share the term: written to both
+tour mode choice,school,hhsize_PT,tour_mode_choice.csv,hhsize_WK,coefficient file,bus and train share the term: written to both
+tour mode choice,school,autos_PT,tour_mode_choice.csv,autos_WK,coefficient file,bus and train share the term: written to both
+tour mode choice,school,kids_PT,tour_mode_choice.csv,kids_WK,Java,household member under 18
+tour mode choice,school,km_WK,tour_mode_choice.csv,km_WK,supported,
+tour mode choice,school,ASC_BK,tour_mode_choice.csv,ASC_BK,supported,
+tour mode choice,school,age_PT,tour_mode_choice.csv,age_BK,coefficient file,bus and train share the term: written to both
+tour mode choice,school,male_PT,tour_mode_choice.csv,male_BK,coefficient file,bus and train share the term: written to both
+tour mode choice,school,lic_PT,tour_mode_choice.csv,lic_BK,coefficient file,bus and train share the term: written to both
+tour mode choice,school,hhsize_PT,tour_mode_choice.csv,hhsize_BK,coefficient file,bus and train share the term: written to both
+tour mode choice,school,autos_PT,tour_mode_choice.csv,autos_BK,coefficient file,bus and train share the term: written to both
+tour mode choice,school,kids_PT,tour_mode_choice.csv,kids_BK,Java,household member under 18
+tour mode choice,school,km_BK,tour_mode_choice.csv,km_BK,supported,
+tour mode choice,school,ASC_CP,tour_mode_choice.csv,ASC_CP,supported,
+tour mode choice,school,age_PT,tour_mode_choice.csv,age_CP,coefficient file,bus and train share the term: written to both
+tour mode choice,school,male_PT,tour_mode_choice.csv,male_CP,coefficient file,bus and train share the term: written to both
+tour mode choice,school,lic_PT,tour_mode_choice.csv,lic_CP,coefficient file,bus and train share the term: written to both
+tour mode choice,school,hhsize_PT,tour_mode_choice.csv,hhsize_CP,coefficient file,bus and train share the term: written to both
+tour mode choice,school,autos_PT,tour_mode_choice.csv,autos_CP,coefficient file,bus and train share the term: written to both
+tour mode choice,school,kids_PT,tour_mode_choice.csv,kids_CP,Java,household member under 18
+tour mode choice,school,km_CP,tour_mode_choice.csv,km_CP,supported,
+tour mode choice,school,ASC_BUS,tour_mode_choice.csv,ASC_BUS,supported,
+tour mode choice,school,age_PT,tour_mode_choice.csv,age_BUS,coefficient file,bus and train share the term: written to both
+tour mode choice,school,age_PT,tour_mode_choice.csv,age_TRAIN,coefficient file,bus and train share the term: written to both
+tour mode choice,school,male_PT,tour_mode_choice.csv,male_BUS,coefficient file,bus and train share the term: written to both
+tour mode choice,school,male_PT,tour_mode_choice.csv,male_TRAIN,coefficient file,bus and train share the term: written to both
+tour mode choice,school,lic_PT,tour_mode_choice.csv,lic_BUS,coefficient file,bus and train share the term: written to both
+tour mode choice,school,lic_PT,tour_mode_choice.csv,lic_TRAIN,coefficient file,bus and train share the term: written to both
+tour mode choice,school,hhsize_PT,tour_mode_choice.csv,hhsize_BUS,coefficient file,bus and train share the term: written to both
+tour mode choice,school,hhsize_PT,tour_mode_choice.csv,hhsize_TRAIN,coefficient file,bus and train share the term: written to both
+tour mode choice,school,autos_PT,tour_mode_choice.csv,autos_BUS,coefficient file,bus and train share the term: written to both
+tour mode choice,school,autos_PT,tour_mode_choice.csv,autos_TRAIN,coefficient file,bus and train share the term: written to both
+tour mode choice,school,kids_PT,tour_mode_choice.csv,kids_BUS,Java,household member under 18
+tour mode choice,school,kids_PT,tour_mode_choice.csv,kids_TRAIN,Java,household member under 18
+tour mode choice,school,km_BUS,tour_mode_choice.csv,km_BUS,supported,
+tour mode choice,school,ASC_TRAIN,tour_mode_choice.csv,ASC_TRAIN,supported,
+tour mode choice,school,km_TRAIN,tour_mode_choice.csv,km_TRAIN,supported,
+tour mode choice,shopping_joint,time,tour_mode_choice.csv,time,Java,"generic minutes of CD, CP, BUS, TRAIN"
+tour mode choice,shopping_joint,cost,tour_mode_choice.csv,cost,Java,"generic $ of CD, CP, BUS, TRAIN"
+tour mode choice,shopping_joint,park_CD,tour_mode_choice.csv,park_CD,Java,paid-parking share of the main-activity zone's area
+tour mode choice,shopping_joint,stops_CD,tour_mode_choice.csv,stops_CD,Java,tour with a stop besides the main activity
+tour mode choice,shopping_joint,ASC_WK,tour_mode_choice.csv,ASC_WK,supported,
+tour mode choice,shopping_joint,age_WK,tour_mode_choice.csv,age_WK,supported,
+tour mode choice,shopping_joint,male_WK,tour_mode_choice.csv,male_WK,supported,
+tour mode choice,shopping_joint,hhsize_WK,tour_mode_choice.csv,hhsize_WK,supported,
+tour mode choice,shopping_joint,autos_WK,tour_mode_choice.csv,autos_WK,supported,
+tour mode choice,shopping_joint,kids_WK,tour_mode_choice.csv,kids_WK,Java,household member under 18
+tour mode choice,shopping_joint,km_WK,tour_mode_choice.csv,km_WK,supported,
+tour mode choice,shopping_joint,ASC_BK,tour_mode_choice.csv,ASC_BK,supported,
+tour mode choice,shopping_joint,km_BK,tour_mode_choice.csv,km_BK,supported,
+tour mode choice,shopping_joint,ASC_CP,tour_mode_choice.csv,ASC_CP,supported,
+tour mode choice,shopping_joint,ASC_BUS,tour_mode_choice.csv,ASC_BUS,supported,
+tour mode choice,other_joint,time,tour_mode_choice.csv,time,Java,"generic minutes of CD, CP, BUS, TRAIN"
+tour mode choice,other_joint,cost,tour_mode_choice.csv,cost,Java,"generic $ of CD, CP, BUS, TRAIN"
+tour mode choice,other_joint,park_CD,tour_mode_choice.csv,park_CD,Java,paid-parking share of the main-activity zone's area
+tour mode choice,other_joint,stops_CD,tour_mode_choice.csv,stops_CD,Java,tour with a stop besides the main activity
+tour mode choice,other_joint,ASC_WK,tour_mode_choice.csv,ASC_WK,supported,
+tour mode choice,other_joint,age_WK,tour_mode_choice.csv,age_WK,supported,
+tour mode choice,other_joint,male_WK,tour_mode_choice.csv,male_WK,supported,
+tour mode choice,other_joint,hhsize_WK,tour_mode_choice.csv,hhsize_WK,supported,
+tour mode choice,other_joint,autos_WK,tour_mode_choice.csv,autos_WK,supported,
+tour mode choice,other_joint,kids_WK,tour_mode_choice.csv,kids_WK,Java,household member under 18
+tour mode choice,other_joint,rec_WK,tour_mode_choice.csv,rec_WK,supported,
+tour mode choice,other_joint,km_WK,tour_mode_choice.csv,km_WK,supported,
+tour mode choice,other_joint,ASC_BK,tour_mode_choice.csv,ASC_BK,supported,
+tour mode choice,other_joint,km_BK,tour_mode_choice.csv,km_BK,supported,
+tour mode choice,other_joint,ASC_CP,tour_mode_choice.csv,ASC_CP,supported,
+tour mode choice,other_joint,age_CP,tour_mode_choice.csv,age_CP,supported,
+tour mode choice,other_joint,male_CP,tour_mode_choice.csv,male_CP,supported,
+tour mode choice,other_joint,lic_CP,tour_mode_choice.csv,lic_CP,supported,
+tour mode choice,other_joint,hhsize_CP,tour_mode_choice.csv,hhsize_CP,supported,
+tour mode choice,other_joint,autos_CP,tour_mode_choice.csv,autos_CP,supported,
+tour mode choice,other_joint,kids_CP,tour_mode_choice.csv,kids_CP,Java,household member under 18
+tour mode choice,other_joint,rec_CP,tour_mode_choice.csv,rec_CP,supported,
+tour mode choice,other_joint,ASC_BUS,tour_mode_choice.csv,ASC_BUS,supported,
+tour mode choice,other_joint,ASC_TRAIN,tour_mode_choice.csv,ASC_TRAIN,supported,
+tour mode choice,other_joint,mu_auto,tour_mode_choice.csv,mu_auto,supported,
+tour mode choice,other_joint,mu_transit,tour_mode_choice.csv,mu_transit,supported,
+primary destination (pooled),SHOPPING_primary,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,
+primary destination (pooled),SHOPPING_primary,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),SHOPPING_primary,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),SHOPPING_primary,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),SHOPPING_primary,d_0_1,dest_choice_mnl.csv,d_0_1,supported,
+primary destination (pooled),SHOPPING_primary,d_1_2,dest_choice_mnl.csv,d_1_2,supported,
+primary destination (pooled),SHOPPING_primary,d_2_5,dest_choice_mnl.csv,d_2_5,supported,
+primary destination (pooled),SHOPPING_primary,d_5_10,dest_choice_mnl.csv,d_5_10,supported,
+primary destination (pooled),SHOPPING_primary,d_10_20,dest_choice_mnl.csv,d_10_20,supported,
+primary destination (pooled),SHOPPING_primary,d_20_50,dest_choice_mnl.csv,d_20_50,supported,
+primary destination (pooled),SHOPPING_primary,intra,dest_choice_mnl.csv,intra,supported,
+primary destination (pooled),SHOPPING_primary,bc,dest_choice_mnl.csv,bc,supported,
+primary destination (pooled),SHOPPING_primary,dcz,dest_choice_mnl.csv,dcz,supported,
+primary destination (pooled),SHOPPING_primary,cbd,dest_choice_mnl.csv,cbd,supported,
+primary destination (pooled),SHOPPING_primary,va,dest_choice_mnl.csv,va,supported,
+primary destination (pooled),SHOPPING_primary,othst,dest_choice_mnl.csv,othst,supported,
+primary destination (pooled),SHOPPING_primary,lnretden,dest_choice_mnl.csv,lnretden,supported,
+primary destination (pooled),SHOPPING_primary,mix,dest_choice_mnl.csv,mix,supported,
+primary destination (pooled),SHOPPING_primary,xcounty,dest_choice_mnl.csv,xcounty,supported,
+primary destination (pooled),SHOPPING_primary,xstate,dest_choice_mnl.csv,xstate,supported,
+primary destination (pooled),SHOPPING_primary,lnd_car0,dest_choice_mnl.csv,lnd_car0,supported,
+primary destination (pooled),SHOPPING_primary,lnd_car1,dest_choice_mnl.csv,lnd_car1,supported,
+primary destination (pooled),SHOPPING_primary,lnd_worker,dest_choice_mnl.csv,lnd_worker,supported,
+primary destination (pooled),SHOPPING_primary,lnd_kid,dest_choice_mnl.csv,lnd_kid,supported,
+primary destination (pooled),SHOPPING_primary,lnd_senior,dest_choice_mnl.csv,lnd_senior,supported,
+primary destination (pooled),SHOPPING_primary,lnd_child,dest_choice_mnl.csv,lnd_child,supported,
+primary destination (pooled),SHOPPING_primary,lnd_male,dest_choice_mnl.csv,lnd_male,Java,new chooser flag
+primary destination (pooled),SHOPPING_primary,lnd_hh1,dest_choice_mnl.csv,lnd_hh1,Java,new chooser flag
+primary destination (pooled),SHOPPING_primary,lnd_am,dest_choice_mnl.csv,lnd_am,supported,
+primary destination (pooled),SHOPPING_primary,lnd_pm,dest_choice_mnl.csv,lnd_pm,supported,
+primary destination (pooled),SHOPPING_primary,lnd_ev,dest_choice_mnl.csv,lnd_ev,supported,
+primary destination (pooled),SHOPPING_primary,lnd_multi,dest_choice_mnl.csv,lnd_multi,supported,
+primary destination (pooled),SHOPPING_primary,cgt,dest_choice_mnl.csv,cgt,supported,
+primary destination (pooled),RECREATION_primary,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,mu_size x scale 0.8003
+primary destination (pooled),RECREATION_primary,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),RECREATION_primary,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),RECREATION_primary,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),RECREATION_primary,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),RECREATION_primary,d_0_1,dest_choice_mnl.csv,d_0_1,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,d_1_2,dest_choice_mnl.csv,d_1_2,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,d_2_5,dest_choice_mnl.csv,d_2_5,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,d_5_10,dest_choice_mnl.csv,d_5_10,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,d_10_20,dest_choice_mnl.csv,d_10_20,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,d_20_50,dest_choice_mnl.csv,d_20_50,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,intra,dest_choice_mnl.csv,intra,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,bc,dest_choice_mnl.csv,bc,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,dcz,dest_choice_mnl.csv,dcz,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,cbd,dest_choice_mnl.csv,cbd,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,va,dest_choice_mnl.csv,va,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,othst,dest_choice_mnl.csv,othst,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnretden,dest_choice_mnl.csv,lnretden,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,mix,dest_choice_mnl.csv,mix,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,xcounty,dest_choice_mnl.csv,xcounty,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,xstate,dest_choice_mnl.csv,xstate,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_car0,dest_choice_mnl.csv,lnd_car0,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_car1,dest_choice_mnl.csv,lnd_car1,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_worker,dest_choice_mnl.csv,lnd_worker,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_kid,dest_choice_mnl.csv,lnd_kid,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_senior,dest_choice_mnl.csv,lnd_senior,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_child,dest_choice_mnl.csv,lnd_child,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_male,dest_choice_mnl.csv,lnd_male,Java,new chooser flag; x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_hh1,dest_choice_mnl.csv,lnd_hh1,Java,new chooser flag; x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_am,dest_choice_mnl.csv,lnd_am,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_pm,dest_choice_mnl.csv,lnd_pm,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_ev,dest_choice_mnl.csv,lnd_ev,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,lnd_multi,dest_choice_mnl.csv,lnd_multi,coefficient file,x purpose scale 0.8003
+primary destination (pooled),RECREATION_primary,cgt,dest_choice_mnl.csv,cgt,coefficient file,x purpose scale 0.8003
+primary destination (pooled),ACCOMPANY_primary,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,mu_size x scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),ACCOMPANY_primary,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),ACCOMPANY_primary,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),ACCOMPANY_primary,size_oth,dest_choice_mnl.csv,size_oth,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),ACCOMPANY_primary,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),ACCOMPANY_primary,d_0_1,dest_choice_mnl.csv,d_0_1,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,d_1_2,dest_choice_mnl.csv,d_1_2,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,d_2_5,dest_choice_mnl.csv,d_2_5,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,d_5_10,dest_choice_mnl.csv,d_5_10,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,d_10_20,dest_choice_mnl.csv,d_10_20,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,d_20_50,dest_choice_mnl.csv,d_20_50,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,intra,dest_choice_mnl.csv,intra,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,bc,dest_choice_mnl.csv,bc,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,dcz,dest_choice_mnl.csv,dcz,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,cbd,dest_choice_mnl.csv,cbd,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,va,dest_choice_mnl.csv,va,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,othst,dest_choice_mnl.csv,othst,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnretden,dest_choice_mnl.csv,lnretden,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,mix,dest_choice_mnl.csv,mix,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,xcounty,dest_choice_mnl.csv,xcounty,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,xstate,dest_choice_mnl.csv,xstate,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_car0,dest_choice_mnl.csv,lnd_car0,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_car1,dest_choice_mnl.csv,lnd_car1,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_worker,dest_choice_mnl.csv,lnd_worker,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_kid,dest_choice_mnl.csv,lnd_kid,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_senior,dest_choice_mnl.csv,lnd_senior,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_child,dest_choice_mnl.csv,lnd_child,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_male,dest_choice_mnl.csv,lnd_male,Java,new chooser flag; x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_hh1,dest_choice_mnl.csv,lnd_hh1,Java,new chooser flag; x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_am,dest_choice_mnl.csv,lnd_am,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_pm,dest_choice_mnl.csv,lnd_pm,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_ev,dest_choice_mnl.csv,lnd_ev,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,lnd_multi,dest_choice_mnl.csv,lnd_multi,coefficient file,x purpose scale 0.7808
+primary destination (pooled),ACCOMPANY_primary,cgt,dest_choice_mnl.csv,cgt,coefficient file,x purpose scale 0.7808
+primary destination (pooled),OTHER_primary,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,mu_size x scale 0.7430
+primary destination (pooled),OTHER_primary,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),OTHER_primary,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),OTHER_primary,size_oth,dest_choice_mnl.csv,size_oth,coefficient file,"size weight exp(theta), base 1"
+primary destination (pooled),OTHER_primary,d_0_1,dest_choice_mnl.csv,d_0_1,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,d_1_2,dest_choice_mnl.csv,d_1_2,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,d_2_5,dest_choice_mnl.csv,d_2_5,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,d_5_10,dest_choice_mnl.csv,d_5_10,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,d_10_20,dest_choice_mnl.csv,d_10_20,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,d_20_50,dest_choice_mnl.csv,d_20_50,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,intra,dest_choice_mnl.csv,intra,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,bc,dest_choice_mnl.csv,bc,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,dcz,dest_choice_mnl.csv,dcz,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,cbd,dest_choice_mnl.csv,cbd,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,va,dest_choice_mnl.csv,va,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,othst,dest_choice_mnl.csv,othst,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnretden,dest_choice_mnl.csv,lnretden,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,mix,dest_choice_mnl.csv,mix,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,xcounty,dest_choice_mnl.csv,xcounty,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,xstate,dest_choice_mnl.csv,xstate,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_car0,dest_choice_mnl.csv,lnd_car0,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_car1,dest_choice_mnl.csv,lnd_car1,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_worker,dest_choice_mnl.csv,lnd_worker,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_kid,dest_choice_mnl.csv,lnd_kid,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_senior,dest_choice_mnl.csv,lnd_senior,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_child,dest_choice_mnl.csv,lnd_child,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_male,dest_choice_mnl.csv,lnd_male,Java,new chooser flag; x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_hh1,dest_choice_mnl.csv,lnd_hh1,Java,new chooser flag; x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_am,dest_choice_mnl.csv,lnd_am,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_pm,dest_choice_mnl.csv,lnd_pm,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_ev,dest_choice_mnl.csv,lnd_ev,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,lnd_multi,dest_choice_mnl.csv,lnd_multi,coefficient file,x purpose scale 0.7430
+primary destination (pooled),OTHER_primary,cgt,dest_choice_mnl.csv,cgt,coefficient file,x purpose scale 0.7430
+stop,SHOPPING_seq_stop,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,
+stop,SHOPPING_seq_stop,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+stop,SHOPPING_seq_stop,dt_1_2,dest_choice_mnl.csv,dt_1_2,supported,
+stop,SHOPPING_seq_stop,dt_2_5,dest_choice_mnl.csv,dt_2_5,supported,
+stop,SHOPPING_seq_stop,dt_5_10,dest_choice_mnl.csv,dt_5_10,supported,
+stop,SHOPPING_seq_stop,dt_10_20,dest_choice_mnl.csv,dt_10_20,supported,
+stop,SHOPPING_seq_stop,dt_20_inf,dest_choice_mnl.csv,dt_20_inf,supported,
+stop,SHOPPING_seq_stop,intra_a,dest_choice_mnl.csv,intra_a,supported,
+stop,SHOPPING_seq_stop,intra_b,dest_choice_mnl.csv,intra_b,supported,
+stop,SHOPPING_seq_stop,bc,dest_choice_mnl.csv,bc,supported,
+stop,SHOPPING_seq_stop,dcz,dest_choice_mnl.csv,dcz,supported,
+stop,SHOPPING_seq_stop,cbd,dest_choice_mnl.csv,cbd,supported,
+stop,SHOPPING_seq_stop,va,dest_choice_mnl.csv,va,supported,
+stop,SHOPPING_seq_stop,othst,dest_choice_mnl.csv,othst,supported,
+stop,SHOPPING_seq_stop,lnretden,dest_choice_mnl.csv,lnretden,supported,
+stop,SHOPPING_seq_stop,mix,dest_choice_mnl.csv,mix,supported,
+stop,SHOPPING_seq_stop,xcounty,dest_choice_mnl.csv,xcounty,supported,
+stop,SHOPPING_seq_stop,xstate,dest_choice_mnl.csv,xstate,supported,
+stop,SHOPPING_seq_stop,lndt_car0,dest_choice_mnl.csv,lndt_car0,supported,
+stop,SHOPPING_seq_stop,lndt_car1,dest_choice_mnl.csv,lndt_car1,supported,
+stop,SHOPPING_seq_stop,lndt_hhsize,dest_choice_mnl.csv,lndt_hhsize,Java,new chooser flag
+stop,SHOPPING_seq_stop,lndt_nonauto,dest_choice_mnl.csv,lndt_nonauto,supported,
+stop,SHOPPING_seq_stop,cgt,dest_choice_mnl.csv,cgt,supported,
+stop,SHOPPING_seq_stop,lstour,dest_choice_mnl.csv,lstour,Java,logsum of the re-specified tour models (estimation: 'ls' of s_stops_newls)
+stop,SHOPPING_stop,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,dt_1_2,dest_choice_mnl.csv,dt_1_2,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,dt_2_5,dest_choice_mnl.csv,dt_2_5,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,dt_5_10,dest_choice_mnl.csv,dt_5_10,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,dt_10_20,dest_choice_mnl.csv,dt_10_20,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,dt_20_inf,dest_choice_mnl.csv,dt_20_inf,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,intra_a,dest_choice_mnl.csv,intra_a,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,intra_b,dest_choice_mnl.csv,intra_b,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,bc,dest_choice_mnl.csv,bc,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,dcz,dest_choice_mnl.csv,dcz,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,cbd,dest_choice_mnl.csv,cbd,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,va,dest_choice_mnl.csv,va,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,othst,dest_choice_mnl.csv,othst,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,lnretden,dest_choice_mnl.csv,lnretden,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,mix,dest_choice_mnl.csv,mix,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,xcounty,dest_choice_mnl.csv,xcounty,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,xstate,dest_choice_mnl.csv,xstate,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,lndt_car0,dest_choice_mnl.csv,lndt_car0,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,lndt_car1,dest_choice_mnl.csv,lndt_car1,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,lndt_hhsize,dest_choice_mnl.csv,lndt_hhsize,Java,"new chooser flag; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,lndt_nonauto,dest_choice_mnl.csv,lndt_nonauto,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,cgt,dest_choice_mnl.csv,cgt,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,SHOPPING_stop,lstour,dest_choice_mnl.csv,lstour,Java,"logsum of the re-specified tour models (estimation: 'ls' of s_stops_newls); same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_seq_stop,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,mu held at 1
+stop,RECREATION_seq_stop,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+stop,RECREATION_seq_stop,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1"
+stop,RECREATION_seq_stop,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+stop,RECREATION_seq_stop,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1"
+stop,RECREATION_seq_stop,dt_1_2,dest_choice_mnl.csv,dt_1_2,supported,
+stop,RECREATION_seq_stop,dt_2_5,dest_choice_mnl.csv,dt_2_5,supported,
+stop,RECREATION_seq_stop,dt_5_10,dest_choice_mnl.csv,dt_5_10,supported,
+stop,RECREATION_seq_stop,dt_10_20,dest_choice_mnl.csv,dt_10_20,supported,
+stop,RECREATION_seq_stop,dt_20_inf,dest_choice_mnl.csv,dt_20_inf,supported,
+stop,RECREATION_seq_stop,intra_a,dest_choice_mnl.csv,intra_a,supported,
+stop,RECREATION_seq_stop,intra_b,dest_choice_mnl.csv,intra_b,supported,
+stop,RECREATION_seq_stop,bc,dest_choice_mnl.csv,bc,supported,
+stop,RECREATION_seq_stop,dcz,dest_choice_mnl.csv,dcz,supported,
+stop,RECREATION_seq_stop,cbd,dest_choice_mnl.csv,cbd,supported,
+stop,RECREATION_seq_stop,va,dest_choice_mnl.csv,va,supported,
+stop,RECREATION_seq_stop,othst,dest_choice_mnl.csv,othst,supported,
+stop,RECREATION_seq_stop,lnretden,dest_choice_mnl.csv,lnretden,supported,
+stop,RECREATION_seq_stop,mix,dest_choice_mnl.csv,mix,supported,
+stop,RECREATION_seq_stop,xcounty,dest_choice_mnl.csv,xcounty,supported,
+stop,RECREATION_seq_stop,xstate,dest_choice_mnl.csv,xstate,supported,
+stop,RECREATION_seq_stop,lndt_nonauto,dest_choice_mnl.csv,lndt_nonauto,supported,
+stop,RECREATION_seq_stop,lndt_inbound,dest_choice_mnl.csv,lndt_inbound,supported,
+stop,RECREATION_seq_stop,lstour,dest_choice_mnl.csv,lstour,Java,logsum of the re-specified tour models (estimation: 'ls' of s_stops_newls)
+stop,RECREATION_stop,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,"mu held at 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,dt_1_2,dest_choice_mnl.csv,dt_1_2,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,dt_2_5,dest_choice_mnl.csv,dt_2_5,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,dt_5_10,dest_choice_mnl.csv,dt_5_10,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,dt_10_20,dest_choice_mnl.csv,dt_10_20,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,dt_20_inf,dest_choice_mnl.csv,dt_20_inf,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,intra_a,dest_choice_mnl.csv,intra_a,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,intra_b,dest_choice_mnl.csv,intra_b,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,bc,dest_choice_mnl.csv,bc,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,dcz,dest_choice_mnl.csv,dcz,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,cbd,dest_choice_mnl.csv,cbd,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,va,dest_choice_mnl.csv,va,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,othst,dest_choice_mnl.csv,othst,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,lnretden,dest_choice_mnl.csv,lnretden,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,mix,dest_choice_mnl.csv,mix,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,xcounty,dest_choice_mnl.csv,xcounty,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,xstate,dest_choice_mnl.csv,xstate,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,lndt_nonauto,dest_choice_mnl.csv,lndt_nonauto,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,lndt_inbound,dest_choice_mnl.csv,lndt_inbound,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,RECREATION_stop,lstour,dest_choice_mnl.csv,lstour,Java,"logsum of the re-specified tour models (estimation: 'ls' of s_stops_newls); same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_seq_stop,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,
+stop,ACCOMPANY_seq_stop,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1"
+stop,ACCOMPANY_seq_stop,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1"
+stop,ACCOMPANY_seq_stop,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+stop,ACCOMPANY_seq_stop,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+stop,ACCOMPANY_seq_stop,size_oth,dest_choice_mnl.csv,size_oth,coefficient file,"size weight exp(theta), base 1"
+stop,ACCOMPANY_seq_stop,dt_0_1,dest_choice_mnl.csv,dt_0_1,supported,
+stop,ACCOMPANY_seq_stop,dt_1_2,dest_choice_mnl.csv,dt_1_2,supported,
+stop,ACCOMPANY_seq_stop,dt_2_5,dest_choice_mnl.csv,dt_2_5,supported,
+stop,ACCOMPANY_seq_stop,dt_5_10,dest_choice_mnl.csv,dt_5_10,supported,
+stop,ACCOMPANY_seq_stop,dt_10_20,dest_choice_mnl.csv,dt_10_20,supported,
+stop,ACCOMPANY_seq_stop,dt_20_inf,dest_choice_mnl.csv,dt_20_inf,supported,
+stop,ACCOMPANY_seq_stop,intra_a,dest_choice_mnl.csv,intra_a,supported,
+stop,ACCOMPANY_seq_stop,intra_b,dest_choice_mnl.csv,intra_b,supported,
+stop,ACCOMPANY_seq_stop,bc,dest_choice_mnl.csv,bc,supported,
+stop,ACCOMPANY_seq_stop,dcz,dest_choice_mnl.csv,dcz,supported,
+stop,ACCOMPANY_seq_stop,cbd,dest_choice_mnl.csv,cbd,supported,
+stop,ACCOMPANY_seq_stop,va,dest_choice_mnl.csv,va,supported,
+stop,ACCOMPANY_seq_stop,othst,dest_choice_mnl.csv,othst,supported,
+stop,ACCOMPANY_seq_stop,lnretden,dest_choice_mnl.csv,lnretden,supported,
+stop,ACCOMPANY_seq_stop,mix,dest_choice_mnl.csv,mix,supported,
+stop,ACCOMPANY_seq_stop,xcounty,dest_choice_mnl.csv,xcounty,supported,
+stop,ACCOMPANY_seq_stop,xstate,dest_choice_mnl.csv,xstate,supported,
+stop,ACCOMPANY_seq_stop,lndt_car0,dest_choice_mnl.csv,lndt_car0,supported,
+stop,ACCOMPANY_seq_stop,lndt_car1,dest_choice_mnl.csv,lndt_car1,supported,
+stop,ACCOMPANY_seq_stop,lndt_nonauto,dest_choice_mnl.csv,lndt_nonauto,supported,
+stop,ACCOMPANY_seq_stop,lstour,dest_choice_mnl.csv,lstour,Java,logsum of the re-specified tour models (estimation: 'ls' of s_stops_newls)
+stop,ACCOMPANY_stop,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,size_oth,dest_choice_mnl.csv,size_oth,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,dt_0_1,dest_choice_mnl.csv,dt_0_1,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,dt_1_2,dest_choice_mnl.csv,dt_1_2,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,dt_2_5,dest_choice_mnl.csv,dt_2_5,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,dt_5_10,dest_choice_mnl.csv,dt_5_10,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,dt_10_20,dest_choice_mnl.csv,dt_10_20,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,dt_20_inf,dest_choice_mnl.csv,dt_20_inf,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,intra_a,dest_choice_mnl.csv,intra_a,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,intra_b,dest_choice_mnl.csv,intra_b,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,bc,dest_choice_mnl.csv,bc,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,dcz,dest_choice_mnl.csv,dcz,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,cbd,dest_choice_mnl.csv,cbd,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,va,dest_choice_mnl.csv,va,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,othst,dest_choice_mnl.csv,othst,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,lnretden,dest_choice_mnl.csv,lnretden,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,mix,dest_choice_mnl.csv,mix,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,xcounty,dest_choice_mnl.csv,xcounty,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,xstate,dest_choice_mnl.csv,xstate,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,lndt_car0,dest_choice_mnl.csv,lndt_car0,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,lndt_car1,dest_choice_mnl.csv,lndt_car1,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,lndt_nonauto,dest_choice_mnl.csv,lndt_nonauto,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,ACCOMPANY_stop,lstour,dest_choice_mnl.csv,lstour,Java,"logsum of the re-specified tour models (estimation: 'ls' of s_stops_newls); same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_seq_stop,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,
+stop,OTHER_seq_stop,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+stop,OTHER_seq_stop,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+stop,OTHER_seq_stop,size_oth,dest_choice_mnl.csv,size_oth,coefficient file,"size weight exp(theta), base 1"
+stop,OTHER_seq_stop,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1"
+stop,OTHER_seq_stop,dt_1_2,dest_choice_mnl.csv,dt_1_2,supported,
+stop,OTHER_seq_stop,dt_2_5,dest_choice_mnl.csv,dt_2_5,supported,
+stop,OTHER_seq_stop,dt_5_10,dest_choice_mnl.csv,dt_5_10,supported,
+stop,OTHER_seq_stop,dt_10_20,dest_choice_mnl.csv,dt_10_20,supported,
+stop,OTHER_seq_stop,dt_20_inf,dest_choice_mnl.csv,dt_20_inf,supported,
+stop,OTHER_seq_stop,intra_a,dest_choice_mnl.csv,intra_a,supported,
+stop,OTHER_seq_stop,intra_b,dest_choice_mnl.csv,intra_b,supported,
+stop,OTHER_seq_stop,bc,dest_choice_mnl.csv,bc,supported,
+stop,OTHER_seq_stop,dcz,dest_choice_mnl.csv,dcz,supported,
+stop,OTHER_seq_stop,cbd,dest_choice_mnl.csv,cbd,supported,
+stop,OTHER_seq_stop,va,dest_choice_mnl.csv,va,supported,
+stop,OTHER_seq_stop,othst,dest_choice_mnl.csv,othst,supported,
+stop,OTHER_seq_stop,lnretden,dest_choice_mnl.csv,lnretden,supported,
+stop,OTHER_seq_stop,mix,dest_choice_mnl.csv,mix,supported,
+stop,OTHER_seq_stop,xcounty,dest_choice_mnl.csv,xcounty,supported,
+stop,OTHER_seq_stop,xstate,dest_choice_mnl.csv,xstate,supported,
+stop,OTHER_seq_stop,lndt_nonauto,dest_choice_mnl.csv,lndt_nonauto,supported,
+stop,OTHER_seq_stop,cgt,dest_choice_mnl.csv,cgt,supported,
+stop,OTHER_seq_stop,lstour,dest_choice_mnl.csv,lstour,Java,logsum of the re-specified tour models (estimation: 'ls' of s_stops_newls)
+stop,OTHER_stop,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,size_oth,dest_choice_mnl.csv,size_oth,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1; same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,dt_1_2,dest_choice_mnl.csv,dt_1_2,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,dt_2_5,dest_choice_mnl.csv,dt_2_5,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,dt_5_10,dest_choice_mnl.csv,dt_5_10,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,dt_10_20,dest_choice_mnl.csv,dt_10_20,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,dt_20_inf,dest_choice_mnl.csv,dt_20_inf,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,intra_a,dest_choice_mnl.csv,intra_a,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,intra_b,dest_choice_mnl.csv,intra_b,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,bc,dest_choice_mnl.csv,bc,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,dcz,dest_choice_mnl.csv,dcz,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,cbd,dest_choice_mnl.csv,cbd,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,va,dest_choice_mnl.csv,va,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,othst,dest_choice_mnl.csv,othst,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,lnretden,dest_choice_mnl.csv,lnretden,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,mix,dest_choice_mnl.csv,mix,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,xcounty,dest_choice_mnl.csv,xcounty,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,xstate,dest_choice_mnl.csv,xstate,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,lndt_nonauto,dest_choice_mnl.csv,lndt_nonauto,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,cgt,dest_choice_mnl.csv,cgt,supported,"same coefficients as the sequential stop model (two-anchor form, joint stops)"
+stop,OTHER_stop,lstour,dest_choice_mnl.csv,lstour,Java,"logsum of the re-specified tour models (estimation: 'ls' of s_stops_newls); same coefficients as the sequential stop model (two-anchor form, joint stops)"
+location,EDUCATION_nonstud,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,mu held at 1
+location,EDUCATION_nonstud,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1"
+location,EDUCATION_nonstud,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1"
+location,EDUCATION_nonstud,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+location,EDUCATION_nonstud,lnd,dest_choice_mnl.csv,lnd,supported,
+location,EDUCATION_nonstud,lnretden,dest_choice_mnl.csv,lnretden,supported,
+location,EDUCATION_nonstud,mix,dest_choice_mnl.csv,mix,supported,
+location,EDUCATION_nonstud,xcounty,dest_choice_mnl.csv,xcounty,supported,
+location,EDUCATION_nonstud,xstate,dest_choice_mnl.csv,xstate,supported,
+location,EDUCATION_nonstud,cgt,dest_choice_mnl.csv,cgt,supported,
+location,EDUCATION_daycare,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,mu held at 1
+location,EDUCATION_daycare,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+location,EDUCATION_daycare,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1"
+location,EDUCATION_daycare,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1"
+location,EDUCATION_daycare,lnd,dest_choice_mnl.csv,lnd,coefficient file,x scale 1.2279 (pooled with non-student school)
+location,EDUCATION_daycare,lnretden,dest_choice_mnl.csv,lnretden,coefficient file,x scale 1.2279 (pooled with non-student school)
+location,EDUCATION_daycare,mix,dest_choice_mnl.csv,mix,coefficient file,x scale 1.2279 (pooled with non-student school)
+location,EDUCATION_daycare,xcounty,dest_choice_mnl.csv,xcounty,coefficient file,x scale 1.2279 (pooled with non-student school)
+location,EDUCATION_daycare,xstate,dest_choice_mnl.csv,xstate,coefficient file,x scale 1.2279 (pooled with non-student school)
+location,EDUCATION_daycare,cgt,dest_choice_mnl.csv,cgt,coefficient file,x scale 1.2279 (pooled with non-student school)
+location,WORK_wahb,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,
+location,WORK_wahb,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wahb,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wahb,d,dest_choice_mnl.csv,d,supported,
+location,WORK_wahb,lnd,dest_choice_mnl.csv,lnd,supported,
+location,WORK_wahb,intra,dest_choice_mnl.csv,intra,supported,
+location,WORK_wahb,xcounty,dest_choice_mnl.csv,xcounty,supported,
+location,WORK_wbhome,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,
+location,WORK_wbhome,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wbhome,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wbhome,size_oth,dest_choice_mnl.csv,size_oth,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wbhome,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wbhome,d_1_2,dest_choice_mnl.csv,d_1_2,supported,
+location,WORK_wbhome,d_2_5,dest_choice_mnl.csv,d_2_5,supported,
+location,WORK_wbhome,d_5_10,dest_choice_mnl.csv,d_5_10,supported,
+location,WORK_wbhome,d_10_20,dest_choice_mnl.csv,d_10_20,supported,
+location,WORK_wbhome,d_20_50,dest_choice_mnl.csv,d_20_50,supported,
+location,WORK_wbhome,d_50_inf,dest_choice_mnl.csv,d_50_inf,supported,
+location,WORK_wbhome,intra,dest_choice_mnl.csv,intra,supported,
+location,WORK_wbhome,va,dest_choice_mnl.csv,va,supported,
+location,WORK_wbhome,othst,dest_choice_mnl.csv,othst,supported,
+location,WORK_wbhome,xcounty,dest_choice_mnl.csv,xcounty,supported,
+location,WORK_wbhome,lnd_inc0,dest_choice_mnl.csv,lnd_inc0,supported,
+location,WORK_wbhome,lnd_inc2,dest_choice_mnl.csv,lnd_inc2,supported,
+location,WORK_wbhome,lnd_worker,dest_choice_mnl.csv,lnd_worker,supported,
+location,WORK_wbhome,bc,dest_choice_mnl.csv,bc,supported,
+location,WORK_wbhome,dcz,dest_choice_mnl.csv,dcz,supported,
+location,WORK_wbwork_stop,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,
+location,WORK_wbwork_stop,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wbwork_stop,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wbwork_stop,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wbwork_stop,size_oth,dest_choice_mnl.csv,size_oth,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wbwork_stop,size_stu,dest_choice_mnl.csv,size_stu,coefficient file,"size weight exp(theta), base 1"
+location,WORK_wbwork_stop,dt_0_1,dest_choice_mnl.csv,dt_0_1,supported,
+location,WORK_wbwork_stop,dt_1_2,dest_choice_mnl.csv,dt_1_2,supported,
+location,WORK_wbwork_stop,dt_2_5,dest_choice_mnl.csv,dt_2_5,supported,
+location,WORK_wbwork_stop,dt_5_10,dest_choice_mnl.csv,dt_5_10,supported,
+location,WORK_wbwork_stop,dt_10_20,dest_choice_mnl.csv,dt_10_20,supported,
+location,WORK_wbwork_stop,dt_20_inf,dest_choice_mnl.csv,dt_20_inf,supported,
+location,WORK_wbwork_stop,intra_a,dest_choice_mnl.csv,intra_a,supported,
+location,WORK_wbwork_stop,intra_b,dest_choice_mnl.csv,intra_b,supported,
+location,WORK_wbwork_stop,lnretden,dest_choice_mnl.csv,lnretden,supported,
+location,WORK_wbwork_stop,mix,dest_choice_mnl.csv,mix,supported,
+location,WORK_wbwork_stop,xcounty,dest_choice_mnl.csv,xcounty,supported,
+location,WORK_wbwork_stop,lndt_car0,dest_choice_mnl.csv,lndt_car0,supported,
+location,WORK_wbwork_stop,lndt_car1,dest_choice_mnl.csv,lndt_car1,supported,
+location,WORK_wbwork_stop,lndt_am,dest_choice_mnl.csv,lndt_am,supported,
+location,WORK_wbwork_stop,lndt_pm,dest_choice_mnl.csv,lndt_pm,supported,
+location,WORK_wbwork_stop,lndt_ev,dest_choice_mnl.csv,lndt_ev,supported,
+location,WORK_wbwork_stop,cgt,dest_choice_mnl.csv,cgt,supported,
+location,OTHER_wbs,mu_size,dest_choice_mnl.csv,mu_size,coefficient file,
+location,OTHER_wbs,size_ret,dest_choice_mnl.csv,size_ret,coefficient file,"size weight exp(theta), base 1"
+location,OTHER_wbs,size_off,dest_choice_mnl.csv,size_off,coefficient file,"size weight exp(theta), base 1"
+location,OTHER_wbs,size_pop,dest_choice_mnl.csv,size_pop,coefficient file,"size weight exp(theta), base 1"
+location,OTHER_wbs,size_oth,dest_choice_mnl.csv,size_oth,coefficient file,"size weight exp(theta), base 1"
+location,OTHER_wbs,d_0_1,dest_choice_mnl.csv,d_0_1,supported,
+location,OTHER_wbs,d_1_2,dest_choice_mnl.csv,d_1_2,supported,
+location,OTHER_wbs,d_2_5,dest_choice_mnl.csv,d_2_5,supported,
+location,OTHER_wbs,d_5_10,dest_choice_mnl.csv,d_5_10,supported,
+location,OTHER_wbs,d_10_20,dest_choice_mnl.csv,d_10_20,supported,
+location,OTHER_wbs,d_20_50,dest_choice_mnl.csv,d_20_50,supported,
+location,OTHER_wbs,intra,dest_choice_mnl.csv,intra,supported,
+location,OTHER_wbs,xcounty,dest_choice_mnl.csv,xcounty,supported,
+location,OTHER_wbs,cgt,dest_choice_mnl.csv,cgt,supported,
+return home,,const,tasha/tasha_return_home.csv,const,supported,
+return home,,detour_km,tasha/tasha_return_home.csv,detour_km,supported,
+return home,,lndetour,tasha/tasha_return_home.csv,lndetour,supported,
+return home,,dhome_km,tasha/tasha_return_home.csv,dhome_km,supported,
+return home,,worker,tasha/tasha_return_home.csv,worker,supported,
+return home,,stud_k12,tasha/tasha_return_home.csv,stud_k12,supported,
+return home,,stud_ps,tasha/tasha_return_home.csv,stud_ps,supported,
+return home,,retiree,tasha/tasha_return_home.csv,retiree,supported,
+return home,,toddler,tasha/tasha_return_home.csv,toddler,supported,
+return home,,female,tasha/tasha_return_home.csv,female,Java,
+return home,,lic,tasha/tasha_return_home.csv,lic,Java,
+return home,,hhsize,tasha/tasha_return_home.csv,hhsize,Java,
+return home,,kids,tasha/tasha_return_home.csv,kids,Java,
+return home,,car0,tasha/tasha_return_home.csv,car0,Java,
+return home,,carshort,tasha/tasha_return_home.csv,carshort,Java,
+return home,,inc_low,tasha/tasha_return_home.csv,inc_low,Java,
+return home,,inc_high,tasha/tasha_return_home.csv,inc_high,Java,
+return home,,a_work,tasha/tasha_return_home.csv,a_work,supported,
+return home,,a_school,tasha/tasha_return_home.csv,a_school,supported,
+return home,,a_acc,tasha/tasha_return_home.csv,a_acc,supported,
+return home,,a_shop,tasha/tasha_return_home.csv,a_shop,supported,
+return home,,a_joint,tasha/tasha_return_home.csv,a_joint,supported,
+return home,,e_work,tasha/tasha_return_home.csv,e_work,supported,
+return home,,e_school,tasha/tasha_return_home.csv,e_school,supported,
+return home,,e_acc,tasha/tasha_return_home.csv,e_acc,supported,
+return home,,e_shop,tasha/tasha_return_home.csv,e_shop,supported,
+return home,,e_joint,tasha/tasha_return_home.csv,e_joint,supported,
+return home,,jj,tasha/tasha_return_home.csv,jj,supported,
+return home,,jmand,tasha/tasha_return_home.csv,jmand,supported,
+return home,,nep,tasha/tasha_return_home.csv,nep,Java,
+return home,,am,tasha/tasha_return_home.csv,am,supported,
+return home,,pm,tasha/tasha_return_home.csv,pm,supported,
+return home,,ev,tasha/tasha_return_home.csv,ev,supported,
+outing occurrence,,const,tasha/tasha_subtour.csv,gen.const,supported,
+outing occurrence,,lncomm,tasha/tasha_subtour.csv,gen.lncomm,supported,
+outing occurrence,,cbd_w,tasha/tasha_subtour.csv,gen.cbd_w,supported,
+outing occurrence,,sp_0_4,tasha/tasha_subtour.csv,gen.sp_0_4,supported,
+outing occurrence,,sp_4_7,tasha/tasha_subtour.csv,gen.sp_4_7,supported,
+outing occurrence,,sw,tasha/tasha_subtour.csv,gen.sw,supported,
+outing occurrence,,arr_early,tasha/tasha_subtour.csv,gen.arr_early,supported,
+outing occurrence,,arr_late,tasha/tasha_subtour.csv,gen.arr_late,supported,
+outing mode,,const,tasha/tasha_subtour.csv,mode.const,supported,
+outing mode,,lnkm,tasha/tasha_subtour.csv,mode.lnkm,supported,
+outing mode,,cbd_w,tasha/tasha_subtour.csv,mode.cbd_w,supported,
+outing mode,,car0,tasha/tasha_subtour.csv,mode.car0,Java,
+outing mode,,carshort,tasha/tasha_subtour.csv,mode.carshort,Java,
+outing mode,,tm_cd,tasha/tasha_subtour.csv,mode.tm_cd,supported,
+outing mode,,tm_cp,tasha/tasha_subtour.csv,mode.tm_cp,supported,
+outing mode,,multi,tasha/tasha_subtour.csv,mode.multi,Java,

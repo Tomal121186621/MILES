@@ -1,0 +1,16 @@
+{
+ "order": [
+  {"folder": "03_residential_dwelling", "why": "lowest level of the residential model; its estimates give the dwelling inclusive value IV_A of the county model"},
+  {"folder": "02_residential_zone_structure_type", "why": "middle level; its estimates give the zone x structure-type inclusive value IV_B of the county model"},
+  {"folder": "01_residential_county", "why": "upper level; reads IV_A and IV_B as data columns, so the lower levels come first (the data already hold the inclusive values of the published lower-level models)"},
+  {"folder": "04_car_ownership", "why": "independent of the other models"},
+  {"folder": "05_workplace_choice", "why": "independent of the other models"},
+  {"folder": "08_school_location_college", "why": "independent; smallest school model (141 zones), quickest test of the location-mixture likelihood"},
+  {"folder": "07_school_location_high_school", "why": "independent; 3 home slots x 719 zones"},
+  {"folder": "06_school_location_K8", "why": "independent; largest expression (4 home slots x 1,144 zones), run last"}
+ ],
+ "notes": [
+  "Models 04 to 08 do not depend on each other or on 01 to 03; any order works.",
+  "If you re-estimate 03 or 02 and want the county model on your own inclusive values, rebuild them with 01_residential_county/input/code/r07_county_iv.py (needs your lower-level estimates in the r06/r08 CSV format) before running 01."
+ ]
+}

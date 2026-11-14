@@ -1,0 +1,39 @@
+{
+ "events": "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Updated MATSim/I695_pricing_runs/FIT/R6/output_events.xml.gz",
+ "network": "/Users/raassarkertomal/Documents/SILO MITO Chayan/VAE-SILO-MITO-MATSIM/Updated MATSim/I695_pricing_runs/FIT/R6/output_network.xml.gz",
+ "off_network_zones": 501,
+ "periods": {
+  "AM": {
+   "links_observed": 0.3736796252787724,
+   "mean_realised_over_ff_observed": 1.507147335484478,
+   "ratio_to_AM_mean": 1.0,
+   "ratio_to_AM_p10": 1.0,
+   "ratio_to_AM_p90": 1.0,
+   "pairs_with_matsim_profile": 0.3977271285269242
+  },
+  "MD": {
+   "links_observed": 0.38832595975453116,
+   "mean_realised_over_ff_observed": 1.3116256954087155,
+   "ratio_to_AM_mean": 0.9225412934439793,
+   "ratio_to_AM_p10": 0.8229513233276119,
+   "ratio_to_AM_p90": 0.9962808217490203,
+   "pairs_with_matsim_profile": 0.3977271285269242
+  },
+  "PM": {
+   "links_observed": 0.38723323584730834,
+   "mean_realised_over_ff_observed": 1.3996134666160998,
+   "ratio_to_AM_mean": 0.9432092535221406,
+   "ratio_to_AM_p10": 0.8484411955338825,
+   "ratio_to_AM_p90": 1.0030329311547397,
+   "pairs_with_matsim_profile": 0.3977271285269242
+  },
+  "NT": {
+   "links_observed": 0.3658750631032081,
+   "mean_realised_over_ff_observed": 1.2584288122834828,
+   "ratio_to_AM_mean": 0.9210803551328587,
+   "ratio_to_AM_p10": 0.8214672902218842,
+   "ratio_to_AM_p90": 0.9946545785214413,
+   "pairs_with_matsim_profile": 0.3977271285269242
+  }
+ }
+}

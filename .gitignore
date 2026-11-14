@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.DS_Store
+site/
+.ipynb_checkpoints/
+# data and run outputs are never committed
+*.parquet
+*.xml.gz
+*.csv.gz
+*.omx

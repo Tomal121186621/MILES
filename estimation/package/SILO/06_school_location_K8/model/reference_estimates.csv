@@ -1,0 +1,17 @@
+parameter,article_section,article_label,coefficient,robust_se,p,coefficient_full_precision,note
+MU_size,Size,size coefficient mu,0.4954,0.0491,<0.001,0.4954325193488095,
+G_in_boundary_public,Size,"in-boundary public enrolment, log weight",6.0411,0.5019,<0.001,6.0410756789630815,
+G_private,Size,"private enrolment, log weight",0.7823,0.3358,0.020,0.7822882481890988,
+B_time,Car time,car time (min),-0.0963,0.0183,<0.001,-0.0963423878878413,
+B_ln1p_time,Car time,ln(1+time),-0.7727,0.3649,0.034,-0.7727188914220914,
+B_same_zone,Boundaries,same zone,0.3406,0.1021,<0.001,0.3405857935967468,
+B_other_county_x_public_share,Boundaries,other county x public share,-2.2521,0.2016,<0.001,-2.252144952250956,
+,Interactions with car time,time x at least as many cars as drivers,,,,,reference category (no parameter)
+B_time_x_no_car,Interactions with car time,time x no car,-0.11,0.0353,0.002,-0.1099542835971949,
+B_time_x_fewer_cars_than_drivers,Interactions with car time,time x fewer cars than drivers,-0.0282,0.0149,0.058,-0.0282425211282322,
+N,fit statistics (article),N,1509.0,,,,model statistic
+K,fit statistics (article),K,9.0,,,,model statistic
+alternatives,fit statistics (article),alternatives,1144.0,,,,model statistic
+LL(0) (overview table),fit statistics (article),LL(0) (overview table),-10407.1,,,,model statistic
+"LL(beta), full set",fit statistics (article),"LL(beta), full set",-2941.0,,,,model statistic
+validation LL,fit statistics (article),validation LL,-3041.5,,,,model statistic

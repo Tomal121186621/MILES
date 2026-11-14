@@ -1,0 +1,13 @@
+parameter,project_name,article_group,article_label,coefficient,robust_se,p_value,article_coefficient,article_robust_se,article_p
+ASC_walk,const,Constant,Constant (walk),4.206342126176543,0.3813480885123509,2.7328505144290137e-28,4.2063,0.3813,<0.001
+B_ln_distance_workplace_first_stop,lnkm,Outing,"ln(1 + distance workplace--first stop, km)",-2.467449466962889,0.1859885783847646,3.6127205165692154e-40,-2.4674,0.186,<0.001
+B_work_tour_car_driver,tm_cd,Outing,"Arrived at work by car, as driver",-2.1986832328380994,0.2776186717052299,2.3790066200047535e-15,-2.1987,0.2776,<0.001
+B_work_tour_car_passenger,tm_cp,Outing,"Arrived at work by car, as passenger",-1.1480612366602676,0.530930919312475,0.030590807584792337,-1.1481,0.5309,0.031
+B_more_than_one_stop,multi,Outing,More than one stop on the outing,-1.060042128913404,0.3643922309647475,0.003625068871761361,-1.06,0.3644,0.004
+B_workplace_zone_10000_jobs_per_km2,cbd_w,Workplace zone,"Workplace zone with at least 10,000 jobs per km$^2$",0.920830042897382,0.2475723294108014,0.00019966618885793424,0.9208,0.2476,<0.001
+B_no_car,car0,Household,No car in the household,0.6052679377024786,0.5008792401759588,0.22688924589379456,0.6053,0.5009,0.227
+B_fewer_cars_than_drivers,carshort,Household,Fewer cars than drivers in the household,0.2643284435115143,0.2957847318138546,0.37150842906263604,0.2643,0.2958,0.372
+LL0,,,LL(0): equal shares of the available alternatives (article Table 2),,,,-815.8,,
+LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-360.155631312972,,,-360.2,,
+N,,,observations,,,,1177.0,,
+K,,,estimated parameters,,,,8.0,,

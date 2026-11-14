@@ -1,0 +1,17 @@
+column,definition,unit,source
+serial,PUMS household serial number,,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+puma7,PUMA (24 x 100000 + PUMA),,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+cars,"chosen alternative: vehicles available VEH, capped at 3 (0, 1, 2, 3+)",,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+workers,"persons with ESR 1, 2, 4, 5 (max 6)",persons,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+nonworking_adults,persons 16+ minus workers (max 6),persons,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+children,persons under 16 (max 6),persons,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+single_person,1 if household size 1,,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+sfd,1 if single-family detached (BLD 2),,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+multifamily,1 if BLD 4-9,,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+bedrooms,bedrooms (max 5),,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+ln_density,ln housing units per km2 of the PUMA,,geo_puma_zone.csv; zoneSystem_inputs_folder.csv
+acc_gain,"non-work accessibility with a car minus without a car, household's income group, housing-unit-weighted over the PUMA's zones",utils,00_shared_data/accessibility/accessibility_2016.csv
+"inc_lt25, inc_25_50, inc_50_100, inc_gt100","piecewise linear pieces of ln(max(household income, 5000) / 50000), income in 2016 $, bends at $25k, $50k, $100k",,s04_form.pieces
+age10,(age of the oldest member - 45) / 10,,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr) person file
+age10_sq,age10 squared,,
+inc_x_dens,"ln income x (ln_density - 5.485957407613654, the estimation-sample mean)",,s06_age.prep

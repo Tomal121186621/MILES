@@ -1,0 +1,21 @@
+column,definition,unit,source
+row_index,row label of the source data frame (episode / pair index),id,estimation code
+const,constant,1,estimation code
+tm_cd,work tour as car driver,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+tm_cp,work tour as car passenger,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+lnkm,ln(1 + car km); model 12: workplace -> first stop of the outing; model 20: between the zones of the leg,ln km,"car distance skim 2016, intrazonal 0.5 sqrt(area) (00_shared_data/skims/abit_base_2016)"
+km,car km; model 12: workplace -> first stop; model 20: of the leg,km,"car distance skim 2016, intrazonal 0.5 sqrt(area) (00_shared_data/skims/abit_base_2016)"
+lnretden_w,ln(1 + retail jobs per km2) of the workplace zone,ln jobs/km2,zone table (00_shared_data/zones)
+cbd_w,"workplace zone with >= 10,000 jobs per km2",0/1,zone table (00_shared_data/zones)
+multi,outing with more than one stop,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+midday,departure from the workplace 11:00-14:00,0/1,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
+y,"1 = first leg of the outing on foot, 0 = mode of the work tour",0/1 or alternative,survey
+w,survey weight (not used: unweighted estimation),weight,RTS
+age_u30,age under 30,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+age_55p,age 55 or over,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+female,female,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+lic,driving licence,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+car0,no car in the household,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+carshort,fewer cars than licensed drivers (at least one car),0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+inc_low,household income below $50k (sum of the members' incomes),0/1,survey population (00_shared_data/rts_2017_18/survey_pop)
+inc_high,household income $100k or more,0/1,survey population (00_shared_data/rts_2017_18/survey_pop)

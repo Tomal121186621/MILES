@@ -1,0 +1,419 @@
+{
+ "model": "School location: K-8",
+ "article_table": "est_school (column K-8)",
+ "purpose": "School zone of K-8 students given the home zone.",
+ "depends_on": [],
+ "data_sources": [
+  {
+   "name": "Regional Travel Survey 2017/18 (household, person, trip records)",
+   "provider": "Baltimore Metropolitan Council (BMC) and National Capital Region Transportation Planning Board (TPB/MWCOG)",
+   "url": "https://www.baltometro.org",
+   "how": "Restricted: request the 2017/2018 Regional Travel Survey data from BMC / TPB. File used: RTS_raw_flat_data.csv (flat person-level file with household fields: household_id, person_id, home_state_county_fips, home_tract_fips, home_type, hhsize, numvehicle, numdrivers, hh_income_detailed, wthhfin, wtperfin, age, age_group, employment_status, j1_workplace_loc, work_state_county_fips, work_tract_fips, license, school locations and BMC/TPB TAZ codes). Also rts_trips_clean.csv (cleaned trips) for the synthetic-population workplace step.",
+   "place_in": "00_shared_data/raw/rts_2017_18/",
+   "files": [
+    "RTS_raw_flat_data.csv",
+    "rts_trips_clean.csv"
+   ],
+   "notes": [
+    "verify: landing page only; restricted data.",
+    "Project location: ../ABIT/input/rts/. Package copy: 00_shared_data/rts_2017_18/ (with rts_split.csv, the project's random 50/50 household split, and tract_zone.csv, the tract-to-zone table of 3_abit/survey_pop)."
+   ]
+  },
+  {
+   "name": "MSTM zone system, zone polygons and peak car skim (Maryland Statewide Transportation Model)",
+   "provider": "Maryland Department of Transportation State Highway Administration (MDOT SHA), provided to the project",
+   "url": "https://roads.maryland.gov",
+   "how": "Not a public download: the 1,588-zone MSTM system (zoneSystem.csv), zone polygons (SMZ_RMZ_02152011inMSTM_EPSG26918.shp) and the AM-peak auto travel-time skim were provided by MDOT. Request them from MDOT SHA (MSTM / travel forecasting).",
+   "place_in": "00_shared_data/raw/mstm/",
+   "files": [
+    "zoneSystem.csv",
+    "SMZ_RMZ_02152011inMSTM_EPSG26918.shp/.shx/.dbf/.prj",
+    "auto_peak_time.csv.gz"
+   ],
+   "notes": [
+    "verify: landing page only; the data are MDOT-provided.",
+    "Project copies: 2_silo/input/zoneSystem.csv, ../ABIT/input/mito_los/Zonal/*.shp, 2_silo/input/skims/auto_peak_time.csv.gz; package copies in 00_shared_data/zone_system and 00_shared_data/skims (used by the package scripts)."
+   ]
+  },
+  {
+   "name": "NCES school directories: CCD 2024-25, EDGE geocodes, Private School Survey 2023-24",
+   "provider": "National Center for Education Statistics",
+   "url": "https://nces.ed.gov/ccd/Data/zip/ccd_sch_029_2425_w_1a_073025.zip",
+   "how": "Download ccd_sch_029_2425_w_1a_073025.zip, ccd_sch_052_2425_l_1a_073025.zip, ccd_sea_052_2425_l_1a_073025.zip, ccd_lea_029_2425_w_1a_073025.zip (https://nces.ed.gov/ccd/Data/zip/), EDGE_GEOCODE_PUBLICSCH_2425.zip and EDGE_GEOCODE_PRIVATESCH_2324.zip (https://nces.ed.gov/programs/edge/data/), pss2324_pu_csv.zip (https://nces.ed.gov/surveys/pss/zip/pss2324_pu_csv.zip).",
+   "place_in": "00_shared_data/raw/nces/",
+   "files": [
+    "ccd_sch_029_2425_w_1a_073025.zip",
+    "ccd_sch_052_2425_l_1a_073025.zip",
+    "ccd_sea_052_2425_l_1a_073025.zip",
+    "ccd_lea_029_2425_w_1a_073025.zip",
+    "EDGE_GEOCODE_PUBLICSCH_2425.zip",
+    "EDGE_GEOCODE_PRIVATESCH_2324.zip",
+    "pss2324_pu_csv.zip"
+   ],
+   "notes": [
+    "Built into 2_silo/input/schools_2016.csv by 2_silo/schools/build_schools.py (see 2_silo/schools/README.md).",
+    "Project location: data/raw/nces/.",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/nces/\" ../../../data/raw/nces (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "IPEDS HD 2024, fall enrolment EF2023A, 12-month enrolment EFFY2024",
+   "provider": "National Center for Education Statistics (IPEDS)",
+   "url": "https://nces.ed.gov/ipeds/datacenter/data/HD2024.zip",
+   "how": "Download HD2024.zip, EF2023A.zip, EFFY2024.zip and their _Dict.zip from https://nces.ed.gov/ipeds/datacenter/data/.",
+   "place_in": "00_shared_data/raw/ipeds/",
+   "files": [
+    "HD2024.zip",
+    "EF2023A.zip",
+    "EFFY2024.zip"
+   ],
+   "notes": [
+    "Project location: data/raw/ipeds/ (college sectors: public 4-year, private 4-year, 2-year).",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/ipeds/\" ../../../data/raw/ipeds (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "School Attendance Boundary Survey 2015-16",
+   "provider": "NCES EDGE",
+   "url": "https://nces.ed.gov/programs/edge/data/SABS_1516_SchoolLevels.zip",
+   "how": "Download and unzip into ex/ (layers SABS_1516_Primary, _Middle, _High, _Other). Page https://nces.ed.gov/programs/edge/sabs.",
+   "place_in": "00_shared_data/raw/sabs/",
+   "files": [
+    "SABS_1516_SchoolLevels.zip"
+   ],
+   "notes": [
+    "Project location: data/raw/sabs/ (read by sc_00_sabs.py from data/raw/sabs/ex/).",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/sabs/\" ../../../data/raw/sabs (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "BMC TAZ 2010 and TPB TAZ 3722 boundaries (the TAZ codes of the RTS)",
+   "provider": "Baltimore Metropolitan Council; MWCOG / TPB",
+   "url": "https://gis.baltometro.org/arcgis/rest/services/Regional_Boundaries/MapServer/14",
+   "how": "ArcGIS REST query (where=1=1, outFields=*, outSR=26918, f=geojson) of BMC layer 14 -> layer14.geojson; TPB layer https://gis.mwcog.org/wa/rest/services/RTDC/TAZ/MapServer/0/query in pages of 1,000 -> rest_layer0_off{0,1000,2000,3000}.geojson.",
+   "place_in": "00_shared_data/raw/taz/",
+   "files": [
+    "layer14.geojson",
+    "rest_layer0_off0.geojson ... off3000.geojson"
+   ],
+   "notes": [
+    "BMC note: do not distribute layer 14 to third parties without asking BMC.",
+    "Project locations: data/raw/taz_bmc/, data/raw/taz_tpb/.",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/taz/\" ../../../data/raw/taz_bmc (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "Census 2010 Redistricting (PL 94-171) Maryland file and TIGER 2010 blocks and tracts",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www2.census.gov/census_2010/01-Redistricting_File--PL_94-171/Maryland/",
+   "how": "md2010.pl.zip (geo file and segment 2, housing units H1) and TIGER/Line 2010 tl_2010_24_tabblock10.zip; tracts tl_2010_<st>_tract10.zip for st = 10, 11, 24, 42, 51, 54 (https://www2.census.gov/geo/tiger/TIGER2010/TRACT/2010/).",
+   "place_in": "00_shared_data/raw/census2010/",
+   "files": [
+    "md2010.pl.zip",
+    "tl_2010_24_tabblock10.zip",
+    "tl_2010_<st>_tract10.zip"
+   ],
+   "notes": [
+    "verify: URLs not documented in the project (folders of the Census site).",
+    "Project locations: data/raw/census2010/, data/raw/tiger_tracts_2010/.",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/census2010/\" ../../../data/raw/census2010 (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "Census 2020 Redistricting (PL 94-171) files, DC, VA, WV",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www2.census.gov/programs-surveys/decennial/2020/data/01-Redistricting_File--PL_94-171/<State>/<st>2020.pl.zip",
+   "how": "Download dc2020.pl.zip, va2020.pl.zip, wv2020.pl.zip (geo file summary level 750, table H1).",
+   "place_in": "00_shared_data/raw/census2020/",
+   "files": [
+    "dc2020.pl.zip",
+    "va2020.pl.zip",
+    "wv2020.pl.zip"
+   ],
+   "notes": [
+    "Project location: data/raw/census2020_pl_dc_va_wv/ (school home weights).",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/census2020/\" ../../../data/raw/census2020_pl_dc_va_wv (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "LEHD LODES 8, Workplace Area Characteristics 2016 and geography crosswalk, Maryland",
+   "provider": "U.S. Census Bureau, LEHD",
+   "url": "https://lehd.ces.census.gov/data/lodes/LODES8/md/wac/md_wac_S000_JT00_2016.csv.gz",
+   "how": "Download md_wac_S000_JT00_2016.csv.gz and https://lehd.ces.census.gov/data/lodes/LODES8/md/md_xwalk.csv.gz (other states: .../LODES8/<st>/wac/<st>_wac_S000_JT00_<year>.csv.gz). Workplace zone attributes (high-earning share CE03/C000) use the 2017 WAC files of md, dc, va, pa, de, wv: https://lehd.ces.census.gov/data/lodes/LODES8/<st>/wac/<st>_wac_S000_JT00_2017.csv.gz (project: data/raw/lodes_wac/ and data/raw/lodes_wac_2017_extra/).",
+   "place_in": "00_shared_data/raw/lodes_wac/",
+   "files": [
+    "md_wac_S000_JT00_2016.csv.gz",
+    "md_xwalk.csv.gz",
+    "<st>_wac_S000_JT00_2017.csv.gz (st = md, dc, va, pa, de, wv)"
+   ],
+   "notes": [
+    "Project location: data/raw/lodes_wac/ (2016 jobs of the synthetic population; job types and high-earning shares of the workplace zones).",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/lodes_wac/\" ../../../data/raw/lodes_wac (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "BLS JOLTS job-openings rate, Maryland",
+   "provider": "U.S. Bureau of Labor Statistics",
+   "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/JTS000000240000000JOR",
+   "how": "BLS public API v1, series JTS000000240000000JOR (Maryland) and JTS000000000000000JOR (U.S.), annual mean of monthly SA values.",
+   "place_in": "00_shared_data/raw/jolts/",
+   "files": [
+    "jolts_bls_api.json"
+   ],
+   "notes": [
+    "URL: API endpoint built from the series ids documented in 2_silo/data_sources.md: verify.",
+    "Project result: 1_vae/vacancy_rate.json."
+   ]
+  },
+  {
+   "name": "ACS PUMS 2014-2018 5-year, household and person files",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www2.census.gov/programs-surveys/acs/data/pums/2018/5-Year/",
+   "how": "Download csv_h<st>.zip and csv_p<st>.zip for st = dc, de, md, pa, va, wv from the 2018 5-Year folder (CSV, not SAS). Variables used: SERIALNO, ST, PUMA, MIGPUMA, MIGSP, POWPUMA, POWSP, MIG, MV, RELP, AGEP, ESR, JWMNP, SCHG, NP, TYPE, BDSP, BLD, TEN, GRNTP, SMOCP, VALP, HINCP, VEH, YBL, WGTP; ADJINC (income adjustment) and ADJHSG (housing-cost adjustment) are columns of the same files.",
+   "place_in": "00_shared_data/raw/acs_pums_2014_2018_5yr/",
+   "files": [
+    "csv_hdc.zip",
+    "csv_hde.zip",
+    "csv_hmd.zip",
+    "csv_hpa.zip",
+    "csv_hva.zip",
+    "csv_hwv.zip",
+    "csv_pdc.zip",
+    "csv_pde.zip",
+    "csv_pmd.zip",
+    "csv_ppa.zip",
+    "csv_pva.zip",
+    "csv_pwv.zip"
+   ],
+   "notes": [
+    "URL: the folder of the documented 2019 and 2024 5-Year files (2_silo/data_sources.md) with the year 2018: verify.",
+    "The package copy is 00_shared_data/acs_pums_2014_2018_5yr/ (project: ../inputs/pums_2018_5yr/). The package scripts read the package copy; replace its files by your download."
+   ]
+  }
+ ],
+ "steps": [
+  {
+   "step": 1,
+   "what": "Synthetic population, VAE generation (upstream project stage; output provided (redo only for a rebuild from raw data; writes into the project folders: back them up first)); the generative model is in the Updated VAE project outside Validation_2026",
+   "cwd": "../../../../Updated VAE",
+   "command": "see the README of that project (steps 01-04: preprocessing of ACS PUMS, training, generation)",
+   "reads": [
+    "ACS PUMS (pums5_2018)",
+    "zone system (mstm)"
+   ],
+   "creates": [
+    "../Updated VAE/outputs/04_generated/hh.parquet, pp.parquet"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 2,
+   "what": "Synthetic population 2016, corrections, jobs, workplaces, dwellings, vacancies (upstream project stage; output provided (redo only for a rebuild from raw data; writes into the project folders: back them up first))",
+   "cwd": "../../../1_vae",
+   "command": "/opt/homebrew/anaconda3/bin/python3 zone_weights_2020.py && /opt/homebrew/anaconda3/bin/python3 zone_weights_2016.py && /opt/homebrew/anaconda3/bin/python3 rebalance_population.py && /opt/homebrew/anaconda3/bin/python3 employment_2016_lodes.py && /opt/homebrew/anaconda3/bin/python3 workplace_balanced.py && /opt/homebrew/anaconda3/bin/python3 export_silo_base.py && /opt/homebrew/anaconda3/bin/python3 zone_vacancy_2016.py && /opt/homebrew/anaconda3/bin/python3 market_vacancy_2016.py",
+   "reads": [
+    "census2010",
+    "census2020 (Maryland 2020 block housing, data/raw/census2020/)",
+    "lodes",
+    "jolts (1_vae/vacancy_rate.json)",
+    "rts (rts_trips_clean.csv)",
+    "pums5 2013-2017 Maryland (market vacancies)"
+   ],
+   "creates": [
+    "1_vae/output/*",
+    "1_vae/vae_outputs/06_silo_input/{hh,pp,dd,jj}_2016.csv"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 3,
+   "what": "SILO base-year microdata (upstream project stage; output provided (redo only for a rebuild from raw data; writes into the project folders: back them up first))",
+   "cwd": "../../../2_silo/input_build",
+   "command": "/opt/homebrew/anaconda3/bin/python3 build_microdata.py && /opt/homebrew/anaconda3/bin/python3 build_base_v2.py",
+   "reads": [
+    "1_vae outputs"
+   ],
+   "creates": [
+    "2_silo/input/microData/{hh,pp,dd,jj}_2016*.csv; copy dd_2016.csv and hh_2016.csv to 00_shared_data/synthetic_population_2016/"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 4,
+   "what": "School inventory 2016 by zone and band (upstream project stage; output provided (redo only for a rebuild from raw data; writes into the project folders: back them up first))",
+   "cwd": "../../../2_silo/schools",
+   "command": "/opt/homebrew/anaconda3/bin/python3 -I build_schools.py",
+   "reads": [
+    "nces",
+    "ipeds",
+    "mstm zone polygons"
+   ],
+   "creates": [
+    "2_silo/input/schools_2016.csv"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 5,
+   "what": "Attendance boundaries: in-boundary public enrolment by home zone (package copy; writes 00_shared_data/school_choice_work/sabs_*.parquet). Reads data/raw/sabs, data/raw/census2010, data/raw/census2020_pl_dc_va_wv through sc_common.RAW (project data/raw)",
+   "cwd": "input/code",
+   "command": "/opt/homebrew/anaconda3/bin/python3 sc_00_sabs.py",
+   "reads": [
+    "sabs",
+    "census2010",
+    "census2020",
+    "schools_2016.csv"
+   ],
+   "creates": [
+    "../../../00_shared_data/school_choice_work/sabs_home_school.parquet, sabs_zone_cov.parquet"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 6,
+   "what": "Students, home and school location mixtures, enrolment by zone (package copy; writes 00_shared_data/school_choice_work/*.parquet)",
+   "cwd": "input/code",
+   "command": "/opt/homebrew/anaconda3/bin/python3 sc_01_data.py",
+   "reads": [
+    "rts",
+    "taz",
+    "tiger tracts 2010",
+    "census2010",
+    "ipeds",
+    "schools_2016.csv",
+    "data/taz_*_to_mstm.csv",
+    "2_silo/jobchoice/work_rts/tract_split_*.parquet"
+   ],
+   "creates": [
+    "../../../00_shared_data/school_choice_work/students.parquet, loc_home.parquet, loc_school.parquet, school_points.parquet, zone_size.parquet"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 7,
+   "what": "input_check, part 1: keep a copy of the provided estimation and hold-out tables",
+   "cwd": "input/data",
+   "command": "rm -rf provided_estimation provided_holdout && cp -R estimation provided_estimation && cp -R holdout provided_holdout",
+   "reads": [],
+   "creates": [
+    "input/data/provided_estimation/",
+    "input/data/provided_holdout/"
+   ],
+   "output_provided": false,
+   "minutes": 0.1,
+   "memory_gb": 0.1
+  },
+  {
+   "step": 8,
+   "what": "Build the estimation and hold-out tables from the inputs (same calls and random draws as the original run; asserts that the LL at the original estimates is reproduced)",
+   "cwd": "input/code",
+   "command": "~/.venvs/biogeme/bin/python build_estimation_data.py",
+   "reads": [
+    "00_shared_data/school_choice_work/*",
+    "00_shared_data/skims/auto_peak_time.csv.gz",
+    "00_shared_data/zone_system/zoneSystem.csv",
+    "2_silo/schoolchoice/work/logsum.npy (original location, loaded at import, not used)",
+    "../data/raw/l07_school_*_coef.csv, _fit.csv"
+   ],
+   "creates": [
+    "../data/estimation/*",
+    "../data/holdout/*"
+   ],
+   "output_provided": true,
+   "minutes": 0.2,
+   "memory_gb": 1.2
+  },
+  {
+   "step": 9,
+   "what": "input_check, part 2: compare the rebuilt tables with the provided ones (rows, column sums, largest difference); must print ALL TABLES MATCH",
+   "cwd": "input/code",
+   "command": "~/.venvs/biogeme/bin/python check_against_provided.py",
+   "reads": [
+    "../data/provided_*",
+    "../data/estimation",
+    "../data/holdout"
+   ],
+   "creates": [],
+   "output_provided": false,
+   "minutes": 0.5,
+   "memory_gb": 1
+  },
+  {
+   "step": 10,
+   "what": "Log-likelihood at the article coefficients (no estimation, nothing written)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_school_location_K8.py --check",
+   "reads": [
+    "../input/data/estimation/*"
+   ],
+   "creates": [],
+   "output_provided": false,
+   "minutes": 33.1,
+   "memory_gb": 4.2
+  },
+  {
+   "step": 11,
+   "what": "Biogeme estimation, start values = article estimates",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_school_location_K8.py",
+   "reads": [
+    "../input/data/estimation/*"
+   ],
+   "creates": [
+    "../output/<model>.html",
+    "../output/<model>.yaml",
+    "../output/<model>_estimates.csv",
+    "../output/biogeme.toml"
+   ],
+   "output_provided": false,
+   "minutes": "not run: many hours expected",
+   "memory_gb": "well above 8 (not run)"
+  },
+  {
+   "step": 12,
+   "what": "Compare the estimates with the article (reference_estimates.csv)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python compare_with_reference.py",
+   "reads": [
+    "../output/<model>_estimates.csv",
+    "reference_estimates.csv"
+   ],
+   "creates": [
+    "../output/comparison_with_article.csv"
+   ],
+   "output_provided": false,
+   "minutes": 0.1,
+   "memory_gb": 0.2
+  }
+ ],
+ "check": {
+  "article_LL": -2941.0,
+  "biogeme_LL_at_article_coefficients": -2941.0295,
+  "biogeme_LL_at_full_precision_estimates": null,
+  "N": 1509,
+  "K": 9
+ },
+ "notes": [
+  "Full choice set (no sampling): all zones with enrolment of the segment; an alternative is available when it has enrolment of the student's own band.",
+  "Location mixture: the survey home and school locations can each spread over several model zones (weights w_h, w_c). L_n = sum_h sum_c w_h w_c exp(V_hc) / sum_j av_hj exp(V_hj), written with Biogeme's WeightedLogSumExp (exact).",
+  "Size term mu ln(sum_k exp(g_k) N_k + 1e-12) with the first enrolment component as reference (weight 1), as in the original estimator.",
+  "Variables in single precision, as the original estimator computes them (t, ln(1+t), shares).",
+  "The data are stored in long format (students, alternatives, candidates); the script makes the wide table itself.",
+  "Memory: the estimation compiles the analytical Hessian of the whole expression (JAX). Options that change only how derivatives are computed, not the model (not tested here): in ../output/biogeme.toml set analytical_hessian_mode = \"chunked\" (with a smaller hessian_memory_fraction), or calculating_second_derivatives = \"finite_differences\". Run the school models alone, with the Java jobs stopped.",
+  "Steps with output_provided = true can be skipped: their results are in input/data or 00_shared_data. Upstream project stages were not re-run for this package; their runtimes are not measured.",
+  "Measured here: --check 1985 s, 4.2 GB; estimation NOT run: the smallest school model (college) already needed more than 8.4 GB and 31 min without finishing; the K-8 expression is 32 times larger (4 x 1,144 utilities). Expect several hours and tens of GB; probably not feasible on this machine while the Java jobs run.",
+  "Environment: Biogeme scripts and package build scripts run with ~/.venvs/biogeme/bin/python (Biogeme 3.3.5); project scripts with /opt/homebrew/anaconda3/bin/python3 (needs geopandas)."
+ ]
+}

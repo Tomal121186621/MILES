@@ -1,0 +1,37 @@
+# Data for the network step (verified 2026-10-21)
+
+"Verified" = the URL answered on 2026-10-21 and the file was downloaded by the script named. Downloads live in `Validation_2026/data/raw/<source>/`
+(never edited by hand; each folder carries a manifest or download log); scripts that read them are kept in this folder and are run with `python3 -I`.
+
+| Dataset | Use | Date of the data | Location | Script | Status |
+|---|---|---|---|---|---|
+| OpenStreetMap, Maryland extract (Geofabrik `maryland-latest.osm.pbf`) | road geometry, highway class, lanes, maxspeed, one-way, motorway_junction exit refs | replication timestamp 2026-06-11T20:21:44Z (file dated 2026-06-12) | `inputs/osm/maryland-latest.osm.pbf` (212 MB); way tags extracted to `I695_pricing/data/network_v8/osm_way_tags.csv` | `I695_pricing/12_corridor_fit/osm_way_tags.py`; converter config `Updated MATSim/input/network/osm_convert_config.xml` (pt2matsim, EPSG:26985) | on this Mac |
+| Supply network (MATSim) | starting point of `network_2024` / `network_2026` | built 2026-10-21 from the extract above | `I695_pricing/data/network_v8_supply.xml.gz` (214,599 nodes, 473,133 links) | `I695_pricing/12_corridor_fit/build_network_v8.py` | on this Mac |
+| MDOT SHA Roadway Functional Classification | functional class of every link; ramp inventory of I-695 (exit and ramp numbers) | layer last edited 2025-12-19 (service metadata) | `data/raw/mdot_sha/functional_class.geojson` (69,501 features, study-area extent) | `fetch_mdot.py` | verified |
+| MDOT SHA Roadway Interchange Exits | exit points of I-95 and I-695 (selectors of the change list, interchange check) | layer last edited 2021-11-02 | `data/raw/mdot_sha/interchange_exits.geojson` (525 points) | `fetch_mdot.py` | verified |
+| MDOT SHA Roadway Lane Mileage | through lanes per segment | layer last edited 2021-11-19 | `data/raw/mdot_sha/lane_mileage.geojson` (85,104 segments) | `fetch_mdot.py` | verified |
+| MDOT SHA Roadway Sign Inventory, posted speed-limit signs | posted speed limits on state routes | layer last edited 2026-08-13 | `data/raw/mdot_sha/speed_limit_signs.geojson` (7,080 signs, study-area extent) | `fetch_mdot.py` | verified |
+| MDOT SHA Project Portal (construction and completed projects) | change list between 2024 and 2026 | layer last edited 2026-10-19 | `data/raw/mdot_sha/projects_construction.geojson` (200), `projects_completed.geojson` (1,234) | `fetch_mdot.py` | verified |
+| MDOT SHA Annual Average Daily Traffic, statewide stations 2015-2024 | count stations, functional system, lanes, directional split; the held-out split | AADT through 2024 (service last updated 2026-08-27) | `I695_pricing/data/mdot_aadt_statewide_2015-2024.geojson` (8,189 stations; 3,797 in the six counties) | `match_count_stations.py` | on this Mac |
+| Baltimore-region county boundaries | study area (Anne Arundel, Baltimore, Baltimore City, Carroll, Harford, Howard) | - | `Updated MATSim/data/bmr_counties.gpkg` | `netio.study_area()` | on this Mac |
+| MTA Maryland GTFS static feeds: local bus, light rail, metro, MARC, commuter bus | transit routes and headways (check against the published schedule); input of the MATSim transit schedule | local bus feed version 2026-08-21, valid 2026-08-21 to 2027-02-06; rail and commuter feeds valid through 2026-12-31 | `data/raw/mta_gtfs/mta_<feed>.zip` (download log `download_2026-10-21.log`) | `fetch_gtfs.sh`; check `check_transit.py` -> `TRANSIT.md` | verified (https://feeds.mta.maryland.gov/gtfs/<feed>, served from mdotmta-gtfs.s3.amazonaws.com) |
+| GTFS of the regional operators in the network area (14 agencies; coverage table in `../transit/TRANSIT_BUILD.md`) | MATSim transit schedule and transit skims beyond the MTA services | per feed (calendar ranges in `../transit/gtfs_merged/manifest.json`): current on 2026-10-21 for RTA, WMATA rail and bus, Ride On, TheBus, Amtrak, Harbor Connector, Towson Loop; ended before 2026-10-21 (latest feed published, used on its last Wednesday) for Charm City Circulator (2025-12-31), Annapolis Transit (2026-09-30), Anne Arundel County Transit (2023-12-31), Harford Transit LINK (2022-12-31), Carroll Transit (2022-01-31) | `data/raw/<agency>/<agency>_gtfs.zip`, one folder per agency, each with `download_2026-10-22.log` (try, HTTP code, bytes, effective URL, sha256) | `../transit/fetch_gtfs_regional.sh` (official URL first, then the Mobility Database mirror `files.mobilitydatabase.org/<id>/latest.zip`; WMATA's own URLs need an API key, HTTP 401) | verified 2026-10-22 |
+| Mobility Database feed catalog (`feeds_v2.csv`) | list of the GTFS feeds of Maryland and DC operators, their official URLs and ids | catalog read 2026-10-22 | `data/raw/mobilitydatabase/feeds_v2.csv` (6,686 feeds) | curl, https://files.mobilitydatabase.org/feeds_v2.csv | verified |
+| Published MTA route list | route-count check | page read 2026-10-21 | https://www.mta.maryland.gov/schedule | `check_transit.py` (counts typed from the page, stated in `TRANSIT.md`) | verified |
+| Key Bridge closure and replacement schedule | change list | 2024-03-26 (closure), 2024-05-31 (RFP: completion fall 2028), 2025-12 (community update: late 2030) | MVA/MDTA traffic alert; MDTA news release; Dundalk Eagle report (URLs in `changes_2024_2026.csv`) | `build_networks.py` | verified |
+| I-95 northbound Express Toll Lanes extension | change list (MD 43 to MD 152 opened December 2024; MD 152 to MD 24 expected end of 2027) | page read 2026-10-21 | https://mdta.maryland.gov/I95ETLNB/home.html | `build_networks.py` | verified |
+| I-695 part-time shoulder use, I-70 to MD 43 (MDOT SHA BA0065172) | change list (not open in 2024 or 2026) | news report 2026-08-25; SHA release 2023-09-27 | URLs in `changes_2024_2026.csv` | `build_networks.py` | verified |
+| NPMRDS probe speeds (RITIS, 2024) | free-flow and congested speed check of the network | - | not downloaded: account and data request required (`Updated MATSim/data/npmrds_2023/README_ACCESS.md`) | - | **open** |
+
+## Files produced in this folder
+
+| File | Content |
+|---|---|
+| `network_2024.xml.gz`, `network_2026.xml.gz` | the two target-year networks (`build_networks.py`, log in `build_networks.log`) |
+| `SPEED_CAPACITY.md`, `link_speed_capacity_2024.csv.gz`, `speed_capacity_summary_2024.csv` | free speed and capacity of the surface-street classes of network_2024, recoded 2026-11-02 from posted speeds (OSM maxspeed, MDOT SHA signs) and the MATSim OSM reader defaults (`recode_speed_capacity.py`); the earlier files are kept as `network_2024_pre_speed.xml.gz` and `../transit/network_2024_pt_pre_speed.xml.gz` |
+| `changes_2024_2026.csv`, `changes_2024_2026_links.csv` | the change list with sources and the link ids it touches |
+| `NETWORK_AUDIT.md` | link-by-link audit against MDOT (`audit_network.py`; tables in `../../data/network_audit_*.csv`) |
+| `TRANSIT.md` | GTFS feed check (`check_transit.py`; tables in `../../data/transit_gtfs_*.csv`) |
+| `../transit/` | MATSim transit schedules, vehicles and transit networks of 2024 and 2026 built with pt2matsim from all GTFS feeds of the network area (`../transit/TRANSIT_BUILD.md`) |
+| `../../data/count_stations_matched.csv`, `../../data/count_stations_split.csv` | station-to-link match table and the seeded calibration-check / held-out split (`match_count_stations.py`) |
+| `../figures/fig_net_*.pdf/.png` | paper figures (`figures_network.py`), registered in `5_reports/figure_list.md` |

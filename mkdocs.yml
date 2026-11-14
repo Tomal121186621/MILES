@@ -1,0 +1,130 @@
+site_name: ORIOLE
+site_description: Integrated population, land-use, activity and traffic simulation for Maryland
+site_author: Raas Sarker Tomal
+repo_url: https://github.com/Tomal121186621
+repo_name: Tomal121186621
+copyright: Copyright &copy; 2026 Raas Sarker Tomal, Center for Multimodal Mobility, University of Maryland
+
+theme:
+  name: material
+  logo: assets/img/logo.svg
+  favicon: assets/img/logo.svg
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: default
+      primary: custom
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Dark mode
+    - scheme: slate
+      primary: custom
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - navigation.instant
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+extra_javascript:
+  - assets/javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Tomal121186621
+    - icon: fontawesome/solid/envelope
+      link: mailto:rtomal@umd.edu
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - def_list
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Home: index.md
+  - Get started:
+      - get-started/index.md
+      - Installation: get-started/installation.md
+      - Repository layout: get-started/repository.md
+      - Run the chain: get-started/running.md
+      - Runtime and storage: get-started/runtime.md
+  - Model design:
+      - model-design/index.md
+      - Synthetic population: model-design/population.md
+      - Land use: model-design/landuse.md
+      - School location: model-design/schools.md
+      - Activities (ORIOLE-Day): model-design/activity.md
+      - Traffic assignment: model-design/assignment.md
+  - Inputs and outputs:
+      - inputs-outputs/index.md
+      - Input data: inputs-outputs/inputs.md
+      - Zone system and networks: inputs-outputs/zones-networks.md
+      - Configuration: inputs-outputs/configuration.md
+      - Outputs: inputs-outputs/outputs.md
+  - Applying ORIOLE:
+      - applying/index.md
+      - Scenarios: applying/scenarios.md
+      - Case study, I-695 pricing: applying/i695.md
+  - Calibration and validation:
+      - calibration-validation/index.md
+      - Estimation: calibration-validation/estimation.md
+      - Calibration: calibration-validation/calibration.md
+      - Validation: calibration-validation/validation.md
+      - Against standard methods: calibration-validation/baselines.md
+      - Known limitations: calibration-validation/limitations.md
+  - Developers:
+      - developers/index.md
+      - Population code: developers/population.md
+      - SILO engine changes: developers/silo.md
+      - ORIOLE-Day engine: developers/activity.md
+      - MATSim runner: developers/matsim.md
+      - Pipeline: developers/pipeline.md
+      - Estimation package: developers/estimation-package.md
+  - About:
+      - about/index.md
+      - Team: about/team.md
+      - Publications: about/publications.md
+      - Glossary: about/glossary.md
+      - References: about/references.md

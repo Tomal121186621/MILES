@@ -1,0 +1,7 @@
+purpose,hh.total,jj.total,jj.retail,jj.office,jj.other,students
+WORK,0.0,1.0,0.0,0.0,0.0,0.0
+EDUCATION,0.0,0.0,0.0,0.0,0.0,1.0
+SHOPPING,0.1,0.0,1.0,0.0,0.0,0.0
+RECREATION,1.0,0.25,0.5,0.0,0.0,0.0
+ACCOMPANY,1.0,0.0,0.0,0.0,0.0,1.0
+OTHER,1.0,1.0,0.0,0.0,0.0,0.0

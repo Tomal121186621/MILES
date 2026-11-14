@@ -1,0 +1,43 @@
+column,definition,unit,source
+tours.parquet: vot,"value of time used in gc: 0.5 x household income / 2,080 h (income floored at $5,000)",$/h,mc_common.features2
+tours.parquet: gc_CD,round-trip generalised cost of car driver: car minutes + 60 x (km x 0.1112 $/km) / vot,min,mc_common.features2
+tours.parquet: gc_CP,round-trip car minutes (car passenger pays nothing),min,mc_common.features2
+tours.parquet: gc_BUS,round-trip bus door-to-door minutes + 60 x fare / vot (0 if not available),min,mc_common.features2
+tours.parquet: gc_TRAIN,round-trip train minutes (walk or drive access) + 60 x fare / vot (0 if not available),min,mc_common.features2
+tours.parquet: km,round-trip car-distance skim (intrazonal 0.5 sqrt(area)),km,car distance skim 2016
+tours.parquet: age,age of the person (joint: of the representative),years,survey population
+tours.parquet: male,man,0/1,survey population
+tours.parquet: lic,driving licence,0/1,survey population
+tours.parquet: hhsize,household size,persons,survey population
+tours.parquet: autos,household cars,cars,survey population
+tours.parquet: core_o,home zone in a core city (BBSR 10),0/1,zone table
+tours.parquet: rural_o,home zone rural (BBSR 40),0/1,zone table
+tours.parquet: core_d,main-activity zone in a core city,0/1,zone table
+tours.parquet: rural_d,main-activity zone rural,0/1,zone table
+tours.parquet: av_CD,"car driver available: licence, household car, age >= 16, not blocked by the household car allocation (m10_car_availability)",0/1,"prep_tours, m06_literature.data"
+tours.parquet: av_CP,car passenger available,0/1,prep_tours
+tours.parquet: av_BUS,bus available: a walk-access path in both halves,0/1,prep_tours
+tours.parquet: av_TRAIN,train available: walk- or drive-access path in both halves,0/1,prep_tours
+tours.parquet: av_WK,walk available: round trip <= 12 km,0/1,prep_tours
+tours.parquet: av_BK,bike available: round trip <= 50 km,0/1,prep_tours
+tours.parquet: y,"chosen mode: 1 car driver, 2 walk, 3 bike, 4 car passenger, 5 bus, 6 train",code,RTS tour mode
+tours.parquet: drivers,household members with a licence,persons,survey population
+tours.parquet: joint,joint household tour,0/1,RTS / tasha_distributions
+tours.parquet: inc_year,household income,USD per year,survey population
+tours.parquet: stops,tour with at least one intermediate stop,0/1,RTS tours
+tours.parquet: t_CD,round-trip car minutes (period skims),min,mode_choice_periods skims
+tours.parquet: c_CD,round-trip car operating cost (km x 0.1112),$,mc_common
+tours.parquet: t_CP,round-trip car minutes,min,period skims
+tours.parquet: c_CP,car passenger cost (0),$,mc_common
+tours.parquet: t_BUS,round-trip bus minutes (0 if not available),min,transit period skims
+tours.parquet: c_BUS,round-trip bus fare,$,mc_common.fare_rule
+tours.parquet: t_TRAIN,round-trip train minutes (0 if not available),min,transit period skims
+tours.parquet: c_TRAIN,round-trip train fare,$,mc_common.fare_rule
+tours.parquet: ovt_BUS,out-of-vehicle time of bus (not in the final models),min,m06_literature.data
+tours.parquet: ovt_TRAIN,out-of-vehicle time of train (not in the final models),min,m06_literature.data
+tours.parquet: park,share of drivers who paid for parking in the destination area (estimation half),share,00_shared_data/mode_choice_inputs/parking_paid_share.csv
+tours.parquet: short,fewer cars than drivers (not in the final models),0/1,estimate_hh.prep
+tours.parquet: acc,accompanying tour,0/1,estimate_hh.prep
+tours.parquet: rec,recreation tour,0/1,estimate_hh.prep
+tours.parquet: kids,household has a member under 18,0/1,m07_children.data
+tours.parquet: choice,chosen mode label (CD WK BK CP BUS TRAIN); not used by Biogeme,label,RTS tour mode
