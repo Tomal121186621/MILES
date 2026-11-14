@@ -16,6 +16,15 @@ Students assigned to schools in every simulated year, against the survey student
   <figcaption>Schools, 2024 (2016 where stated). (a) students by age, 2024; (b) car time to school, 2024; (c) car time to school, 2016; (d) school in home county, 2024; (e) school zone holds the attendance-zone school, 2024; (f) car time to school, K–8, 2024; (g) car time to school, high school, 2024; (h) car time to school, college, 2024.</figcaption>
 </figure>
 
+## Why the car time to school is too long
+
+The assigned schools are 1 to 4 minutes farther than the schools of the survey students (2024: K–8 14.9 against
+13.7 min, high school 17.5 against 15.7, college 34.7 against 30.3). Most of the gap is present in the base year (2016:
+14.9, 16.8 and 33.0 min), and it grows slowly for high school and college as the population moves while the school
+inventory and its capacities stay fixed. Enrolment is an upper limit, enforced by shadow prices, so students who do not
+find a seat at a near school are sent to a farther one. The observed times are those of the 2017/18 survey students,
+so the 2024 comparison also carries seven years of change in where students live.
+
 ## Scorecard
 
 <div class="vsum"><b>8</b> comparisons · <span class="vb ok">1 within</span> <span class="vb close">5 close</span> <span class="vb out">2 outside</span></div>

@@ -71,6 +71,31 @@ The land-use model is calibrated on 2017–2020 and tested **out of sample on 20
 
 Model: mean of five seeds; calibration window 2017–2020, out-of-sample years 2021–2024.
 
+## Why some comparisons are outside
+
+**Home-county workplace share by county** (MAPE 45 %). The model keeps 41–90 % of each county's employed residents
+working in their home county, against 24–72 % in LODES; the difference averages 18.6 points and is the same in the base
+year (17.2 points in 2016), so it does not grow during the simulation. The two measure different things: LODES counts
+*jobs* from employer records, and multi-establishment employers can report jobs at one address; the model's workplace
+choice is estimated on the travel survey, which records where *workers* go. Against the ACS, which also asks workers,
+the commute agrees: county-to-county flows correlate at 0.995, and the 2024 activity model sends 54.4 % of commuters to
+their home county or county group against 54.0 % in the ACS. The large relative error also comes from small counties:
+in Caroline the LODES share is 24 %, so a 28-point gap is a 118 % error.
+
+**Dwelling vacancy by county** (MAPE 86 %). This is a weakness of the land-use model. County populations are held to the
+Census estimates and new dwellings follow the county building permits, so vacancy is what is left between the two.
+Where the residential-location model sends more households than there are dwellings, vacancy runs to zero and the county
+falls short of its population: Carroll (0 % vacant, 5.6 % short of the Census) and Prince George's (0 %, 2.5 % short).
+Where it sends fewer, vacant dwellings accumulate: Howard 10.4 % and Baltimore City 7.7 % against 2.3 % and 4.9 % in the
+ACS. In percentage points the average difference is about 2 points; the percentage error is large because vacancy rates
+are small (0 against 2.6 % counts as 100 %). Construction does not respond to vacancy, and prices respond too weakly to
+rebalance demand across counties.
+
+**Vacant share of jobs** (imposed; MAPE 20 %). Jobs follow the job inputs (LODES, QCEW) year by year, while employment is
+aligned to the ACS rate of the year before the simulated year. The vacancy is the difference, so it inherits that lag:
+in 2021 the model leaves 2.7 % of jobs vacant against 7.0 % in JOLTS, when openings surged after the pandemic, a surge
+that is in no input. By 2024 the two are close again (5.5 against 5.1 %).
+
 ## Scorecard
 
 <div class="vsum"><b>36</b> comparisons · <span class="vb ok">22 within</span> <span class="vb close">8 close</span> <span class="vb out">6 outside</span></div>
