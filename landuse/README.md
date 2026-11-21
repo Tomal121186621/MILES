@@ -63,8 +63,9 @@ Other folders:
   (`test_assignment.py`); `schools/parameters/` holds a copy of the estimated school coefficients.
 - `lib/residential/`, `lib/jobchoice/`: shared code of the residential location and workplace choice models.
 - `calibration/targets_construction.py`, `fetch_data.py`: calibration targets.
-- `engine_inputs/`: copy of the small engine input tables (coefficient files and configuration). The `residential_county_*`,
-  `residential_zone_attributes.csv`, `residential_zone_dwelling_coefficients.csv` and `resloc_*` files belong to the earlier three-level residential model.
+- `engine_inputs/`: copy of the small engine input tables (coefficient files and configuration). The input files of the earlier
+  three-level residential model (`residential_county_*`, `residential_zone_attributes.csv`, `residential_zone_dwelling_coefficients.csv`,
+  `resloc_*`) were removed; they remain in the git history and are not read when `resloc.twolevel = true`.
 - `engine/`: engine source changes (`src/`, `silo_changes.patch`).
 
 Run every script from the repository root, e.g. `python landuse/run/run_seeds.py 5 2`.

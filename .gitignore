@@ -9,3 +9,4 @@ site/
 *.csv.gz
 *.omx
 miles.toml
+*.egg-info/

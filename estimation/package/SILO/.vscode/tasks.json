@@ -17,9 +17,9 @@
       }
     },
     {
-      "label": "SILO: 03_residential_dwelling",
+      "label": "SILO: 02_residential_dwelling",
       "type": "shell",
-      "command": "./run_model.sh 03_residential_dwelling",
+      "command": "./run_model.sh 02_residential_dwelling",
       "presentation": {
         "reveal": "always",
         "panel": "dedicated",
@@ -28,20 +28,9 @@
       "problemMatcher": []
     },
     {
-      "label": "SILO: 02_residential_zone_structure_type",
+      "label": "SILO: 01_residential_puma",
       "type": "shell",
-      "command": "./run_model.sh 02_residential_zone_structure_type",
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated",
-        "clear": true
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "SILO: 01_residential_county",
-      "type": "shell",
-      "command": "./run_model.sh 01_residential_county",
+      "command": "./run_model.sh 01_residential_puma",
       "presentation": {
         "reveal": "always",
         "panel": "dedicated",

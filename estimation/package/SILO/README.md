@@ -3,8 +3,7 @@
 Each estimated SILO-side model of the Baltimore chain, as published in the article (the specification the engine runs use),
 with its exact estimation data, a Biogeme script and the article estimates for comparison. The Route B revisions of
 13 November 2026 are not in this package (they are in `../CLAUDE_TABLES/SILO/route_B_2026-11-13`). The residential location
-models (01, 02) are the two-level model of the estimation document; the SILO code for it is not written yet, so the engine
-runs still use the former model. The workplace model (05) is the simplified 25-parameter model of the estimation document
+models (01, 02) are the two-level model of the estimation document, which the engine runs use. The workplace model (05) is the simplified 25-parameter model of the estimation document
 (the former 35-parameter scripts and data are in `05_workplace_choice/_former_35_parameter_model/`).
 
 | Folder | Model | Table | N | Alternatives |
@@ -19,8 +18,8 @@ runs still use the former model. The workplace model (05) is the simplified 25-p
 
 The residential location model has two levels (PUMA, then dwelling within the PUMA), estimated on ACS PUMS 2014-2018 movers
 only. It replaces the former three-level model (county, zone x structure type, dwelling), whose folders
-`01_residential_county`, `02_residential_zone_structure_type` and `03_residential_dwelling` are kept unchanged in
-`_superseded_1117/` (their relative paths to `00_shared_data` need one more `../` there). There is no folder 03; the other
+`01_residential_county`, `02_residential_zone_structure_type` and `03_residential_dwelling` were removed from this
+repository (they remain in its git history). There is no folder 03; the other
 folders keep their numbers. The PUMA level uses a crosswalk in which every zone has a PUMA (zones without a 2010 tract
 internal point by their centroid) and a market size M = dwelling stock x fixed PUMA turnover rate; density x household type and income and a core-city share
 correct the city-vs-suburb bias; see

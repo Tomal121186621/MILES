@@ -30,7 +30,7 @@
   }
  ],
  "notes": [
-  "Models 04 to 08 do not depend on each other or on 01 and 02; any order works. There is no folder 03 (the former three-level residential model is in _superseded_1117/).",
+  "Models 04 to 08 do not depend on each other or on 01 and 02; any order works. There is no folder 03 (the former three-level residential model was removed; it remains in the git history).",
   "If you re-estimate 02 and want the PUMA model on your own inclusive values, rebuild the PUMA data with DWELLING_ESTIMATES=<your 02 estimates csv> (see 01_residential_puma/input/code/README.md) before running 01."
  ]
 }
