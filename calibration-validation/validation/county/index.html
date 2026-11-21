@@ -712,6 +712,8 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2337,49 +2367,10 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </li>
       
         <li class="md-nav__item">
-  <a href="#land-use-2024" class="md-nav__link">
+  <a href="#land-use-2024-and-all-stages-in-the-study-counties" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Land use, 2024
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Land use, 2024">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#every-variable-in-the-study-counties_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Every variable in the study counties
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#population-jobs-and-workplaces" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Population, jobs and workplaces
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#all-stages-in-the-study-counties" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        All stages in the study counties
+        Land use, 2024, and all stages in the study counties
       
     </span>
   </a>
@@ -2643,7 +2634,7 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2997,49 +2988,10 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </li>
       
         <li class="md-nav__item">
-  <a href="#land-use-2024" class="md-nav__link">
+  <a href="#land-use-2024-and-all-stages-in-the-study-counties" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Land use, 2024
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Land use, 2024">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#every-variable-in-the-study-counties_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Every variable in the study counties
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#population-jobs-and-workplaces" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Population, jobs and workplaces
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#all-stages-in-the-study-counties" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        All stages in the study counties
+        Land use, 2024, and all stages in the study counties
       
     </span>
   </a>
@@ -3133,18 +3085,34 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 
 
 <h1 id="county-view">County view<a class="headerlink" href="#county-view" title="Permanent link">¶</a></h1>
-<p>The validation of every stage, county by county: all 24 Maryland counties for the population and land use, and the six
-counties of the study area (Baltimore City and the counties of Baltimore, Anne Arundel, Howard, Harford and Carroll) for
-every stage.</p>
-<div class="admonition info">
-<p class="admonition-title">How to read the figures</p>
-<p>Heatmaps: total variation distance between the model and the ACS for each county and variable, in percentage points;
-bold above the 5 pp limit. The six study counties are above the line. Bars: orange model, dark grey observed. County
-samples of the ACS are small, so differences of a few points in the smaller counties are within its sampling error.</p>
+<p>The validation county by county: all 24 Maryland counties for the synthetic population, with every variable shown for the
+six counties of the study area (Baltimore City and the counties of Baltimore, Anne Arundel, Howard, Harford and Carroll).</p>
+<div class="miles-key">
+<div class="miles-key-sw"><span><i style="background:#e8811a"></i>Model</span><span><i style="background:#3b4252"></i>Observed (ACS)</span></div>
+<table>
+<thead>
+<tr>
+<th>Figure</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Heatmap</td>
+<td>total variation distance (TVD) between model and ACS for each county and variable, in percentage points: the share of households (or persons) that would have to change class to match the ACS; darker = larger; the six study counties (bold) are above the line</td>
+</tr>
+<tr>
+<td>Bars by county</td>
+<td>the distribution of one variable in each study county, model next to ACS</td>
+</tr>
+</tbody>
+</table>
+<p>County samples of the ACS are small: differences of a few points in the smaller counties are within its sampling error.</p>
 </div>
 <h2 id="synthetic-population-2016">Synthetic population, 2016<a class="headerlink" href="#synthetic-population-2016" title="Permanent link">¶</a></h2>
-<p>The base population against the ACS PUMS 2014–2018, by county. <strong>151 of 168</strong> county × variable cells are within 5 pp,
-16 between 5 and 10, one above 10 (household size in Baltimore City, where one-person households are too few).</p>
+<p>The base population against the ACS PUMS 2014–2018, by county. Median TVD over all county × variable cells <strong>1.8 pp</strong>
+(study counties 2.0 pp); by variable from 0.4 pp (age, sex) to 3.4 pp (household income). The largest gap is household size in
+Baltimore City, where one-person households are too few.</p>
 <figure>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_heat_population.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_heat_population.png"></a>
   </p>
@@ -3176,225 +3144,9 @@ samples of the ACS are small, so differences of a few points in the smaller coun
 </div>
 </div>
 </div>
-<h2 id="land-use-2024">Land use, 2024<a class="headerlink" href="#land-use-2024" title="Permanent link">¶</a></h2>
-<p>The 2024 population of the land-use model (mean of five seeds) against the ACS PUMS 2024, by county, after eight years of
-simulation. <strong>131 of 168</strong> cells are within 5 pp, 35 between 5 and 10, two above 10.</p>
-<figure>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_heat_landuse.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_heat_landuse.png"></a>
-  </p>
-<figcaption>Land use in 2024 against the ACS PUMS 2024: total variation distance by county and variable.</figcaption>
-</figure>
-<h3 id="every-variable-in-the-study-counties_1">Every variable in the study counties<a class="headerlink" href="#every-variable-in-the-study-counties_1" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:7"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><input id="__tabbed_2_5" name="__tabbed_2" type="radio"><input id="__tabbed_2_6" name="__tabbed_2" type="radio"><input id="__tabbed_2_7" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">Household size</label><label for="__tabbed_2_2">Cars</label><label for="__tabbed_2_3">Household income</label><label for="__tabbed_2_4">Age</label><label for="__tabbed_2_5">Employment, 16+</label><label for="__tabbed_2_6">Sex</label><label for="__tabbed_2_7">Adults 18–34 with parents</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_landuse_household.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_landuse_household.png"></a></p>
-</div>
-<div class="tabbed-block">
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_landuse_cars.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_landuse_cars.png"></a></p>
-</div>
-<div class="tabbed-block">
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_landuse_income.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_landuse_income.png"></a></p>
-</div>
-<div class="tabbed-block">
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_landuse_age.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_landuse_age.png"></a></p>
-</div>
-<div class="tabbed-block">
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_landuse_employed.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_landuse_employed.png"></a></p>
-</div>
-<div class="tabbed-block">
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_landuse_sex.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_landuse_sex.png"></a></p>
-</div>
-<div class="tabbed-block">
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_landuse_adults.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_landuse_adults.png"></a></p>
-</div>
-</div>
-</div>
-<h3 id="population-jobs-and-workplaces">Population, jobs and workplaces<a class="headerlink" href="#population-jobs-and-workplaces" title="Permanent link">¶</a></h3>
-<table>
-<thead>
-<tr>
-<th>County</th>
-<th style="text-align: right;">Persons ÷ Census, 2016</th>
-<th style="text-align: right;">Persons ÷ Census, 2024</th>
-<th style="text-align: right;">Filled jobs ÷ LODES, 2016</th>
-<th style="text-align: right;">Filled jobs ÷ LODES, 2023</th>
-<th style="text-align: right;">Jobs in home county, model / LODES, 2016</th>
-<th style="text-align: right;">Jobs in home county, model / LODES, 2023</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Baltimore City</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.06</td>
-<td style="text-align: right;">1.08</td>
-<td style="text-align: right;">57.2 / 47.4 %</td>
-<td style="text-align: right;">56.3 / 46.2 %</td>
-</tr>
-<tr>
-<td>Baltimore County</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">0.99</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">52.8 / 43.1 %</td>
-<td style="text-align: right;">52.5 / 41.6 %</td>
-</tr>
-<tr>
-<td>Anne Arundel</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.04</td>
-<td style="text-align: right;">1.08</td>
-<td style="text-align: right;">53.9 / 47.0 %</td>
-<td style="text-align: right;">54.7 / 42.9 %</td>
-</tr>
-<tr>
-<td>Howard</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">0.97</td>
-<td style="text-align: right;">42.5 / 33.2 %</td>
-<td style="text-align: right;">41.2 / 32.1 %</td>
-</tr>
-<tr>
-<td>Harford</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.17</td>
-<td style="text-align: right;">1.16</td>
-<td style="text-align: right;">57.4 / 39.0 %</td>
-<td style="text-align: right;">55.4 / 38.8 %</td>
-</tr>
-<tr>
-<td>Carroll</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">0.940</td>
-<td style="text-align: right;">1.01</td>
-<td style="text-align: right;">1.03</td>
-<td style="text-align: right;">43.8 / 33.6 %</td>
-<td style="text-align: right;">44.8 / 32.3 %</td>
-</tr>
-</tbody>
-</table>
-<p>County populations are controlled to the Census estimates; Carroll falls 6 % short in 2024 because the county runs out of
-vacant dwellings. The home-county job share is higher than in LODES in every county. LODES counts jobs rather than workers; the
-comparison with the ACS commute below, which counts workers, is closer.</p>
-<h2 id="all-stages-in-the-study-counties">All stages in the study counties<a class="headerlink" href="#all-stages-in-the-study-counties" title="Permanent link">¶</a></h2>
-<figure>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_composition.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_composition.png"></a>
-  </p>
-<figcaption>(a) Land use 2024 against the ACS 2024: total variation distance of four attributes, with the 5 pp limit; (b) commuters
-  working in their home county, activity model 2024 against the ACS 2024.</figcaption>
-</figure>
-<figure>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/county/fig_county_ratios.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/county/fig_county_ratios.png"></a>
-  </p>
-<figcaption>(a) 2024 persons ÷ Census estimate and filled jobs ÷ LODES 2023; (b) traffic ÷ counts (passenger vehicles,
-  mainline stations) and weekday passenger-vehicle miles ÷ MDOT SHA mileage. Traffic carries residents only.</figcaption>
-</figure>
-<table>
-<thead>
-<tr>
-<th>County</th>
-<th style="text-align: right;">Persons ÷ Census</th>
-<th style="text-align: right;">Filled jobs ÷ LODES</th>
-<th style="text-align: right;">Household size TVD</th>
-<th style="text-align: right;">Cars TVD</th>
-<th style="text-align: right;">Income TVD</th>
-<th style="text-align: right;">Work in home county, model / ACS</th>
-<th style="text-align: right;">Commute flows TVD vs ACS</th>
-<th style="text-align: right;">Count stations</th>
-<th style="text-align: right;">Traffic ÷ counts</th>
-<th style="text-align: right;">Vehicle-miles ÷ MDOT</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Baltimore City</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.08</td>
-<td style="text-align: right;">9.3 pp</td>
-<td style="text-align: right;">1.0 pp</td>
-<td style="text-align: right;">3.5 pp</td>
-<td style="text-align: right;">56.5 / 61.8 %</td>
-<td style="text-align: right;">5.7 pp</td>
-<td style="text-align: right;">572</td>
-<td style="text-align: right;">0.81</td>
-<td style="text-align: right;">0.74</td>
-</tr>
-<tr>
-<td>Baltimore County</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.00</td>
-<td style="text-align: right;">3.7 pp</td>
-<td style="text-align: right;">0.7 pp</td>
-<td style="text-align: right;">3.7 pp</td>
-<td style="text-align: right;">53.1 / 51.7 %</td>
-<td style="text-align: right;">3.7 pp</td>
-<td style="text-align: right;">750</td>
-<td style="text-align: right;">0.83</td>
-<td style="text-align: right;">0.82</td>
-</tr>
-<tr>
-<td>Anne Arundel</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.08</td>
-<td style="text-align: right;">4.3 pp</td>
-<td style="text-align: right;">2.1 pp</td>
-<td style="text-align: right;">6.2 pp</td>
-<td style="text-align: right;">50.9 / 59.9 %</td>
-<td style="text-align: right;">9.2 pp</td>
-<td style="text-align: right;">443</td>
-<td style="text-align: right;">0.81</td>
-<td style="text-align: right;">0.80</td>
-</tr>
-<tr>
-<td>Howard</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">0.97</td>
-<td style="text-align: right;">6.6 pp</td>
-<td style="text-align: right;">2.0 pp</td>
-<td style="text-align: right;">4.8 pp</td>
-<td style="text-align: right;">39.2 / 44.9 %</td>
-<td style="text-align: right;">5.9 pp</td>
-<td style="text-align: right;">178</td>
-<td style="text-align: right;">0.76</td>
-<td style="text-align: right;">0.73</td>
-</tr>
-<tr>
-<td>Harford</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">1.16</td>
-<td style="text-align: right;">3.0 pp</td>
-<td style="text-align: right;">3.0 pp</td>
-<td style="text-align: right;">4.9 pp</td>
-<td style="text-align: right;">54.6 / 56.5 %</td>
-<td style="text-align: right;">2.9 pp</td>
-<td style="text-align: right;">210</td>
-<td style="text-align: right;">0.77</td>
-<td style="text-align: right;">0.75</td>
-</tr>
-<tr>
-<td>Carroll</td>
-<td style="text-align: right;">0.940</td>
-<td style="text-align: right;">1.03</td>
-<td style="text-align: right;">6.9 pp</td>
-<td style="text-align: right;">2.8 pp</td>
-<td style="text-align: right;">8.5 pp</td>
-<td style="text-align: right;">43.3 / 46.6 %</td>
-<td style="text-align: right;">7.6 pp</td>
-<td style="text-align: right;">154</td>
-<td style="text-align: right;">0.97</td>
-<td style="text-align: right;">0.95</td>
-</tr>
-</tbody>
-</table>
-<p>TVD: total variation distance against the ACS 2024. Traffic ÷ counts: passenger vehicles at the mainline count stations of
-the county.</p>
+<h2 id="land-use-2024-and-all-stages-in-the-study-counties">Land use, 2024, and all stages in the study counties<a class="headerlink" href="#land-use-2024-and-all-stages-in-the-study-counties" title="Permanent link">¶</a></h2>
+<p>Results of this section are updated after the final runs. Traffic and vehicle-miles by county are on the
+<a href="../traffic/#regional-traffic">Traffic</a> page.</p>
 
 
 

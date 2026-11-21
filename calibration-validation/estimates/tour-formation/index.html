@@ -712,6 +712,8 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2598,7 +2628,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -3043,13 +3073,13 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 
 
 <h1 id="tour-formation">Tour formation<a class="headerlink" href="#tour-formation" title="Permanent link">¶</a></h1>
-<p>Binary logits that shape the tours of MILES-Day: outings from the workplace, their mode, and returns home between episodes.</p>
+<p>Binary logits that shape the tours of MAST: outings from the workplace, their mode, and returns home between episodes.</p>
 <div class="admonition note">
 <p class="admonition-title">Reading the tables</p>
-<p>Coefficient: maximum-likelihood estimate with robust (sandwich) standard error; *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. The same tables can be re-estimated with Biogeme from the estimation package.</p>
+<p>Coefficient: maximum-likelihood estimate, with significance stars *** p &lt; 0.01, ** p &lt; 0.05, * p &lt; 0.10; robust (sandwich) standard error; two-sided p-value. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. Hold-out: fit on the held-out half of the data, which was also used in the specification search. "Reference": the omitted category; "—": removed from the model.</p>
 </div>
 <h3 id="outing-from-the-workplace">Outing from the workplace<a class="headerlink" href="#outing-from-the-workplace" title="Permanent link">¶</a></h3>
-<p>Binary logit: whether a work episode at the usual workplace contains an outing.</p>
+<p>Whether a work episode at the usual workplace contains at least one outing.</p>
 <div class="estfit"><span>N = 8,613</span><span>K = 8</span><span>LL(β̂) = −3,061.5</span><span>ρ̄² = 0.486</span><span>Hold-out: LL −3,093.2</span></div>
 
 <table>
@@ -3072,7 +3102,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>Constant</td>
 <td style="text-align: right;">−4.6092***</td>
 <td style="text-align: right;">0.5251</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Work episode</em></strong></td>
@@ -3082,7 +3112,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Work duration, 0–4 h (per h)</td>
-<td style="text-align: right;">0.4033**</td>
+<td style="text-align: right;">0.4033***</td>
 <td style="text-align: right;">0.1439</td>
 <td style="text-align: right;">0.005</td>
 </tr>
@@ -3090,11 +3120,11 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>Work duration, 4–7 h (per h)</td>
 <td style="text-align: right;">0.5862***</td>
 <td style="text-align: right;">0.0668</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Secondary work episode (arrival from 15:00)</td>
-<td style="text-align: right;">−2.0156**</td>
+<td style="text-align: right;">−2.0156***</td>
 <td style="text-align: right;">0.7207</td>
 <td style="text-align: right;">0.005</td>
 </tr>
@@ -3105,10 +3135,16 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
+<td>Arrival at work 7:00–10:00</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Arrival at work before 7:00</td>
 <td style="text-align: right;">−0.7452***</td>
 <td style="text-align: right;">0.1155</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Arrival at work from 10:00</td>
@@ -3123,22 +3159,24 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Workplace zone with at least 10,000 jobs per km^2</td>
+<td>Workplace zone with at least 10,000 jobs per km²</td>
 <td style="text-align: right;">0.5497***</td>
 <td style="text-align: right;">0.0705</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Ln(1 + home–workplace distance, km)</td>
 <td style="text-align: right;">−0.1786***</td>
 <td style="text-align: right;">0.0373</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 8,613 work episodes at the usual workplace; alternatives: 2; parameters: 8. LL(β̂) = −3,061.5; BIC = 6,195.5. Hold-out half (8,561 episodes): LL = −3,093.2. Estimation: Biogeme, robust standard errors. An outing is a work episode at the usual workplace followed by one or more discretionary episodes and a return to the workplace. Work duration: piecewise linear in hours with bends at 4 h and 7 h; secondary work episode: arrival at work from 15:00.</p>
+
 <h3 id="mode-of-the-outing">Mode of the outing<a class="headerlink" href="#mode-of-the-outing" title="Permanent link">¶</a></h3>
-<p>Binary logit: whether the outing is walked or keeps the mode of the work tour.</p>
-<div class="estfit"><span>N = 1,177</span><span>K = 8</span><span>LL(β̂) = −360.2</span><span>ρ̄² = 0.549</span><span>Hold-out: LL −299.7</span></div>
+<p>Whether the outing is walked or keeps the mode of the work tour; 7 parameters. The term for fewer cars than drivers is not in the model.</p>
+<div class="estfit"><span>N = 1,177</span><span>K = 7</span><span>LL(β̂) = −360.6</span><span>ρ̄² = 0.549</span><span>Hold-out: LL −299.8</span></div>
 
 <table>
 <thead>
@@ -3158,9 +3196,9 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Constant (walk)</td>
-<td style="text-align: right;">4.2063***</td>
-<td style="text-align: right;">0.3813</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">4.3240***</td>
+<td style="text-align: right;">0.3610</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Outing</em></strong></td>
@@ -3170,27 +3208,33 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Ln(1 + distance workplace–first stop, km)</td>
-<td style="text-align: right;">−2.4674***</td>
-<td style="text-align: right;">0.1860</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−2.4743***</td>
+<td style="text-align: right;">0.1870</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr>
+<td>Arrived at work by other modes</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Arrived at work by car, as driver</td>
-<td style="text-align: right;">−2.1987***</td>
-<td style="text-align: right;">0.2776</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−2.2785***</td>
+<td style="text-align: right;">0.2626</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Arrived at work by car, as passenger</td>
-<td style="text-align: right;">−1.1481*</td>
-<td style="text-align: right;">0.5309</td>
-<td style="text-align: right;">0.031</td>
+<td style="text-align: right;">−1.1701**</td>
+<td style="text-align: right;">0.5325</td>
+<td style="text-align: right;">0.028</td>
 </tr>
 <tr>
 <td>More than one stop on the outing</td>
-<td style="text-align: right;">−1.0600**</td>
-<td style="text-align: right;">0.3644</td>
-<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">−1.0898***</td>
+<td style="text-align: right;">0.3653</td>
+<td style="text-align: right;">0.003</td>
 </tr>
 <tr>
 <td><strong><em>Workplace zone</em></strong></td>
@@ -3199,10 +3243,10 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Workplace zone with at least 10,000 jobs per km^2</td>
-<td style="text-align: right;">0.9208***</td>
-<td style="text-align: right;">0.2476</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Workplace zone with at least 10,000 jobs per km²</td>
+<td style="text-align: right;">0.9061***</td>
+<td style="text-align: right;">0.2488</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Household</em></strong></td>
@@ -3211,21 +3255,23 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>No car in the household</td>
-<td style="text-align: right;">0.6053</td>
-<td style="text-align: right;">0.5009</td>
-<td style="text-align: right;">0.227</td>
+<td>Household with at least one car</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Fewer cars than drivers in the household</td>
-<td style="text-align: right;">0.2643</td>
-<td style="text-align: right;">0.2958</td>
-<td style="text-align: right;">0.372</td>
+<td>No car in the household</td>
+<td style="text-align: right;">0.5059</td>
+<td style="text-align: right;">0.4887</td>
+<td style="text-align: right;">0.301</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 1,177 outings; alternatives: walk or the mode of the work tour; parameters: 7. LL(β̂) = −360.6; BIC = 770.7. Hold-out half (1,153 outings): LL = −299.8. Estimation: Biogeme, robust standard errors. If the outing does not walk, its legs keep the mode of the work tour (the car stays at the workplace for a walking outing). Mode of the work tour: reference other modes; distance: car distance between the workplace and the first stop. A term for fewer cars than drivers is not included: it is not significant (likelihood-ratio test p = 0.34) and BIC is lower without it.</p>
+
 <h3 id="return-home-between-episodes">Return home between episodes<a class="headerlink" href="#return-home-between-episodes" title="Permanent link">¶</a></h3>
-<p>Binary logit: whether a person goes home between two consecutive out-of-home episodes.</p>
+<p>Whether a person goes home between two consecutive out-of-home episodes; 33 parameters. The term for fewer cars than drivers is kept: the household car allocation does not cover this choice.</p>
 <div class="estfit"><span>N = 28,349</span><span>K = 33</span><span>LL(β̂) = −13,697.0</span><span>ρ̄² = 0.301</span><span>Hold-out: LL −13,771.8</span></div>
 
 <table>
@@ -3246,7 +3292,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Constant</td>
-<td style="text-align: right;">0.2860*</td>
+<td style="text-align: right;">0.2860**</td>
 <td style="text-align: right;">0.1207</td>
 <td style="text-align: right;">0.018</td>
 </tr>
@@ -3258,7 +3304,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Detour via home (km)</td>
-<td style="text-align: right;">−0.0080*</td>
+<td style="text-align: right;">−0.0080**</td>
 <td style="text-align: right;">0.0034</td>
 <td style="text-align: right;">0.018</td>
 </tr>
@@ -3266,13 +3312,13 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>Ln(1 + detour via home, km)</td>
 <td style="text-align: right;">−0.4645***</td>
 <td style="text-align: right;">0.0410</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Distance from home (km)</td>
 <td style="text-align: right;">0.0067***</td>
 <td style="text-align: right;">0.0013</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Episodes</em></strong></td>
@@ -3281,10 +3327,16 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
+<td>Preceding episode: other individual discretionary</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Preceding episode: work</td>
 <td style="text-align: right;">−0.2370***</td>
 <td style="text-align: right;">0.0526</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Preceding episode: school</td>
@@ -3302,23 +3354,29 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>Preceding episode: shopping</td>
 <td style="text-align: right;">0.1653***</td>
 <td style="text-align: right;">0.0415</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Preceding episode: joint</td>
 <td style="text-align: right;">0.6576***</td>
 <td style="text-align: right;">0.0763</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr>
+<td>Following episode: other individual discretionary</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Following episode: work</td>
 <td style="text-align: right;">−0.8090***</td>
 <td style="text-align: right;">0.0698</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Following episode: school</td>
-<td style="text-align: right;">−0.2001</td>
+<td style="text-align: right;">−0.2001*</td>
 <td style="text-align: right;">0.1064</td>
 <td style="text-align: right;">0.060</td>
 </tr>
@@ -3326,19 +3384,19 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>Following episode: accompanying</td>
 <td style="text-align: right;">0.4622***</td>
 <td style="text-align: right;">0.0504</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Following episode: shopping</td>
 <td style="text-align: right;">−0.7064***</td>
 <td style="text-align: right;">0.0392</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Following episode: joint</td>
 <td style="text-align: right;">1.2098***</td>
 <td style="text-align: right;">0.0599</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Joint episodes</em></strong></td>
@@ -3350,13 +3408,13 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>Both episodes joint</td>
 <td style="text-align: right;">−2.2242***</td>
 <td style="text-align: right;">0.1081</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Joint episode next to a work or school episode</td>
 <td style="text-align: right;">0.5146***</td>
 <td style="text-align: right;">0.0822</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Person</em></strong></td>
@@ -3365,14 +3423,20 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
+<td>Person type: non-worker</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Person type: worker</td>
 <td style="text-align: right;">−0.2405***</td>
 <td style="text-align: right;">0.0561</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Person type: K–12 student</td>
-<td style="text-align: right;">−0.1929</td>
+<td style="text-align: right;">−0.1929*</td>
 <td style="text-align: right;">0.1099</td>
 <td style="text-align: right;">0.079</td>
 </tr>
@@ -3384,13 +3448,13 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Person type: retiree</td>
-<td style="text-align: right;">−0.1698**</td>
+<td style="text-align: right;">−0.1698***</td>
 <td style="text-align: right;">0.0594</td>
 <td style="text-align: right;">0.004</td>
 </tr>
 <tr>
 <td>Person type: child under 5</td>
-<td style="text-align: right;">−0.2725*</td>
+<td style="text-align: right;">−0.2725**</td>
 <td style="text-align: right;">0.1249</td>
 <td style="text-align: right;">0.029</td>
 </tr>
@@ -3398,13 +3462,13 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>Female</td>
 <td style="text-align: right;">−0.1202***</td>
 <td style="text-align: right;">0.0305</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Driving licence</td>
 <td style="text-align: right;">0.4137***</td>
 <td style="text-align: right;">0.0848</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Household</em></strong></td>
@@ -3416,19 +3480,31 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>Household size (persons)</td>
 <td style="text-align: right;">0.1267***</td>
 <td style="text-align: right;">0.0167</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>Household income below \50k</td>
+<td>Household income $50–100k</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Household income below $50k</td>
 <td style="text-align: right;">−0.1886***</td>
 <td style="text-align: right;">0.0491</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>Household income \100k or more</td>
-<td style="text-align: right;">0.1125**</td>
+<td>Household income $100k or more</td>
+<td style="text-align: right;">0.1125***</td>
 <td style="text-align: right;">0.0348</td>
 <td style="text-align: right;">0.001</td>
+</tr>
+<tr>
+<td>Cars in the household: at least as many as drivers</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>No car in the household</td>
@@ -3438,7 +3514,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Fewer cars than drivers in the household</td>
-<td style="text-align: right;">−0.1200**</td>
+<td style="text-align: right;">−0.1200***</td>
 <td style="text-align: right;">0.0448</td>
 <td style="text-align: right;">0.007</td>
 </tr>
@@ -3446,7 +3522,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>Child under 16 in the household</td>
 <td style="text-align: right;">−0.2205***</td>
 <td style="text-align: right;">0.0487</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Day pattern</em></strong></td>
@@ -3458,11 +3534,17 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>Number of out-of-home episodes in the day</td>
 <td style="text-align: right;">−0.1497***</td>
 <td style="text-align: right;">0.0087</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Time of day</em></strong></td>
 <td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>End of the preceding episode 9:00–15:00</td>
+<td style="text-align: right;">reference</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
@@ -3476,16 +3558,17 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td>End of the preceding episode 15–19</td>
 <td style="text-align: right;">−0.3433***</td>
 <td style="text-align: right;">0.0363</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>End of the preceding episode after 19:00</td>
 <td style="text-align: right;">−1.3199***</td>
 <td style="text-align: right;">0.0823</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 28,349 pairs of consecutive out-of-home episodes; alternatives: 2; parameters: 33. LL(β̂) = −13,697.0; BIC = 27,732.2. Hold-out half (28,327 pairs): LL = −13,771.8. Estimation: maximum likelihood (robust sandwich covariance). y = 1 if the person returned home between two consecutive out-of-home episodes; pairs inside an outing from the workplace and pairs of two work episodes are excluded. Income bands: household income.</p>
 
 
 

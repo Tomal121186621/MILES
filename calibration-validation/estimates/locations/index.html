@@ -712,6 +712,8 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2675,7 +2705,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -3197,612 +3227,355 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 
 
 <h1 id="destinations-and-stops">Destinations and stops<a class="headerlink" href="#destinations-and-stops" title="Permanent link">¶</a></h1>
-<p>Location models of MILES-Day over the full choice set of 1,588 zones, estimated on the survey estimation half.</p>
+<p>Location models of MAST over the full choice set of 1,588 zones, estimated on the survey estimation half. Each model has one attraction variable, entered as its own log term, β ln(1 + x), and ln zone area where a density term would otherwise be needed.</p>
 <div class="admonition note">
 <p class="admonition-title">Reading the tables</p>
-<p>Coefficient: maximum-likelihood estimate with robust (sandwich) standard error; *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. The same tables can be re-estimated with Biogeme from the estimation package.</p>
+<p>Coefficient: maximum-likelihood estimate, with significance stars *** p &lt; 0.01, ** p &lt; 0.05, * p &lt; 0.10; robust (sandwich) standard error; two-sided p-value. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. Hold-out: fit on the held-out half of the data, which was also used in the specification search. "Reference": the omitted category; "—": removed from the model.</p>
 </div>
 <h3 id="main-destination-of-discretionary-tours">Main destination of discretionary tours<a class="headerlink" href="#main-destination-of-discretionary-tours" title="Permanent link">¶</a></h3>
-<p>One logit for shopping, recreation, accompanying and other errands over 1,588 zones, with a scale for each purpose.</p>
-<div class="estfit"><span>N = 14,341</span><span>K = 71</span><span>LL(β̂) = −49,122.5</span><span>ρ̄² = 0.535</span><span>Hold-out: LL per record −3.352</span></div>
+<p>One logit for shopping, recreation, accompanying and other errands, from home, with a scale for each purpose. Level of service: piecewise car distance and car generalised time.</p>
+<div class="estfit"><span>N = 14,341</span><span>K = 62</span><span>LL(β̂) = −49,427.4</span><span>ρ̄² = 0.532</span><span>Hold-out: LL per record −3.370</span></div>
 
+<div class="modetab">
 <table>
 <thead>
 <tr>
 <th>Variable</th>
-<th style="text-align: right;">Coefficient</th>
-<th style="text-align: right;">Robust s.e.</th>
-<th style="text-align: right;">p</th>
+<th style="text-align: right;">Shopping</th>
+<th style="text-align: right;">Recreation</th>
+<th style="text-align: right;">Accompanying</th>
+<th style="text-align: right;">Other</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong><em>All purposes: Distance and impedance</em></strong></td>
+<td><strong><em>Distance and impedance</em></strong></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Distance 0–1 km (per km)</td>
-<td style="text-align: right;">−3.9489***</td>
-<td style="text-align: right;">0.2517</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−3.8632*** (shared)<br><span class="se">(0.2474) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Distance 1–2 km</td>
-<td style="text-align: right;">−1.0280***</td>
-<td style="text-align: right;">0.0779</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−1.0004*** (shared)<br><span class="se">(0.0763) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Distance 2–5 km</td>
-<td style="text-align: right;">−0.5405***</td>
-<td style="text-align: right;">0.0217</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.5475*** (shared)<br><span class="se">(0.0215) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Distance 5–10 km</td>
-<td style="text-align: right;">−0.2295***</td>
-<td style="text-align: right;">0.0107</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.2281*** (shared)<br><span class="se">(0.0106) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Distance 10–20 km</td>
-<td style="text-align: right;">−0.1546***</td>
-<td style="text-align: right;">0.0058</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.1539*** (shared)<br><span class="se">(0.0057) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Distance 20–50 km</td>
-<td style="text-align: right;">−0.0827***</td>
-<td style="text-align: right;">0.0044</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.0828*** (shared)<br><span class="se">(0.0043) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
-<td><strong><em>All purposes: Boundaries</em></strong></td>
+<td>Distance &gt; 50 km</td>
+<td style="text-align: right;">0 (fixed)</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Car generalised time (min)</td>
+<td style="text-align: right;">−0.0390***<sup>a</sup><br><span class="se">(0.0023) &lt;0.001</span></td>
+<td style="text-align: right;">−0.0275***<br><span class="se">(0.0025) &lt;0.001</span></td>
+<td style="text-align: right;">−0.0537***<br><span class="se">(0.0091) &lt;0.001</span></td>
+<td style="text-align: right;">−0.0390***<sup>a</sup><br><span class="se">(0.0023) &lt;0.001</span></td>
+</tr>
+<tr>
+<td><strong><em>Same zone</em></strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Intrazonal (destination = home zone)</td>
+<td style="text-align: right;">−1.0335***<br><span class="se">(0.0604) &lt;0.001</span></td>
+<td style="text-align: right;">−0.5869***<br><span class="se">(0.0714) &lt;0.001</span></td>
+<td style="text-align: right;">−0.2913***<br><span class="se">(0.1125) 0.010</span></td>
+<td style="text-align: right;">−0.6037***<br><span class="se">(0.0835) &lt;0.001</span></td>
+</tr>
+<tr>
+<td><strong><em>Area</em></strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Rest of Maryland</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Baltimore City</td>
+<td style="text-align: right;">−1.0854***<br><span class="se">(0.1177) &lt;0.001</span></td>
+<td style="text-align: right;">−0.1145<br><span class="se">(0.1446) 0.428</span></td>
+<td style="text-align: right;">−0.3444<br><span class="se">(0.2655) 0.194</span></td>
+<td style="text-align: right;">0.1178<br><span class="se">(0.1564) 0.451</span></td>
+</tr>
+<tr>
+<td>Washington DC</td>
+<td style="text-align: right;">0.0738<br><span class="se">(0.1472) 0.616</span></td>
+<td style="text-align: right;">0.9144***<br><span class="se">(0.1412) &lt;0.001</span></td>
+<td style="text-align: right;">0.8009***<br><span class="se">(0.2191) &lt;0.001</span></td>
+<td style="text-align: right;">0.5635***<br><span class="se">(0.1465) &lt;0.001</span></td>
+</tr>
+<tr>
+<td>High job-density zone</td>
+<td style="text-align: right;">−0.6292***<br><span class="se">(0.0911) &lt;0.001</span></td>
+<td style="text-align: right;">0.6412***<br><span class="se">(0.0983) &lt;0.001</span></td>
+<td style="text-align: right;">1.1656***<br><span class="se">(0.1964) &lt;0.001</span></td>
+<td style="text-align: right;">0.5052***<br><span class="se">(0.1203) &lt;0.001</span></td>
+</tr>
+<tr>
+<td>Virginia</td>
+<td style="text-align: right;">0.2944***<br><span class="se">(0.1028) 0.004</span></td>
+<td style="text-align: right;">0.5959***<br><span class="se">(0.1085) &lt;0.001</span></td>
+<td style="text-align: right;">0.8229***<br><span class="se">(0.2493) &lt;0.001</span></td>
+<td style="text-align: right;">0.9775***<br><span class="se">(0.1137) &lt;0.001</span></td>
+</tr>
+<tr>
+<td>Delaware, Pennsylvania, West Virginia</td>
+<td style="text-align: right;">1.2452***<br><span class="se">(0.1729) &lt;0.001</span></td>
+<td style="text-align: right;">0.2491<br><span class="se">(0.2322) 0.283</span></td>
+<td style="text-align: right;">0.3116<br><span class="se">(0.7931) 0.694</span></td>
+<td style="text-align: right;">0.4927*<br><span class="se">(0.2585) 0.057</span></td>
+</tr>
+<tr>
+<td><strong><em>Land use</em></strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Ln(zone area, km²)</td>
+<td style="text-align: right;">0.2463***<br><span class="se">(0.0260) &lt;0.001</span></td>
+<td style="text-align: right;">0.4519***<br><span class="se">(0.0288) &lt;0.001</span></td>
+<td style="text-align: right;">0.3969***<br><span class="se">(0.0563) &lt;0.001</span></td>
+<td style="text-align: right;">0.3013***<br><span class="se">(0.0325) &lt;0.001</span></td>
+</tr>
+<tr>
+<td>Land-use mix (entropy)</td>
+<td style="text-align: right;">−0.0247<br><span class="se">(0.1154) 0.831</span></td>
+<td style="text-align: right;">0.7290***<br><span class="se">(0.1350) &lt;0.001</span></td>
+<td style="text-align: right;">1.2163***<br><span class="se">(0.1991) &lt;0.001</span></td>
+<td style="text-align: right;">0.3604**<br><span class="se">(0.1571) 0.022</span></td>
+</tr>
+<tr>
+<td><strong><em>Boundaries</em></strong></td>
+<td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Outside the origin county</td>
-<td style="text-align: right;">−0.5531***</td>
-<td style="text-align: right;">0.0369</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.5356*** (shared)<br><span class="se">(0.0363) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Outside the origin state</td>
-<td style="text-align: right;">−0.6451***</td>
-<td style="text-align: right;">0.0621</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.6326*** (shared)<br><span class="se">(0.0611) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
-<td><strong><em>All purposes: Interactions with ln(distance)</em></strong></td>
+<td><strong><em>Interactions with ln(distance)</em></strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Ln(distance) × cars ≥ drivers</td>
+<td style="text-align: right;">reference</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × no car</td>
-<td style="text-align: right;">−0.3801***</td>
-<td style="text-align: right;">0.0537</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.3730*** (shared)<br><span class="se">(0.0533) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × cars &lt; drivers</td>
-<td style="text-align: right;">−0.1524***</td>
-<td style="text-align: right;">0.0329</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.1526*** (shared)<br><span class="se">(0.0321) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Ln(distance) × worker</td>
-<td style="text-align: right;">−0.0504</td>
-<td style="text-align: right;">0.0285</td>
-<td style="text-align: right;">0.077</td>
+<td>Ln(distance) × person 18–64</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × person &lt; 18</td>
-<td style="text-align: right;">−0.0039</td>
-<td style="text-align: right;">0.0417</td>
-<td style="text-align: right;">0.926</td>
+<td style="text-align: right;">−0.0027 (shared)<br><span class="se">(0.0404) 0.947</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × person 65+</td>
-<td style="text-align: right;">−0.0742*</td>
-<td style="text-align: right;">0.0307</td>
-<td style="text-align: right;">0.016</td>
+<td style="text-align: right;">−0.0748** (shared)<br><span class="se">(0.0298) 0.012</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × household with children</td>
-<td style="text-align: right;">−0.2064***</td>
-<td style="text-align: right;">0.0304</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.2069*** (shared)<br><span class="se">(0.0295) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Ln(distance) × worker</td>
+<td style="text-align: right;">−0.0525* (shared)<br><span class="se">(0.0277) 0.058</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × male</td>
-<td style="text-align: right;">−0.0081</td>
-<td style="text-align: right;">0.0225</td>
-<td style="text-align: right;">0.719</td>
+<td style="text-align: right;">−0.0071 (shared)<br><span class="se">(0.0219) 0.746</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × one-person household</td>
-<td style="text-align: right;">−0.0795*</td>
-<td style="text-align: right;">0.0327</td>
-<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">−0.0822** (shared)<br><span class="se">(0.0320) 0.010</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Ln(distance) × midday 9–15</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × AM 6–9</td>
-<td style="text-align: right;">−0.2487***</td>
-<td style="text-align: right;">0.0404</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.2476*** (shared)<br><span class="se">(0.0392) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × PM 15–19</td>
-<td style="text-align: right;">−0.1231***</td>
-<td style="text-align: right;">0.0269</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.1183*** (shared)<br><span class="se">(0.0263) &lt;0.001</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × evening 19–6</td>
-<td style="text-align: right;">−0.0002</td>
-<td style="text-align: right;">0.0358</td>
-<td style="text-align: right;">0.995</td>
+<td style="text-align: right;">−0.0011 (shared)<br><span class="se">(0.0348) 0.975</span></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(distance) × tour with at least one stop</td>
-<td style="text-align: right;">0.4726***</td>
-<td style="text-align: right;">0.0259</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Shopping, recreation and other: Size</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>μ, ln size</td>
-<td style="text-align: right;">1.2485***</td>
-<td style="text-align: right;">0.0246</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Shopping and other: Distance and impedance</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Car generalised time (min)</td>
-<td style="text-align: right;">−0.0398***</td>
-<td style="text-align: right;">0.0024</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Shopping: Same zone</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Intrazonal (destination = home zone)</td>
-<td style="text-align: right;">−1.0378***</td>
-<td style="text-align: right;">0.0603</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Shopping: Area</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Baltimore City</td>
-<td style="text-align: right;">−1.1351***</td>
-<td style="text-align: right;">0.1175</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>Washington DC</td>
-<td style="text-align: right;">0.0064</td>
-<td style="text-align: right;">0.1514</td>
-<td style="text-align: right;">0.966</td>
-</tr>
-<tr>
-<td>Central business district</td>
-<td style="text-align: right;">−0.6453***</td>
-<td style="text-align: right;">0.0938</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>Virginia</td>
-<td style="text-align: right;">0.3273**</td>
-<td style="text-align: right;">0.1047</td>
-<td style="text-align: right;">0.002</td>
-</tr>
-<tr>
-<td>Delaware, Pennsylvania, West Virginia</td>
-<td style="text-align: right;">1.3423***</td>
-<td style="text-align: right;">0.1716</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Shopping: Land use</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Ln(1 + retail jobs per km^2)</td>
-<td style="text-align: right;">−0.2153***</td>
-<td style="text-align: right;">0.0242</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>Land-use mix (entropy)</td>
-<td style="text-align: right;">0.0546</td>
-<td style="text-align: right;">0.1253</td>
-<td style="text-align: right;">0.663</td>
-</tr>
-<tr>
-<td><strong><em>Shopping: Size</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>θ population (ln weight)</td>
-<td style="text-align: right;">−7.0818***</td>
-<td style="text-align: right;">0.9939</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ office jobs (ln weight)</td>
-<td style="text-align: right;">−7.0158***</td>
-<td style="text-align: right;">1.9882</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Recreation: Same zone</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Intrazonal (destination = home zone)</td>
-<td style="text-align: right;">−0.5627***</td>
-<td style="text-align: right;">0.0739</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Recreation: Area</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Baltimore City</td>
-<td style="text-align: right;">−0.2226</td>
-<td style="text-align: right;">0.1525</td>
-<td style="text-align: right;">0.144</td>
-</tr>
-<tr>
-<td>Washington DC</td>
-<td style="text-align: right;">0.6920***</td>
-<td style="text-align: right;">0.1625</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>Central business district</td>
-<td style="text-align: right;">0.4298***</td>
-<td style="text-align: right;">0.1199</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>Virginia</td>
-<td style="text-align: right;">0.3426**</td>
-<td style="text-align: right;">0.1159</td>
-<td style="text-align: right;">0.003</td>
-</tr>
-<tr>
-<td>Delaware, Pennsylvania, West Virginia</td>
-<td style="text-align: right;">0.0967</td>
-<td style="text-align: right;">0.2446</td>
-<td style="text-align: right;">0.693</td>
-</tr>
-<tr>
-<td><strong><em>Recreation: Land use</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Ln(1 + retail jobs per km^2)</td>
-<td style="text-align: right;">−0.4192***</td>
-<td style="text-align: right;">0.0428</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>Land-use mix (entropy)</td>
-<td style="text-align: right;">1.4325***</td>
-<td style="text-align: right;">0.2690</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Recreation: Distance and impedance</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Car generalised time (min)</td>
-<td style="text-align: right;">−0.0303***</td>
-<td style="text-align: right;">0.0028</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Recreation: Size</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>θ population (ln weight)</td>
-<td style="text-align: right;">−3.5094***</td>
-<td style="text-align: right;">0.3862</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ office jobs (ln weight)</td>
-<td style="text-align: right;">−3.8614***</td>
-<td style="text-align: right;">0.3620</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ school enrolment (ln weight)</td>
-<td style="text-align: right;">−3.8306***</td>
-<td style="text-align: right;">0.3262</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Recreation: Scale</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Scale (shopping = 1; p tests against 1)</td>
-<td style="text-align: right;">0.8003***</td>
-<td style="text-align: right;">0.0180</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Accompanying: Same zone</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Intrazonal (destination = home zone)</td>
-<td style="text-align: right;">−0.2063</td>
-<td style="text-align: right;">0.1283</td>
-<td style="text-align: right;">0.108</td>
-</tr>
-<tr>
-<td><strong><em>Accompanying: Area</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Baltimore City</td>
-<td style="text-align: right;">−0.5608*</td>
-<td style="text-align: right;">0.2810</td>
-<td style="text-align: right;">0.046</td>
-</tr>
-<tr>
-<td>Washington DC</td>
-<td style="text-align: right;">0.5288*</td>
-<td style="text-align: right;">0.2436</td>
-<td style="text-align: right;">0.030</td>
-</tr>
-<tr>
-<td>Central business district</td>
-<td style="text-align: right;">0.3719</td>
-<td style="text-align: right;">0.2182</td>
-<td style="text-align: right;">0.088</td>
-</tr>
-<tr>
-<td>Virginia</td>
-<td style="text-align: right;">0.8902**</td>
-<td style="text-align: right;">0.2712</td>
-<td style="text-align: right;">0.001</td>
-</tr>
-<tr>
-<td>Delaware, Pennsylvania, West Virginia</td>
-<td style="text-align: right;">0.3096</td>
-<td style="text-align: right;">0.8644</td>
-<td style="text-align: right;">0.720</td>
-</tr>
-<tr>
-<td><strong><em>Accompanying: Land use</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Ln(1 + retail jobs per km^2)</td>
-<td style="text-align: right;">−0.1441</td>
-<td style="text-align: right;">0.0949</td>
-<td style="text-align: right;">0.129</td>
-</tr>
-<tr>
-<td>Land-use mix (entropy)</td>
-<td style="text-align: right;">0.5790</td>
-<td style="text-align: right;">0.4588</td>
-<td style="text-align: right;">0.207</td>
-</tr>
-<tr>
-<td><strong><em>Accompanying: Distance and impedance</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Car generalised time (min)</td>
-<td style="text-align: right;">−0.0634***</td>
-<td style="text-align: right;">0.0108</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Accompanying: Size</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>θ population (ln weight)</td>
-<td style="text-align: right;">−3.5912*</td>
-<td style="text-align: right;">1.3939</td>
-<td style="text-align: right;">0.010</td>
-</tr>
-<tr>
-<td>θ office jobs (ln weight)</td>
-<td style="text-align: right;">−1.6023</td>
-<td style="text-align: right;">1.2258</td>
-<td style="text-align: right;">0.191</td>
-</tr>
-<tr>
-<td>θ other jobs (ln weight)</td>
-<td style="text-align: right;">−1.0426</td>
-<td style="text-align: right;">1.1138</td>
-<td style="text-align: right;">0.349</td>
-</tr>
-<tr>
-<td>θ school enrolment (ln weight)</td>
-<td style="text-align: right;">0.1792</td>
-<td style="text-align: right;">1.4900</td>
-<td style="text-align: right;">0.904</td>
-</tr>
-<tr>
-<td>μ, ln size</td>
-<td style="text-align: right;">0.7108***</td>
-<td style="text-align: right;">0.1350</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Accompanying: Scale</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Scale (shopping = 1; p tests against 1)</td>
-<td style="text-align: right;">0.7808***</td>
-<td style="text-align: right;">0.0380</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Other: Same zone</em></strong></td>
+<td style="text-align: right;">0.4577*** (shared)<br><span class="se">(0.0257) &lt;0.001</span></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Intrazonal (destination = home zone)</td>
-<td style="text-align: right;">−0.6166***</td>
-<td style="text-align: right;">0.0831</td>
-<td style="text-align: right;">&lt; 0.001</td>
 </tr>
 <tr>
-<td><strong><em>Other: Area</em></strong></td>
+<td><strong><em>Attraction</em></strong></td>
 <td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Baltimore City</td>
-<td style="text-align: right;">−0.0982</td>
-<td style="text-align: right;">0.1542</td>
-<td style="text-align: right;">0.525</td>
-</tr>
-<tr>
-<td>Washington DC</td>
-<td style="text-align: right;">−0.2853</td>
-<td style="text-align: right;">0.1566</td>
-<td style="text-align: right;">0.068</td>
-</tr>
-<tr>
-<td>Central business district</td>
-<td style="text-align: right;">−0.5147***</td>
-<td style="text-align: right;">0.1408</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>Virginia</td>
-<td style="text-align: right;">0.3924***</td>
-<td style="text-align: right;">0.1121</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>Delaware, Pennsylvania, West Virginia</td>
-<td style="text-align: right;">0.1253</td>
-<td style="text-align: right;">0.2606</td>
-<td style="text-align: right;">0.631</td>
-</tr>
-<tr>
-<td><strong><em>Other: Land use</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Ln(1 + retail jobs per km^2)</td>
-<td style="text-align: right;">−0.2385***</td>
-<td style="text-align: right;">0.0328</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(1 + retail jobs)</td>
+<td style="text-align: right;">1.0496***<br><span class="se">(0.0216) &lt;0.001</span></td>
+<td style="text-align: right;">0.4880***<br><span class="se">(0.0253) &lt;0.001</span></td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">0.5222***<br><span class="se">(0.0265) &lt;0.001</span></td>
 </tr>
 <tr>
-<td>Land-use mix (entropy)</td>
-<td style="text-align: right;">−1.2335***</td>
-<td style="text-align: right;">0.1794</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(1 + school enrolment)</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">0.1858***<br><span class="se">(0.0208) &lt;0.001</span></td>
+<td style="text-align: right;">–</td>
 </tr>
 <tr>
-<td><strong><em>Other: Size</em></strong></td>
-<td style="text-align: right;"></td>
+<td><strong><em>Scale</em></strong></td>
 <td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>θ office jobs (ln weight)</td>
-<td style="text-align: right;">−1.9295***</td>
-<td style="text-align: right;">0.1748</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ other jobs (ln weight)</td>
-<td style="text-align: right;">−1.1888***</td>
-<td style="text-align: right;">0.1646</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Other: Scale</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Scale (shopping = 1; p tests against 1)</td>
-<td style="text-align: right;">0.7430***</td>
-<td style="text-align: right;">0.0108</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Scale μ_p (p against 1)</td>
+<td style="text-align: right;">1 (normalised)</td>
+<td style="text-align: right;">0.8252***<br><span class="se">(0.0204) &lt;0.001</span></td>
+<td style="text-align: right;">0.8197***<br><span class="se">(0.0367) &lt;0.001</span></td>
+<td style="text-align: right;">0.7449***<br><span class="se">(0.0114) &lt;0.001</span></td>
 </tr>
 </tbody>
 </table>
+</div>
+<p class="estnote">Observations (estimation half): shopping 5,058; recreation 4,159; accompanying 1,593; other 3,531 tours; alternatives: 1,588 zones (full choice set); parameters: 62. LL(β̂) = −49,427.4; BIC = 99,448.2. Hold-out half (14,177 records, used before in the specification search): LL = −47,778.8. Utility of zone j for purpose p: U<sub>pj</sub> = μ_p V<sub>pj</sub>, μ = 1 for shopping; a coefficient marked shared takes the same value in V<sub>p</sub> of every purpose that has the variable, so its effect on utility differs across purposes only through the scale; <sup>a</sup> shared by shopping and other. –: not in the model of this purpose. Estimation: maximum likelihood on the full choice set, robust sandwich covariance, unweighted; estimation half of the Regional Travel Survey. Locations: the survey's traffic zones, spread over the model zones by housing units (home ends) or jobs (activity ends); the likelihood is averaged over the possible zones of the destination and of home (location mixture). Attraction: β_pln(1+x<sub>pj</sub>), x<sub>pj</sub> the retail jobs of zone j (school enrolment for accompanying). Zone area in km², at least 0.05 km². Distance: car distance from home (km), piecewise linear with the slope per km in each band; ln(distance) interactions with person, household, arrival-time and tour flags; high job-density zone: at least 10,000 jobs per km²; land-use mix: entropy of the job and population shares (0–1); car generalised time: car time plus cost over the household's value of time (min).</p>
+
+<p class="estnote">Each cell: coefficient with stars; below it, the robust standard error in brackets and the p-value.</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_mast_dest_pooled_holdout_map.png" data-desc-position="bottom"><img alt="Main destination: hold-out records by PUMA, observed and model, and model minus observed." src="../../../assets/img/estimates/fig_mast_dest_pooled_holdout_map.png"></a></p>
+<p class="estnote">Main destination: hold-out records by PUMA, observed and model, and model minus observed.</p>
+
 <h3 id="stop-location-shopping">Stop location: shopping<a class="headerlink" href="#stop-location-shopping" title="Permanent link">¶</a></h3>
-<p>Location of an intermediate shopping stop by its detour between the previous location and the next anchor.</p>
-<div class="estfit"><span>N = 3,979</span><span>K = 23</span><span>LL(β̂) = −9,987.8</span><span>ρ̄² = 0.659</span><span>Hold-out: LL per record −2.527</span></div>
+<p>Location of an intermediate shopping stop by its detour between the previous location and the next anchor, with the logsum of the tour mode models over the detour.</p>
+<div class="estfit"><span>N = 3,979</span><span>K = 23</span><span>LL(β̂) = −9,982.6</span><span>ρ̄² = 0.659</span><span>Hold-out: LL per record −2.527</span></div>
 
 <table>
 <thead>
@@ -3822,45 +3595,45 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Detour 1–2 km</td>
-<td style="text-align: right;">−0.5080***</td>
-<td style="text-align: right;">0.0783</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.5052***</td>
+<td style="text-align: right;">0.0781</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 2–5 km</td>
-<td style="text-align: right;">−0.2083***</td>
+<td style="text-align: right;">−0.2115***</td>
 <td style="text-align: right;">0.0341</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 5–10 km</td>
-<td style="text-align: right;">−0.1438***</td>
+<td style="text-align: right;">−0.1436***</td>
 <td style="text-align: right;">0.0218</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 10–20 km</td>
-<td style="text-align: right;">−0.1571***</td>
-<td style="text-align: right;">0.0164</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.1566***</td>
+<td style="text-align: right;">0.0163</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour &gt; 20 km</td>
-<td style="text-align: right;">−0.0389***</td>
-<td style="text-align: right;">0.0085</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.0386***</td>
+<td style="text-align: right;">0.0084</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Mode-choice logsum, detour</td>
-<td style="text-align: right;">0.4811***</td>
-<td style="text-align: right;">0.0685</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.4845***</td>
+<td style="text-align: right;">0.0686</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Car generalised time, detour (min)</td>
-<td style="text-align: right;">−0.0178*</td>
+<td style="text-align: right;">−0.0179***</td>
 <td style="text-align: right;">0.0069</td>
-<td style="text-align: right;">0.010</td>
+<td style="text-align: right;">0.009</td>
 </tr>
 <tr>
 <td><strong><em>Anchor zones</em></strong></td>
@@ -3870,15 +3643,15 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Stop in the zone of the previous location</td>
-<td style="text-align: right;">0.3478***</td>
+<td style="text-align: right;">0.3417***</td>
 <td style="text-align: right;">0.0584</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Stop in the zone of the next anchor</td>
-<td style="text-align: right;">0.3056***</td>
-<td style="text-align: right;">0.0615</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.2971***</td>
+<td style="text-align: right;">0.0614</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Area</em></strong></td>
@@ -3887,34 +3660,40 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
+<td>Rest of Maryland</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Baltimore City</td>
-<td style="text-align: right;">−0.8250***</td>
-<td style="text-align: right;">0.1659</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.8146***</td>
+<td style="text-align: right;">0.1662</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Washington DC</td>
-<td style="text-align: right;">−0.3399*</td>
-<td style="text-align: right;">0.1461</td>
-<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">−0.3281**</td>
+<td style="text-align: right;">0.1462</td>
+<td style="text-align: right;">0.025</td>
 </tr>
 <tr>
-<td>Central business district</td>
-<td style="text-align: right;">−0.2221*</td>
-<td style="text-align: right;">0.1043</td>
-<td style="text-align: right;">0.033</td>
+<td>High job-density zone</td>
+<td style="text-align: right;">−0.2294**</td>
+<td style="text-align: right;">0.1037</td>
+<td style="text-align: right;">0.027</td>
 </tr>
 <tr>
 <td>Virginia</td>
-<td style="text-align: right;">0.1887</td>
+<td style="text-align: right;">0.1816</td>
 <td style="text-align: right;">0.1522</td>
-<td style="text-align: right;">0.215</td>
+<td style="text-align: right;">0.233</td>
 </tr>
 <tr>
 <td>Delaware, Pennsylvania, West Virginia</td>
-<td style="text-align: right;">0.7742</td>
-<td style="text-align: right;">0.5210</td>
-<td style="text-align: right;">0.137</td>
+<td style="text-align: right;">0.7625</td>
+<td style="text-align: right;">0.5170</td>
+<td style="text-align: right;">0.140</td>
 </tr>
 <tr>
 <td><strong><em>Land use</em></strong></td>
@@ -3923,16 +3702,16 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Ln(1 + retail jobs per km^2)</td>
-<td style="text-align: right;">−0.3662***</td>
-<td style="text-align: right;">0.0379</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(zone area, km²)</td>
+<td style="text-align: right;">0.3688***</td>
+<td style="text-align: right;">0.0364</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Land-use mix (entropy)</td>
-<td style="text-align: right;">−0.4917***</td>
-<td style="text-align: right;">0.1369</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.4951***</td>
+<td style="text-align: right;">0.1372</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -3942,63 +3721,74 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Outside the counties of both anchors</td>
-<td style="text-align: right;">−0.7395***</td>
-<td style="text-align: right;">0.0900</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.7378***</td>
+<td style="text-align: right;">0.0899</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Outside the states of both anchors</td>
-<td style="text-align: right;">−0.5997**</td>
+<td style="text-align: right;">−0.5983***</td>
 <td style="text-align: right;">0.1896</td>
 <td style="text-align: right;">0.002</td>
 </tr>
 <tr>
 <td><strong><em>Interactions with ln(1 + detour)</em></strong></td>
 <td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Ln(1 + detour) × cars ≥ drivers</td>
+<td style="text-align: right;">reference</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × no car</td>
-<td style="text-align: right;">−0.0821</td>
-<td style="text-align: right;">0.1325</td>
-<td style="text-align: right;">0.536</td>
+<td style="text-align: right;">−0.0797</td>
+<td style="text-align: right;">0.1326</td>
+<td style="text-align: right;">0.548</td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × cars &lt; drivers</td>
-<td style="text-align: right;">−0.2759***</td>
+<td style="text-align: right;">−0.2765***</td>
 <td style="text-align: right;">0.0674</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × household size (persons)</td>
-<td style="text-align: right;">0.0536**</td>
+<td style="text-align: right;">0.0537***</td>
 <td style="text-align: right;">0.0168</td>
 <td style="text-align: right;">0.001</td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × tour mode not car</td>
-<td style="text-align: right;">−0.5526***</td>
-<td style="text-align: right;">0.0899</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.5520***</td>
+<td style="text-align: right;">0.0900</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td><strong><em>Size</em></strong></td>
+<td><strong><em>Attraction</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>μ, ln size</td>
-<td style="text-align: right;">1.2740***</td>
-<td style="text-align: right;">0.0414</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(1 + retail jobs)</td>
+<td style="text-align: right;">0.9202***</td>
+<td style="text-align: right;">0.0268</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 3,979; alternatives: 1,588 zones (full choice set); parameters: 23. LL(β̂) = −9,982.6; BIC = 20,155.9. Hold-out half (3,846 records, used before in the specification search): LL = −9,719.2. Estimation: maximum likelihood on the full choice set, robust sandwich covariance, unweighted; estimation half of the Regional Travel Survey. Locations: the survey's traffic zones, spread over the model zones by housing units (home ends) or jobs (activity ends); the likelihood is averaged over the possible zones of the destination and of the anchors (location mixture). Attraction: βln(1+x<sub>j</sub>), x<sub>j</sub> the retail jobs of zone j. Zone area in km², at least 0.05 km². Dependent variable: chosen zone of the stop. Detour: d(a,j) + d(j,b) - d(a,b) by car (km) between the origin a of the trip to the stop and the next anchor b of the tour (the primary destination for an outbound stop, home for an inbound stop), piecewise linear with the slope per km in each band; interactions with person, household, tour and arrival-time flags; land-use mix: entropy of the job and population shares (0–1); logsum: mode-choice logsum of the detour; transit available: bus door-to-door time below 120 min.</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_mast_stop_shopping_holdout_map.png" data-desc-position="bottom"><img alt="Shopping stops: hold-out records by PUMA, observed and model, and model minus observed." src="../../../assets/img/estimates/fig_mast_stop_shopping_holdout_map.png"></a></p>
+<p class="estnote">Shopping stops: hold-out records by PUMA, observed and model, and model minus observed.</p>
+
 <h3 id="stop-location-recreation">Stop location: recreation<a class="headerlink" href="#stop-location-recreation" title="Permanent link">¶</a></h3>
 <p>Location of an intermediate recreation stop.</p>
-<div class="estfit"><span>N = 5,064</span><span>K = 22</span><span>LL(β̂) = −15,801.1</span><span>ρ̄² = 0.576</span><span>Hold-out: LL per record −3.195</span></div>
+<div class="estfit"><span>N = 5,064</span><span>K = 20</span><span>LL(β̂) = −15,874.9</span><span>ρ̄² = 0.574</span><span>Hold-out: LL per record −3.205</span></div>
 
 <table>
 <thead>
@@ -4018,39 +3808,39 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Detour 1–2 km</td>
-<td style="text-align: right;">−0.5150***</td>
-<td style="text-align: right;">0.0682</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.4963***</td>
+<td style="text-align: right;">0.0672</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 2–5 km</td>
-<td style="text-align: right;">−0.1479***</td>
-<td style="text-align: right;">0.0278</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.1625***</td>
+<td style="text-align: right;">0.0277</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 5–10 km</td>
-<td style="text-align: right;">−0.0906***</td>
+<td style="text-align: right;">−0.0884***</td>
 <td style="text-align: right;">0.0175</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 10–20 km</td>
-<td style="text-align: right;">−0.1542***</td>
+<td style="text-align: right;">−0.1560***</td>
 <td style="text-align: right;">0.0097</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour &gt; 20 km</td>
 <td style="text-align: right;">−0.0349***</td>
 <td style="text-align: right;">0.0029</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Mode-choice logsum, detour</td>
-<td style="text-align: right;">1.2937***</td>
-<td style="text-align: right;">0.0807</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">1.2926***</td>
+<td style="text-align: right;">0.0813</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Anchor zones</em></strong></td>
@@ -4060,15 +3850,15 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Stop in the zone of the previous location</td>
-<td style="text-align: right;">0.4737***</td>
-<td style="text-align: right;">0.0539</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.4821***</td>
+<td style="text-align: right;">0.0541</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Stop in the zone of the next anchor</td>
-<td style="text-align: right;">0.3115***</td>
-<td style="text-align: right;">0.0556</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.3177***</td>
+<td style="text-align: right;">0.0559</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Area</em></strong></td>
@@ -4077,34 +3867,40 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
+<td>Rest of Maryland</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Baltimore City</td>
-<td style="text-align: right;">−0.2281*</td>
-<td style="text-align: right;">0.1091</td>
-<td style="text-align: right;">0.037</td>
+<td style="text-align: right;">−0.1632</td>
+<td style="text-align: right;">0.1098</td>
+<td style="text-align: right;">0.137</td>
 </tr>
 <tr>
 <td>Washington DC</td>
-<td style="text-align: right;">0.4872***</td>
-<td style="text-align: right;">0.1041</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.5772***</td>
+<td style="text-align: right;">0.1036</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>Central business district</td>
-<td style="text-align: right;">0.7511***</td>
-<td style="text-align: right;">0.0803</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>High job-density zone</td>
+<td style="text-align: right;">0.8835***</td>
+<td style="text-align: right;">0.0688</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Virginia</td>
-<td style="text-align: right;">0.1107</td>
-<td style="text-align: right;">0.1051</td>
-<td style="text-align: right;">0.292</td>
+<td style="text-align: right;">0.1881*</td>
+<td style="text-align: right;">0.1074</td>
+<td style="text-align: right;">0.080</td>
 </tr>
 <tr>
 <td>Delaware, Pennsylvania, West Virginia</td>
-<td style="text-align: right;">0.8568***</td>
+<td style="text-align: right;">0.8807***</td>
 <td style="text-align: right;">0.2259</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Land use</em></strong></td>
@@ -4113,16 +3909,16 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Ln(1 + retail jobs per km^2)</td>
-<td style="text-align: right;">−0.4138***</td>
-<td style="text-align: right;">0.0224</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(zone area, km²)</td>
+<td style="text-align: right;">0.4465***</td>
+<td style="text-align: right;">0.0253</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Land-use mix (entropy)</td>
-<td style="text-align: right;">0.1896</td>
-<td style="text-align: right;">0.1166</td>
-<td style="text-align: right;">0.104</td>
+<td style="text-align: right;">0.0155</td>
+<td style="text-align: right;">0.1075</td>
+<td style="text-align: right;">0.886</td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -4132,15 +3928,15 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Outside the counties of both anchors</td>
-<td style="text-align: right;">−0.8623***</td>
-<td style="text-align: right;">0.0700</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.8589***</td>
+<td style="text-align: right;">0.0698</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Outside the states of both anchors</td>
-<td style="text-align: right;">−0.4874***</td>
-<td style="text-align: right;">0.1232</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.4712***</td>
+<td style="text-align: right;">0.1235</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Interactions with ln(1 + detour)</em></strong></td>
@@ -4150,45 +3946,38 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Ln(1 + detour) × tour mode not car</td>
-<td style="text-align: right;">−0.3499***</td>
+<td style="text-align: right;">−0.3436***</td>
 <td style="text-align: right;">0.0491</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × inbound stop</td>
-<td style="text-align: right;">0.1338***</td>
-<td style="text-align: right;">0.0302</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.1343***</td>
+<td style="text-align: right;">0.0300</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td><strong><em>Size</em></strong></td>
+<td><strong><em>Attraction</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>θ population (ln weight)</td>
-<td style="text-align: right;">−4.7310***</td>
-<td style="text-align: right;">0.2295</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ office jobs (ln weight)</td>
-<td style="text-align: right;">−4.6293***</td>
-<td style="text-align: right;">0.3132</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ school pupils (ln weight)</td>
-<td style="text-align: right;">−5.0794***</td>
-<td style="text-align: right;">0.4358</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(1 + retail jobs)</td>
+<td style="text-align: right;">0.4456***</td>
+<td style="text-align: right;">0.0190</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 5,064; alternatives: 1,588 zones (full choice set); parameters: 20. LL(β̂) = −15,874.9; BIC = 31,920.5. Hold-out half (5,184 records, used before in the specification search): LL = −16,616.0. Estimation: maximum likelihood on the full choice set, robust sandwich covariance, unweighted; estimation half of the Regional Travel Survey. Locations: the survey's traffic zones, spread over the model zones by housing units (home ends) or jobs (activity ends); the likelihood is averaged over the possible zones of the destination and of the anchors (location mixture). Attraction: βln(1+x<sub>j</sub>), x<sub>j</sub> the retail jobs of zone j. Zone area in km², at least 0.05 km². Dependent variable: chosen zone of the stop. Detour: d(a,j) + d(j,b) - d(a,b) by car (km) between the origin a of the trip to the stop and the next anchor b of the tour (the primary destination for an outbound stop, home for an inbound stop), piecewise linear with the slope per km in each band; interactions with person, household, tour and arrival-time flags; land-use mix: entropy of the job and population shares (0–1); logsum: mode-choice logsum of the detour; transit available: bus door-to-door time below 120 min.</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_mast_stop_recreation_holdout_map.png" data-desc-position="bottom"><img alt="Recreation stops: hold-out records by PUMA, observed and model, and model minus observed." src="../../../assets/img/estimates/fig_mast_stop_recreation_holdout_map.png"></a></p>
+<p class="estnote">Recreation stops: hold-out records by PUMA, observed and model, and model minus observed.</p>
+
 <h3 id="stop-location-accompanying">Stop location: accompanying<a class="headerlink" href="#stop-location-accompanying" title="Permanent link">¶</a></h3>
 <p>Location of an intermediate drop-off or pick-up stop.</p>
-<div class="estfit"><span>N = 3,515</span><span>K = 26</span><span>LL(β̂) = −12,417.5</span><span>ρ̄² = 0.520</span><span>Hold-out: LL per record −3.406</span></div>
+<div class="estfit"><span>N = 3,515</span><span>K = 22</span><span>LL(β̂) = −12,488.1</span><span>ρ̄² = 0.517</span><span>Hold-out: LL per record −3.396</span></div>
 
 <table>
 <thead>
@@ -4208,45 +3997,45 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Detour 0–1 km (per km)</td>
-<td style="text-align: right;">0.4508***</td>
-<td style="text-align: right;">0.1172</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.4902***</td>
+<td style="text-align: right;">0.1173</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 1–2 km</td>
-<td style="text-align: right;">−0.3258***</td>
-<td style="text-align: right;">0.0948</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.3241***</td>
+<td style="text-align: right;">0.0940</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 2–5 km</td>
-<td style="text-align: right;">−0.1724***</td>
-<td style="text-align: right;">0.0312</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.1870***</td>
+<td style="text-align: right;">0.0307</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 5–10 km</td>
-<td style="text-align: right;">−0.0893***</td>
-<td style="text-align: right;">0.0181</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.0920***</td>
+<td style="text-align: right;">0.0180</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 10–20 km</td>
-<td style="text-align: right;">−0.1286***</td>
+<td style="text-align: right;">−0.1316***</td>
 <td style="text-align: right;">0.0098</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour &gt; 20 km</td>
-<td style="text-align: right;">−0.0526***</td>
-<td style="text-align: right;">0.0038</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.0537***</td>
+<td style="text-align: right;">0.0039</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Mode-choice logsum, detour</td>
-<td style="text-align: right;">1.0694***</td>
-<td style="text-align: right;">0.1213</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">1.0272***</td>
+<td style="text-align: right;">0.1208</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Anchor zones</em></strong></td>
@@ -4256,15 +4045,15 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Stop in the zone of the previous location</td>
-<td style="text-align: right;">0.5497***</td>
-<td style="text-align: right;">0.0672</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.5685***</td>
+<td style="text-align: right;">0.0662</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Stop in the zone of the next anchor</td>
-<td style="text-align: right;">0.2702***</td>
-<td style="text-align: right;">0.0704</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.3115***</td>
+<td style="text-align: right;">0.0690</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Area</em></strong></td>
@@ -4273,34 +4062,40 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
+<td>Rest of Maryland</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Baltimore City</td>
-<td style="text-align: right;">−0.1668</td>
-<td style="text-align: right;">0.1347</td>
-<td style="text-align: right;">0.215</td>
+<td style="text-align: right;">−0.2207*</td>
+<td style="text-align: right;">0.1330</td>
+<td style="text-align: right;">0.097</td>
 </tr>
 <tr>
 <td>Washington DC</td>
-<td style="text-align: right;">0.0066</td>
-<td style="text-align: right;">0.1236</td>
-<td style="text-align: right;">0.958</td>
+<td style="text-align: right;">−0.1387</td>
+<td style="text-align: right;">0.1139</td>
+<td style="text-align: right;">0.223</td>
 </tr>
 <tr>
-<td>Central business district</td>
-<td style="text-align: right;">0.8265***</td>
-<td style="text-align: right;">0.1342</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>High job-density zone</td>
+<td style="text-align: right;">1.1162***</td>
+<td style="text-align: right;">0.0972</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Virginia</td>
-<td style="text-align: right;">0.2195</td>
-<td style="text-align: right;">0.1161</td>
-<td style="text-align: right;">0.059</td>
+<td style="text-align: right;">0.2596**</td>
+<td style="text-align: right;">0.1140</td>
+<td style="text-align: right;">0.023</td>
 </tr>
 <tr>
 <td>Delaware, Pennsylvania, West Virginia</td>
-<td style="text-align: right;">−0.3250</td>
-<td style="text-align: right;">0.4267</td>
-<td style="text-align: right;">0.446</td>
+<td style="text-align: right;">−0.1532</td>
+<td style="text-align: right;">0.4161</td>
+<td style="text-align: right;">0.713</td>
 </tr>
 <tr>
 <td><strong><em>Land use</em></strong></td>
@@ -4309,16 +4104,16 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Ln(1 + retail jobs per km^2)</td>
-<td style="text-align: right;">−0.5678***</td>
-<td style="text-align: right;">0.0415</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(zone area, km²)</td>
+<td style="text-align: right;">0.5396***</td>
+<td style="text-align: right;">0.0290</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Land-use mix (entropy)</td>
-<td style="text-align: right;">−0.4895***</td>
-<td style="text-align: right;">0.1364</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.5783***</td>
+<td style="text-align: right;">0.1014</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -4328,15 +4123,15 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Outside the counties of both anchors</td>
-<td style="text-align: right;">−1.0294***</td>
-<td style="text-align: right;">0.0792</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−1.0163***</td>
+<td style="text-align: right;">0.0791</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Outside the states of both anchors</td>
-<td style="text-align: right;">−0.1963</td>
-<td style="text-align: right;">0.1357</td>
-<td style="text-align: right;">0.148</td>
+<td style="text-align: right;">−0.1847</td>
+<td style="text-align: right;">0.1359</td>
+<td style="text-align: right;">0.174</td>
 </tr>
 <tr>
 <td><strong><em>Interactions with ln(1 + detour)</em></strong></td>
@@ -4345,64 +4140,51 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
+<td>Ln(1 + detour) × cars ≥ drivers</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Ln(1 + detour) × no car</td>
-<td style="text-align: right;">−0.0369</td>
-<td style="text-align: right;">0.2580</td>
-<td style="text-align: right;">0.886</td>
+<td style="text-align: right;">−0.0656</td>
+<td style="text-align: right;">0.2623</td>
+<td style="text-align: right;">0.802</td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × cars &lt; drivers</td>
-<td style="text-align: right;">−0.1049*</td>
-<td style="text-align: right;">0.0486</td>
+<td style="text-align: right;">−0.1051**</td>
+<td style="text-align: right;">0.0488</td>
 <td style="text-align: right;">0.031</td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × tour mode not car</td>
-<td style="text-align: right;">−0.3387***</td>
-<td style="text-align: right;">0.0718</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.3201***</td>
+<td style="text-align: right;">0.0723</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td><strong><em>Size</em></strong></td>
+<td><strong><em>Attraction</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>θ population (ln weight)</td>
-<td style="text-align: right;">−2.4517***</td>
-<td style="text-align: right;">0.4054</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ retail jobs (ln weight)</td>
-<td style="text-align: right;">3.7616***</td>
-<td style="text-align: right;">0.2578</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ office jobs (ln weight)</td>
-<td style="text-align: right;">−1.3766</td>
-<td style="text-align: right;">0.7184</td>
-<td style="text-align: right;">0.055</td>
-</tr>
-<tr>
-<td>θ other jobs (ln weight)</td>
-<td style="text-align: right;">−0.9279</td>
-<td style="text-align: right;">0.5471</td>
-<td style="text-align: right;">0.090</td>
-</tr>
-<tr>
-<td>μ, ln size</td>
-<td style="text-align: right;">0.9199***</td>
-<td style="text-align: right;">0.0381</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(1 + school enrolment)</td>
+<td style="text-align: right;">0.1108***</td>
+<td style="text-align: right;">0.0088</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 3,515; alternatives: 1,588 zones (full choice set); parameters: 22. LL(β̂) = −12,488.1; BIC = 25,155.7. Hold-out half (3,554 records, used before in the specification search): LL = −12,070.0. Estimation: maximum likelihood on the full choice set, robust sandwich covariance, unweighted; estimation half of the Regional Travel Survey. Locations: the survey's traffic zones, spread over the model zones by housing units (home ends) or jobs (activity ends); the likelihood is averaged over the possible zones of the destination and of the anchors (location mixture). Attraction: βln(1+x<sub>j</sub>), x<sub>j</sub> the school enrolment of zone j. Zone area in km², at least 0.05 km². Dependent variable: chosen zone of the stop. Detour: d(a,j) + d(j,b) - d(a,b) by car (km) between the origin a of the trip to the stop and the next anchor b of the tour (the primary destination for an outbound stop, home for an inbound stop), piecewise linear with the slope per km in each band; interactions with person, household, tour and arrival-time flags; land-use mix: entropy of the job and population shares (0–1); logsum: mode-choice logsum of the detour; transit available: bus door-to-door time below 120 min.</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_mast_stop_accompanying_holdout_map.png" data-desc-position="bottom"><img alt="Accompanying stops: hold-out records by PUMA, observed and model, and model minus observed." src="../../../assets/img/estimates/fig_mast_stop_accompanying_holdout_map.png"></a></p>
+<p class="estnote">Accompanying stops: hold-out records by PUMA, observed and model, and model minus observed.</p>
+
 <h3 id="stop-location-other-errands">Stop location: other errands<a class="headerlink" href="#stop-location-other-errands" title="Permanent link">¶</a></h3>
 <p>Location of an intermediate stop for other errands.</p>
-<div class="estfit"><span>N = 8,055</span><span>K = 23</span><span>LL(β̂) = −24,580.1</span><span>ρ̄² = 0.586</span><span>Hold-out: LL per record −3.024</span></div>
+<div class="estfit"><span>N = 8,055</span><span>K = 20</span><span>LL(β̂) = −24,653.3</span><span>ρ̄² = 0.584</span><span>Hold-out: LL per record −3.028</span></div>
 
 <table>
 <thead>
@@ -4422,45 +4204,45 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Detour 1–2 km</td>
-<td style="text-align: right;">−0.3803***</td>
-<td style="text-align: right;">0.0519</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.3645***</td>
+<td style="text-align: right;">0.0515</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 2–5 km</td>
-<td style="text-align: right;">−0.2100***</td>
-<td style="text-align: right;">0.0223</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.2202***</td>
+<td style="text-align: right;">0.0221</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 5–10 km</td>
-<td style="text-align: right;">−0.0746***</td>
+<td style="text-align: right;">−0.0761***</td>
 <td style="text-align: right;">0.0140</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 10–20 km</td>
-<td style="text-align: right;">−0.1484***</td>
+<td style="text-align: right;">−0.1517***</td>
 <td style="text-align: right;">0.0083</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour &gt; 20 km</td>
-<td style="text-align: right;">−0.0230***</td>
-<td style="text-align: right;">0.0044</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.0257***</td>
+<td style="text-align: right;">0.0043</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Mode-choice logsum, detour</td>
-<td style="text-align: right;">1.5254***</td>
-<td style="text-align: right;">0.1011</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">1.5476***</td>
+<td style="text-align: right;">0.1019</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Car generalised time, detour (min)</td>
-<td style="text-align: right;">−0.0089*</td>
-<td style="text-align: right;">0.0036</td>
-<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">−0.0063*</td>
+<td style="text-align: right;">0.0034</td>
+<td style="text-align: right;">0.065</td>
 </tr>
 <tr>
 <td><strong><em>Anchor zones</em></strong></td>
@@ -4470,15 +4252,15 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Stop in the zone of the previous location</td>
-<td style="text-align: right;">0.5333***</td>
-<td style="text-align: right;">0.0414</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.5396***</td>
+<td style="text-align: right;">0.0411</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Stop in the zone of the next anchor</td>
-<td style="text-align: right;">0.1903***</td>
-<td style="text-align: right;">0.0433</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.1943***</td>
+<td style="text-align: right;">0.0430</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Area</em></strong></td>
@@ -4487,34 +4269,40 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
+<td>Rest of Maryland</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Baltimore City</td>
-<td style="text-align: right;">−0.1198</td>
-<td style="text-align: right;">0.0868</td>
-<td style="text-align: right;">0.167</td>
+<td style="text-align: right;">−0.0798</td>
+<td style="text-align: right;">0.0867</td>
+<td style="text-align: right;">0.358</td>
 </tr>
 <tr>
 <td>Washington DC</td>
-<td style="text-align: right;">−0.1640</td>
-<td style="text-align: right;">0.0966</td>
-<td style="text-align: right;">0.090</td>
+<td style="text-align: right;">0.0757</td>
+<td style="text-align: right;">0.0887</td>
+<td style="text-align: right;">0.394</td>
 </tr>
 <tr>
-<td>Central business district</td>
-<td style="text-align: right;">0.3425***</td>
-<td style="text-align: right;">0.0775</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>High job-density zone</td>
+<td style="text-align: right;">0.6557***</td>
+<td style="text-align: right;">0.0612</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Virginia</td>
-<td style="text-align: right;">0.1240</td>
-<td style="text-align: right;">0.0914</td>
-<td style="text-align: right;">0.175</td>
+<td style="text-align: right;">0.1931**</td>
+<td style="text-align: right;">0.0909</td>
+<td style="text-align: right;">0.034</td>
 </tr>
 <tr>
 <td>Delaware, Pennsylvania, West Virginia</td>
-<td style="text-align: right;">−0.3285</td>
-<td style="text-align: right;">0.2441</td>
-<td style="text-align: right;">0.178</td>
+<td style="text-align: right;">−0.2740</td>
+<td style="text-align: right;">0.2351</td>
+<td style="text-align: right;">0.244</td>
 </tr>
 <tr>
 <td><strong><em>Land use</em></strong></td>
@@ -4523,16 +4311,16 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Ln(1 + retail jobs per km^2)</td>
-<td style="text-align: right;">−0.3612***</td>
-<td style="text-align: right;">0.0249</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(zone area, km²)</td>
+<td style="text-align: right;">0.3882***</td>
+<td style="text-align: right;">0.0210</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Land-use mix (entropy)</td>
-<td style="text-align: right;">−0.0611</td>
-<td style="text-align: right;">0.0994</td>
-<td style="text-align: right;">0.539</td>
+<td style="text-align: right;">0.2763***</td>
+<td style="text-align: right;">0.0874</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -4542,15 +4330,15 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Outside the counties of both anchors</td>
-<td style="text-align: right;">−1.0353***</td>
-<td style="text-align: right;">0.0587</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−1.0293***</td>
+<td style="text-align: right;">0.0586</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Outside the states of both anchors</td>
-<td style="text-align: right;">−0.2522*</td>
-<td style="text-align: right;">0.1012</td>
-<td style="text-align: right;">0.013</td>
+<td style="text-align: right;">−0.2536**</td>
+<td style="text-align: right;">0.1010</td>
+<td style="text-align: right;">0.012</td>
 </tr>
 <tr>
 <td><strong><em>Interactions with ln(1 + detour)</em></strong></td>
@@ -4560,45 +4348,32 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Ln(1 + detour) × tour mode not car</td>
-<td style="text-align: right;">−0.3297***</td>
+<td style="text-align: right;">−0.3264***</td>
 <td style="text-align: right;">0.0458</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td><strong><em>Size</em></strong></td>
+<td><strong><em>Attraction</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>θ office jobs (ln weight)</td>
-<td style="text-align: right;">−3.8285***</td>
-<td style="text-align: right;">0.2137</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ other jobs (ln weight)</td>
-<td style="text-align: right;">−3.3780***</td>
-<td style="text-align: right;">0.2348</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ school pupils (ln weight)</td>
-<td style="text-align: right;">−6.2719***</td>
-<td style="text-align: right;">1.1856</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>μ, ln size</td>
-<td style="text-align: right;">0.9388***</td>
-<td style="text-align: right;">0.0251</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(1 + retail jobs)</td>
+<td style="text-align: right;">0.4635***</td>
+<td style="text-align: right;">0.0147</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 8,055; alternatives: 1,588 zones (full choice set); parameters: 20. LL(β̂) = −24,653.3; BIC = 49,486.5. Hold-out half (8,010 records, used before in the specification search): LL = −24,256.6. Estimation: maximum likelihood on the full choice set, robust sandwich covariance, unweighted; estimation half of the Regional Travel Survey. Locations: the survey's traffic zones, spread over the model zones by housing units (home ends) or jobs (activity ends); the likelihood is averaged over the possible zones of the destination and of the anchors (location mixture). Attraction: βln(1+x<sub>j</sub>), x<sub>j</sub> the retail jobs of zone j. Zone area in km², at least 0.05 km². Dependent variable: chosen zone of the stop. Detour: d(a,j) + d(j,b) - d(a,b) by car (km) between the origin a of the trip to the stop and the next anchor b of the tour (the primary destination for an outbound stop, home for an inbound stop), piecewise linear with the slope per km in each band; interactions with person, household, tour and arrival-time flags; land-use mix: entropy of the job and population shares (0–1); logsum: mode-choice logsum of the detour; transit available: bus door-to-door time below 120 min.</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_mast_stop_other_holdout_map.png" data-desc-position="bottom"><img alt="Other-errand stops: hold-out records by PUMA, observed and model, and model minus observed." src="../../../assets/img/estimates/fig_mast_stop_other_holdout_map.png"></a></p>
+<p class="estnote">Other-errand stops: hold-out records by PUMA, observed and model, and model minus observed.</p>
+
 <h3 id="outing-from-the-workplace-first-stop">Outing from the workplace: first stop<a class="headerlink" href="#outing-from-the-workplace-first-stop" title="Permanent link">¶</a></h3>
 <p>Location of the first stop of an outing that starts and ends at the workplace.</p>
-<div class="estfit"><span>N = 1,180</span><span>K = 13</span><span>LL(β̂) = −3,089.9</span><span>ρ̄² = 0.665</span><span>Hold-out: LL per record −2.715</span></div>
+<div class="estfit"><span>N = 1,180</span><span>K = 10</span><span>LL(β̂) = −3,112.3</span><span>ρ̄² = 0.663</span><span>Hold-out: LL per record −2.707</span></div>
 
 <table>
 <thead>
@@ -4618,45 +4393,45 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Distance 0–1 km (per km)</td>
-<td style="text-align: right;">−5.5813***</td>
-<td style="text-align: right;">0.4576</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−5.9496***</td>
+<td style="text-align: right;">0.4628</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Distance 1–2 km</td>
-<td style="text-align: right;">−1.1903***</td>
-<td style="text-align: right;">0.2060</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−1.2190***</td>
+<td style="text-align: right;">0.2130</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Distance 2–5 km</td>
-<td style="text-align: right;">−0.3162***</td>
-<td style="text-align: right;">0.0794</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.3562***</td>
+<td style="text-align: right;">0.0810</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Distance 5–10 km</td>
-<td style="text-align: right;">−0.3256***</td>
-<td style="text-align: right;">0.0478</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.3237***</td>
+<td style="text-align: right;">0.0484</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Distance 10–20 km</td>
-<td style="text-align: right;">−0.1042**</td>
-<td style="text-align: right;">0.0387</td>
-<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">−0.1093***</td>
+<td style="text-align: right;">0.0384</td>
+<td style="text-align: right;">0.004</td>
 </tr>
 <tr>
 <td>Distance 20–50 km</td>
-<td style="text-align: right;">−0.0502</td>
-<td style="text-align: right;">0.0303</td>
-<td style="text-align: right;">0.098</td>
+<td style="text-align: right;">−0.0505*</td>
+<td style="text-align: right;">0.0304</td>
+<td style="text-align: right;">0.096</td>
 </tr>
 <tr>
 <td>Car generalised time (min)</td>
-<td style="text-align: right;">−0.0716**</td>
-<td style="text-align: right;">0.0235</td>
-<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">−0.0691***</td>
+<td style="text-align: right;">0.0239</td>
+<td style="text-align: right;">0.004</td>
 </tr>
 <tr>
 <td><strong><em>Same zone</em></strong></td>
@@ -4666,9 +4441,9 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Intrazonal (destination = workplace zone)</td>
-<td style="text-align: right;">−0.2414</td>
-<td style="text-align: right;">0.1600</td>
-<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">−0.2151</td>
+<td style="text-align: right;">0.1564</td>
+<td style="text-align: right;">0.169</td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -4678,45 +4453,32 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Outside the workplace county</td>
-<td style="text-align: right;">−1.3701***</td>
-<td style="text-align: right;">0.1842</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−1.3915***</td>
+<td style="text-align: right;">0.1828</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td><strong><em>Size</em></strong></td>
+<td><strong><em>Attraction</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>θ population (ln weight)</td>
-<td style="text-align: right;">−5.5334***</td>
-<td style="text-align: right;">1.5769</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ office jobs (ln weight)</td>
-<td style="text-align: right;">−2.5016***</td>
-<td style="text-align: right;">0.3190</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ other jobs (ln weight)</td>
-<td style="text-align: right;">−3.2305***</td>
-<td style="text-align: right;">0.8060</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>μ, ln size</td>
-<td style="text-align: right;">0.8516***</td>
-<td style="text-align: right;">0.0611</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(1 + retail jobs)</td>
+<td style="text-align: right;">0.6934***</td>
+<td style="text-align: right;">0.0476</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 1,180; alternatives: 1,588 zones (full choice set); parameters: 10. LL(β̂) = −3,112.3; BIC = 6,295.3. Hold-out half (1,155 records, used before in the specification search): LL = −3,126.1. Estimation: maximum likelihood on the full choice set, robust sandwich covariance, unweighted. Destinations: the survey's census tract, matched to the model zones by the area of their overlap. Estimation half of the Regional Travel Survey. Attraction: βln(1+x<sub>j</sub>), x<sub>j</sub> the retail jobs of zone j. Same form and estimator as the other location models with the usual workplace as the anchor: distance from the workplace (km), piecewise linear with the slope per km in each band.</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_mast_outing_dest_holdout_map.png" data-desc-position="bottom"><img alt="Outing first stops: hold-out records by PUMA, observed and model, and model minus observed." src="../../../assets/img/estimates/fig_mast_outing_dest_holdout_map.png"></a></p>
+<p class="estnote">Outing first stops: hold-out records by PUMA, observed and model, and model minus observed.</p>
+
 <h3 id="work-business-workers-with-a-usual-workplace">Work business: workers with a usual workplace<a class="headerlink" href="#work-business-workers-with-a-usual-workplace" title="Permanent link">¶</a></h3>
 <p>Location of work-business episodes, with home and workplace as anchors.</p>
-<div class="estfit"><span>N = 1,539</span><span>K = 22</span><span>LL(β̂) = −8,402.2</span><span>ρ̄² = 0.312</span><span>Hold-out: LL per record −5.541</span></div>
+<div class="estfit"><span>N = 1,539</span><span>K = 18</span><span>LL(β̂) = −8,432.1</span><span>ρ̄² = 0.310</span><span>Hold-out: LL per record −5.554</span></div>
 
 <table>
 <thead>
@@ -4736,45 +4498,45 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Detour 0–1 km (per km)</td>
-<td style="text-align: right;">0.8611***</td>
-<td style="text-align: right;">0.1932</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.8718***</td>
+<td style="text-align: right;">0.1929</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 1–2 km</td>
-<td style="text-align: right;">−0.7482***</td>
-<td style="text-align: right;">0.1749</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.7337***</td>
+<td style="text-align: right;">0.1747</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour 2–5 km</td>
-<td style="text-align: right;">−0.0724</td>
-<td style="text-align: right;">0.0603</td>
-<td style="text-align: right;">0.230</td>
+<td style="text-align: right;">−0.0933</td>
+<td style="text-align: right;">0.0604</td>
+<td style="text-align: right;">0.123</td>
 </tr>
 <tr>
 <td>Detour 5–10 km</td>
-<td style="text-align: right;">−0.0111</td>
-<td style="text-align: right;">0.0315</td>
-<td style="text-align: right;">0.724</td>
+<td style="text-align: right;">−0.0145</td>
+<td style="text-align: right;">0.0316</td>
+<td style="text-align: right;">0.646</td>
 </tr>
 <tr>
 <td>Detour 10–20 km</td>
-<td style="text-align: right;">−0.0632***</td>
-<td style="text-align: right;">0.0134</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.0719***</td>
+<td style="text-align: right;">0.0132</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Detour &gt; 20 km</td>
-<td style="text-align: right;">−0.0127*</td>
-<td style="text-align: right;">0.0050</td>
-<td style="text-align: right;">0.011</td>
+<td style="text-align: right;">−0.0178***</td>
+<td style="text-align: right;">0.0047</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Car generalised time, detour (min)</td>
-<td style="text-align: right;">−0.0136**</td>
-<td style="text-align: right;">0.0046</td>
-<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">−0.0088**</td>
+<td style="text-align: right;">0.0042</td>
+<td style="text-align: right;">0.037</td>
 </tr>
 <tr>
 <td><strong><em>Same zone</em></strong></td>
@@ -4784,14 +4546,14 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Stop in the home zone</td>
-<td style="text-align: right;">1.1106***</td>
-<td style="text-align: right;">0.1215</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">1.1300***</td>
+<td style="text-align: right;">0.1225</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Stop in the workplace zone</td>
-<td style="text-align: right;">−0.5247**</td>
-<td style="text-align: right;">0.1637</td>
+<td style="text-align: right;">−0.5239***</td>
+<td style="text-align: right;">0.1640</td>
 <td style="text-align: right;">0.001</td>
 </tr>
 <tr>
@@ -4801,16 +4563,16 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Ln(1 + retail jobs per km^2)</td>
-<td style="text-align: right;">−0.0802**</td>
-<td style="text-align: right;">0.0294</td>
-<td style="text-align: right;">0.006</td>
+<td>Ln(zone area, km²)</td>
+<td style="text-align: right;">0.1646***</td>
+<td style="text-align: right;">0.0290</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Land-use mix (entropy)</td>
-<td style="text-align: right;">0.5928*</td>
-<td style="text-align: right;">0.2662</td>
-<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">0.2989</td>
+<td style="text-align: right;">0.1949</td>
+<td style="text-align: right;">0.125</td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -4820,9 +4582,9 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Outside the counties of both anchors</td>
-<td style="text-align: right;">−1.0162***</td>
-<td style="text-align: right;">0.0818</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.9945***</td>
+<td style="text-align: right;">0.0819</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Interactions with ln(1 + detour)</em></strong></td>
@@ -4831,76 +4593,69 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
+<td>Ln(1 + detour) × cars ≥ drivers</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Ln(1 + detour) × no car</td>
-<td style="text-align: right;">−0.1163</td>
-<td style="text-align: right;">0.1178</td>
-<td style="text-align: right;">0.323</td>
+<td style="text-align: right;">−0.1520</td>
+<td style="text-align: right;">0.1165</td>
+<td style="text-align: right;">0.192</td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × cars &lt; drivers</td>
-<td style="text-align: right;">−0.2729***</td>
-<td style="text-align: right;">0.0723</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.2870***</td>
+<td style="text-align: right;">0.0712</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr>
+<td>Ln(1 + detour) × midday 9–15</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × AM 6–9</td>
-<td style="text-align: right;">0.0428</td>
-<td style="text-align: right;">0.0532</td>
-<td style="text-align: right;">0.422</td>
+<td style="text-align: right;">0.0403</td>
+<td style="text-align: right;">0.0528</td>
+<td style="text-align: right;">0.445</td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × PM 15–19</td>
-<td style="text-align: right;">−0.2424***</td>
-<td style="text-align: right;">0.0584</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.2480***</td>
+<td style="text-align: right;">0.0582</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Ln(1 + detour) × evening 19–6</td>
-<td style="text-align: right;">−0.2277*</td>
-<td style="text-align: right;">0.1001</td>
-<td style="text-align: right;">0.023</td>
+<td style="text-align: right;">−0.2369**</td>
+<td style="text-align: right;">0.0994</td>
+<td style="text-align: right;">0.017</td>
 </tr>
 <tr>
-<td><strong><em>Size</em></strong></td>
+<td><strong><em>Attraction</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>θ population (ln weight)</td>
-<td style="text-align: right;">−2.2439***</td>
-<td style="text-align: right;">0.5863</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>θ office jobs (ln weight)</td>
-<td style="text-align: right;">−0.2926</td>
-<td style="text-align: right;">0.4013</td>
-<td style="text-align: right;">0.466</td>
-</tr>
-<tr>
-<td>θ other jobs (ln weight)</td>
-<td style="text-align: right;">−0.6868</td>
-<td style="text-align: right;">0.4647</td>
-<td style="text-align: right;">0.139</td>
-</tr>
-<tr>
-<td>θ school pupils (ln weight)</td>
-<td style="text-align: right;">−2.0439**</td>
-<td style="text-align: right;">0.7482</td>
-<td style="text-align: right;">0.006</td>
-</tr>
-<tr>
-<td>μ, ln size</td>
-<td style="text-align: right;">0.8539***</td>
-<td style="text-align: right;">0.0441</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(1 + office jobs)</td>
+<td style="text-align: right;">0.5580***</td>
+<td style="text-align: right;">0.0251</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 1,539; alternatives: 1,588 zones (full choice set); parameters: 18. LL(β̂) = −8,432.1; BIC = 16,996.3. Hold-out half (1,529 records, used before in the specification search): LL = −8,492.8. Estimation: maximum likelihood on the full choice set, robust sandwich covariance, unweighted. Destinations: the survey's census tract, matched to the model zones by the area of their overlap. Estimation half of the Regional Travel Survey. Attraction: βln(1+x<sub>j</sub>), x<sub>j</sub> the office jobs of zone j. Zone area in km², at least 0.05 km². Detour: d(h,j) + d(j,w) - d(h,w) by car between home h and the usual workplace w (km), piecewise linear with the slope per km in each band; interactions with household and arrival-time flags; land-use mix: entropy of the job and population shares (0–1); logsum: mode-choice logsum of the stop.</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_mast_loc_wbwork_holdout_map.png" data-desc-position="bottom"><img alt="Work business, usual-workplace workers: hold-out records by PUMA, observed and model, and model minus observed." src="../../../assets/img/estimates/fig_mast_loc_wbwork_holdout_map.png"></a></p>
+<p class="estnote">Work business, usual-workplace workers: hold-out records by PUMA, observed and model, and model minus observed.</p>
+
 <h3 id="work-business-other-persons">Work business: other persons<a class="headerlink" href="#work-business-other-persons" title="Permanent link">¶</a></h3>
 <p>Location of work-business episodes of persons without a usual workplace.</p>
-<div class="estfit"><span>N = 1,259</span><span>K = 19</span><span>LL(β̂) = −6,766.7</span><span>ρ̄² = 0.297</span><span>Hold-out: LL per record −5.588</span></div>
+<div class="estfit"><span>N = 1,259</span><span>K = 16</span><span>LL(β̂) = −6,819.3</span><span>ρ̄² = 0.292</span><span>Hold-out: LL per record −5.625</span></div>
 
 <table>
 <thead>
@@ -4920,39 +4675,39 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Distance 1–2 km</td>
-<td style="text-align: right;">−2.2205***</td>
-<td style="text-align: right;">0.2555</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−2.1253***</td>
+<td style="text-align: right;">0.2528</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Distance 2–5 km</td>
-<td style="text-align: right;">−0.1198</td>
-<td style="text-align: right;">0.0818</td>
-<td style="text-align: right;">0.143</td>
+<td style="text-align: right;">−0.1183</td>
+<td style="text-align: right;">0.0814</td>
+<td style="text-align: right;">0.146</td>
 </tr>
 <tr>
 <td>Distance 5–10 km</td>
-<td style="text-align: right;">−0.1715***</td>
-<td style="text-align: right;">0.0327</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.1706***</td>
+<td style="text-align: right;">0.0325</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Distance 10–20 km</td>
-<td style="text-align: right;">−0.1153***</td>
+<td style="text-align: right;">−0.1145***</td>
 <td style="text-align: right;">0.0138</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Distance 20–50 km</td>
-<td style="text-align: right;">−0.0798***</td>
-<td style="text-align: right;">0.0053</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.0811***</td>
+<td style="text-align: right;">0.0054</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Distance &gt; 50 km</td>
-<td style="text-align: right;">−0.0390***</td>
+<td style="text-align: right;">−0.0392***</td>
 <td style="text-align: right;">0.0033</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Same zone</em></strong></td>
@@ -4962,9 +4717,9 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Intrazonal (destination = home zone)</td>
-<td style="text-align: right;">0.6269***</td>
-<td style="text-align: right;">0.1782</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.7504***</td>
+<td style="text-align: right;">0.1792</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Area</em></strong></td>
@@ -4973,28 +4728,34 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
+<td>Rest of Maryland</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Baltimore City</td>
-<td style="text-align: right;">−0.1409</td>
-<td style="text-align: right;">0.0999</td>
-<td style="text-align: right;">0.158</td>
+<td style="text-align: right;">−0.2364**</td>
+<td style="text-align: right;">0.0983</td>
+<td style="text-align: right;">0.016</td>
 </tr>
 <tr>
 <td>Washington DC</td>
-<td style="text-align: right;">0.1273</td>
-<td style="text-align: right;">0.1406</td>
-<td style="text-align: right;">0.365</td>
+<td style="text-align: right;">0.3742***</td>
+<td style="text-align: right;">0.1269</td>
+<td style="text-align: right;">0.003</td>
 </tr>
 <tr>
 <td>Virginia</td>
-<td style="text-align: right;">−0.1645</td>
-<td style="text-align: right;">0.1281</td>
-<td style="text-align: right;">0.199</td>
+<td style="text-align: right;">0.2043*</td>
+<td style="text-align: right;">0.1197</td>
+<td style="text-align: right;">0.088</td>
 </tr>
 <tr>
 <td>Delaware, Pennsylvania, West Virginia</td>
-<td style="text-align: right;">−0.8010***</td>
-<td style="text-align: right;">0.2142</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.2775</td>
+<td style="text-align: right;">0.2094</td>
+<td style="text-align: right;">0.185</td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -5004,9 +4765,9 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Outside the origin county</td>
-<td style="text-align: right;">−0.2972***</td>
-<td style="text-align: right;">0.0863</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.3124***</td>
+<td style="text-align: right;">0.0861</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Interactions with ln(distance)</em></strong></td>
@@ -5015,58 +4776,51 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Ln(distance) × income &lt; \50k</td>
-<td style="text-align: right;">−0.1223</td>
-<td style="text-align: right;">0.0671</td>
+<td>Ln(distance) × income $50–100k</td>
+<td style="text-align: right;">reference</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Ln(distance) × income &lt; $50k</td>
+<td style="text-align: right;">−0.1206*</td>
+<td style="text-align: right;">0.0664</td>
+<td style="text-align: right;">0.069</td>
+</tr>
+<tr>
+<td>Ln(distance) × income ≥ $100k</td>
+<td style="text-align: right;">0.1157*</td>
+<td style="text-align: right;">0.0634</td>
 <td style="text-align: right;">0.068</td>
 </tr>
 <tr>
-<td>Ln(distance) × income ≥q \100k</td>
-<td style="text-align: right;">0.1043</td>
-<td style="text-align: right;">0.0639</td>
-<td style="text-align: right;">0.103</td>
-</tr>
-<tr>
 <td>Ln(distance) × worker</td>
-<td style="text-align: right;">0.3669***</td>
-<td style="text-align: right;">0.0565</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">0.3775***</td>
+<td style="text-align: right;">0.0556</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td><strong><em>Size</em></strong></td>
+<td><strong><em>Attraction</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>θ office jobs (ln weight)</td>
-<td style="text-align: right;">−0.5587</td>
-<td style="text-align: right;">0.3015</td>
-<td style="text-align: right;">0.064</td>
-</tr>
-<tr>
-<td>θ other jobs (ln weight)</td>
-<td style="text-align: right;">−0.0792</td>
-<td style="text-align: right;">0.3270</td>
-<td style="text-align: right;">0.809</td>
-</tr>
-<tr>
-<td>θ school pupils (ln weight)</td>
-<td style="text-align: right;">−3.0742*</td>
-<td style="text-align: right;">1.3999</td>
-<td style="text-align: right;">0.028</td>
-</tr>
-<tr>
-<td>μ, ln size</td>
-<td style="text-align: right;">0.7309***</td>
-<td style="text-align: right;">0.0342</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(1 + office jobs)</td>
+<td style="text-align: right;">0.5440***</td>
+<td style="text-align: right;">0.0239</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 1,259; alternatives: 1,588 zones (full choice set); parameters: 16. LL(β̂) = −6,819.3; BIC = 13,752.9. Hold-out half (1,348 records, used before in the specification search): LL = −7,583.1. Estimation: maximum likelihood on the full choice set, robust sandwich covariance, unweighted. Destinations: the survey's census tract, matched to the model zones by the area of their overlap. Estimation half of the Regional Travel Survey. Attraction: βln(1+x<sub>j</sub>), x<sub>j</sub> the office jobs of zone j. Distance: car distance from the home (km), piecewise linear with the slope per km in each band; ln(distance) interactions with person, household and arrival-time flags; land-use mix: entropy of the job and population shares (0–1).</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_mast_loc_wbother_holdout_map.png" data-desc-position="bottom"><img alt="Work business, other persons: hold-out records by PUMA, observed and model, and model minus observed." src="../../../assets/img/estimates/fig_mast_loc_wbother_holdout_map.png"></a></p>
+<p class="estnote">Work business, other persons: hold-out records by PUMA, observed and model, and model minus observed.</p>
+
 <h3 id="work-trips-of-persons-who-work-at-home">Work trips of persons who work at home<a class="headerlink" href="#work-trips-of-persons-who-work-at-home" title="Permanent link">¶</a></h3>
 <p>Location of the work trips of persons whose usual workplace is home.</p>
-<div class="estfit"><span>N = 366</span><span>K = 6</span><span>LL(β̂) = −1,634.6</span><span>ρ̄² = 0.431</span><span>Hold-out: LL per record −4.375</span></div>
+<div class="estfit"><span>N = 366</span><span>K = 5</span><span>LL(β̂) = −1,640.9</span><span>ρ̄² = 0.430</span><span>Hold-out: LL per record −4.389</span></div>
 
 <table>
 <thead>
@@ -5086,15 +4840,15 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Distance (km)</td>
-<td style="text-align: right;">−0.0180***</td>
-<td style="text-align: right;">0.0049</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−0.0183***</td>
+<td style="text-align: right;">0.0050</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td>Ln(distance, km)</td>
-<td style="text-align: right;">−1.4059***</td>
-<td style="text-align: right;">0.1380</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">−1.4001***</td>
+<td style="text-align: right;">0.1388</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Same zone</em></strong></td>
@@ -5104,9 +4858,9 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Intrazonal (destination = home zone)</td>
-<td style="text-align: right;">1.2092***</td>
-<td style="text-align: right;">0.2609</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">1.3040***</td>
+<td style="text-align: right;">0.2615</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -5116,41 +4870,40 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </tr>
 <tr>
 <td>Outside the origin county</td>
-<td style="text-align: right;">−0.4478*</td>
-<td style="text-align: right;">0.1900</td>
-<td style="text-align: right;">0.018</td>
+<td style="text-align: right;">−0.4580**</td>
+<td style="text-align: right;">0.1903</td>
+<td style="text-align: right;">0.016</td>
 </tr>
 <tr>
-<td><strong><em>Size</em></strong></td>
+<td><strong><em>Attraction</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>θ population (ln weight)</td>
-<td style="text-align: right;">−2.0456***</td>
-<td style="text-align: right;">0.4009</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>μ, ln size</td>
-<td style="text-align: right;">0.7477***</td>
-<td style="text-align: right;">0.0778</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td>Ln(1 + office jobs)</td>
+<td style="text-align: right;">0.5299***</td>
+<td style="text-align: right;">0.0466</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Observations: 366; alternatives: 1,588 zones (full choice set); parameters: 5. LL(β̂) = −1,640.9; BIC = 3,311.3. Hold-out half (427 records, used before in the specification search): LL = −1,874.0. Estimation: maximum likelihood on the full choice set, robust sandwich covariance, unweighted. Destinations: the survey's census tract, matched to the model zones by the area of their overlap. Estimation half of the Regional Travel Survey. Attraction: βln(1+x<sub>j</sub>), x<sub>j</sub> the office jobs of zone j. Distance: car distance from home (km).</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_mast_loc_wahb_holdout_map.png" data-desc-position="bottom"><img alt="Work trips of home workers: hold-out records by PUMA, observed and model, and model minus observed." src="../../../assets/img/estimates/fig_mast_loc_wahb_holdout_map.png"></a></p>
+<p class="estnote">Work trips of home workers: hold-out records by PUMA, observed and model, and model minus observed.</p>
+
 <h3 id="school-and-daycare-without-a-school-record">School and daycare without a school record<a class="headerlink" href="#school-and-daycare-without-a-school-record" title="Permanent link">¶</a></h3>
 <p>One pooled model for school episodes of persons without a school record and daycare of children under 5, with a purpose scale.</p>
-<div class="estfit"><span>N = 846</span><span>K = 11</span><span>LL(β̂) = −3,706.8</span><span>ρ̄² = 0.453</span><span>Hold-out: LL per record −4.280</span></div>
+<div class="estfit"><span>N = 846</span><span>K = 9</span><span>LL(β̂) = −3,798.5</span><span>ρ̄² = 0.440</span><span>Hold-out: LL per record −4.396</span></div>
 
+<div class="modetab">
 <table>
 <thead>
 <tr>
 <th>Variable</th>
-<th style="text-align: right;">Coefficient</th>
-<th style="text-align: right;">Robust s.e.</th>
-<th style="text-align: right;">p</th>
+<th style="text-align: right;">Non-student school</th>
+<th style="text-align: right;">Daycare</th>
 </tr>
 </thead>
 <tbody>
@@ -5158,106 +4911,76 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td><strong><em>Distance and impedance</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Ln(distance, km)</td>
+<td style="text-align: right;">−1.0600*** (shared)<br><span class="se">(0.0618) &lt;0.001</span></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Ln(distance, km) (shared)</td>
-<td style="text-align: right;">−1.0349</td>
-<td style="text-align: right;">0.0640</td>
+<td>Car generalised time (min)</td>
+<td style="text-align: right;">−0.0447*** (shared)<br><span class="se">(0.0043) &lt;0.001</span></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
 <td><strong><em>Land use</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Ln(zone area, km²)</td>
+<td style="text-align: right;">0.1238*** (shared)<br><span class="se">(0.0463) 0.007</span></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Ln(1 + retail jobs per km2) (shared)</td>
-<td style="text-align: right;">−0.1383</td>
-<td style="text-align: right;">0.0328</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Land-use mix (entropy) (shared)</td>
-<td style="text-align: right;">1.3441</td>
-<td style="text-align: right;">0.2701</td>
+<td>Land-use mix (entropy)</td>
+<td style="text-align: right;">1.2281*** (shared)<br><span class="se">(0.2069) &lt;0.001</span></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
+</tr>
+<tr>
+<td>Outside the origin county</td>
+<td style="text-align: right;">−0.5883*** (shared)<br><span class="se">(0.1177) &lt;0.001</span></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Outside the origin county (shared)</td>
-<td style="text-align: right;">−0.5721</td>
-<td style="text-align: right;">0.1198</td>
+<td>Outside the origin state</td>
+<td style="text-align: right;">−0.4893*** (shared)<br><span class="se">(0.1660) 0.003</span></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Outside the origin state (shared)</td>
-<td style="text-align: right;">−0.5208</td>
-<td style="text-align: right;">0.1677</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td><strong><em>Distance and impedance</em></strong></td>
-<td style="text-align: right;"></td>
+<td><strong><em>Attraction</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Car generalised time (min) (shared)</td>
-<td style="text-align: right;">−0.0480</td>
-<td style="text-align: right;">0.0046</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td><strong><em>Size</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Theta population (ln weight), non-student school</td>
-<td style="text-align: right;">−2.6083</td>
-<td style="text-align: right;">0.2803</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Theta office jobs (ln weight), non-student school</td>
-<td style="text-align: right;">−1.5241</td>
-<td style="text-align: right;">0.2714</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Theta school pupils (ln weight), daycare</td>
-<td style="text-align: right;">−0.7555</td>
-<td style="text-align: right;">0.6794</td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Theta population (ln weight), daycare</td>
-<td style="text-align: right;">−0.8610</td>
-<td style="text-align: right;">0.5918</td>
-<td style="text-align: right;"></td>
+<td>Ln(1 + school enrolment)</td>
+<td style="text-align: right;">0.5437***<br><span class="se">(0.0814) &lt;0.001</span></td>
+<td style="text-align: right;">0.1261***<br><span class="se">(0.0334) &lt;0.001</span></td>
 </tr>
 <tr>
 <td><strong><em>Scale</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Scale, daycare</td>
-<td style="text-align: right;">1.2279</td>
-<td style="text-align: right;">0.0464</td>
-<td style="text-align: right;"></td>
+<td>Scale (p against 1)</td>
+<td style="text-align: right;">1 (normalised)</td>
+<td style="text-align: right;">1.2389***<br><span class="se">(0.0453) &lt;0.001</span></td>
 </tr>
 </tbody>
 </table>
+</div>
+<p class="estnote">Observations (estimation half): non-student school 567, daycare 279 episodes; alternatives: 1,588 zones (full choice set); parameters: 9. LL(β̂) = −3,798.5; BIC = 7,657.6. Hold-out half (839 records: non-student school 557, daycare 282; used before in the specification search): LL = −3,688.3. Utility of zone j for purpose p: U<sub>pj</sub> = μ_p V<sub>pj</sub>, μ = 1 for non-student school; a coefficient marked shared takes the same value in V<sub>p</sub> of both purposes. –: not in the model of this purpose. Estimation: maximum likelihood on the full choice set, robust sandwich covariance, unweighted. Destinations: the survey's census tract, matched to the model zones by the area of their overlap. Estimation half of the Regional Travel Survey. Attraction: β_pln(1+x<sub>j</sub>), x<sub>j</sub> the school enrolment of zone j, one coefficient per purpose. Zone area in km², at least 0.05 km². Distance: car distance from home (km); land-use mix: entropy of the job and population shares (0–1).</p>
+
+<p class="estnote">Each cell: coefficient with stars; below it, the robust standard error in brackets and the p-value.</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_mast_loc_edu_holdout_map.png" data-desc-position="bottom"><img alt="School and daycare without a record: hold-out records by PUMA, observed and model, and model minus observed." src="../../../assets/img/estimates/fig_mast_loc_edu_holdout_map.png"></a></p>
+<p class="estnote">School and daycare without a record: hold-out records by PUMA, observed and model, and model minus observed.</p>
 
 
 

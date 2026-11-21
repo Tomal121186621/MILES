@@ -714,6 +714,8 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
       
         
       
+        
+      
     
     
     
@@ -879,7 +881,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -908,6 +910,34 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2520,7 +2550,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2918,7 +2948,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 <tbody>
 <tr>
 <td><strong>Engine</strong></td>
-<td>Python, run after every SILO year</td>
+<td>Inside SILO (Java), every simulated year</td>
 </tr>
 <tr>
 <td><strong>Code</strong></td>
@@ -2930,7 +2960,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </tr>
 <tr>
 <td><strong>Sensitive to</strong></td>
-<td>Car time, attendance boundaries, enrolment and capacity</td>
+<td>Car time, attendance boundaries, enrolment and capacity, school composition</td>
 </tr>
 <tr>
 <td><strong>Produces</strong></td>
@@ -2939,7 +2969,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </tbody>
 </table>
 </div>
-<p>Every simulated year, students are assigned to schools by three multinomial logits over the zones with enrolment of
+<p>Every simulated year, inside SILO, students are assigned to schools by three multinomial logits over the zones with enrolment of
 the student's band:</p>
 <table>
 <thead>
@@ -2967,10 +2997,40 @@ the student's band:</p>
 </tr>
 </tbody>
 </table>
-<p>Each model has a size term in which public enrolment inside the home's attendance zone is a separate component, car
-time and boundary terms. The attendance boundary dominates public K–12 choice: an in-boundary seat weighs about 420
-times an out-of-boundary public seat in K–8 and 68 times in high school. Enrolment is an upper limit, enforced by
-shadow prices, and student status is aligned to the ACS enrolment rates.</p>
+<p>Each model has a size term in which public enrolment inside the home's attendance boundary is a separate component,
+car time, boundary terms and the own-race share of the zone's enrolment of the band. The K–8 and high-school models add
+the share of enrolment in charter or magnet schools, and the K–8 model the test-score quality of the zone's public
+schools (with a weaker effect for incomes under $40k). The attendance boundary dominates public K–12 choice: an
+in-boundary seat weighs about 470 times an out-of-boundary public seat in K–8 and 72 times in high school.</p>
+<table>
+<thead>
+<tr>
+<th>Band</th>
+<th style="text-align: right;">Parameters</th>
+<th style="text-align: right;">Hold-out log-likelihood per student</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K–8</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">−1.953</td>
+</tr>
+<tr>
+<td>High school</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">−1.810</td>
+</tr>
+<tr>
+<td>College</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">−2.789</td>
+</tr>
+</tbody>
+</table>
+<p>The own-race share is recomputed every year from the current students; quality and the charter-or-magnet share are
+fixed inputs. Enrolment is an upper limit, enforced by shadow prices, and student status is aligned to the ACS
+enrolment rates. Full estimates: <a href="../../calibration-validation/estimates/schools/">School location</a>.</p>
 
 
 
@@ -3025,13 +3085,13 @@ shadow prices, and student status is aligned to the ACS enrolment rates.</p>
         
         
           
-          <a href="../activity/" class="md-footer__link md-footer__link--next" aria-label="Next: Activities (MILES-Day)">
+          <a href="../activity/" class="md-footer__link md-footer__link--next" aria-label="Next: Activities (MAST)">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Activities (MILES-Day)
+                Activities (MAST)
               </div>
             </div>
             <div class="md-footer__button md-icon">

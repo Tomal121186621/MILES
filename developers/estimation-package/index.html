@@ -712,6 +712,8 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2510,7 +2540,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -3084,15 +3114,16 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 
 <h1 id="estimation-package">Estimation package<a class="headerlink" href="#estimation-package" title="Permanent link">¶</a></h1>
 <p>The estimation package lets anyone re-estimate every model of MILES with <strong>Python Biogeme</strong> and check the result
-against the published estimates. It lives in <code>estimation/package/</code>; the specification search behind each model is in <code>estimation/development/</code>.</p>
+against the published estimates. The folder <code>ABIT/</code> holds the models of MAST (named after the code base MAST is built
+on). It lives in <code>estimation/package/</code>; the specification search behind each model is in <code>estimation/development/</code>.</p>
 <h2 id="layout">Layout<a class="headerlink" href="#layout" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>estimation/package/
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── RUN_ORDER.pdf                 which folder to run, in which order
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── SILO/                         land-use, workplace and school models (8)
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── SILO/                         land-use, workplace and school models (7)
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── 00_shared_data/           (not in the repository) census microdata, survey, zones, skims
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── 01_residential_county/
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   ├── 01_residential_puma/
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   │   ├── INSTRUCTIONS.pdf      from data download to output, step by step
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   │   ├── 01_residential_county_estimation.ipynb
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   │   ├── 01_residential_puma_estimation.ipynb
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│   │   ├── input/code/           data preparation scripts
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│   │   ├── input/data/raw/       source extracts
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│   │   ├── input/data/estimation/  the estimation table and its data dictionary
@@ -3100,7 +3131,7 @@ against the published estimates. It lives in <code>estimation/package/</code>; t
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│   │   ├── model/                Biogeme script, published estimates
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│   │   └── output/               your results
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│   └── ...
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>├── ABIT/                         MILES-Day: distributions and 20 models
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>├── ABIT/                         MAST models: distributions and 20 models
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│   ├── 00_tasha_distributions/   activity distributions (not a Biogeme model)
 <a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│   ├── 01_primary_destination_pooled/
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│   └── ...
@@ -3117,14 +3148,10 @@ against the published estimates. It lives in <code>estimation/package/</code>; t
 <tbody>
 <tr>
 <td>SILO/01</td>
-<td>Residential location: county</td>
+<td>Residential location: PUMA</td>
 </tr>
 <tr>
 <td>SILO/02</td>
-<td>Residential location: zone × structure type</td>
-</tr>
-<tr>
-<td>SILO/03</td>
 <td>Residential location: dwelling</td>
 </tr>
 <tr>
@@ -3238,7 +3265,7 @@ they are built from the census microdata and the travel survey by each folder's 
 </tr>
 </tbody>
 </table>
-<p><code>activity/build_parameters.py</code> writes the activity files and <code>TERM_MAP.csv</code>, which maps all 699 estimated terms to
+<p><code>activity/build_parameters.py</code> writes the activity files and <code>TERM_MAP.csv</code>, which maps every estimated term to
 their engine file and variable.</p>
 
 

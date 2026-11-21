@@ -712,6 +712,8 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -1907,32 +1937,10 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#school-location-kindergarten-to-grade-8" class="md-nav__link">
+  <a href="#school-location-k8-high-school-and-college" class="md-nav__link">
     <span class="md-ellipsis">
       
-        School location: kindergarten to grade 8
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#school-location-high-school" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        School location: high school
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#school-location-college" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        School location: college
+        School location: K–8, high school and college
       
     </span>
   </a>
@@ -2598,7 +2606,7 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2924,32 +2932,10 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
-  <a href="#school-location-kindergarten-to-grade-8" class="md-nav__link">
+  <a href="#school-location-k8-high-school-and-college" class="md-nav__link">
     <span class="md-ellipsis">
       
-        School location: kindergarten to grade 8
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#school-location-high-school" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        School location: high school
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#school-location-college" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        School location: college
+        School location: K–8, high school and college
       
     </span>
   </a>
@@ -3043,15 +3029,51 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 
 
 <h1 id="school-location">School location<a class="headerlink" href="#school-location" title="Permanent link">¶</a></h1>
-<p>Three multinomial logits over the zones with enrolment of the student's band, estimated on the survey estimation half with the full choice set.</p>
+<p>Three multinomial logits over the zones with enrolment of the student's band (K–8, high school, college), estimated on the survey estimation half with the full choice set.</p>
 <div class="admonition note">
 <p class="admonition-title">Reading the tables</p>
-<p>Coefficient: maximum-likelihood estimate with robust (sandwich) standard error; *** p &lt; 0.001, ** p &lt; 0.01, * p &lt; 0.05. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. The same tables can be re-estimated with Biogeme from the estimation package.</p>
+<p>Coefficient: maximum-likelihood estimate, with significance stars *** p &lt; 0.01, ** p &lt; 0.05, * p &lt; 0.10; robust (sandwich) standard error; two-sided p-value. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. Hold-out: fit on the held-out half of the data, which was also used in the specification search. "Reference": the omitted category; "—": removed from the model.</p>
 </div>
-<h3 id="school-location-kindergarten-to-grade-8">School location: kindergarten to grade 8<a class="headerlink" href="#school-location-kindergarten-to-grade-8" title="Permanent link">¶</a></h3>
-<p>Choice of the school zone over all zones with K–8 enrolment, with the attendance boundary as a separate size component. Survey estimation half.</p>
-<div class="estfit"><span>N = 1,509</span><span>K = 9</span><span>LL(β̂) = −2,941.0</span><span>ρ̄² = 0.717</span><span>Hold-out: LL per student −1.983</span></div>
-
+<h3 id="school-location-k8-high-school-and-college">School location: K–8, high school and college<a class="headerlink" href="#school-location-k8-high-school-and-college" title="Permanent link">¶</a></h3>
+<p>Size term with public enrolment inside the home's attendance boundary as a separate component, car time, boundary terms and the own-race share of the zone's enrolment; the K–12 models add the charter-or-magnet share, and the K–8 model the test-score quality of the zone's public schools.</p>
+<table>
+<thead>
+<tr>
+<th>Band</th>
+<th style="text-align: right;">N</th>
+<th style="text-align: right;">K</th>
+<th style="text-align: right;">LL(β̂)</th>
+<th style="text-align: right;">ρ̄²</th>
+<th style="text-align: right;">Hold-out LL per student</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K–8</td>
+<td style="text-align: right;">1,509</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">−2,885.6</td>
+<td style="text-align: right;">0.721</td>
+<td style="text-align: right;">−1.953</td>
+</tr>
+<tr>
+<td>High school</td>
+<td style="text-align: right;">668</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">−1,217.0</td>
+<td style="text-align: right;">0.722</td>
+<td style="text-align: right;">−1.810</td>
+</tr>
+<tr>
+<td>College</td>
+<td style="text-align: right;">673</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">−1,810.4</td>
+<td style="text-align: right;">0.454</td>
+<td style="text-align: right;">−2.789</td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr>
@@ -3063,28 +3085,34 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 </thead>
 <tbody>
 <tr>
+<td><strong>K–8</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td><strong><em>Size</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Size coefficient mu</td>
-<td style="text-align: right;">0.4954***</td>
-<td style="text-align: right;">0.0491</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> size coefficient μ</td>
+<td style="text-align: right;">0.4947***</td>
+<td style="text-align: right;">0.0480</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>In-boundary public enrolment, log weight</td>
-<td style="text-align: right;">6.0411***</td>
-<td style="text-align: right;">0.5019</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> in-boundary public enrolment, log weight</td>
+<td style="text-align: right;">6.1465***</td>
+<td style="text-align: right;">0.5110</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>Private enrolment, log weight</td>
-<td style="text-align: right;">0.7823*</td>
-<td style="text-align: right;">0.3358</td>
-<td style="text-align: right;">0.020</td>
+<td> private enrolment, log weight</td>
+<td style="text-align: right;">1.3654***</td>
+<td style="text-align: right;">0.3146</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Car time</em></strong></td>
@@ -3093,16 +3121,28 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Car time (min)</td>
-<td style="text-align: right;">−0.0963***</td>
-<td style="text-align: right;">0.0183</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> car time (min)</td>
+<td style="text-align: right;">−0.0857***</td>
+<td style="text-align: right;">0.0172</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>Ln(1+time)</td>
-<td style="text-align: right;">−0.7727*</td>
-<td style="text-align: right;">0.3649</td>
-<td style="text-align: right;">0.034</td>
+<td> ln(1+time)</td>
+<td style="text-align: right;">−1.0211***</td>
+<td style="text-align: right;">0.3478</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+<tr>
+<td> time × no car</td>
+<td style="text-align: right;">−0.0999***</td>
+<td style="text-align: right;">0.0355</td>
+<td style="text-align: right;">0.005</td>
+</tr>
+<tr>
+<td> time × fewer cars than drivers</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -3111,51 +3151,59 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Same zone</td>
-<td style="text-align: right;">0.3406***</td>
-<td style="text-align: right;">0.1021</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td>Other county × public share</td>
-<td style="text-align: right;">−2.2521***</td>
-<td style="text-align: right;">0.2016</td>
-<td style="text-align: right;">&lt; 0.001</td>
-</tr>
-<tr>
-<td><strong><em>Interactions with car time</em></strong></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;"></td>
-</tr>
-<tr>
-<td>Time × no car</td>
-<td style="text-align: right;">−0.1100**</td>
-<td style="text-align: right;">0.0353</td>
+<td> same zone</td>
+<td style="text-align: right;">0.3165***</td>
+<td style="text-align: right;">0.1015</td>
 <td style="text-align: right;">0.002</td>
 </tr>
 <tr>
-<td>Time × fewer cars than drivers</td>
-<td style="text-align: right;">−0.0282</td>
-<td style="text-align: right;">0.0149</td>
-<td style="text-align: right;">0.058</td>
+<td> other county × public share</td>
+<td style="text-align: right;">−2.3277***</td>
+<td style="text-align: right;">0.1999</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
-</tbody>
-</table>
-<h3 id="school-location-high-school">School location: high school<a class="headerlink" href="#school-location-high-school" title="Permanent link">¶</a></h3>
-<p>Choice of the school zone over all zones with high-school enrolment. Survey estimation half.</p>
-<div class="estfit"><span>N = 668</span><span>K = 5</span><span>LL(β̂) = −1,243.3</span><span>ρ̄² = 0.716</span><span>Hold-out: LL per student −1.853</span></div>
-
-<table>
-<thead>
 <tr>
-<th>Variable</th>
-<th style="text-align: right;">Coefficient</th>
-<th style="text-align: right;">Robust s.e.</th>
-<th style="text-align: right;">p</th>
+<td><strong><em>School zone</em></strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
-</thead>
-<tbody>
+<tr>
+<td> charter-or-magnet share</td>
+<td style="text-align: right;">0.5690***</td>
+<td style="text-align: right;">0.1554</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr>
+<td> quality of the public part (per 10 points, centred)</td>
+<td style="text-align: right;">0.2047***</td>
+<td style="text-align: right;">0.0326</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr>
+<td> quality × income &lt;$40k</td>
+<td style="text-align: right;">−0.3536***</td>
+<td style="text-align: right;">0.1184</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+<tr>
+<td> share of public enrolment without a score</td>
+<td style="text-align: right;">0.8633***</td>
+<td style="text-align: right;">0.2104</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr>
+<td> own-race share of the zone's enrolment</td>
+<td style="text-align: right;">1.1184***</td>
+<td style="text-align: right;">0.1958</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr>
+<td><strong>High school</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
 <tr>
 <td><strong><em>Size</em></strong></td>
 <td style="text-align: right;"></td>
@@ -3163,22 +3211,22 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Size coefficient mu</td>
-<td style="text-align: right;">0.6788***</td>
-<td style="text-align: right;">0.0613</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> size coefficient μ</td>
+<td style="text-align: right;">0.6637***</td>
+<td style="text-align: right;">0.0591</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>In-boundary public enrolment, log weight</td>
-<td style="text-align: right;">4.2150***</td>
-<td style="text-align: right;">0.4252</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> in-boundary public enrolment, log weight</td>
+<td style="text-align: right;">4.2834***</td>
+<td style="text-align: right;">0.4414</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>Private enrolment, log weight</td>
-<td style="text-align: right;">0.2471</td>
-<td style="text-align: right;">0.2737</td>
-<td style="text-align: right;">0.366</td>
+<td> private enrolment, log weight</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td><strong><em>Car time</em></strong></td>
@@ -3187,10 +3235,10 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Car time (min)</td>
-<td style="text-align: right;">−0.1044***</td>
-<td style="text-align: right;">0.0071</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> car time (min)</td>
+<td style="text-align: right;">−0.1028***</td>
+<td style="text-align: right;">0.0070</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -3199,27 +3247,35 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Other county × public share</td>
-<td style="text-align: right;">−2.5167***</td>
-<td style="text-align: right;">0.3076</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> other county × public share</td>
+<td style="text-align: right;">−2.5892***</td>
+<td style="text-align: right;">0.2993</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
-</tbody>
-</table>
-<h3 id="school-location-college">School location: college<a class="headerlink" href="#school-location-college" title="Permanent link">¶</a></h3>
-<p>Choice of the college zone over all zones with college enrolment. Survey estimation half.</p>
-<div class="estfit"><span>N = 673</span><span>K = 9</span><span>LL(β̂) = −1,827.8</span><span>ρ̄² = 0.448</span><span>Hold-out: LL per student −2.824</span></div>
-
-<table>
-<thead>
 <tr>
-<th>Variable</th>
-<th style="text-align: right;">Coefficient</th>
-<th style="text-align: right;">Robust s.e.</th>
-<th style="text-align: right;">p</th>
+<td><strong><em>School zone</em></strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
-</thead>
-<tbody>
+<tr>
+<td> charter-or-magnet share</td>
+<td style="text-align: right;">0.7409***</td>
+<td style="text-align: right;">0.1778</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr>
+<td> own-race share of the zone's enrolment</td>
+<td style="text-align: right;">1.6429***</td>
+<td style="text-align: right;">0.2582</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr>
+<td><strong>College</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
 <tr>
 <td><strong><em>Size</em></strong></td>
 <td style="text-align: right;"></td>
@@ -3227,22 +3283,22 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Size coefficient mu</td>
-<td style="text-align: right;">0.5362***</td>
-<td style="text-align: right;">0.0309</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> size coefficient μ</td>
+<td style="text-align: right;">0.5456***</td>
+<td style="text-align: right;">0.0321</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>Private 4-year enrolment, log weight</td>
-<td style="text-align: right;">−1.2928***</td>
-<td style="text-align: right;">0.2529</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> private 4-year enrolment, log weight</td>
+<td style="text-align: right;">−1.3251***</td>
+<td style="text-align: right;">0.2540</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>2-year enrolment, log weight</td>
-<td style="text-align: right;">−0.8526***</td>
-<td style="text-align: right;">0.2257</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> 2-year enrolment, log weight</td>
+<td style="text-align: right;">−0.8480***</td>
+<td style="text-align: right;">0.2227</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Car time</em></strong></td>
@@ -3251,16 +3307,28 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Car time (min)</td>
-<td style="text-align: right;">−0.0385***</td>
+<td> car time (min)</td>
+<td style="text-align: right;">−0.0395***</td>
 <td style="text-align: right;">0.0085</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>Ln(1+time)</td>
-<td style="text-align: right;">−1.1630***</td>
-<td style="text-align: right;">0.3180</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> ln(1+time)</td>
+<td style="text-align: right;">−1.2011***</td>
+<td style="text-align: right;">0.3081</td>
+<td style="text-align: right;">&lt;0.001</td>
+</tr>
+<tr>
+<td> time × income &lt;$40k</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
+<td> time × income $125k+</td>
+<td style="text-align: right;">0.0195***</td>
+<td style="text-align: right;">0.0053</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
 <td><strong><em>Boundaries</em></strong></td>
@@ -3269,37 +3337,35 @@ New: <a href="../">full result tables of all 28 estimated models</a> and the
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Other county</td>
-<td style="text-align: right;">−0.5675***</td>
+<td> other county</td>
+<td style="text-align: right;">−0.5639***</td>
 <td style="text-align: right;">0.1325</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td>Other state</td>
-<td style="text-align: right;">−0.6713***</td>
-<td style="text-align: right;">0.1346</td>
-<td style="text-align: right;">&lt; 0.001</td>
+<td> other state</td>
+<td style="text-align: right;">−0.6885***</td>
+<td style="text-align: right;">0.1351</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 <tr>
-<td><strong><em>Interactions with car time</em></strong></td>
+<td><strong><em>School zone</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Time × income &lt;40k</td>
-<td style="text-align: right;">−0.0218</td>
-<td style="text-align: right;">0.0118</td>
-<td style="text-align: right;">0.064</td>
-</tr>
-<tr>
-<td>Time × income 125k+</td>
-<td style="text-align: right;">0.0174**</td>
-<td style="text-align: right;">0.0054</td>
-<td style="text-align: right;">0.001</td>
+<td> own-race share of the zone's enrolment</td>
+<td style="text-align: right;">1.3986***</td>
+<td style="text-align: right;">0.2061</td>
+<td style="text-align: right;">&lt;0.001</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">Choice set: all zones with enrolment of the student's band (no sampling). Dependent variable: school zone of students with a school record, estimation half of the Regional Travel Survey 2017/18; hold-out half on the full choice set. Unweighted; robust (sandwich) standard errors. K–8: N = 1,509 students, 1,144 zones with enrolment, K = 13; LL(0) = −10,407.1; LL(β̂) = −2,885.6; ρ² = 0.723; AIC = 5,797.2; BIC = 5,866.4. Hold-out (1,534 students): LL = −2,995.8 (−1.953 per student); without the own-race share −3,016.0. High school: N = 668 students, 719 zones with enrolment, K = 6; LL(0) = −4,394.0; LL(β̂) = −1,217.0; ρ² = 0.723; AIC = 2,445.9; BIC = 2,472.9. Hold-out (667 students): LL = −1,207.5 (−1.810 per student); without the own-race share −1,227.6. College: N = 673 students, 141 zones with enrolment, K = 9; LL(0) = −3,330.5; LL(β̂) = −1,810.4; ρ² = 0.456; AIC = 3,638.7; BIC = 3,679.3. Hold-out (686 students): LL = −1,913.5 (−2.789 per student); without the own-race share −1,938.9. The hold-out half was also used in the specification search, so its fit is not an independent test. Size term μln S<sub>j</sub> with the public enrolment of the band outside the home's attendance boundary as reference (college: public 4-year); log weights of the other enrolment types relative to it. Car time: AM-peak car time from the home zone (min). Public share: share of public enrolment in the zone's enrolment of the band. Interactions: no car, reference households with a car; income $125k+, reference all other incomes. Charter-or-magnet share: share of the zone's enrolment of the band in public charter or magnet schools. Quality: enrolment-weighted mean % proficient (ELA and math, Maryland public schools) minus the Maryland mean (38.3), per 10 points, times the share of the zone's enrolment in schools with a score. Own-race share: share of the zone's enrolment of the band that is of the student's race (white, Black, Hispanic, other); it describes the composition of the schools and does not separate preference from information, transport or history. —: K–8 time × fewer cars than drivers and college time × income &lt;$40k: removed (college: BIC); high-school private log weight: fixed at 0 (p = 0.37 when estimated). High school: school quality was tested and not kept (BIC).</p>
+
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/estimates/fig_school_holdout_map.png" data-desc-position="bottom"><img alt="School location: hold-out students by school zone" src="../../../assets/img/estimates/fig_school_holdout_map.png"></a></p>
+<p class="estnote">School location: schools of the hold-out students, observed and model, and model minus observed.</p>
 
 
 

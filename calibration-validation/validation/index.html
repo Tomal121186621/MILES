@@ -712,6 +712,8 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2518,7 +2548,7 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2855,10 +2885,10 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
 </li>
       
         <li class="md-nav__item">
-  <a href="#design" class="md-nav__link">
+  <a href="#measures-and-criteria" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Design
+        Measures and criteria
       
     </span>
   </a>
@@ -2952,69 +2982,45 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
 
 
 <h1 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">¶</a></h1>
-<p>Every stage is tested on data it was neither estimated nor calibrated on. <strong>Verification</strong> compares a model with its
-estimation data; <strong>validation</strong> with data used in no estimation or calibration step. Each stage page shows the same
-things: headline numbers, the main figure, every comparison in detail, and a scorecard.</p>
+<p>Every stage is tested on data it was neither estimated nor calibrated on. Following Roorda, Miller and Habib (2008),
+<strong>verification</strong> compares a model with the data it was estimated on and <strong>validation</strong> with data used in no estimation
+or calibration step. Each stage page shows the headline numbers, the main figure and every comparison in detail.</p>
 <table>
 <thead>
 <tr>
 <th>Stage</th>
 <th>Tested against</th>
-<th style="text-align: right;">Comparisons</th>
-<th style="text-align: right;">Within</th>
-<th style="text-align: right;">Close</th>
-<th style="text-align: right;">Outside</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><a href="population/">Synthetic population</a></td>
-<td>ACS PUMS 2014–18, held-out PUMS test split, LODES, travel survey</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">3</td>
+<td>ACS PUMS 2014–18, held-out PUMS test split, travel survey</td>
 </tr>
 <tr>
 <td><a href="landuse/">Land use</a></td>
 <td>ACS, Census estimates, JOLTS, permits, county flows; out of sample 2021–24</td>
-<td style="text-align: right;">36</td>
-<td style="text-align: right;">27</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">3</td>
 </tr>
 <tr>
 <td><a href="schools/">School location</a></td>
 <td>Survey students, ACS enrolment</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">2</td>
 </tr>
 <tr>
 <td><a href="activities/">Activities</a></td>
 <td>Survey hold-out half; ATUS, ACS 2024, LODES</td>
-<td style="text-align: right;">43</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td><a href="traffic/">Traffic</a></td>
+<td>MDOT SHA 2024 counts, TMAS continuous counts, screenlines, MDOT SHA mileage</td>
 </tr>
 <tr>
 <td><a href="county/">County view</a></td>
-<td>Every variable by county, all 24 Maryland counties</td>
-<td style="text-align: right;">336</td>
-<td style="text-align: right;">282</td>
-<td style="text-align: right;">51</td>
-<td style="text-align: right;">3</td>
+<td>Synthetic population by county, all 24 Maryland counties</td>
 </tr>
 </tbody>
 </table>
-<p>Traffic is compared as a ratio rather than counted against a limit, because the model carries residents only: simulated
-passenger-vehicle volumes are 0.81 of the 2024 counts at 2,308 mainline stations (R² 0.90 across stations); see
-<a href="traffic/">Traffic</a>.</p>
-<p><strong>Within:</strong> a distribution within 5 percentage points (total variation distance), a set of shares within 5 points on
-average (mean absolute difference) or a rate within 5 % (mean absolute percentage error) of the observed value, the acceptance limits of the land-use and activity tests. <strong>Close:</strong> within twice
-that. <strong>Outside:</strong> beyond. </p>
+<p>Traffic is compared as a ratio, because the assignment carries residents only: simulated passenger-vehicle volumes are
+0.81 of the 2024 counts at 2,308 mainline stations (R² 0.90 across stations).</p>
 <h2 id="strategy">Strategy<a class="headerlink" href="#strategy" title="Permanent link">¶</a></h2>
 <p>Each stage is estimated on one set of data and tested on another:</p>
 <table>
@@ -3028,13 +3034,13 @@ that. <strong>Outside:</strong> beyond. </p>
 <tbody>
 <tr>
 <td>Synthetic population</td>
-<td>ACS PUMS 2012–16, 80 % training split by PUMA</td>
-<td>10 % held-out test split; ACS 2014–18 by PUMA</td>
+<td>ACS PUMS 2012–16, training split</td>
+<td>Held-out test split; ACS 2014–18, Maryland and 96 PUMAs</td>
 </tr>
 <tr>
 <td>Land use</td>
-<td>ACS PUMS movers 2014–18; survey estimation half; calibrated on 2017–20</td>
-<td>Movers 2019–21 (out of time); ACS and Census 2021–24 (out of sample)</td>
+<td>ACS PUMS movers 2014–18 and households; survey estimation half; calibrated on 2017–20</td>
+<td>Held-out PUMS movers; ACS and Census 2021–24 (out of sample)</td>
 </tr>
 <tr>
 <td>Schools</td>
@@ -3057,44 +3063,62 @@ that. <strong>Outside:</strong> beyond. </p>
 household size. The hold-out half enters no estimation or calibration step. TASHA was validated on a later survey of
 the same region; no later diary exists here, so the hold-out half and the 2024 benchmarks take its place
 (<a href="activities/#estimation-and-validation-strategy">details</a>).</p>
-<h2 id="design">Design<a class="headerlink" href="#design" title="Permanent link">¶</a></h2>
+<h2 id="measures-and-criteria">Measures and criteria<a class="headerlink" href="#measures-and-criteria" title="Permanent link">¶</a></h2>
 <table>
 <thead>
 <tr>
 <th>Stage</th>
-<th>Test</th>
-<th>Measure and criterion</th>
+<th>Measure</th>
+<th>Criterion (source)</th>
 <th>Runs</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Population</td>
-<td>Held-out PUMS test split; ACS by PUMA</td>
-<td>SRMSE at the sampling floor</td>
+<td>Population synthesis</td>
+<td>Marginals and joint tables against the PUMS test split</td>
+<td>SRMSE at the sampling floor (own)</td>
 <td>1</td>
 </tr>
 <tr>
-<td>Land use</td>
-<td>Calibrated 2017–20, tested 2021–24</td>
-<td>Rates ±5 %; shares ±5 pp</td>
+<td>Land use, consistency</td>
+<td>County population; employment; vacancies; construction</td>
+<td>Imposed; county population ±2 % (own)</td>
 <td>5 seeds</td>
 </tr>
 <tr>
+<td>Land use, tests</td>
+<td>Event rates; household size; car ownership; moves and mover flows; commuting</td>
+<td>Rates ±5 %; shares ±5 pp (own)</td>
+<td>5 seeds</td>
+</tr>
+<tr>
+<td>Location choice</td>
+<td>Hold-out log-likelihood; trip-length distribution (KS); shares by area</td>
+<td>KS below its 5 % critical value; mean within 5 % (FHWA, 2010)</td>
+<td>–</td>
+</tr>
+<tr>
 <td>Activities</td>
-<td>Survey hold-out half; 2024 benchmarks</td>
-<td>Start times within 2 pp per hour</td>
+<td>Activities by purpose; start-time and duration profiles (KS on hourly values); trips per chain</td>
+<td>Start times within 2 pp per hour (Roorda et al., 2008)</td>
 <td>10 replications</td>
 </tr>
 <tr>
-<td>Traffic</td>
-<td>2024 counts and continuous counters</td>
-<td>%RMSE by volume group (FDOT); GEH &lt; 5 for &gt; 85 % of hourly flows</td>
+<td>Assignment</td>
+<td>AAWDT by facility and volume group; hourly counts</td>
+<td>%RMSE by volume group (FDOT, 2008; Wegmann, 2016); GEH &lt; 5 for &gt; 85 % of flows (DfT)</td>
 <td>5 seeds</td>
 </tr>
 </tbody>
 </table>
-<p>What the misses mean is stated in <a href="../limitations/">Known limitations</a>.</p>
+<p>Own: threshold chosen for this study where no published guideline exists. SRMSE: standardised root-mean-square error;
+KS: Kolmogorov–Smirnov distance; pp: percentage points; GEH: Geoffrey E. Havers statistic of hourly flows. Location
+choice is tested on the survey hold-out half, which involves no simulation.</p>
+<p>The land-use results are the mean and range of five seeds. The activity model is run with ten replications on each
+population; for 2024 on the land-use seed closest to the mean of the five, with a 10 % household sample, and the
+assignment receives the replication closest to the mean.</p>
+<p>What the differences mean is stated in <a href="../limitations/">Known limitations</a>.</p>
 
 
 

@@ -712,6 +712,8 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2036,17 +2066,6 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
 </li>
       
         <li class="md-nav__item">
-  <a href="#car-ownership" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Car ownership
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#district-of-columbia-workplace-term" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2607,7 +2626,7 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2944,17 +2963,6 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
 </li>
       
         <li class="md-nav__item">
-  <a href="#car-ownership" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Car ownership
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#district-of-columbia-workplace-term" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3045,8 +3053,8 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
 
 
 <h1 id="calibration">Calibration<a class="headerlink" href="#calibration" title="Permanent link">¶</a></h1>
-<p>Calibration is confined to three groups of land-use and workplace parameters. The calibration window is
-<strong>2017–2020</strong>; the years <strong>2021–2024</strong> are kept for the out-of-sample test. Traffic counts play no role.</p>
+<p>Calibration is confined to the demographic levers of the land-use model. The calibration window is <strong>2017–2020</strong>;
+the years <strong>2021–2024</strong> are kept for the out-of-sample test. Traffic counts play no role.</p>
 <h2 id="demographic-levers">Demographic levers<a class="headerlink" href="#demographic-levers" title="Permanent link">¶</a></h2>
 <p>Five levers scale the event rates of SILO: births, marriages, divorces, the shift <span class="arithmatex">\(a_m\)</span> of the moving decision and
 leaving the parental home. Targets come from the Census components of change and the ACS PUMS. In each round the
@@ -3054,7 +3062,7 @@ model is run from 2016 to 2020 and every lever is updated by the damped ratio</p
 <div class="arithmatex">\[
 \theta^{(k+1)} = \theta^{(k)} \big(y^{\text{obs}} / y^{\text{model}}\big)^{\omega},
 \]</div>
-<p>where <span class="arithmatex">\(y\)</span> are the window means of 2017–2020 and <span class="arithmatex">\(\omega\)</span> is a damping exponent between 0.5 and 1.0.</p>
+<p>where <span class="arithmatex">\(y\)</span> are the window means of 2017–2020 and <span class="arithmatex">\(\omega = 0.8\)</span> is a damping exponent.</p>
 <table>
 <thead>
 <tr>
@@ -3065,39 +3073,38 @@ model is run from 2016 to 2020 and every lever is updated by the damped ratio</p
 <tbody>
 <tr>
 <td>Births</td>
-<td style="text-align: right;">1.002</td>
+<td style="text-align: right;">1.001</td>
 </tr>
 <tr>
 <td>Marriages</td>
-<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.001</td>
 </tr>
 <tr>
 <td>Divorces</td>
-<td style="text-align: right;">1.000</td>
-</tr>
-<tr>
-<td>Moves</td>
-<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.999</td>
 </tr>
 <tr>
 <td>Leaving home</td>
 <td style="text-align: right;">0.988</td>
 </tr>
+<tr>
+<td>Moves<sup>1</sup></td>
+<td style="text-align: right;">1.005</td>
+</tr>
 </tbody>
 </table>
-<p>The levers are then frozen, and the model is run from 2016 to 2024 with five seeds.</p>
-<h2 id="car-ownership">Car ownership<a class="headerlink" href="#car-ownership" title="Permanent link">¶</a></h2>
-<p>The county constants of the car-ownership model are updated by the damped log-ratio of observed to modelled shares.
-In the final round every county × car-ownership cell is within 5 percentage points of the ACS.</p>
+<p class="estnote">1. The shift \(a_m\) was calibrated last, with the two-level residential location model, against the same target (12.39 % of persons aged one and over moved in the last 12 months, mean of 2017–2020): after three rounds it is 1.111. In that run leaving home (0.988) and construction (1.000) were on target and their levers were not changed.</p>
+
+<p>The levers are then frozen, and the model is run from 2016 to 2024.</p>
 <h2 id="district-of-columbia-workplace-term">District of Columbia workplace term<a class="headerlink" href="#district-of-columbia-workplace-term" title="Permanent link">¶</a></h2>
-<p>The travel survey has more Maryland workers commuting to the District than the ACS: the estimated model gives 13.1 %
-against 9.8 %. For application, the District workplace term is shifted by −0.387 (from 1.097 to 0.710), so that
-9.82 % of Maryland-resident base-year workers work in the District, the ACS 2016–2020 share. This share is therefore
-not a test of the model.</p>
+<p>The travel survey has more Maryland workers commuting to the District than the ACS, and the estimated workplace model
+reproduces the survey. The District term is not calibrated: its estimate (0.83) is used without a shift, so the
+District share of Maryland workers remains a test against the ACS.</p>
 <h2 id="not-calibrated">Not calibrated<a class="headerlink" href="#not-calibrated" title="Permanent link">¶</a></h2>
 <ul>
-<li>MILES-Day is applied without frequency factors or constant adjustments.</li>
-<li>None of the other choice models is calibrated.</li>
+<li>MAST is applied without frequency factors or constant adjustments.</li>
+<li>None of the other choice models is calibrated. The Baltimore City term of car ownership is estimated with the other
+  coefficients.</li>
 <li>The choice-based weights of the work tour mode choice are part of its estimator.</li>
 <li>The road network is not calibrated to counts.</li>
 </ul>

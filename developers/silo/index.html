@@ -712,6 +712,8 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2601,7 +2631,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -3057,7 +3087,13 @@ their package paths).</p>
 <td><code>ReslocModel</code></td>
 <td>useCases/maryland</td>
 <td>changed</td>
-<td>three-level nested logit: county → zone × dwelling type → dwelling</td>
+<td>residential location; with <code>resloc.twolevel=true</code> it uses the two-level model</td>
+</tr>
+<tr>
+<td><code>ReslocTwoLevel</code></td>
+<td>useCases/maryland</td>
+<td>new</td>
+<td>two-level model: PUMA (market size, own-race share, vacancy rule), then dwelling among 30 vacant dwellings</td>
 </tr>
 <tr>
 <td><code>ReslocProperties</code></td>
@@ -3066,16 +3102,10 @@ their package paths).</p>
 <td>reads the <code>resloc.*</code> keys</td>
 </tr>
 <tr>
-<td><code>ReslocRespecUtility</code></td>
+<td>Utility and verifier classes</td>
 <td>useCases/maryland</td>
 <td>new</td>
-<td>utilities of the estimated residential location model, shared by engine and verifier</td>
-</tr>
-<tr>
-<td><code>ReslocRespecVerify</code></td>
-<td>useCases/maryland</td>
-<td>new</td>
-<td>compares engine utilities with the estimation</td>
+<td>utilities of the estimated residential and car-ownership models, shared by engine and verifier</td>
 </tr>
 <tr>
 <td><code>CarOwnershipModelMd</code></td>
@@ -3084,10 +3114,10 @@ their package paths).</p>
 <td>0/1/2/3+ car logit with coefficients from file</td>
 </tr>
 <tr>
-<td><code>CarOwnershipRespec</code></td>
+<td><code>SchoolDataMd</code></td>
 <td>useCases/maryland</td>
-<td>new</td>
-<td>utility of the estimated car-ownership model</td>
+<td>changed</td>
+<td>school location with the estimated K–8, high-school and college models; seat release</td>
 </tr>
 <tr>
 <td><code>JobDataManagerImpl</code></td>
@@ -3120,20 +3150,20 @@ their package paths).</p>
 </thead>
 <tbody>
 <tr>
-<td><code>coefficients/write_residential_location.py</code></td>
-<td><code>residential_county_coefficients.csv</code>, <code>residential_zone_dwelling_coefficients.csv</code>, county and zone attributes</td>
+<td><code>estimation/development/residential_location/</code> (final step)</td>
+<td><code>residential_puma_coefficients.csv</code>, <code>residential_dwelling_coefficients.csv</code> and the PUMA and zone files</td>
 </tr>
 <tr>
-<td><code>coefficients/write_car_ownership.py</code></td>
-<td><code>car_ownership_estimated_coefficients.csv</code>, <code>car_ownership_puma_attributes.csv</code></td>
+<td><code>coefficients/export_car_ownership.py</code></td>
+<td><code>car_ownership_estimated_coefficients.csv</code>, <code>car_ownership_county_constants.csv</code></td>
 </tr>
 <tr>
-<td><code>coefficients/write_workplace_choice.py</code></td>
+<td><code>estimation/development/workplace_choice/w13_*.py</code></td>
 <td><code>workplace_choice_coefficients.csv</code></td>
 </tr>
 <tr>
-<td><code>coefficients/write_school_location.py</code></td>
-<td>school coefficients (<code>landuse/schools/parameters/</code>)</td>
+<td><code>estimation/development/other_locations/l11_export_silo.py</code></td>
+<td><code>school_location_coefficients_{k8,hs,college}.csv</code> and the school data files</td>
 </tr>
 <tr>
 <td><code>coefficients/write_zone_attributes.py</code></td>
@@ -3141,13 +3171,13 @@ their package paths).</p>
 </tr>
 </tbody>
 </table>
-<p>Checks: <code>landuse/checks/check_*.py</code> recompute utilities in the engine and compare them with <span class="arithmatex">\(X\beta\)</span> from the estimation; the
-verifiers are switched on with <code>-Dsilo.resloc.respec.dump</code> and <code>-Dsilo.jobchoice.verify</code>.</p>
+<p>Checks: <code>landuse/checks/check_*.py</code> recompute utilities in the engine and compare them with <span class="arithmatex">\(X\beta\)</span> from the estimation;
+the engine verifiers are switched on with system properties (see <code>landuse/engine/README.md</code>).</p>
 <h2 id="adding-a-model">Adding a model<a class="headerlink" href="#adding-a-model" title="Permanent link">¶</a></h2>
 <ol>
 <li>Estimate it and write its coefficients to a CSV in <code>landuse/engine_inputs/</code>.</li>
 <li>Read the file in a properties class and add a switch key.</li>
-<li>Implement the utility in a pure class (as <code>ReslocRespecUtility</code>), so the engine and a verifier share it.</li>
+<li>Implement the utility in a pure class, so the engine and a verifier share it.</li>
 <li>Add a unit check that compares engine utilities with the estimation.</li>
 </ol>
 
@@ -3204,13 +3234,13 @@ verifiers are switched on with <code>-Dsilo.resloc.respec.dump</code> and <code>
         
         
           
-          <a href="../activity/" class="md-footer__link md-footer__link--next" aria-label="Next: MILES-Day engine">
+          <a href="../activity/" class="md-footer__link md-footer__link--next" aria-label="Next: MAST engine">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                MILES-Day engine
+                MAST engine
               </div>
             </div>
             <div class="md-footer__button md-icon">

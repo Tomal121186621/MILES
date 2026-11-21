@@ -712,6 +712,8 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2180,17 +2210,6 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </li>
       
         <li class="md-nav__item">
-  <a href="#in-detail" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        In detail
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#out-of-sample-table" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2202,10 +2221,10 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-some-comparisons-are-outside" class="md-nav__link">
+  <a href="#residential-location-in-the-simulation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why some comparisons are outside
+        Residential location in the simulation
       
     </span>
   </a>
@@ -2213,10 +2232,21 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </li>
       
         <li class="md-nav__item">
-  <a href="#scorecard" class="md-nav__link">
+  <a href="#small-areas" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scorecard
+        Small areas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In detail
       
     </span>
   </a>
@@ -2620,7 +2650,7 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2957,17 +2987,6 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </li>
       
         <li class="md-nav__item">
-  <a href="#in-detail" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        In detail
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#out-of-sample-table" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2979,10 +2998,10 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-some-comparisons-are-outside" class="md-nav__link">
+  <a href="#residential-location-in-the-simulation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why some comparisons are outside
+        Residential location in the simulation
       
     </span>
   </a>
@@ -2990,10 +3009,21 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </li>
       
         <li class="md-nav__item">
-  <a href="#scorecard" class="md-nav__link">
+  <a href="#small-areas" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scorecard
+        Small areas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In detail
       
     </span>
   </a>
@@ -3087,53 +3117,54 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 
 
 <h1 id="land-use">Land use<a class="headerlink" href="#land-use" title="Permanent link">¶</a></h1>
-<p>The land-use model is calibrated on 2017–2020 and tested <strong>out of sample on 2021–2024</strong> against the ACS, the Census population estimates and components of change, JOLTS, building permits and the ACS county-to-county flows. Model: mean of five seeds.</p>
+<p>The land-use model is calibrated on 2017–2020 and tested <strong>out of sample on 2021–2024</strong> against the ACS, the Census
+population estimates and components of change, JOLTS, building permits and the ACS county-to-county flows. Model: mean
+of five seeds.</p>
 <div class="miles-numbers">
-<div><b>0.995</b><span>county commute flows, correlation with the ACS</span></div>
-<div><b>≤ 2.1 pp</b><span>household size, cars, age, income in 2024</span></div>
-<div><b>≤ 6 %</b><span>births, marriages, divorces out of sample</span></div>
-<div><b>12.8 / 10.9 %</b><span>persons who moved, model / observed</span></div>
+<div><b>0.995</b><span>correlation between the modelled and the ACS county-to-county commuting flows, 2021–24</span></div>
+<div><b>1.5–3.7 pp</b><span>TVD of household size, cars, age and household income from the ACS 2020–24; every class within 2.1 pp</span></div>
+<div><b>≤ 6 %</b><span>difference of the birth, marriage and divorce rates from the observed rates, 2021–24</span></div>
+<div><b>12.8 %</b><span>of persons moved home in a year, 2021–24 (ACS: 10.9 %)</span></div>
 </div>
 
-<div class="admonition info">
-<p class="admonition-title">How to read the figures</p>
-<p>Orange: model; dark grey: observed; light grey: a second observed source. Error bars: range of the five land-use seeds or of the ten activity-model replications. Each panel shows one fit measure: for a distribution the total variation distance (TVD, percentage points of the population that would have to change class); for shares that are not one distribution, the mean absolute difference (MAD, percentage points); otherwise the mean absolute percentage error (MAPE).</p>
+<div class="miles-key">
+<div class="miles-key-sw"><span><i style="background:#e8811a"></i>Model</span><span><i style="background:#3b4252"></i>Observed</span><span><i style="background:#b5b3ab"></i>Second observed source</span><span><i class="bar"></i>Range of the five land-use seeds</span></div>
+<table>
+<thead>
+<tr>
+<th>Fit measure in the panel title</th>
+<th>Used for</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TVD</strong>, percentage points</td>
+<td>a distribution (the classes add up to 100 %)</td>
+<td>share of the population that would have to change class to match the observed</td>
+</tr>
+<tr>
+<td><strong>MAPE</strong>, %</td>
+<td>rates, means and counts</td>
+<td>mean absolute difference as a percentage of the observed value</td>
+</tr>
+</tbody>
+</table>
 </div>
 <h2 id="main-results">Main results<a class="headerlink" href="#main-results" title="Permanent link">¶</a></h2>
 <figure>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_val_stage2.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_val_stage2.png"></a>
   </p>
-<figcaption>Land use against observed data, Maryland. (a) household size, 2024; (b) cars, 2024; (c) age, 2024; (d) household income, 2024; (e) demographic events, 2021–24; (f) mobility and commuting, 2021–24; (g) car time to school, 2024; (h) persons who moved, by year.</figcaption>
+<figcaption>Land use against observed data, Maryland. (a) household size, 2024; (b) cars, 2024; (c) age, 2024; (d) household income, 2024; (e) demographic events, 2021–24; (f) mobility and commuting, 2021–24; (g) car time to school, 2024; (h) persons who moved, by year. Observed: ACS PUMS 2020–2024 (a–d); sources of the table below (e, f, h); travel survey 2017/18 (g).</figcaption>
 </figure>
-<h2 id="in-detail">In detail<a class="headerlink" href="#in-detail" title="Permanent link">¶</a></h2>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Composition 2024</label><label for="__tabbed_1_2">Events by year</label><label for="__tabbed_1_3">Counties</label><label for="__tabbed_1_4">Counties, jobs, vacancies</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p></p><figure markdown="">
-  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_s_val_stage2_composition.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_s_val_stage2_composition.png"></a>
-  <figcaption>(a) sex, 2024; (b) employed 16+, 2024; (c) age, 2024; (d) household size, 2024; (e) cars, 2024; (f) household income, 2024; (g) workers per household, 2024; (h) living arrangements of adults 18–34, 2024; (i) employed share by sex and age, 2024.</figcaption>
-</figure><p></p>
-</div>
-<div class="tabbed-block">
-<p></p><figure markdown="">
-  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_s_val_stage2_events.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_s_val_stage2_events.png"></a>
-  <figcaption>(a) births per woman 15–50; (b) deaths per person; (c) marriages per adult; (d) divorces per married person; (e) persons who moved; (f) job changes per employed; (g) employed share 16+ (imposed); (h) vacant share of jobs (imposed); (i) residents working in Maryland; (j) same-county workplace; (k) movers staying in their county; (l) time to work.</figcaption>
-</figure><p></p>
-</div>
-<div class="tabbed-block">
-<p></p><figure markdown="">
-  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_s_val_stage2_spatial.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_s_val_stage2_spatial.png"></a>
-  <figcaption>(a) population by county, 2024; (b) filled jobs by county, 2024; (c) new dwellings by county, 2021–24 (imposed).</figcaption>
-</figure><p></p>
-</div>
-<div class="tabbed-block">
-<p></p><figure markdown="">
-  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_s_val_stage2_spatial_b.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_s_val_stage2_spatial_b.png"></a>
-  <figcaption>(a) home-county workplace share by county, 2024; (b) dwelling vacancy by county, 2024; (c) filled jobs by type, 2024; (d) movers leaving Maryland, 2024.</figcaption>
-</figure><p></p>
-</div>
-</div>
-</div>
+<p>In 2024 household size, cars, age and household income are within 2.1 points of the ACS 2020–2024 in every class, and
+no share varies by more than 0.4 points across the seeds. Commuting is stable: 82.8 % of Maryland residents work in
+Maryland in 2021–2024 (ACS 84.1 %). Births, marriages and divorces are within 6 % of the observed rates out of sample,
+but deaths are 12 % low, as the death rates do not follow the higher mortality of 2021–2023. The move rate is the
+largest out-of-sample miss: 12.6 to 12.9 % in each year of 2021–2024 against 10.8 to 11.2 % observed, after agreeing
+within 0.5 points in 2017–2020; the observed rate fell after 2020 while the calibrated model kept its 2017–2020 level.
+One-person households are 2.4 points too few, an error inherited from the base population, and car ownership is within
+1.3 points of the ACS in every class.</p>
 <h2 id="out-of-sample-table">Out-of-sample table<a class="headerlink" href="#out-of-sample-table" title="Permanent link">¶</a></h2>
 <table>
 <thead>
@@ -3147,11 +3178,53 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </thead>
 <tbody>
 <tr>
+<td><em>Consistency checks (imposed)</em></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr>
 <td>Population / Census estimate</td>
 <td style="text-align: right;">0.999</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">0.995</td>
 <td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>Counties within ±2 % of the estimate (of 24)</td>
+<td style="text-align: right;">24.0</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">22.2</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr>
+<td>Employed share of persons 16+ (%)</td>
+<td style="text-align: right;">64.9</td>
+<td style="text-align: right;">65.3</td>
+<td style="text-align: right;">63.3</td>
+<td style="text-align: right;">65.2</td>
+</tr>
+<tr>
+<td>Vacant share of jobs, year end (%)</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">6.4</td>
+</tr>
+<tr>
+<td>New dwellings / permits</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td><em>Tests</em></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr>
 <td>Job-to-job changes per employed (%)</td>
@@ -3161,11 +3234,25 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 <td style="text-align: right;">25.2</td>
 </tr>
 <tr>
+<td>Mean car time to work (min)¹</td>
+<td style="text-align: right;">30.1</td>
+<td style="text-align: right;">32.7</td>
+<td style="text-align: right;">30.4</td>
+<td style="text-align: right;">31.2</td>
+</tr>
+<tr>
 <td>Residents working in Maryland (%)</td>
 <td style="text-align: right;">83.2</td>
 <td style="text-align: right;">82.7</td>
 <td style="text-align: right;">82.8</td>
 <td style="text-align: right;">84.1</td>
+</tr>
+<tr>
+<td>Same county, of in-state workplaces (%)²</td>
+<td style="text-align: right;">61.7</td>
+<td style="text-align: right;">62.2</td>
+<td style="text-align: right;">61.2</td>
+<td style="text-align: right;">62.2</td>
 </tr>
 <tr>
 <td>Persons who moved (%)</td>
@@ -3175,7 +3262,7 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 <td style="text-align: right;">10.9</td>
 </tr>
 <tr>
-<td>Mover flows, correlation with ACS</td>
+<td>Mover flows, correlation with ACS 2016–20</td>
 <td style="text-align: right;">0.970</td>
 <td style="text-align: right;">–</td>
 <td style="text-align: right;">0.946</td>
@@ -3203,11 +3290,53 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 <td style="text-align: right;">0.0091</td>
 </tr>
 <tr>
+<td>Marriages per adult</td>
+<td style="text-align: right;">0.0169</td>
+<td style="text-align: right;">0.0169</td>
+<td style="text-align: right;">0.0156</td>
+<td style="text-align: right;">0.0166</td>
+</tr>
+<tr>
+<td>Divorces per married person</td>
+<td style="text-align: right;">0.0155</td>
+<td style="text-align: right;">0.0154</td>
+<td style="text-align: right;">0.0154</td>
+<td style="text-align: right;">0.0147</td>
+</tr>
+<tr>
 <td>Households of 1 person (%)</td>
 <td style="text-align: right;">24.4</td>
 <td style="text-align: right;">27.6</td>
 <td style="text-align: right;">26.2</td>
 <td style="text-align: right;">28.6</td>
+</tr>
+<tr>
+<td>2 persons</td>
+<td style="text-align: right;">30.8</td>
+<td style="text-align: right;">32.5</td>
+<td style="text-align: right;">30.4</td>
+<td style="text-align: right;">32.1</td>
+</tr>
+<tr>
+<td>3 persons</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">16.4</td>
+<td style="text-align: right;">18.2</td>
+<td style="text-align: right;">16.0</td>
+</tr>
+<tr>
+<td>4 persons</td>
+<td style="text-align: right;">15.1</td>
+<td style="text-align: right;">13.5</td>
+<td style="text-align: right;">14.8</td>
+<td style="text-align: right;">13.3</td>
+</tr>
+<tr>
+<td>5 or more persons</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">10.1</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">10.1</td>
 </tr>
 <tr>
 <td>Households without a car (%)</td>
@@ -3217,265 +3346,89 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 <td style="text-align: right;">8.7</td>
 </tr>
 <tr>
-<td>2 cars (%)</td>
+<td>1 car</td>
+<td style="text-align: right;">31.5</td>
+<td style="text-align: right;">32.4</td>
+<td style="text-align: right;">32.7</td>
+<td style="text-align: right;">33.5</td>
+</tr>
+<tr>
+<td>2 cars</td>
 <td style="text-align: right;">37.2</td>
 <td style="text-align: right;">36.5</td>
 <td style="text-align: right;">35.7</td>
 <td style="text-align: right;">35.8</td>
 </tr>
-</tbody>
-</table>
-<p>Model: mean of five seeds; calibration window 2017–2020, out-of-sample years 2021–2024.</p>
-<h2 id="why-some-comparisons-are-outside">Why some comparisons are outside<a class="headerlink" href="#why-some-comparisons-are-outside" title="Permanent link">¶</a></h2>
-<p><strong>Home-county workplace share by county</strong> (18.6 points). The model keeps 41–90 % of each county's employed residents
-working in their home county, against 24–72 % in LODES; the difference averages 18.6 points and is the same in the base
-year (17.2 points in 2016), so it does not grow during the simulation. The two measure different things: LODES counts
-<em>jobs</em> from employer records, and multi-establishment employers can report jobs at one address; the model's workplace
-choice is estimated on the travel survey, which records where <em>workers</em> go. Against the ACS, which also asks workers,
-the commute agrees: county-to-county flows correlate at 0.995, and the 2024 activity model sends 54.4 % of commuters to
-their home county or county group against 54.0 % in the ACS. </p>
-<p><strong>Dwelling vacancy by county</strong> (2.1 points on average). This is a weakness of the land-use model. County populations are held to the
-Census estimates and new dwellings follow the county building permits, so vacancy is what is left between the two.
-Where the residential-location model sends more households than there are dwellings, vacancy runs to zero and the county
-falls short of its population: Carroll (0 % vacant, 5.6 % short of the Census) and Prince George's (0 %, 2.5 % short).
-Where it sends fewer, vacant dwellings accumulate: Howard 10.4 % and Baltimore City 7.7 % against 2.3 % and 4.9 % in the
-ACS. Construction does not respond to vacancy, and prices respond too weakly to
-rebalance demand across counties.</p>
-<p><strong>Vacant share of jobs</strong> (imposed; 1.2 points on average, 4.3 points in 2021). Jobs follow the job inputs (LODES, QCEW) year by year, while employment is
-aligned to the ACS rate of the year before the simulated year. The vacancy is the difference, so it inherits that lag:
-in 2021 the model leaves 2.7 % of jobs vacant against 7.0 % in JOLTS, when openings surged after the pandemic, a surge
-that is in no input. By 2024 the two are close again (5.5 against 5.1 %).</p>
-<h2 id="scorecard">Scorecard<a class="headerlink" href="#scorecard" title="Permanent link">¶</a></h2>
-<p class="vsum">36 comparisons: 27 within the limit, 6 close, 3 outside.</p>
-
-<table>
-<thead>
 <tr>
-<th>Compared variable</th>
-<th style="text-align: right;">Fit</th>
-<th style="text-align: center;">Result</th>
-<th>Note</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Household size, 2024</td>
-<td style="text-align: right;">TVD 3.5 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Cars, 2024</td>
-<td style="text-align: right;">TVD 1.5 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Age, 2024</td>
-<td style="text-align: right;">TVD 2.1 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Household income, 2024</td>
-<td style="text-align: right;">TVD 3.7 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Demographic events, 2021–24</td>
-<td style="text-align: right;">MAPE 6.4 %</td>
-<td style="text-align: center;">Close</td>
-<td></td>
-</tr>
-<tr>
-<td>Mobility and commuting, 2021–24</td>
-<td style="text-align: right;">MAD 1.3 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Car time to school, 2024</td>
-<td style="text-align: right;">MAPE 12 %</td>
-<td style="text-align: center;">Outside</td>
-<td></td>
-</tr>
-<tr>
-<td>Persons who moved, by year</td>
-<td style="text-align: right;">MAPE 9.7 %</td>
-<td style="text-align: center;">Close</td>
-<td></td>
-</tr>
-<tr>
-<td>Sex, 2024</td>
-<td style="text-align: right;">TVD 0.5 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Employed 16+, 2024</td>
-<td style="text-align: right;">TVD 0.9 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Age, 2024</td>
-<td style="text-align: right;">TVD 2.1 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Household size, 2024</td>
-<td style="text-align: right;">TVD 3.5 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Cars, 2024</td>
-<td style="text-align: right;">TVD 1.5 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Household income, 2024</td>
-<td style="text-align: right;">TVD 3.7 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Workers per household, 2024</td>
-<td style="text-align: right;">TVD 3.1 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Living arrangements of adults 18–34, 2024</td>
-<td style="text-align: right;">MAD 3.0 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Employed share by sex and age, 2024</td>
-<td style="text-align: right;">MAD 1.0 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Births per woman 15–50</td>
-<td style="text-align: right;">MAPE 1.7 %</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Deaths per person</td>
-<td style="text-align: right;">MAPE 8.7 %</td>
-<td style="text-align: center;">Close</td>
-<td></td>
-</tr>
-<tr>
-<td>Marriages per adult</td>
-<td style="text-align: right;">MAPE 4.0 %</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Divorces per married person</td>
-<td style="text-align: right;">MAPE 2.9 %</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Persons who moved</td>
-<td style="text-align: right;">MAPE 9.7 %</td>
-<td style="text-align: center;">Close</td>
-<td></td>
-</tr>
-<tr>
-<td>Job changes per employed</td>
-<td style="text-align: right;">MAPE 4.5 %</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Employed share 16+ (imposed)</td>
-<td style="text-align: right;">MAD 1.1 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Vacant share of jobs (imposed)</td>
-<td style="text-align: right;">MAD 1.2 pp</td>
-<td style="text-align: center;">Within</td>
-<td>imposed; follows the inputs with a one-year lag</td>
-</tr>
-<tr>
-<td>Residents working in maryland</td>
-<td style="text-align: right;">MAD 0.9 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Same-county workplace</td>
-<td style="text-align: right;">MAD 0.8 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Movers staying in their county</td>
-<td style="text-align: right;">MAD 2.0 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Time to work</td>
-<td style="text-align: right;">MAPE 5.3 %</td>
-<td style="text-align: center;">Close</td>
-<td></td>
-</tr>
-<tr>
-<td>Population by county, 2024</td>
-<td style="text-align: right;">MAPE 0.7 %</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Filled jobs by county, 2024</td>
-<td style="text-align: right;">MAPE 11 %</td>
-<td style="text-align: center;">Outside</td>
-<td></td>
-</tr>
-<tr>
-<td>New dwellings by county, 2021–24 (imposed)</td>
-<td style="text-align: right;">MAPE 0.1 %</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Home-county workplace share by county, 2024</td>
-<td style="text-align: right;">MAD 18.6 pp</td>
-<td style="text-align: center;">Outside</td>
-<td>LODES counts jobs, not workers; against the ACS the share agrees (County view)</td>
-</tr>
-<tr>
-<td>Dwelling vacancy by county, 2024</td>
-<td style="text-align: right;">MAD 2.1 pp</td>
-<td style="text-align: center;">Within</td>
-<td>model weakness, see below</td>
-</tr>
-<tr>
-<td>Filled jobs by type, 2024</td>
-<td style="text-align: right;">MAPE 6.3 %</td>
-<td style="text-align: center;">Close</td>
-<td></td>
-</tr>
-<tr>
-<td>Movers leaving maryland, 2024</td>
-<td style="text-align: right;">MAD 1.0 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
+<td>3 or more cars</td>
+<td style="text-align: right;">23.0</td>
+<td style="text-align: right;">22.4</td>
+<td style="text-align: right;">23.4</td>
+<td style="text-align: right;">22.1</td>
 </tr>
 </tbody>
 </table>
+<p>Model: mean of five seeds; window means of the calibration years 2017–2020 and the out-of-sample years 2021–2024.
+Mover flows: correlation of the county-to-county flows of all pairs. ¹ Model: AM-peak car skim; observed: ACS
+door-to-door time of all modes, a different measure. ² ACS 2016–20, without work at home. Sources: Census population
+estimates and components of change (population, births, deaths); ACS PUMS (employment, moves, marriages, divorces,
+households, cars, commute); JOLTS (vacancies, quits); Building Permits Survey; ACS county-to-county migration and
+commuting flows.</p>
+<p><strong>Consistency checks.</strong> The imposed quantities hold, with three exceptions that are model results. In 2024 county
+populations are within ±2 % of the Census estimates in 20.4 of 24 counties, because some counties run out of vacant
+dwellings. The employed share is 1.9 points low in 2021–2024, because the alignment uses the ACS rates of the year before
+the simulated year, and the vacant share of jobs inherits this lag (4.8 against 6.4 %). In 2021 the model leaves 2.7 % of
+jobs vacant against 7.0 % in JOLTS, when openings surged after the pandemic, a surge that is in no input.</p>
+<h2 id="residential-location-in-the-simulation">Residential location in the simulation<a class="headerlink" href="#residential-location-in-the-simulation" title="Permanent link">¶</a></h2>
+<p>The housing stock runs tight in some counties with little vacancy. In a 2016–2024 run with one seed, the 2024 population
+is below the Census estimate in Carroll (−4.0 %), Caroline (−3.8 %), Wicomico (−3.6 %), Queen Anne's (−3.1 %), Calvert
+(−1.9 %), Cecil (−1.9 %) and Frederick (−1.6 %) counties, because no vacant dwelling is left there for the in-migrants
+that the population control would add. The racial composition drifts toward stronger local majorities: from 2016 to
+2024 the white share of persons in Baltimore County rises from 60.3 to 62.7 % (ACS 2020–2024: 53.0 %), and the Black
+share rises from 60.0 to 61.4 % in Baltimore City (53.9 %) and from 63.6 to 66.7 % in Prince George's County (61.7 %).
+With the own-race shares held at their 2016 values these differences are only about 0.7 points smaller, so the drift
+comes from the own-race term itself, not from its yearly update.</p>
+<h2 id="small-areas">Small areas<a class="headerlink" href="#small-areas" title="Permanent link">¶</a></h2>
+<p>At the scale of the model zones the 2020 population is close to the Census: households R² = 0.978, weighted MAPE 7.2 %,
+88 % of the zones within ±20 % (persons 9.6 %, 83 %). In 2024, on 414 tract–zone clusters, 85 % of the clusters are
+within ±20 % of the ACS (weighted MAPE 9.9 %). The 2016 base, which placed households by the Census counts, already
+scores a weighted MAPE of 6.7 % against Census 2020. The model's spatial change is not reproduced: R² ≤ 0.01 against the
+Census and ACS changes of households, and the zones with the top decile of observed growth receive 18 % of their growth,
+while new dwellings match the permits by county. Car ownership and dwelling type by cluster fit no better than the
+PUMA's observed share (R² 0.54 against 0.62 for households without a car, 0.51 against 0.53 for single-family detached),
+and the R² of median income by cluster falls from 0.47 in 2016 to 0.32 in 2024.</p>
+<h2 id="in-detail">In detail<a class="headerlink" href="#in-detail" title="Permanent link">¶</a></h2>
+<p>Composition is compared with the ACS PUMS 5-year file centred on the simulated year (for 2024: 2020–2024), events and
+commuting by year with the sources of the table above; quantities marked <em>imposed</em> are consistency checks, not tests.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">Composition 2024</label><label for="__tabbed_1_2">Events by year</label><label for="__tabbed_1_3">Counties</label><label for="__tabbed_1_4">Workplaces, vacancy, migration</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p></p><figure markdown="">
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_s_val_stage2_composition.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_s_val_stage2_composition.png"></a>
+  <figcaption>(a) sex; (b) employed, 16+; (c) age; (d) household size; (e) cars; (f) household income; (g) workers per household; (h) adults 18–34 with a parent or non-relatives; (i) employed share by sex and age. Observed: ACS PUMS 2020–2024.</figcaption>
+</figure><p></p>
+</div>
+<div class="tabbed-block">
+<p></p><figure markdown="">
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_s_val_stage2_events.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_s_val_stage2_events.png"></a>
+  <figcaption>Calibration window 2017–2020. (a) births per woman 15–50; (b) deaths per person; (c) marriages per adult; (d) divorces per married person; (e) persons who moved; (f) job changes per employed; (g) employed share 16+ (imposed); (h) vacant share of jobs (imposed); (i) residents working in Maryland; (j) same-county workplace; (k) movers staying in their county; (l) time to work (model: AM-peak car time; ACS: door-to-door time of all modes).</figcaption>
+</figure><p></p>
+</div>
+<div class="tabbed-block">
+<p></p><figure markdown="">
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_s_val_stage2_spatial.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_s_val_stage2_spatial.png"></a>
+  <figcaption>(a) population, 2024, against the Census estimate; (b) filled jobs, 2024, against LODES 2023; (c) dwellings built 2021–2024 against permits (imposed).</figcaption>
+</figure><p></p>
+</div>
+<div class="tabbed-block">
+<p></p><figure markdown="">
+  <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_s_val_stage2_spatial_b.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_s_val_stage2_spatial_b.png"></a>
+  <figcaption>2024. (a) in-state workers in the home county against LODES 2023; (b) vacant dwellings by county against the ACS 2024; (c) filled jobs by type against LODES 2023; (d) movers leaving Maryland against the ACS flows 2016–2020.</figcaption>
+</figure><p></p>
+</div>
+</div>
+</div>
+<p>The model's jobs follow the QCEW and include jobs that LODES does not cover.</p>
 
 
 

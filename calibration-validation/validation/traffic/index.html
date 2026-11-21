@@ -712,6 +712,8 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2275,10 +2305,32 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </li>
       
         <li class="md-nav__item">
-  <a href="#screenlines-and-vehicle-miles" class="md-nav__link">
+  <a href="#screenlines" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Screenlines and vehicle-miles
+        Screenlines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regional-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regional traffic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#residents-travel-and-road-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Residents' travel and road traffic
       
     </span>
   </a>
@@ -2609,7 +2661,7 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2957,10 +3009,32 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 </li>
       
         <li class="md-nav__item">
-  <a href="#screenlines-and-vehicle-miles" class="md-nav__link">
+  <a href="#screenlines" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Screenlines and vehicle-miles
+        Screenlines
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regional-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regional traffic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#residents-travel-and-road-traffic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Residents' travel and road traffic
       
     </span>
   </a>
@@ -3065,191 +3139,477 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 
 
 <h1 id="traffic">Traffic<a class="headerlink" href="#traffic" title="Permanent link">¶</a></h1>
-<p>The 2024 assignment against the MDOT SHA counts (average annual weekday traffic), the FHWA continuous count stations,
-seven screenlines and the MDOT SHA mileage. The model carries <strong>residents only</strong>: trucks, commercial vehicles and through
-traffic are not simulated, so ratios below 1 are expected, most of all off-peak and on roads with much freight.
-Model: mean of five seeds.</p>
+<p>The 2024 assignment against the MDOT SHA counts (average annual weekday traffic, AAWDT), the FHWA continuous count
+stations (TMAS), the screenlines and the MDOT SHA mileage. The assignment carries only the <strong>residents' cars</strong> with a
+tour touching the six counties: trucks, commercial vehicles and through traffic are not simulated, so ratios below 1 are
+expected, most of all off-peak and on roads with much freight. No count was used to set any speed or capacity. Model:
+mean of five assignment seeds.</p>
 <div class="miles-numbers">
 <div><b>0.81</b><span>model ÷ count, passenger vehicles, 2,308 mainline stations</span></div>
 <div><b>0.91</b><span>on I-695, passenger vehicles</span></div>
 <div><b>R² 0.90</b><span>across stations, passenger vehicles</span></div>
-<div><b>1.02 / 0.97</b><span>model ÷ count in the morning / evening peak, continuous counters</span></div>
+<div><b>1.11 / 1.03</b><span>model ÷ count in the morning / evening peak, continuous count stations</span></div>
 </div>
 
 <p><a class="md-button md-button--primary" href="../map/"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2c3.31 0 6 2.66 6 5.95C18 12.41 12 19 12 19S6 12.41 6 7.95C6 4.66 8.69 2 12 2m0 4a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2m8 13c0 2.21-3.58 4-8 4s-8-1.79-8-4c0-1.29 1.22-2.44 3.11-3.17l.64.91C6.67 17.19 6 17.81 6 18.5c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5c0-.69-.67-1.31-1.75-1.76l.64-.91C18.78 16.56 20 17.71 20 19"></path></svg></span> Open the interactive validation map</a></p>
 <div class="admonition info">
 <p class="admonition-title">How to read the figures</p>
-<p>Orange: model; dark grey: counts. Bands and error bars: range of the five runs. Ratios are model ÷ count.</p>
+<p>Orange: model; dark grey: counts. Bands and error bars: range of the five assignment seeds. Ratios are model ÷ count.</p>
 </div>
 <h2 id="counts-at-every-station">Counts at every station<a class="headerlink" href="#counts-at-every-station" title="Permanent link">¶</a></h2>
-<p>Every interstate station, including the Baltimore Beltway (I-695) and the Capital Beltway (I-495), is listed in
-<a href="../interstates/">Interstates by station</a>.</p>
+<p>Stations are matched to network links by road identity; 3,437 of 3,797 stations are matched unambiguously, 2,308 of them
+on the mainline. Every interstate station, including the Baltimore Beltway (I-695) and the Capital Beltway (I-495), is
+listed in <a href="../interstates/">Interstates by station</a>.</p>
 <figure>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_traffic_scatter.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_traffic_scatter.png"></a>
   </p>
-<figcaption>Modelled against counted daily traffic at the 2,308 mainline stations: (a) all vehicles, (b) passenger vehicles, by road
-  class; least-squares line through the origin.</figcaption>
+<figcaption>Modelled against counted daily traffic at the 2,308 mainline stations, 2024: (a) all vehicles; (b) passenger vehicles, by road class. Dashed: least-squares line through the origin.</figcaption>
 </figure>
-<figure>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_traffic_counts.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_traffic_counts.png"></a>
-  </p>
-<figcaption>(a) Model ÷ count by road class; (b) root-mean-square error of passenger vehicles by volume group against the
-  acceptable limit of the FDOT standard.</figcaption>
-</figure>
+<p>Across stations the modelled volumes follow the counts with R² = 0.89 and a slope of 0.78 for all vehicles and R² = 0.90
+and a slope of 0.84 for passenger vehicles. Two random halves of the stations give the same ratio (0.77 and 0.77).</p>
 <table>
 <thead>
 <tr>
-<th>Road class</th>
+<th>Facility class</th>
 <th style="text-align: right;">Stations</th>
+<th style="text-align: right;">Tolerance (%)</th>
 <th style="text-align: right;">Model ÷ count, all</th>
 <th style="text-align: right;">Model ÷ count, passenger</th>
+<th style="text-align: right;">%RMSE, all</th>
 <th style="text-align: right;">%RMSE, passenger</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Interstate: I-695</td>
+<td>Interstate I-695</td>
 <td style="text-align: right;">41</td>
+<td style="text-align: right;">±7</td>
 <td style="text-align: right;">0.84</td>
 <td style="text-align: right;">0.91</td>
+<td style="text-align: right;">18.9</td>
 <td style="text-align: right;">14.3</td>
 </tr>
 <tr>
-<td>Interstate: other</td>
+<td>Other interstate</td>
 <td style="text-align: right;">77</td>
+<td style="text-align: right;">±7</td>
 <td style="text-align: right;">0.72</td>
 <td style="text-align: right;">0.80</td>
+<td style="text-align: right;">40.8</td>
 <td style="text-align: right;">36.3</td>
 </tr>
 <tr>
-<td>Other freeway / expressway</td>
+<td>Other freeway or expressway</td>
 <td style="text-align: right;">82</td>
+<td style="text-align: right;">±7</td>
 <td style="text-align: right;">0.86</td>
 <td style="text-align: right;">0.88</td>
+<td style="text-align: right;">38.3</td>
 <td style="text-align: right;">37.5</td>
 </tr>
 <tr>
 <td>Principal arterial</td>
 <td style="text-align: right;">323</td>
+<td style="text-align: right;">±15</td>
 <td style="text-align: right;">0.93</td>
 <td style="text-align: right;">0.96</td>
+<td style="text-align: right;">37.7</td>
 <td style="text-align: right;">38.7</td>
 </tr>
 <tr>
 <td>Minor arterial</td>
 <td style="text-align: right;">601</td>
+<td style="text-align: right;">±15</td>
 <td style="text-align: right;">0.69</td>
 <td style="text-align: right;">0.71</td>
+<td style="text-align: right;">52.5</td>
 <td style="text-align: right;">51.8</td>
 </tr>
 <tr>
 <td>Major collector</td>
 <td style="text-align: right;">801</td>
+<td style="text-align: right;">±25</td>
 <td style="text-align: right;">0.58</td>
 <td style="text-align: right;">0.60</td>
+<td style="text-align: right;">68.4</td>
 <td style="text-align: right;">67.4</td>
 </tr>
 <tr>
-<td>Minor collector / local</td>
+<td>Minor collector or local</td>
 <td style="text-align: right;">383</td>
+<td style="text-align: right;">±25</td>
 <td style="text-align: right;">0.60</td>
 <td style="text-align: right;">0.63</td>
+<td style="text-align: right;">82.6</td>
 <td style="text-align: right;">81.6</td>
 </tr>
 <tr>
-<td><strong>All classes</strong></td>
-<td style="text-align: right;"><strong>2,308</strong></td>
-<td style="text-align: right;"><strong>0.77</strong></td>
-<td style="text-align: right;"><strong>0.81</strong></td>
-<td style="text-align: right;"><strong>58.5</strong></td>
+<td>All classes</td>
+<td style="text-align: right;">2,308</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.81</td>
+<td style="text-align: right;">64.2</td>
+<td style="text-align: right;">58.5</td>
 </tr>
 </tbody>
 </table>
+<p>Mainline count stations of the six counties; ratio: model ÷ count of the summed volumes. Counts: MDOT SHA 2024 AAWDT,
+both directions; passenger vehicles: count × (1 − truck and bus share of the station's classification counts, or of its
+class where the station has none). Model: link volumes of residents' cars, mean of the last five iterations, scaled from
+the 10 % sample. Tolerance: model ÷ count band by facility class (FDOT, 2008).</p>
+<p>On I-695, other freeways and principal arterials the model carries 0.84 to 0.93 of all vehicles and 0.88 to 0.96 of
+passenger vehicles, and principal arterials are within their tolerance; on minor arterials and collectors it carries
+0.58 to 0.69. Only the volume group below 5,000 vehicles a day meets the %RMSE guideline.</p>
+<figure>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_traffic_counts.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_traffic_counts.png"></a>
+  </p>
+<figcaption>(a) Model ÷ count by road class; (b) root-mean-square error of passenger vehicles by volume group, with the guideline value of each group.</figcaption>
+</figure>
 <h2 id="through-the-day">Through the day<a class="headerlink" href="#through-the-day" title="Permanent link">¶</a></h2>
+<p>The 21 of the 25 TMAS continuous count stations of the six counties with complete 2024 weekdays (42 station
+directions): 15 freeway stations and 6 arterial and collector stations.</p>
 <figure>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_traffic_hourly.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_traffic_hourly.png"></a>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_traffic_tmas_hourly.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_traffic_tmas_hourly.png"></a>
   </p>
-<figcaption>Weekday vehicles per hour, summed over the MDOT SHA continuous count stations of the region and I-695
-  (22 station directions). Model ÷ count: 1.02 at 6:00–10:00, 0.97 at 15:00–19:00, 0.67 at midday, 0.70 in the evening and
-  0.43 at night (0.81 over the day). The peaks, when residents' travel dominates, are reproduced; the gaps lie where trucks,
-  commercial vehicles and through traffic carry more of the traffic.</figcaption>
+<figcaption>Weekday hourly passenger-vehicle volumes at the TMAS continuous count stations of the six counties, 2024: count and model by direction. Panel title: road and TMAS station number. Blue dots: hours with GEH ≥ 5.</figcaption>
 </figure>
-<h2 id="screenlines-and-vehicle-miles">Screenlines and vehicle-miles<a class="headerlink" href="#screenlines-and-vehicle-miles" title="Permanent link">¶</a></h2>
-<figure>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_traffic_screenlines_vmt.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_traffic_screenlines_vmt.png"></a>
-  </p>
-<figcaption>(a) Model ÷ count on the counted crossings of the seven screenlines; (b) weekday passenger-vehicle miles by county,
-  model ÷ MDOT SHA mileage.</figcaption>
-</figure>
+<table>
+<thead>
+<tr>
+<th>Period</th>
+<th style="text-align: right;">Model ÷ count, freeways</th>
+<th style="text-align: right;">Other</th>
+<th style="text-align: right;">All</th>
+<th style="text-align: right;">GEH &lt; 5 (%), freeways</th>
+<th style="text-align: right;">Other</th>
+<th style="text-align: right;">All</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Morning peak, 6:00–10:00</td>
+<td style="text-align: right;">1.09</td>
+<td style="text-align: right;">1.34</td>
+<td style="text-align: right;">1.11</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr>
+<td>Midday, 10:00–15:00</td>
+<td style="text-align: right;">0.72</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr>
+<td>Evening peak, 15:00–19:00</td>
+<td style="text-align: right;">1.02</td>
+<td style="text-align: right;">1.11</td>
+<td style="text-align: right;">1.03</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr>
+<td>Evening, 19:00–24:00</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">1.26</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">31</td>
+</tr>
+<tr>
+<td>Night, 0:00–6:00</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">0.98</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr>
+<td>Whole day</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">1.10</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">27</td>
+</tr>
+</tbody>
+</table>
+<p>Observed: average weekday of 2024 by station, direction and hour, Monday to Friday without federal holidays, days with
+every lane reporting all 24 hours, converted to passenger vehicles with the station's truck and bus shares. Ratio: model
+÷ count of the volumes summed over the stations and hours of the period. GEH &lt; 5: share of the station-direction-hours
+of the period (guideline: 85 %). Source: FHWA Travel Monitoring Analysis System 2024.</p>
+<p>The commute peaks, when residents' travel dominates, are reproduced; the gaps lie where the unmodelled trucks,
+commercial vehicles and through traffic carry more of the traffic. Neither a class-based coding of speeds and capacities
+(all-class ratio within 0.01) nor matching stations by proximity alone (ratios by class within 0.03) changes the result.</p>
+<h2 id="screenlines">Screenlines<a class="headerlink" href="#screenlines" title="Permanent link">¶</a></h2>
+<p>Seven screenlines were placed on the region's rivers, county lines and cordons before any model result was read. The
+table shows the four whose counted crossings carry at least 70 % of the motorway, trunk and primary capacity crossing
+them; the southern regional boundary, the Little Gunpowder Falls and the rest of the regional boundary have less count
+coverage.</p>
 <table>
 <thead>
 <tr>
 <th>Screenline</th>
 <th style="text-align: right;">Counted crossings</th>
+<th style="text-align: right;">Count, all vehicles (thousand)</th>
 <th style="text-align: right;">Model ÷ count, all</th>
 <th style="text-align: right;">Model ÷ count, passenger</th>
-<th style="text-align: center;">Within FHWA deviation</th>
+<th style="text-align: right;">Maximum deviation (%)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>S1 Baltimore City cordon</td>
 <td style="text-align: right;">67</td>
+<td style="text-align: right;">1,561</td>
 <td style="text-align: right;">0.77</td>
 <td style="text-align: right;">0.82</td>
-<td style="text-align: center;">no</td>
+<td style="text-align: right;">±10</td>
 </tr>
 <tr>
 <td>S2 Patapsco River</td>
 <td style="text-align: right;">21</td>
+<td style="text-align: right;">941</td>
 <td style="text-align: right;">0.89</td>
 <td style="text-align: right;">0.97</td>
-<td style="text-align: center;">yes</td>
+<td style="text-align: right;">±10</td>
+</tr>
+<tr>
+<td>Harbor and tidal river</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">455</td>
+<td style="text-align: right;">1.02</td>
+<td style="text-align: right;">1.10</td>
+<td style="text-align: right;">±10</td>
+</tr>
+<tr>
+<td>Upper river</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">486</td>
+<td style="text-align: right;">0.77</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">±10</td>
 </tr>
 <tr>
 <td>S3 Beltway cordon</td>
 <td style="text-align: right;">55</td>
+<td style="text-align: right;">1,649</td>
 <td style="text-align: right;">0.73</td>
 <td style="text-align: right;">0.77</td>
-<td style="text-align: center;">no</td>
-</tr>
-<tr>
-<td>S4 Southern boundary (Patuxent)</td>
-<td style="text-align: right;">10</td>
-<td style="text-align: right;">0.70</td>
-<td style="text-align: right;">0.74</td>
-<td style="text-align: center;">no</td>
-</tr>
-<tr>
-<td>S5 Little Gunpowder Falls</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">1.03</td>
-<td style="text-align: right;">1.07</td>
-<td style="text-align: center;">yes</td>
+<td style="text-align: right;">±10</td>
 </tr>
 <tr>
 <td>S6 Carroll County line</td>
 <td style="text-align: right;">12</td>
+<td style="text-align: right;">203</td>
 <td style="text-align: right;">0.93</td>
 <td style="text-align: right;">1.01</td>
-<td style="text-align: center;">yes</td>
-</tr>
-<tr>
-<td>S7 Other regional boundary</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">0.97</td>
-<td style="text-align: right;">1.04</td>
-<td style="text-align: center;">yes</td>
+<td style="text-align: right;">±10</td>
 </tr>
 </tbody>
 </table>
-<p>S4, S5 and S7 have counts on less than 70 % of the major-road capacity crossing them.</p>
+<p>Counted: a matched mainline count station on the same road within 3 km of the line (6 km on motorways and trunk roads);
+count and model are compared on the counted crossings only. Maximum deviation of a screenline total by its volume
+(Wegmann, 2016; FDOT, 2008).</p>
+<h2 id="regional-traffic">Regional traffic<a class="headerlink" href="#regional-traffic" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Measure</th>
+<th style="text-align: right;">Model</th>
+<th style="text-align: right;">Observed</th>
+<th>Fit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Weekday passenger-vehicle miles, six counties (million)</td>
+<td style="text-align: right;">54.8</td>
+<td style="text-align: right;">69.3</td>
+<td>ratio 0.79; MAPE 20 % (counties)</td>
+</tr>
+<tr>
+<td>Travel time to work, all modes (distribution)</td>
+<td style="text-align: right;">40.0 min</td>
+<td style="text-align: right;">29.3 min</td>
+<td>TVD 15.2 pp</td>
+</tr>
+<tr>
+<td>Travel time to work, drivers alone (distribution)</td>
+<td style="text-align: right;">26.7 min</td>
+<td style="text-align: right;">28.9 min</td>
+<td>TVD 17.0 pp</td>
+</tr>
+<tr>
+<td>Time leaving home for work, share 6:00–8:59 (distribution)</td>
+<td style="text-align: right;">65 %</td>
+<td style="text-align: right;">62 %</td>
+<td>TVD 8.9 pp</td>
+</tr>
+<tr>
+<td>Means of transport to work, public transport share (5 classes)</td>
+<td style="text-align: right;">8.3 %</td>
+<td style="text-align: right;">4.2 %</td>
+<td>TVD 6.4 pp</td>
+</tr>
+<tr>
+<td>Morning-peak car time, assigned vs. upstream skim (mean)</td>
+<td style="text-align: right;">23.3 min</td>
+<td style="text-align: right;">28.4 min</td>
+<td>median ratio 0.78; 51 % within ±25 %</td>
+</tr>
+<tr>
+<td>Weekday boardings, five MTA modes (thousand): NTD 2024 / 2017/18 equivalent</td>
+<td style="text-align: right;">456</td>
+<td style="text-align: right;">174 / 255</td>
+<td>ratio 2.62 / 1.79</td>
+</tr>
+<tr>
+<td>Car-driver trip distance (distribution)</td>
+<td style="text-align: right;">15.3 km</td>
+<td style="text-align: right;">14.4 km</td>
+<td>TVD 9.6 pp</td>
+</tr>
+<tr>
+<td>Car-driver trip time (distribution)</td>
+<td style="text-align: right;">15.5 min</td>
+<td style="text-align: right;">22.0 min</td>
+<td>TVD 21.7 pp</td>
+</tr>
+<tr>
+<td>Passenger vehicles at 2,308 mainline count stations (sum, million)</td>
+<td style="text-align: right;">31.0</td>
+<td style="text-align: right;">38.1</td>
+<td>gap 19 %</td>
+</tr>
+<tr>
+<td>Home-to-work county flows (shares by home county)</td>
+<td style="text-align: right;">975 k</td>
+<td style="text-align: right;">1,380 k</td>
+<td>TVD 5.7 pp; R² 0.98</td>
+</tr>
+</tbody>
+</table>
+<p>Model: Maryland residents with a tour touching the region, mean of five assignment seeds. Observed: MDOT SHA 2024
+vehicle miles, converted to weekday passenger vehicles with the region's count stations; ACS 2024 and 2020–2024; NTD
+2024 average typical weekday boardings and their 2017/18 equivalent; travel survey 2017/18 (weighted); ACS 2016–2020
+county-to-county flows.</p>
+<p>The residents carry 0.79 of the weekday passenger-vehicle miles of the six counties, between 0.73 (Howard) and 0.95
+(Carroll) by county and between 0.55 (collectors) and 0.92 (principal arterials) by road class. The modelled transit
+boardings are 2.6 times the NTD 2024 count and 1.8 times its 2017/18 equivalent, the period of the survey on which the
+mode choice is estimated (local bus 2.1, light rail 2.3, Metro subway 1.3, MARC and commuter bus 0.5). Transit carries
+3.5 % of the residents' trips against 3.2 % in the survey, with 1.72 boardings per transit trip. The assigned
+morning-peak car times are a median 0.78 of the fixed skim times on which the land-use and activity models chose
+locations.</p>
+<figure>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_traffic_vmt_matrix.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_traffic_vmt_matrix.png"></a>
+  </p>
+<figcaption>Weekday passenger-vehicle miles, model ÷ observed, by county and road class, 2024. Observed: MDOT SHA Mileage Reports, converted to weekday passenger vehicles with the region's count stations. Blank: no mileage reported.</figcaption>
+</figure>
+<h2 id="residents-travel-and-road-traffic">Residents' travel and road traffic<a class="headerlink" href="#residents-travel-and-road-traffic" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Home county</th>
+<th style="text-align: right;">By the residents: model</th>
+<th style="text-align: right;">Survey</th>
+<th style="text-align: right;">Ratio</th>
+<th style="text-align: right;">On the roads: model</th>
+<th style="text-align: right;">Observed</th>
+<th style="text-align: right;">Ratio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Baltimore City</td>
+<td style="text-align: right;">10.7</td>
+<td style="text-align: right;">9.5</td>
+<td style="text-align: right;">1.13</td>
+<td style="text-align: right;">11.5</td>
+<td style="text-align: right;">15.4</td>
+<td style="text-align: right;">0.74</td>
+</tr>
+<tr>
+<td>Baltimore County</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">17.8</td>
+<td style="text-align: right;">1.03</td>
+<td style="text-align: right;">21.3</td>
+<td style="text-align: right;">26.0</td>
+<td style="text-align: right;">0.82</td>
+</tr>
+<tr>
+<td>Anne Arundel</td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">1.10</td>
+<td style="text-align: right;">21.8</td>
+<td style="text-align: right;">27.1</td>
+<td style="text-align: right;">0.80</td>
+</tr>
+<tr>
+<td>Howard</td>
+<td style="text-align: right;">20.7</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">1.06</td>
+<td style="text-align: right;">24.5</td>
+<td style="text-align: right;">33.5</td>
+<td style="text-align: right;">0.73</td>
+</tr>
+<tr>
+<td>Harford</td>
+<td style="text-align: right;">23.7</td>
+<td style="text-align: right;">21.1</td>
+<td style="text-align: right;">1.13</td>
+<td style="text-align: right;">19.6</td>
+<td style="text-align: right;">26.1</td>
+<td style="text-align: right;">0.75</td>
+</tr>
+<tr>
+<td>Carroll</td>
+<td style="text-align: right;">25.3</td>
+<td style="text-align: right;">24.8</td>
+<td style="text-align: right;">1.02</td>
+<td style="text-align: right;">19.9</td>
+<td style="text-align: right;">21.1</td>
+<td style="text-align: right;">0.95</td>
+</tr>
+<tr>
+<td>Six counties</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">17.3</td>
+<td style="text-align: right;">1.08</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">24.7</td>
+<td style="text-align: right;">0.79</td>
+</tr>
+</tbody>
+</table>
+<p>Weekday passenger-vehicle miles per resident, 2024. By the residents: car-driver distance of the executed trips of the
+county's residents wherever driven, against the travel survey 2017/18 (weighted). On the roads: all modelled car traffic
+on the network of the county, against the MDOT SHA vehicle miles.</p>
+<p>The residents drive slightly more than in the survey, while the traffic on the roads falls short: the gap lies in
+traffic the model does not carry. The simulated car trips drive 74 % of their route on secondary, tertiary and local
+roads when start and end lie less than 1 km apart and 14 % when they lie more than 20 km apart. For short trips, 0.2 to
+5 km apart, the simulated route is 4 % longer than the fastest route on empty roads and 9 % longer than the shortest
+route.</p>
 <h2 id="trip-lengths">Trip lengths<a class="headerlink" href="#trip-lengths" title="Permanent link">¶</a></h2>
+<p>Measured alike, between census tracts, the residents' car-driver trips average 11.4 km against 11.5 km in the survey,
+with a TVD of 4.6 percentage points; trips to or from shopping are longer than in the survey (7.6 against 6.6 km) and
+trips to or from work shorter (15.9 against 17.2 km).</p>
 <figure>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_traffic_triplength.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_traffic_triplength.png"></a>
   </p>
-<figcaption>Car-driver trip length of the residents against the 2017/18 travel survey, measured alike (straight line between the
-  census tracts of the trip ends).</figcaption>
+<figcaption>Car-driver trip length, model 2024 against the travel survey 2017/18: (a) all trips; (b)–(e) by purpose; (f) mean length. Distance: straight line between the internal points of the census tracts of the two trip ends, for model and survey alike; residents of the six counties, survey weighted.</figcaption>
 </figure>
 
 

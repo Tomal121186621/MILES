@@ -26,7 +26,7 @@
     
     
       
-        <title>MILES-Day engine - MILES</title>
+        <title>MAST engine - MILES</title>
       
     
     
@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#miles-day-engine" class="md-skip">
+        <a href="#mast-engine" class="md-skip">
           Skip to content
         </a>
       
@@ -142,7 +142,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MILES-Day engine
+              MAST engine
             
           </span>
         </div>
@@ -712,6 +712,8 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2519,7 +2549,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2537,7 +2567,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -3038,8 +3068,8 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   
 
 
-<h1 id="miles-day-engine">MILES-Day engine<a class="headerlink" href="#miles-day-engine" title="Permanent link">¶</a></h1>
-<p>MILES-Day runs on the ABIT engine (<a href="https://github.com/msmobility/abit">msmobility/abit</a>). Its own code is the
+<h1 id="mast-engine">MAST engine<a class="headerlink" href="#mast-engine" title="Permanent link">¶</a></h1>
+<p>MAST is built on the ABIT code base (<a href="https://github.com/msmobility/abit">msmobility/abit</a>). Its own code is the
 package <code>abm.models.maryland</code> and the run class <code>abm.RunAbitMarylandLos</code>, in <code>activity/engine/ABIT/src/main/java</code>.</p>
 <h2 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">¶</a></h2>
 <table>
@@ -3068,7 +3098,7 @@ package <code>abm.models.maryland</code> and the run class <code>abm.RunAbitMary
 </tr>
 <tr>
 <td><code>MarylandDestinationChoice</code></td>
-<td>destination and stop logits over all zones (<code>dest.choice.model=mnl</code>)</td>
+<td>destination and stop logits over all zones, one log attraction term per model (<code>dest.choice.model=mnl</code>)</td>
 </tr>
 <tr>
 <td><code>MarylandTourNestedModeChoice</code></td>

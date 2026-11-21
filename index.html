@@ -454,7 +454,7 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
     <div class="mh-wrap mh-stats__grid">
       <div><b data-count="12.5" data-dec="1" data-suffix=" M">12.5 M</b><span>synthetic persons</span></div>
       <div><b data-count="1588">1,588</b><span>zones in six states</span></div>
-      <div><b data-count="28">28</b><span>estimated choice models</span></div>
+      <div><b data-count="27">27</b><span>estimated choice models</span></div>
       <div><b data-count="3946">3,946</b><span>activity distributions</span></div>
       <div><b data-count="2308">2,308</b><span>count stations tested</span></div>
     </div>
@@ -499,20 +499,20 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
               ownership, with MILES's estimated residential-location, workplace and car-ownership models.</p>
             <dl>
               <dt>Engine</dt><dd>SILO, Java, yearly steps 2016 → 2024</dd>
-              <dt>Sensitive to</dt><dd>Car times and accessibility, housing prices and supply, jobs, incomes</dd>
+              <dt>Sensitive to</dt><dd>Car times and accessibility, housing costs, vacancies, jobs, incomes</dd>
               <dt>Produces</dt><dd>Population, dwellings and jobs of every year</dd>
             </dl>
             <p class="mh-links"><a href="model-design/landuse/">Model design</a><a href="calibration-validation/estimates/landuse/">Estimates</a><a href="calibration-validation/validation/landuse/">Validation</a></p>
           </div>
-          <aside class="mh-score"><h4>Tested on</h4><p>Movers 2019–21; ACS and Census 2021–24, years not used in calibration</p></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>Held-out ACS PUMS movers; ACS and Census 2021–24, years not used in calibration</p></aside>
         </article>
         <article class="mh-panel">
           <div>
             <h3>School location</h3>
-            <p>Every student is assigned a school after each SILO year with three multinomial logits, respecting
+            <p>Every student is assigned a school in each SILO year with three multinomial logits, respecting
               attendance boundaries, enrolment and capacity.</p>
             <dl>
-              <dt>Engine</dt><dd>Python, after every SILO year</dd>
+              <dt>Engine</dt><dd>Inside SILO, every simulated year</dd>
               <dt>Models</dt><dd>K–8, high school, college</dd>
               <dt>Produces</dt><dd>The school of every student</dd>
             </dl>
@@ -522,11 +522,11 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
         </article>
         <article class="mh-panel">
           <div>
-            <h3>Activities: MILES-Day</h3>
+            <h3>Activities: MAST</h3>
             <p>Each person receives a full weekday: activities drawn from survey distributions, scheduled, located with
               estimated logit models, and tour modes chosen with household car allocation and joint tours.</p>
             <dl>
-              <dt>Engine</dt><dd>MILES-Day on the ABIT engine, Java</dd>
+              <dt>Engine</dt><dd>MAST, Java, built on the ABIT code base</dd>
               <dt>Estimated on</dt><dd>2017/18 Regional Travel Survey, estimation half</dd>
               <dt>Produces</dt><dd>One weekday plan per person: activities, locations, times, modes</dd>
             </dl>
@@ -563,7 +563,7 @@ New: <a href="calibration-validation/estimates/">full result tables of all 28 es
         <div class="mh-reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 21V10l7.5-5 7.5 5v11h-5v-7H5v7zM24 2v19h-7V8.93l-1-.66V6h-2v.93l-4-2.66V2zm-3 12h-2v2h2zm0-4h-2v2h2zm0-4h-2v2h2z"></path></svg><h3>Land use that evolves</h3><p>Moves, job changes, births, deaths, marriages and car ownership update the population every year from 2016 to 2024.</p></div>
         <div class="mh-reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15 13h1.5v2.82l2.44 1.41-.75 1.3L15 16.69zm4-5H5v11h4.67c-.43-.91-.67-1.93-.67-3a7 7 0 0 1 7-7c1.07 0 2.09.24 3 .67zM5 21a2 2 0 0 1-2-2V5c0-1.11.89-2 2-2h1V1h2v2h8V1h2v2h1a2 2 0 0 1 2 2v6.1c1.24 1.26 2 2.99 2 4.9a7 7 0 0 1-7 7c-1.91 0-3.64-.76-4.9-2zm11-9.85A4.85 4.85 0 0 0 11.15 16c0 2.68 2.17 4.85 4.85 4.85A4.85 4.85 0 0 0 20.85 16c0-2.68-2.17-4.85-4.85-4.85"></path></svg><h3>A full weekday for everyone</h3><p>Activities, schedules, locations and tour modes, with household car allocation and joint tours.</p></div>
         <div class="mh-reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.1 4.8c-.1-.5-.5-.8-1-.8H13l.2 3h-2.4l.2-3H6.8c-.5 0-.9.4-1 .8l-2.7 14c-.1.6.4 1.2 1 1.2H10l.3-5h3.4l.3 5h5.8c.6 0 1.1-.6 1-1.2zM10.4 13l.2-4h2.6l.2 4z"></path></svg><h3>Dynamic traffic</h3><p>Every trip routed in MATSim with departure-time shifts, transit timetables and income-based values of time.</p></div>
-        <div class="mh-reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg><h3>Estimated and tested, not tuned</h3><p>28 choice models estimated with Biogeme; every stage tested on data it never saw. Counts play no role in estimation or calibration.</p></div>
+        <div class="mh-reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-13 5-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"></path></svg><h3>Estimated and tested, not tuned</h3><p>27 choice models estimated with Biogeme; every stage tested on data it never saw. Counts play no role in estimation or calibration.</p></div>
       </div>
     </div>
   </section>

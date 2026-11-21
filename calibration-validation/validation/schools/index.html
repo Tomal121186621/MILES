@@ -712,6 +712,8 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2207,17 +2237,6 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#scorecard" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scorecard
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2587,7 +2606,7 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2923,17 +2942,6 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#scorecard" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Scorecard
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -3021,92 +3029,53 @@ New: <a href="../../estimates/">full result tables of all 28 estimated models</a
 
 
 <h1 id="school-location">School location<a class="headerlink" href="#school-location" title="Permanent link">¶</a></h1>
-<p>Students assigned to schools in every simulated year, against the survey students of the same counties and the ACS enrolment.</p>
+<p>Students assigned to schools in every simulated year, against the survey students of the same counties and the ACS
+enrolment. Model: mean of the five land-use seeds.</p>
 <div class="miles-numbers">
-<div><b>2 %</b><span>students by age, error against the ACS</span></div>
-<div><b>1–4 min</b><span>assigned schools farther than surveyed</span></div>
-<div><b>420×</b><span>weight of an in-boundary K–8 seat</span></div>
+<div><b>2 %</b><span>mean difference of the number of students by age from the ACS 2024 (aligned: a consistency check)</span></div>
+<div><b>1–4 min</b><span>longer car time to the assigned school than the survey students report, by school level, 2024</span></div>
+<div><b>2–11 pp</b><span>fewer students attend a school in their home county than in the survey</span></div>
 </div>
 
-<div class="admonition info">
-<p class="admonition-title">How to read the figures</p>
-<p>Orange: model; dark grey: observed; light grey: a second observed source. Error bars: range of the five land-use seeds or of the ten activity-model replications. Each panel shows one fit measure: for a distribution the total variation distance (TVD, percentage points of the population that would have to change class); for shares that are not one distribution, the mean absolute difference (MAD, percentage points); otherwise the mean absolute percentage error (MAPE).</p>
-</div>
-<figure>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_s_val_stage2_schools.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_s_val_stage2_schools.png"></a>
-  </p>
-<figcaption>Schools, 2024 (2016 where stated). (a) students by age, 2024; (b) car time to school, 2024; (c) car time to school, 2016; (d) school in home county, 2024; (e) school zone holds the attendance-zone school, 2024; (f) car time to school, K–8, 2024; (g) car time to school, high school, 2024; (h) car time to school, college, 2024.</figcaption>
-</figure>
-<h2 id="why-the-car-time-to-school-is-too-long">Why the car time to school is too long<a class="headerlink" href="#why-the-car-time-to-school-is-too-long" title="Permanent link">¶</a></h2>
-<p>The assigned schools are 1 to 4 minutes farther than the schools of the survey students (2024: K–8 14.9 against
-13.7 min, high school 17.5 against 15.7, college 34.7 against 30.3). Most of the gap is present in the base year (2016:
-14.9, 16.8 and 33.0 min), and it grows slowly for high school and college as the population moves while the school
-inventory and its capacities stay fixed. Enrolment is an upper limit, enforced by shadow prices, so students who do not
-find a seat at a near school are sent to a farther one. The observed times are those of the 2017/18 survey students,
-so the 2024 comparison also carries seven years of change in where students live.</p>
-<h2 id="scorecard">Scorecard<a class="headerlink" href="#scorecard" title="Permanent link">¶</a></h2>
-<p class="vsum">8 comparisons: 2 within the limit, 4 close, 2 outside.</p>
-
+<div class="miles-key">
+<div class="miles-key-sw"><span><i style="background:#e8811a"></i>Model</span><span><i style="background:#3b4252"></i>Observed</span><span><i style="background:#b5b3ab"></i>Second observed source</span><span><i class="bar"></i>Range of the five land-use seeds</span></div>
 <table>
 <thead>
 <tr>
-<th>Compared variable</th>
-<th style="text-align: right;">Fit</th>
-<th style="text-align: center;">Result</th>
-<th>Note</th>
+<th>Fit measure in the panel title</th>
+<th>Used for</th>
+<th>Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Students by age, 2024</td>
-<td style="text-align: right;">MAPE 2.0 %</td>
-<td style="text-align: center;">Within</td>
-<td></td>
+<td><strong>TVD</strong>, percentage points</td>
+<td>a distribution (the classes add up to 100 %)</td>
+<td>share of the students that would have to change class to match the observed</td>
 </tr>
 <tr>
-<td>Car time to school, 2024</td>
-<td style="text-align: right;">MAPE 12 %</td>
-<td style="text-align: center;">Outside</td>
-<td></td>
-</tr>
-<tr>
-<td>Car time to school, 2016</td>
-<td style="text-align: right;">MAPE 8.3 %</td>
-<td style="text-align: center;">Close</td>
-<td></td>
-</tr>
-<tr>
-<td>School in home county, 2024</td>
-<td style="text-align: right;">MAD 5.6 pp</td>
-<td style="text-align: center;">Close</td>
-<td></td>
-</tr>
-<tr>
-<td>School zone holds the attendance-zone school, 2024</td>
-<td style="text-align: right;">MAD 4.0 pp</td>
-<td style="text-align: center;">Within</td>
-<td></td>
-</tr>
-<tr>
-<td>Car time to school, k–8, 2024</td>
-<td style="text-align: right;">TVD 6.7 pp</td>
-<td style="text-align: center;">Close</td>
-<td></td>
-</tr>
-<tr>
-<td>Car time to school, high school, 2024</td>
-<td style="text-align: right;">TVD 6.2 pp</td>
-<td style="text-align: center;">Close</td>
-<td></td>
-</tr>
-<tr>
-<td>Car time to school, college, 2024</td>
-<td style="text-align: right;">TVD 11.8 pp</td>
-<td style="text-align: center;">Outside</td>
-<td></td>
+<td><strong>MAPE</strong>, %</td>
+<td>rates, means and counts</td>
+<td>mean absolute difference as a percentage of the observed value</td>
 </tr>
 </tbody>
 </table>
+</div>
+<figure>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/img/validation/fig_s_val_stage2_schools.png" data-desc-position="bottom"><img alt="" src="../../../assets/img/validation/fig_s_val_stage2_schools.png"></a>
+  </p>
+<figcaption>Schools in the chain against observed data. (a) students by age, 2024 (aligned); (b) car time to school, 2024; (c) car time to school, 2016; (d) school in home county, 2024; (e) school zone holds the attendance-zone school, 2024; (f) car time to school, K–8, 2024; (g) car time to school, high school, 2024; (h) car time to school, college, 2024. Observed: ACS enrolment (a); students of both halves of the travel survey 2017/18, weighted (b–h).</figcaption>
+</figure>
+<p>Student numbers are a consistency check, because student status is aligned to the ACS enrolment rates. Model students
+are restricted to the home counties of the survey students. The attendance-zone share counts homes covered by attendance
+boundaries.</p>
+<h2 id="why-the-car-time-to-school-is-too-long">Why the car time to school is too long<a class="headerlink" href="#why-the-car-time-to-school-is-too-long" title="Permanent link">¶</a></h2>
+<p>The assigned schools are 1 to 4 minutes farther by car than the schools of the survey students (2024: K–8 14.9 against
+13.7 min, high school 17.5 against 15.7, college 34.7 against 30.3), and home-county shares are 2 to 11 points low. Most
+of the gap is already present in the base year. It grows for high school and college as the population changes while
+the school inventory and its capacities stay fixed. Enrolment is an upper limit, enforced by shadow prices, so students
+who do not find a seat at a near school are sent to a farther one. The observed times are those of the 2017/18 survey
+students, so the 2024 comparison also carries seven years of change in where students live.</p>
 
 
 

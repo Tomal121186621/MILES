@@ -712,6 +712,8 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -1507,10 +1537,10 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </li>
       
         <li class="md-nav__item">
-  <a href="#activities-miles-day" class="md-nav__link">
+  <a href="#activities-mast" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Activities (MILES-Day)
+        Activities (MAST)
       
     </span>
   </a>
@@ -2593,7 +2623,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2930,10 +2960,10 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </li>
       
         <li class="md-nav__item">
-  <a href="#activities-miles-day" class="md-nav__link">
+  <a href="#activities-mast" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Activities (MILES-Day)
+        Activities (MAST)
       
     </span>
   </a>
@@ -3021,11 +3051,11 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 
 <h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h1>
 <p>Each engine reads one properties file. The keys below are the ones that switch on MILES's models; the values are
-those of the reported runs. In the SILO engine, the value <code>respec</code> of the <code>*.spec</code> and <code>job.choice.model</code> keys selects
-the estimated models documented on this site; <code>miles landuse …</code> sets it for you.</p>
+those of the final runs. The SILO settings of the final runs are collected in <code>landuse/run/adopted_settings.sh</code>, and
+<code>miles landuse …</code> sets the model switches for you.</p>
 <h2 id="land-use-silo">Land use (SILO)<a class="headerlink" href="#land-use-silo" title="Permanent link">¶</a></h2>
 <p>Written by <code>landuse/run/write_properties.py &lt;scenario&gt; &lt;start&gt; &lt;end&gt; [skim_years] [seed] [spec]</code>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><input id="__tabbed_1_5" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">General</label><label for="__tabbed_1_2">Residential location</label><label for="__tabbed_1_3">Car ownership</label><label for="__tabbed_1_4">Jobs</label><label for="__tabbed_1_5">Demography and calibration</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><input id="__tabbed_1_4" name="__tabbed_1" type="radio"><input id="__tabbed_1_5" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">General</label><label for="__tabbed_1_2">Residential location</label><label for="__tabbed_1_3">Car ownership</label><label for="__tabbed_1_4">Jobs and schools</label><label for="__tabbed_1_5">Demography and calibration</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <table>
@@ -3077,32 +3107,44 @@ the estimated models documented on this site; <code>miles landuse …</code> set
 </thead>
 <tbody>
 <tr>
-<td><code>resloc.model</code></td>
-<td><code>mnl</code></td>
+<td><code>resloc.twolevel</code></td>
+<td><code>true</code> (PUMA, then dwelling)</td>
 </tr>
 <tr>
-<td><code>resloc.spec</code></td>
-<td><code>respec</code> (the estimated three-level model)</td>
+<td><code>resloc.twolevel.puma.coefficients</code></td>
+<td><code>input/residential_puma_coefficients.csv</code></td>
 </tr>
 <tr>
-<td><code>resloc.region.coefficients</code></td>
-<td><code>input/residential_county_coefficients.csv</code></td>
+<td><code>resloc.twolevel.dwelling.coefficients</code></td>
+<td><code>input/residential_dwelling_coefficients.csv</code></td>
 </tr>
 <tr>
-<td><code>resloc.dwelling.coefficients</code></td>
-<td><code>input/residential_zone_dwelling_coefficients.csv</code> (zone and dwelling levels)</td>
+<td><code>resloc.twolevel.puma.zone.file</code>, <code>resloc.twolevel.mig.zone.file</code></td>
+<td>zones of each PUMA and migration PUMA</td>
 </tr>
 <tr>
-<td><code>resloc.region.attributes</code>, <code>resloc.region.adjacency</code></td>
-<td>county attributes and adjacency</td>
+<td><code>resloc.twolevel.zone.attributes.file</code>, <code>resloc.twolevel.zone.core.file</code></td>
+<td>zone attributes; DC and Baltimore City zones</td>
 </tr>
 <tr>
-<td><code>resloc.respec.zone.attributes</code></td>
-<td>zone attributes of the zone level</td>
+<td><code>resloc.twolevel.puma.adjacency.file</code></td>
+<td>PUMA adjacency</td>
 </tr>
 <tr>
-<td><code>resloc.respec.accessibility.file</code></td>
-<td>multimodal non-work accessibility by year</td>
+<td><code>resloc.marketsize</code>, <code>resloc.turnover.file</code></td>
+<td><code>stock_turnover</code>; turnover rate by PUMA</td>
+</tr>
+<tr>
+<td><code>resloc.puma.vacancy.availability</code></td>
+<td><code>true</code> (PUMA weight scaled by its vacancy rate relative to 2016)</td>
+</tr>
+<tr>
+<td><code>resloc.race.share.fixed2016</code></td>
+<td><code>false</code> (own-race shares recomputed every year)</td>
+</tr>
+<tr>
+<td><code>population.control.until.no.vacancy</code></td>
+<td><code>true</code></td>
 </tr>
 <tr>
 <td><code>resloc.move.duration</code></td>
@@ -3125,20 +3167,12 @@ the estimated models documented on this site; <code>miles landuse …</code> set
 </thead>
 <tbody>
 <tr>
-<td><code>car.ownership.spec</code></td>
-<td><code>respec</code></td>
-</tr>
-<tr>
 <td><code>car.ownership.coefficients.file</code></td>
 <td><code>input/car_ownership_estimated_coefficients.csv</code></td>
 </tr>
 <tr>
 <td><code>car.ownership.region.constants.file</code></td>
-<td>calibrated county constants</td>
-</tr>
-<tr>
-<td><code>car.ownership.respec.location.file</code></td>
-<td>PUMA density and accessibility gain</td>
+<td><code>input/car_ownership_county_constants.csv</code> (the estimated Baltimore City term; 0 elsewhere)</td>
 </tr>
 </tbody>
 </table>
@@ -3153,12 +3187,12 @@ the estimated models documented on this site; <code>miles landuse …</code> set
 </thead>
 <tbody>
 <tr>
-<td><code>job.choice.model</code></td>
-<td><code>respec</code></td>
+<td><code>job.choice.coefficients.file</code></td>
+<td><code>input/workplace_choice_coefficients.csv</code> (24 terms; District term as estimated)</td>
 </tr>
 <tr>
-<td><code>job.choice.coefficients.file</code></td>
-<td><code>input/workplace_choice_coefficients.csv</code> (District term anchored to the ACS)</td>
+<td><code>job.choice.size</code></td>
+<td><code>jobs</code> (all job types weighted equally)</td>
 </tr>
 <tr>
 <td><code>job.change.rate</code></td>
@@ -3171,6 +3205,14 @@ the estimated models documented on this site; <code>miles landuse …</code> set
 <tr>
 <td><code>employment.types</code></td>
 <td><code>RET,OFF,IND,OTH</code></td>
+</tr>
+<tr>
+<td><code>school.choice.coef.k8</code>, <code>.hs</code>, <code>.college</code></td>
+<td><code>input/school_location_coefficients_{k8,hs,college}.csv</code></td>
+</tr>
+<tr>
+<td><code>school.seat.release</code></td>
+<td><code>true</code> (seat released when a student leaves school or the population)</td>
 </tr>
 </tbody>
 </table>
@@ -3186,23 +3228,23 @@ the estimated models documented on this site; <code>miles landuse …</code> set
 <tbody>
 <tr>
 <td><code>demographics.local.birth.rate.adjuster</code></td>
-<td>2.1002</td>
+<td>2.1724</td>
 </tr>
 <tr>
 <td><code>demographics.local.marriage.rate.adjuster</code></td>
-<td>1.3944</td>
+<td>1.3436</td>
 </tr>
 <tr>
 <td><code>demographics.local.divorce.rate.adjuster</code></td>
-<td>0.6716</td>
+<td>0.6867</td>
 </tr>
 <tr>
 <td><code>demographics.local.leave.parents.adjuster</code></td>
-<td>2.578</td>
+<td>2.7775</td>
 </tr>
 <tr>
 <td><code>move.or.not.binomial.log.shift.parameter</code></td>
-<td>1.6742</td>
+<td>1.1114</td>
 </tr>
 <tr>
 <td><code>construct.dwelling.demand.scaler</code></td>
@@ -3222,7 +3264,7 @@ the estimated models documented on this site; <code>miles landuse …</code> set
 </div>
 </div>
 </div>
-<h2 id="activities-miles-day">Activities (MILES-Day)<a class="headerlink" href="#activities-miles-day" title="Permanent link">¶</a></h2>
+<h2 id="activities-mast">Activities (MAST)<a class="headerlink" href="#activities-mast" title="Permanent link">¶</a></h2>
 <p>Written by <code>activity/write_properties.py &lt;name&gt; &lt;silo_scenario&gt; &lt;year&gt; [sample] [skims]</code>; the switches of the
 coefficient set (<code>activity/parameters/run_params.csv</code>) are appended.</p>
 <table>
@@ -3363,6 +3405,8 @@ coefficient set (<code>activity/parameters/run_params.csv</code>) are appended.<
 </tr>
 </tbody>
 </table>
+<p>Transit settings of the final runs: transfer penalty <code>-Dpt.lineswitch=-0.13</code> (about 10 in-vehicle minutes) and
+transfer walks up to <code>-Dpt.beeline=300</code> m, set by <code>pipeline/run_chain.py</code> with <code>MATSIM_PT=berlin MATSIM_PT_LIT=1</code>.</p>
 <p>Chain settings: flow capacity = sample (0.1), storage capacity = sample^0.75 (0.178), 100 iterations.</p>
 
 

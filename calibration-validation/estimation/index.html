@@ -712,6 +712,8 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2607,7 +2637,7 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -3051,23 +3081,27 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
   of residential location and car ownership on ACS PUMS households.</li>
 <li><strong>Weights.</strong> The survey is stratified by home location, which every model except residential location takes as
   given, so these models are estimated without weights. Weights are used only where the sample is selected on the
-  outcome: the zone level of residential location (whose outcome is the home location) and the work tour mode choice
-  (whose sample over-represents rail commuters; weighted exogenous sample maximum likelihood).</li>
+  outcome: the PUMA level of residential location (whose sample is selected on origin and destination inside the
+  zone-system area) and the work tour mode choice (whose sample over-represents rail commuters; weighted exogenous
+  sample maximum likelihood).</li>
 <li><strong>Location probabilities.</strong> A survey location known by traffic zone or tract may cover several model zones; its
   probability is the sum of the probabilities of those zones, weighted by housing units, enrolment or jobs.</li>
 <li><strong>Choice sets.</strong> School and activity-location models use the full choice set of 1,588 zones; workplace choice the
-  chosen zone and 99 sampled zones; the zone and dwelling levels of residential location 30 sampled alternatives.</li>
+  chosen zone and 99 sampled zones; the PUMA level of residential location all 97 PUMAs, and the dwelling level 30
+  sampled alternatives.</li>
 <li><strong>Specification search.</strong> Each model is built in blocks of variables from a basic model. A block is kept when its
   likelihood-ratio test is significant at 5 %, it lowers the BIC and its signs are as expected; non-nested forms are
   compared by BIC.</li>
 <li><strong>Standard errors</strong> are robust (sandwich).</li>
+<li><strong>Hold-out.</strong> The hold-out half was consulted more than once in the specification search of several models, so its
+  fit is not a fully independent test.</li>
 <li><strong>Software:</strong> Python Biogeme for every model of the estimation package.</li>
 </ul>
 <h2 id="all-estimated-models">All estimated models<a class="headerlink" href="#all-estimated-models" title="Permanent link">¶</a></h2>
 <p>The full results of every model, coefficient by coefficient, are in <a href="../estimates/">Estimated models</a>.</p>
 <p><span class="arithmatex">\(N\)</span>: observations; <span class="arithmatex">\(K\)</span>: parameters; LL: log-likelihood at the estimates; <span class="arithmatex">\(\bar\rho^2\)</span>: adjusted rho-square.
-Hold-out: <span class="arithmatex">\(\rho^2\)</span> (county, zone, dwelling, cars), log-likelihood per record (workplace, schools, locations) or total
-log-likelihood (tour formation and mode) on held-out data.</p>
+Hold-out: log-likelihood per mover (residential location), <span class="arithmatex">\(\rho^2\)</span> (car ownership), log-likelihood per record
+(workplace, schools, locations) or total log-likelihood (tour formation and mode) on held-out data.</p>
 <table>
 <thead>
 <tr>
@@ -3081,7 +3115,7 @@ log-likelihood (tour formation and mode) on held-out data.</p>
 </thead>
 <tbody>
 <tr>
-<td><strong>Land use and workplace</strong></td>
+<td><strong><em>Land use and workplace</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -3089,47 +3123,39 @@ log-likelihood (tour formation and mode) on held-out data.</p>
 <td style="text-align: right;"></td>
 </tr>
 <tr>
-<td>Residential location: county (44)</td>
+<td>Residential location: PUMA (97)<sup>1</sup></td>
 <td style="text-align: right;">15,163</td>
 <td style="text-align: right;">14</td>
-<td style="text-align: right;">−15,959.4</td>
-<td style="text-align: right;">0.714</td>
-<td style="text-align: right;">0.714</td>
+<td style="text-align: right;">−34,670.3</td>
+<td style="text-align: right;">0.500</td>
+<td style="text-align: right;">−2.297</td>
 </tr>
 <tr>
-<td>zone × dwelling type (30 sampled, weighted)</td>
-<td style="text-align: right;">10,655</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">−28,089.7</td>
-<td style="text-align: right;">0.224</td>
-<td style="text-align: right;">0.139</td>
-</tr>
-<tr>
-<td>dwelling (30 sampled)</td>
+<td>Residential location: dwelling (30 sampled)</td>
 <td style="text-align: right;">15,163</td>
-<td style="text-align: right;">38</td>
-<td style="text-align: right;">−47,688.2</td>
-<td style="text-align: right;">0.075</td>
-<td style="text-align: right;">0.082</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">−47,478.6</td>
+<td style="text-align: right;">0.079</td>
+<td style="text-align: right;">−3.115</td>
 </tr>
 <tr>
 <td>Car ownership (4)</td>
 <td style="text-align: right;">91,348</td>
-<td style="text-align: right;">51</td>
-<td style="text-align: right;">−80,664.0</td>
-<td style="text-align: right;">0.363</td>
-<td style="text-align: right;">0.358</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">−78,613.6</td>
+<td style="text-align: right;">0.379</td>
+<td style="text-align: right;">0.375</td>
 </tr>
 <tr>
 <td>Workplace (100 sampled)</td>
 <td style="text-align: right;">9,707</td>
-<td style="text-align: right;">36</td>
-<td style="text-align: right;">−21,334.3</td>
-<td style="text-align: right;">0.522</td>
-<td style="text-align: right;">−4.808</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">−21,376.5</td>
+<td style="text-align: right;">0.521</td>
+<td style="text-align: right;">−4.811<sup>2</sup></td>
 </tr>
 <tr>
-<td><strong>Schools (full choice set)</strong></td>
+<td><strong><em>Schools (full choice set)</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -3139,29 +3165,29 @@ log-likelihood (tour formation and mode) on held-out data.</p>
 <tr>
 <td>K–8 (1,144 zones)</td>
 <td style="text-align: right;">1,509</td>
-<td style="text-align: right;">9</td>
-<td style="text-align: right;">−2,941.0</td>
-<td style="text-align: right;">0.717</td>
-<td style="text-align: right;">−1.983</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">−2,885.6</td>
+<td style="text-align: right;">0.721</td>
+<td style="text-align: right;">−1.953</td>
 </tr>
 <tr>
 <td>High school (719 zones)</td>
 <td style="text-align: right;">668</td>
-<td style="text-align: right;">5</td>
-<td style="text-align: right;">−1,243.3</td>
-<td style="text-align: right;">0.716</td>
-<td style="text-align: right;">−1.853</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">−1,217.0</td>
+<td style="text-align: right;">0.722</td>
+<td style="text-align: right;">−1.810</td>
 </tr>
 <tr>
 <td>College (141 zones)</td>
 <td style="text-align: right;">673</td>
 <td style="text-align: right;">9</td>
-<td style="text-align: right;">−1,827.8</td>
-<td style="text-align: right;">0.448</td>
-<td style="text-align: right;">−2.824</td>
+<td style="text-align: right;">−1,810.4</td>
+<td style="text-align: right;">0.454</td>
+<td style="text-align: right;">−2.789</td>
 </tr>
 <tr>
-<td><strong>MILES-Day: locations (1,588 zones)</strong></td>
+<td><strong><em>MAST: locations (1,588 zones)</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -3171,85 +3197,85 @@ log-likelihood (tour formation and mode) on held-out data.</p>
 <tr>
 <td>Main activity, four purposes (pooled)</td>
 <td style="text-align: right;">14,341</td>
-<td style="text-align: right;">71</td>
-<td style="text-align: right;">−49,122.5</td>
-<td style="text-align: right;">0.535</td>
-<td style="text-align: right;">−3.352</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">−49,427.4</td>
+<td style="text-align: right;">0.532</td>
+<td style="text-align: right;">−3.370</td>
 </tr>
 <tr>
 <td>Stop: shopping</td>
 <td style="text-align: right;">3,979</td>
 <td style="text-align: right;">23</td>
-<td style="text-align: right;">−9,987.8</td>
+<td style="text-align: right;">−9,982.6</td>
 <td style="text-align: right;">0.659</td>
 <td style="text-align: right;">−2.527</td>
 </tr>
 <tr>
 <td>Stop: recreation</td>
 <td style="text-align: right;">5,064</td>
-<td style="text-align: right;">22</td>
-<td style="text-align: right;">−15,801.1</td>
-<td style="text-align: right;">0.576</td>
-<td style="text-align: right;">−3.195</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">−15,874.9</td>
+<td style="text-align: right;">0.574</td>
+<td style="text-align: right;">−3.205</td>
 </tr>
 <tr>
 <td>Stop: accompanying</td>
 <td style="text-align: right;">3,515</td>
-<td style="text-align: right;">26</td>
-<td style="text-align: right;">−12,417.5</td>
-<td style="text-align: right;">0.520</td>
-<td style="text-align: right;">−3.406</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">−12,488.1</td>
+<td style="text-align: right;">0.517</td>
+<td style="text-align: right;">−3.396</td>
 </tr>
 <tr>
 <td>Stop: other errands</td>
 <td style="text-align: right;">8,055</td>
-<td style="text-align: right;">23</td>
-<td style="text-align: right;">−24,580.1</td>
-<td style="text-align: right;">0.586</td>
-<td style="text-align: right;">−3.024</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">−24,653.3</td>
+<td style="text-align: right;">0.584</td>
+<td style="text-align: right;">−3.028</td>
 </tr>
 <tr>
 <td>Outing from the workplace: first stop</td>
 <td style="text-align: right;">1,180</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">−3,089.9</td>
-<td style="text-align: right;">0.665</td>
-<td style="text-align: right;">−2.715</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">−3,112.3</td>
+<td style="text-align: right;">0.663</td>
+<td style="text-align: right;">−2.707</td>
 </tr>
 <tr>
 <td>Work business: usual-workplace workers</td>
 <td style="text-align: right;">1,539</td>
-<td style="text-align: right;">22</td>
-<td style="text-align: right;">−8,402.2</td>
-<td style="text-align: right;">0.312</td>
-<td style="text-align: right;">−5.541</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">−8,432.1</td>
+<td style="text-align: right;">0.310</td>
+<td style="text-align: right;">−5.554</td>
 </tr>
 <tr>
 <td>Work business: other persons</td>
 <td style="text-align: right;">1,259</td>
-<td style="text-align: right;">19</td>
-<td style="text-align: right;">−6,766.7</td>
-<td style="text-align: right;">0.297</td>
-<td style="text-align: right;">−5.588</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">−6,819.3</td>
+<td style="text-align: right;">0.292</td>
+<td style="text-align: right;">−5.625</td>
 </tr>
 <tr>
 <td>Work trips of home workers</td>
 <td style="text-align: right;">366</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">−1,634.6</td>
-<td style="text-align: right;">0.431</td>
-<td style="text-align: right;">−4.375</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">−1,640.9</td>
+<td style="text-align: right;">0.430</td>
+<td style="text-align: right;">−4.389</td>
 </tr>
 <tr>
 <td>School without record; daycare (pooled)</td>
 <td style="text-align: right;">846</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">−3,706.8</td>
-<td style="text-align: right;">0.453</td>
-<td style="text-align: right;">−4.280</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">−3,798.5</td>
+<td style="text-align: right;">0.440</td>
+<td style="text-align: right;">−4.396</td>
 </tr>
 <tr>
-<td><strong>MILES-Day: tour formation and mode</strong></td>
+<td><strong><em>MAST: tour formation and mode</em></strong></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -3267,10 +3293,10 @@ log-likelihood (tour formation and mode) on held-out data.</p>
 <tr>
 <td>Mode of the outing (2)</td>
 <td style="text-align: right;">1,177</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">−360.2</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">−360.6</td>
 <td style="text-align: right;">0.549</td>
-<td style="text-align: right;">−299.7</td>
+<td style="text-align: right;">−299.8</td>
 </tr>
 <tr>
 <td>Return home (2)</td>
@@ -3281,7 +3307,7 @@ log-likelihood (tour formation and mode) on held-out data.</p>
 <td style="text-align: right;">−13,771.8</td>
 </tr>
 <tr>
-<td>Tour mode: work (6, weighted)</td>
+<td>Tour mode: work (6)<sup>3</sup></td>
 <td style="text-align: right;">9,126</td>
 <td style="text-align: right;">51</td>
 <td style="text-align: right;">−4,313.1</td>
@@ -3329,26 +3355,28 @@ log-likelihood (tour formation and mode) on held-out data.</p>
 <td style="text-align: right;">−459.1</td>
 </tr>
 <tr>
-<td>Transit leg mode (5)</td>
-<td style="text-align: right;">6,792</td>
+<td>Transit-tour legs (5)<sup>4</sup></td>
+<td style="text-align: right;">6,773</td>
 <td style="text-align: right;">35</td>
-<td style="text-align: right;">−3,501.8</td>
-<td style="text-align: right;"></td>
-<td style="text-align: right;">−3,366.7</td>
+<td style="text-align: right;">−3,421.5</td>
+<td style="text-align: right;">0.621</td>
+<td style="text-align: right;">−3,291.0</td>
 </tr>
 </tbody>
 </table>
+<p class="estnote">1. Weighted by the expected in-area share of origin and destination; inclusive value of the dwelling level with coefficient 1. 2. Full choice set of 1,587 zones with jobs. 3. Choice-based sample weights (weighted pseudo-log-likelihood). 4. Car driver available only with a household car that is free over the tour window.</p>
+
 <p>The synthetic population (CVAE) is not a likelihood model; its fit is reported in <a href="../validation/">validation</a>. The activity
-distributions of MILES-Day are 3,946 weighted relative frequencies of the estimation half.</p>
+distributions of MAST are 3,946 weighted relative frequencies of the estimation half.</p>
 <h2 id="linking-logsums">Linking logsums<a class="headerlink" href="#linking-logsums" title="Permanent link">¶</a></h2>
 <p>Three logsums connect the models:</p>
 <ul>
 <li><strong>Mode-choice logsum</strong> of a person between two zones for a purpose, from the tour mode model; it enters the stop
   models as the logsum detour.</li>
 <li><strong>Non-work accessibility</strong> of a zone, the destination-choice logsum over all 1,588 zones for shopping, recreation,
-  accompanying and other trips, weighted by trip shares (0.329, 0.279, 0.148, 0.243). It enters residential
-  location, car ownership and workplace choice.</li>
-<li><strong>Inclusive values</strong> of the residential location levels.</li>
+  accompanying and other trips, weighted by trip shares (0.329, 0.279, 0.148, 0.243). It enters car ownership as the
+  accessibility gained from a car.</li>
+<li><strong>Inclusive value</strong> of the dwelling level in the PUMA level of residential location.</li>
 </ul>
 <h2 id="re-estimating-the-models-yourself">Re-estimating the models yourself<a class="headerlink" href="#re-estimating-the-models-yourself" title="Permanent link">¶</a></h2>
 <p>Every model can be re-estimated from its data with Python Biogeme; see <a href="../../developers/estimation-package/">the estimation package</a>.</p>

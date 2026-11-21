@@ -712,6 +712,8 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
       
         
       
+        
+      
     
     
     
@@ -864,7 +866,7 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -893,6 +895,34 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
     
   
     Traffic assignment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../model-design/transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
   
 
     
@@ -2320,24 +2350,6 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Against standard methods
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -2354,69 +2366,6 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#population-synthesis-cvae-against-ipf-ipu-and-weighted-sampling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Population synthesis: CVAE against IPF, IPU and weighted sampling
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#land-use-against-the-original-silo-maryland-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Land use: against the original SILO Maryland model
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#activities-against-the-original-set-up-and-a-standard-tour-based-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Activities: against the original set-up and a standard tour-based model
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#assignment-against-the-original-activity-demand" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Assignment: against the original activity demand
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -2607,7 +2556,7 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -2926,58 +2875,6 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
-      
-        <li class="md-nav__item">
-  <a href="#population-synthesis-cvae-against-ipf-ipu-and-weighted-sampling" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Population synthesis: CVAE against IPF, IPU and weighted sampling
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#land-use-against-the-original-silo-maryland-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Land use: against the original SILO Maryland model
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#activities-against-the-original-set-up-and-a-standard-tour-based-model" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Activities: against the original set-up and a standard tour-based model
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#assignment-against-the-original-activity-demand" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Assignment: against the original activity demand
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -3045,106 +2942,17 @@ New: <a href="../estimates/">full result tables of all 28 estimated models</a> a
 
 
 <h1 id="comparison-with-standard-methods">Comparison with standard methods<a class="headerlink" href="#comparison-with-standard-methods" title="Permanent link">¶</a></h1>
-<p>Each stage is run against an established alternative. Every variant uses the same inputs, targets, hold-out data and
-measures; baselines are calibrated with the same levers; no variant is fitted to traffic counts.</p>
-<h2 id="population-synthesis-cvae-against-ipf-ipu-and-weighted-sampling">Population synthesis: CVAE against IPF, IPU and weighted sampling<a class="headerlink" href="#population-synthesis-cvae-against-ipf-ipu-and-weighted-sampling" title="Permanent link">¶</a></h2>
-<p>Baselines: iterative proportional fitting with a weighted draw, iterative proportional updating (PopulationSim) and
-weighted sampling of the training households, all on the same training records and controls, five draws each.</p>
+<p>Each stage is to be run against an established alternative, with the same inputs, targets, hold-out data and measures,
+and with no variant fitted to traffic counts:</p>
 <ul>
-<li>On fit to the held-out records, the classic methods are better: IPU reaches the noise level of the held-out data
-  on one-way distributions.</li>
-<li>Reweighting methods copy whole training households, so they cannot produce a combination that is absent from the
-  sample. The CVAE generates <strong>62 % of the held-out combinations that the training data lack</strong>, and copies fewer
-  households than a fresh sample shares with the training data (11 % against 22 %).</li>
+<li><strong>Population synthesis</strong>: the conditional variational autoencoder against iterative proportional fitting with a
+  weighted draw, iterative proportional updating (PopulationSim) and weighted sampling of the training households.</li>
+<li><strong>Land use</strong>: against the original SILO Maryland model, calibrated with the same procedure.</li>
+<li><strong>Activities</strong>: MAST against the original activity set-up and a standard tour-based model.</li>
+<li><strong>Assignment</strong>: the same network and assignment with the original activity demand.</li>
 </ul>
-<p>The CVAE's gain is variety beyond the sample, not closer fit to it.</p>
-<h2 id="land-use-against-the-original-silo-maryland-model">Land use: against the original SILO Maryland model<a class="headerlink" href="#land-use-against-the-original-silo-maryland-model" title="Permanent link">¶</a></h2>
-<p>Both models are calibrated with the same procedure and tested on 2021–2024.</p>
-<table>
-<thead>
-<tr>
-<th>Measure</th>
-<th style="text-align: right;">Original</th>
-<th style="text-align: right;">MILES</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Out-of-sample cells within 5 pp</td>
-<td style="text-align: right;">86.8 %</td>
-<td style="text-align: right;"><strong>94.5 %</strong></td>
-</tr>
-<tr>
-<td>Mover flows between counties, correlation with ACS</td>
-<td style="text-align: right;">0.625</td>
-<td style="text-align: right;"><strong>0.946</strong></td>
-</tr>
-<tr>
-<td>Movers staying in their county, share of observed</td>
-<td style="text-align: right;">0.260</td>
-<td style="text-align: right;"><strong>0.986</strong></td>
-</tr>
-<tr>
-<td>Mean travel time to work, ratio to ACS</td>
-<td style="text-align: right;">1.557</td>
-<td style="text-align: right;"><strong>0.974</strong></td>
-</tr>
-</tbody>
-</table>
-<p>The gap of the original model lies in young adults living with their parents, age, cars, employment, household size
-and income.</p>
-<h2 id="activities-against-the-original-set-up-and-a-standard-tour-based-model">Activities: against the original set-up and a standard tour-based model<a class="headerlink" href="#activities-against-the-original-set-up-and-a-standard-tour-based-model" title="Permanent link">¶</a></h2>
-<ul>
-<li>MILES-Day beats both baselines on 58–73 % of the error measures and loses on 2–21 %, in all three survey settings;
-  its mean normalised error is less than half of theirs.</li>
-<li>The gain comes mainly from the TASHA-type scheduler (durations, start times, school and work activity) and from the
-  return-home and workplace-outing models: adding TASHA-type generation cuts the mean normalised error from 9.9 to
-  6.8 on the estimation half, and the return-home and outing models bring it to 4.0.</li>
-<li>On the 2024 external data no variant is clearly best.</li>
-</ul>
-<h2 id="assignment-against-the-original-activity-demand">Assignment: against the original activity demand<a class="headerlink" href="#assignment-against-the-original-activity-demand" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th>Measure</th>
-<th style="text-align: right;">Original demand</th>
-<th style="text-align: right;">MILES</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>%RMSE, all count stations</td>
-<td style="text-align: right;">86.5</td>
-<td style="text-align: right;"><strong>58.5</strong></td>
-</tr>
-<tr>
-<td>Model / count</td>
-<td style="text-align: right;">0.617</td>
-<td style="text-align: right;"><strong>0.813</strong></td>
-</tr>
-<tr>
-<td>I-695 model / count</td>
-<td style="text-align: right;">0.607</td>
-<td style="text-align: right;"><strong>0.906</strong></td>
-</tr>
-<tr>
-<td>Vehicle-miles, model / observed</td>
-<td style="text-align: right;">0.614</td>
-<td style="text-align: right;"><strong>0.791</strong></td>
-</tr>
-<tr>
-<td>Hourly flows with GEH &lt; 5</td>
-<td style="text-align: right;">4 %</td>
-<td style="text-align: right;"><strong>14 %</strong></td>
-</tr>
-<tr>
-<td>Mean screenline deviation</td>
-<td style="text-align: right;">0.246</td>
-<td style="text-align: right;"><strong>0.116</strong></td>
-</tr>
-</tbody>
-</table>
-<p>The original demand is closer on transit boardings and on the trip-length distribution of the survey.</p>
+<p>The comparison is updated after the final runs. The validation of each stage against observed data is on the
+<a href="../validation/">validation pages</a>.</p>
 
 
 

@@ -15,7 +15,7 @@
         <link rel="prev" href="../activity/">
       
       
-        <link rel="next" href="../../inputs-outputs/">
+        <link rel="next" href="../transit/">
       
       
         
@@ -714,6 +714,8 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
       
         
       
+        
+      
     
     
     
@@ -869,7 +871,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MILES-Day)
+    Activities (MAST)
   
 
     
@@ -1108,6 +1110,34 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../transit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Public transit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -2712,7 +2742,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MILES-Day engine
+    MAST engine
   
 
     
@@ -3289,7 +3319,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </tr>
 <tr>
 <td><strong>Demand</strong></td>
-<td>MILES-Day weekday plans, 10 % sample, modes fixed</td>
+<td>MAST weekday plans, 10 % sample, modes fixed</td>
 </tr>
 <tr>
 <td><strong>Choices</strong></td>
@@ -3297,7 +3327,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </tr>
 <tr>
 <td><strong>Runs</strong></td>
-<td>100 iterations × 5 seeds</td>
+<td>100 iterations; three independent chains, seeds 1–3</td>
 </tr>
 </tbody>
 </table>
@@ -3366,7 +3396,7 @@ changes its route or departure time. After 100 iterations the link volumes are r
 </tr>
 <tr>
 <td>Outside the study area</td>
-<td>Coordinate from MILES-Day</td>
+<td>Coordinate from MAST</td>
 <td style="text-align: right;">82,891</td>
 </tr>
 </tbody>
@@ -3815,7 +3845,7 @@ Metrorail and ferries on artificial links.</p>
 </table>
 <p>Capacity and PCE are multiplied by the sample rate (0.1) in each run.</p>
 <h2 id="4-simulation-set-up">4. Simulation set-up<a class="headerlink" href="#4-simulation-set-up" title="Permanent link">¶</a></h2>
-<p>Values of the 2024 validation runs.</p>
+<p>Values of the final 2024 runs.</p>
 <p><strong>Table 11.</strong> Simulation.</p>
 <table>
 <thead>
@@ -3831,7 +3861,7 @@ Metrorail and ferries on artificial links.</p>
 </tr>
 <tr>
 <td>Random seeds</td>
-<td>1–5</td>
+<td>1–3 (one run per land-use seed)</td>
 </tr>
 <tr>
 <td>Flow capacity factor</td>
@@ -3902,11 +3932,11 @@ Metrorail and ferries on artificial links.</p>
 </tr>
 <tr>
 <td>Transfer walk, max.</td>
-<td>100 m</td>
+<td>300 m</td>
 </tr>
 <tr>
 <td>Transfer penalty</td>
-<td>0</td>
+<td>−0.13 utils (about 10 in-vehicle minutes)</td>
 </tr>
 <tr>
 <td>Capacity constraints</td>
@@ -3967,8 +3997,13 @@ Metrorail and ferries on artificial links.</p>
 </tr>
 <tr>
 <td>Waiting for transit</td>
-<td style="text-align: right;">−1.02</td>
+<td style="text-align: right;">0</td>
 <td>utils/h</td>
+</tr>
+<tr>
+<td>Transfer (line switch)</td>
+<td style="text-align: right;">−0.13</td>
+<td>utils</td>
 </tr>
 <tr>
 <td>Marginal utility of money</td>
@@ -3993,31 +4028,33 @@ Metrorail and ferries on artificial links.</p>
 <tr>
 <td>Car</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.075</td>
+<td style="text-align: right;">0.1112</td>
 </tr>
 <tr>
 <td>Ride</td>
 <td style="text-align: right;">0</td>
-<td style="text-align: right;">0.075</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr>
 <td>Transit</td>
-<td style="text-align: right;">−1.02</td>
-<td style="text-align: right;">0.50</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr>
 <td>Walk</td>
-<td style="text-align: right;">−4.40</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">—</td>
 </tr>
 <tr>
 <td>Bike</td>
-<td style="text-align: right;">−2.345</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">—</td>
 </tr>
 </tbody>
 </table>
-<p>Time spent travelling also loses the performing rate (0.78 utils/h). Mode constants have no effect (no mode choice).</p>
+<p>Every travel minute loses only the performing rate (0.78 utils/h), so all minutes are valued alike, as in the
+generalised cost of the MAST work tour-mode model. Car operating cost: AAA 2017; the car passenger does not pay;
+transit fares are flat per ride and do not affect the route. Mode constants are 0 (no mode choice).</p>
 <p><strong>Table 16.</strong> Activity types.</p>
 <table>
 <thead>
@@ -4103,9 +4140,9 @@ Metrorail and ferries on artificial links.</p>
 <h2 id="running">Running<a class="headerlink" href="#running" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>miles<span class="w"> </span>assignment<span class="w"> </span>network<span class="w">      </span><span class="c1"># road networks 2024 and 2026</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>miles<span class="w"> </span>assignment<span class="w"> </span>transit<span class="w">      </span><span class="c1"># GTFS merge, conversion, mapping</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>miles<span class="w"> </span>assignment<span class="w"> </span>plans<span class="w">        </span><span class="c1"># MILES-Day plans -&gt; MATSim population</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>miles<span class="w"> </span>assignment<span class="w"> </span>plans<span class="w">        </span><span class="c1"># MAST plans -&gt; MATSim population</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>miles<span class="w"> </span>assignment<span class="w"> </span>run<span class="w">          </span><span class="c1"># one run</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>miles<span class="w"> </span>assignment<span class="w"> </span>seeds<span class="w">        </span><span class="c1"># five seeds</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>miles<span class="w"> </span>assignment<span class="w"> </span>seeds<span class="w">        </span><span class="c1"># several seeds</span>
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>miles<span class="w"> </span>assignment<span class="w"> </span>validate<span class="w">     </span><span class="c1"># counts, screenlines, counters</span>
 </code></pre></div>
 
@@ -4145,7 +4182,7 @@ Metrorail and ferries on artificial links.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../activity/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Activities (MILES-Day)">
+          <a href="../activity/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Activities (MAST)">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -4155,20 +4192,20 @@ Metrorail and ferries on artificial links.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Activities (MILES-Day)
+                Activities (MAST)
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../inputs-outputs/" class="md-footer__link md-footer__link--next" aria-label="Next: Inputs and outputs">
+          <a href="../transit/" class="md-footer__link md-footer__link--next" aria-label="Next: Public transit">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Inputs and outputs
+                Public transit
               </div>
             </div>
             <div class="md-footer__button md-icon">
