@@ -215,6 +215,12 @@ resloc.move.reference        = 1.0
 resloc.tenure.file           = input/tenure_by_age.csv
 accessibility.model          = logsum
 accessibility.logsum.file    = {V}/data/accessibility_{{year}}.csv
+# 2026-11-14: region weight of the search x min(1, vacancy / structural vacancy of the region's stock) (ReslocModel.availability);
+# false = the earlier model (set to true by run/adopted_settings.sh)
+resloc.region.vacancy.availability = false
+# 2026-11-15: driver's licences of the forecast years by the Maryland age profile (DriversLicenseModelMd, cohort hazard to the target
+# rates by age band x area of input/drivers_license_targets_md.csv); blank = the earlier model
+drivers.license.targets.file =
 """
 # 2026-11-09: re-specified models (landuse/coefficients/write_*.py); the record keys are replaced, the new
 # switches are appended; the calibrated levers of the record model (car-ownership county constants, DC anchoring of the workplace
@@ -243,4 +249,14 @@ if spec == "respec":
     for k, v in RESPEC.items():
         P, n = re.subn(rf"^{re.escape(k)}\s*=.*$", f"{k} = {v}", P, flags=re.M); assert n == 1, k
     P += RESPEC_NEW
-open(f"{R}/{name}.properties", "w").write(P); print(f"{R}/{name}.properties written; base {B}; spec {spec}")
+# 2026-11-15: SILO_MICRODATA=<tag> (the adopted setup uses v8) reads the base-year microdata from run/base_<tag>/microData (link
+# run/base/microData_<tag>): the corrected base built by landuse/inputs/base_year (cars re-assigned to the ACS 2014-18 cars x
+# persons-16+ joint, licences to the RTS 2017-18 rates by age). Unset (default) = the files of the chosen spec, unchanged.
+MD_TAG = os.environ.get("SILO_MICRODATA", "").strip()
+if MD_TAG:
+    import re
+    src = f"{R}/base_{MD_TAG}/microData"; assert os.path.isdir(src), src
+    if not os.path.lexists(f"{B}/microData_{MD_TAG}"): os.symlink(src, f"{B}/microData_{MD_TAG}")
+    for k, kind in [("household", "hh"), ("person", "pp"), ("dwelling", "dd"), ("job", "jj")]:
+        P, n = re.subn(rf"^{k}\.file\.ascii\s*=.*$", f"{k}.file.ascii = microData_{MD_TAG}/{kind}", P, flags=re.M); assert n == 1, k
+open(f"{R}/{name}.properties", "w").write(P); print(f"{R}/{name}.properties written; base {B}; spec {spec}" + (f"; microdata {MD_TAG}" if MD_TAG else ""))

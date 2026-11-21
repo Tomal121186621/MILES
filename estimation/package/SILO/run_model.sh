@@ -1,6 +1,6 @@
 #!/bin/bash
 # Run one SILO model: log-likelihood at the article coefficients, full Biogeme estimation, comparison with the article.
-# Usage: ./run_model.sh 03_residential_dwelling        (from manual_estimation/SILO; the log also goes to <model>/output/run_log.txt)
+# Usage: ./run_model.sh 02_residential_dwelling        (from manual_estimation/SILO; the log also goes to <model>/output/run_log.txt)
 set -e
 PY=~/.venvs/biogeme/bin/python
 M="${1:?model folder}"

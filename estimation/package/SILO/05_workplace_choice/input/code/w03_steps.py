@@ -10,7 +10,7 @@ import numpy as np, pandas as pd
 import wdc
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-V = os.environ.get("MILES_WORKSPACE", "") + ""
+V = os.environ.get("MILES_WORKSPACE", "")
 TPER = ["t*female", "t*young", "t*old", "t*g1", "t*g3", "t*g4", "t*lic", "t*hhs", "t*rurh", "t*kids", "t*w2"]
 CURRENT = (["t", "lt", "t*female", "t*young", "t*old", "t*g1", "t*g3", "t*g4", "t*lic", "t*hhs", "t*rurh", "ls", "intra", "cc", "cs",
             "cs*g4", "cs*hva", "dcw", "reg_bc", "reg_mopg", "reg_dcr", "reg_nvc", "reg_nvo", "reg_mdo", "reg_oth",

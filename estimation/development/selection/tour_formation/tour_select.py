@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tour formation of ABIT under one base specification (re-specification 2026-11-06): outing generation (at least one outing
+"""Tour formation of MAST under one base specification (re-specification 2026-11-06): outing generation (at least one outing
 during a work episode at the usual workplace), outing mode (walk against the mode of the work tour) and return home between two
 consecutive out-of-home episodes.  Binary logits, maximum likelihood (statsmodels), robust (HC0) standard errors; estimation half,
 hold-out = validation half of the RTS.

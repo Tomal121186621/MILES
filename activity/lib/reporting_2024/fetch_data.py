@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Downloads for the 2024 temporal validation of ABIT (3_abit/temporal_2024).  Files go to Validation_2026/data/raw/<source>/
+"""Downloads for the 2024 temporal validation of MAST (3_abit/temporal_2024).  Files go to Validation_2026/data/raw/<source>/
 and are never edited; every download is logged with URL, date, size and the full SHA-256 in data/raw/<source>/SOURCES.csv and
 appended to data/raw/manifest.csv (16-character hash there, as in the rest of the manifest).  Files already present are kept.
 

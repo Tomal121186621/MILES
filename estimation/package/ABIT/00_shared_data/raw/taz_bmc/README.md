@@ -7,3 +7,5 @@
 - Files: layer14.geojson, layer15.geojson
 - Notes: Layer note: do not distribute to third parties without asking the BMC Modelling Group. Used for the TAZ crosswalk of the TAZ-located records (models 01-05).
 
+
+- Files shipped: SOURCES.txt, layer14.geojson, layer15.geojson, copied 2026-11-17 from Validation_2026/data/raw/taz_bmc (project-relative to VAE-SILO-MITO-MATSIM).

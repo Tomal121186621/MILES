@@ -31,6 +31,9 @@ IPF, IPU
 LODES
 : Longitudinal Employer–Household Dynamics Origin–Destination Employment Statistics.
 
+MAST
+: Maryland Activity Scheduling and Travel model, the activity model of MILES, built on the ABIT code base.
+
 MATSim
 : Multi-Agent Transport Simulation, the assignment software.
 
@@ -56,7 +59,7 @@ SRMSE
 : Standardised root-mean-square error between two contingency tables.
 
 TASHA
-: Travel Activity Scheduler for Household Agents, whose scheduling approach MILES-Day adopts.
+: Travel Activity Scheduler for Household Agents, whose scheduling approach MAST adopts.
 
 TVD
 : Total variation distance between two distributions, in percentage points.

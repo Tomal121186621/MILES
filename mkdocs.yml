@@ -103,8 +103,9 @@ nav:
       - Synthetic population: model-design/population.md
       - Land use: model-design/landuse.md
       - School location: model-design/schools.md
-      - Activities (MILES-Day): model-design/activity.md
+      - Activities (MAST): model-design/activity.md
       - Traffic assignment: model-design/assignment.md
+      - Public transit: model-design/transit.md
   - Inputs and outputs:
       - inputs-outputs/index.md
       - Data: inputs-outputs/inputs.md
@@ -154,7 +155,7 @@ nav:
       - developers/index.md
       - Population code: developers/population.md
       - SILO engine changes: developers/silo.md
-      - MILES-Day engine: developers/activity.md
+      - MAST engine: developers/activity.md
       - MATSim runner: developers/matsim.md
       - Pipeline: developers/pipeline.md
       - Estimation package: developers/estimation-package.md

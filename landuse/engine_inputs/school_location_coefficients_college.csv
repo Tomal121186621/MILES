@@ -1,0 +1,17 @@
+# School location choice, segment college: final model of estimation/development/other_locations/l10_school.py
+# (copy of l10_school_college_final_coef.csv). V_hj = mu_size ln S_hj + sum b_x x_hj; S_hj = sum_c exp(g_c) N_c,hj
+# components K-12: pub_out (reference, weight 1), pub_in (SABS in-boundary public enrolment), priv; college: pub4 (reference), priv4, cc
+# b_ names: t car peak min, lt ln(1+t), intra same zone, cc other county, cs other state, ccpub other county x public share,
+# X car0 no car in household, X g1 / g4 household income < $40k / >= $125k (2016 $), cm charter-or-magnet share, qpub quality of
+# the public part (centred), qnone public share without a score, own own-race share of the zone's enrolment of the band.
+# g_ = 0 rows: size weights held at 0 in estimation.
+parameter,value
+mu_size,0.5455894404743602
+g_priv4,-1.325057738655998
+g_cc,-0.8480215388941582
+b_t,-0.0394979056929087
+b_lt,-1.2010543055166518
+b_cc,-0.5638650462294221
+b_cs,-0.6885062617568226
+b_tXg4,0.0195241750837384
+b_own,1.398595111331569

@@ -14,3 +14,5 @@
 - Files: charm_city_circulator/charm_city_circulator_gtfs.zip, rta_central_maryland/rta_central_maryland_gtfs.zip, anne_arundel_transit/anne_arundel_transit_gtfs.zip, annapolis_transit/annapolis_transit_gtfs.zip, harford_transit_link/harford_transit_link_gtfs.zip, carroll_transit/carroll_transit_gtfs.zip, wmata_rail/wmata_rail_gtfs.zip, wmata_bus/wmata_bus_gtfs.zip, ride_on/ride_on_gtfs.zip, thebus_pg/thebus_pg_gtfs.zip, amtrak/amtrak_gtfs.zip, harbor_connector/harbor_connector_gtfs.zip, towson_loop/towson_loop_gtfs.zip
 - Notes: Downloads of 2026-10-22; stale feeds (Charm City Circulator, Annapolis, Anne Arundel, Harford, Carroll) are used on their last Wednesday with service (merge_gtfs_full.py). WMATA official URLs need an API key; the mirror was used.
 
+
+- Files shipped: amtrak/, annapolis_transit/, anne_arundel_transit/, carroll_transit/, charm_city_circulator/, harbor_connector/, harford_transit_link/, mta_gtfs/, ride_on/, rta_central_maryland/, thebus_pg/, towson_loop/, wmata_bus/, wmata_rail/, copied 2026-11-17 from Validation_2026/data/raw/mta_gtfs and Validation_2026/data/raw/<agency> (with download logs) (project-relative to VAE-SILO-MITO-MATSIM).

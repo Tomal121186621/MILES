@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Zone x structure-type part: accessibility with car-based impedance (A, current) against multimodal impedance (A_ls: the
-destination models with the ABIT mode-choice logsum as impedance, so transit, walk and bike count), in the final specification
+destination models with the MAST mode-choice logsum as impedance, so transit, walk and bike count), in the final specification
 of r03_sequence.py.  Same households and sampled choice sets; non-nested forms compared by BIC on the estimation half; the
 validation half (full choice set) is used once, for the chosen form.
     python3 estimation/development/residential_location/r08_zone_multimodal.py   ->  r08_fit.csv, r08_coef.csv"""

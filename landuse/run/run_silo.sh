@@ -10,7 +10,9 @@ S="${MILES_WORKSPACE}/2_silo"; E="$S/engine"
 # compiled class directories first (always current after mvn compile), then the reactor jars, then the dependency classpath
 # stage 2b: the schools extension (extensions/schools) is a reactor module, compiled with -pl siloCore,extensions/schools,useCases/maryland
 CP="$E/useCases/maryland/target/classes:$E/siloCore/target/classes:$E/extensions/schools/target/classes:$E/useCases/matsim2silo/target/classes:$E/useCases/maryland/target/maryland-0.1.0-SNAPSHOT.jar:$E/siloCore/target/siloCore-0.1.0-SNAPSHOT.jar:$E/extensions/schools/target/schools-0.1.0-SNAPSHOT.jar:$E/useCases/matsim2silo/target/matsim2silo-0.1.0-SNAPSHOT.jar:$(sed "s|\$HOME|$HOME|g" "$MILES_HOME/landuse/run/classpath.txt")"
-JAVA="$(/usr/libexec/java_home -v 21)/bin/java"
+# SILO_CP_PREPEND (optional) = class directories put before the engine classes; unset = unchanged (a rebuilt engine with the patch needs none)
+CP="${SILO_CP_PREPEND:+$SILO_CP_PREPEND:}$CP"
+JAVA="${JAVA_HOME:-$(/usr/libexec/java_home -v 21)}/bin/java"   # Java 21
 NAME="$(basename "$PROPS" .properties)"; LOG="$S/run/logs/$NAME.log"; mkdir -p "$S/run/logs"
 echo "[run_silo] $NAME  xmx=$XMX  $(date '+%F %T')" | tee -a "$S/run/logs/runs.log"
 "$JAVA" -Xmx"$XMX" ${SILO_JAVA_OPTS:-} -Dlog4j2.formatMsgNoLookups=true -Dlog4j2.configurationFile="$MILES_HOME/landuse/run/log4j2_quiet.xml" -cp "$CP" de.tum.bgu.msm.run.SiloMstm "$PROPS" > "$LOG" 2>&1; rc=$?

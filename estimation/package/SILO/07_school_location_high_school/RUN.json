@@ -1,6 +1,6 @@
 {
  "model": "School location: high school",
- "article_table": "est_school (column high school)",
+ "article_table": "est_school (high school panel)",
  "purpose": "School zone of high-school students given the home zone.",
  "depends_on": [],
  "data_sources": [
@@ -189,6 +189,50 @@
     "URL: the folder of the documented 2019 and 2024 5-Year files (2_silo/data_sources.md) with the year 2018: verify.",
     "The package copy is 00_shared_data/acs_pums_2014_2018_5yr/ (project: ../inputs/pums_2018_5yr/). The package scripts read the package copy; replace its files by your download."
    ]
+  },
+  {
+   "name": "School test results of Maryland public schools (state assessment, % proficient), 2016-17 and 2018-19",
+   "provider": "U.S. Department of Education EDFacts, through the Urban Institute Education Data Portal",
+   "url": "https://educationdata.urban.org/api/v1/schools/edfacts/assessments/2016/grade-99/?fips=24",
+   "how": "Download the JSON of https://educationdata.urban.org/api/v1/schools/edfacts/assessments/2016/grade-99/?fips=24 and of the same address with 2018 (school-level results, all grades, all students); save them as edfacts_assessments_md_2016_grade99.json and edfacts_assessments_md_2018_grade99.json. The Maryland Report Card download page returned server errors when the data were collected.",
+   "place_in": "00_shared_data/school_attributes_raw/msde_reportcard/",
+   "files": [
+    "edfacts_assessments_md_2016_grade99.json",
+    "edfacts_assessments_md_2018_grade99.json"
+   ],
+   "notes": [
+    "Package copy in place (public). Fields used: ncessch, read_test_pct_prof_midpt, math_test_pct_prof_midpt; README.txt in the folder."
+   ]
+  },
+  {
+   "name": "NCES CCD 2024-25 membership by race and grade (052) and directory (029, charter flag); CCD 2017-18 school characteristics (129, magnet flag); Private School Survey 2023-24",
+   "provider": "National Center for Education Statistics",
+   "url": "https://nces.ed.gov/ccd/Data/zip/ccd_sch_129_1718_w_1a_083118.zip",
+   "how": "Download ccd_sch_052_2425_l_1a_073025.zip and ccd_sch_029_2425_w_1a_073025.zip (https://nces.ed.gov/ccd/Data/zip/), ccd_sch_129_1718_w_1a_083118.zip (same folder) and pss2324_pu_csv.zip (https://nces.ed.gov/surveys/pss/zip/pss2324_pu_csv.zip).",
+   "place_in": "00_shared_data/school_attributes_raw/nces/",
+   "files": [
+    "ccd_sch_052_2425_l_1a_073025.zip",
+    "ccd_sch_029_2425_w_1a_073025.zip",
+    "ccd_sch_129_1718_w_1a_083118.zip",
+    "pss2324_pu_csv.zip"
+   ],
+   "notes": [
+    "Package copy in place (public). The 052 file (213 MB, Deflate64) is read with unzip -p; its extract of the six states is provided as 00_shared_data/school_choice_work/school_ccd052_race_extract.parquet and used when present."
+   ]
+  },
+  {
+   "name": "IPEDS fall enrolment by race 2023 (EF2023A) and institutional characteristics 2023-24 (IC2023: dormitory capacity)",
+   "provider": "National Center for Education Statistics (IPEDS)",
+   "url": "https://nces.ed.gov/ipeds/datacenter/data/IC2023.zip",
+   "how": "Download EF2023A.zip, IC2023.zip and their _Dict.zip from https://nces.ed.gov/ipeds/datacenter/data/.",
+   "place_in": "00_shared_data/school_attributes_raw/ipeds/",
+   "files": [
+    "EF2023A.zip",
+    "IC2023.zip"
+   ],
+   "notes": [
+    "Package copy in place (public)."
+   ]
   }
  ],
  "steps": [
@@ -303,6 +347,23 @@
   },
   {
    "step": 7,
+   "what": "School attributes: student race, enrolment by race, charter and magnet enrolment, test-score quality, dormitory capacity (package copy; writes 00_shared_data/school_choice_work/school_*)",
+   "cwd": "input/code",
+   "command": "~/.venvs/biogeme/bin/python school_attributes_data.py",
+   "reads": [
+    "00_shared_data/school_attributes_raw/*",
+    "00_shared_data/rts_2017_18/RTS_raw_flat_data.csv",
+    "00_shared_data/school_choice_work/school_points.parquet, students.parquet"
+   ],
+   "creates": [
+    "../../../00_shared_data/school_choice_work/school_zone_attr.parquet, school_student_race.parquet, school_point_attr.parquet, school_dorm_share_md.csv, school_attributes.log"
+   ],
+   "output_provided": true,
+   "minutes": 0.1,
+   "memory_gb": 1.8
+  },
+  {
+   "step": 8,
    "what": "input_check, part 1: keep a copy of the provided estimation and hold-out tables",
    "cwd": "input/data",
    "command": "rm -rf provided_estimation provided_holdout && cp -R estimation provided_estimation && cp -R holdout provided_holdout",
@@ -316,16 +377,16 @@
    "memory_gb": 0.1
   },
   {
-   "step": 8,
-   "what": "Build the estimation and hold-out tables from the inputs (same calls and random draws as the original run; asserts that the LL at the original estimates is reproduced)",
+   "step": 9,
+   "what": "Build the estimation and hold-out tables from the inputs (same calls as the original run; asserts that the LL at the final estimates is reproduced on both halves)",
    "cwd": "input/code",
    "command": "~/.venvs/biogeme/bin/python build_estimation_data.py",
    "reads": [
-    "00_shared_data/school_choice_work/*",
+    "00_shared_data/school_choice_work/* (with the school_* attribute files)",
     "00_shared_data/skims/auto_peak_time.csv.gz",
     "00_shared_data/zone_system/zoneSystem.csv",
-    "2_silo/schoolchoice/work/logsum.npy (original location, loaded at import, not used)",
-    "../data/raw/l07_school_*_coef.csv, _fit.csv"
+    "00_shared_data/school_choice_work/logsum.npy (loaded at import, not used)",
+    "../data/raw/ final estimates and fit (*_coef.csv, *_fit.csv)"
    ],
    "creates": [
     "../data/estimation/*",
@@ -333,10 +394,10 @@
    ],
    "output_provided": true,
    "minutes": 0.1,
-   "memory_gb": 0.5
+   "memory_gb": 1.0
   },
   {
-   "step": 9,
+   "step": 10,
    "what": "input_check, part 2: compare the rebuilt tables with the provided ones (rows, column sums, largest difference); must print ALL TABLES MATCH",
    "cwd": "input/code",
    "command": "~/.venvs/biogeme/bin/python check_against_provided.py",
@@ -351,7 +412,7 @@
    "memory_gb": 1
   },
   {
-   "step": 10,
+   "step": 11,
    "what": "Log-likelihood at the article coefficients (no estimation, nothing written)",
    "cwd": "model",
    "command": "~/.venvs/biogeme/bin/python estimate_school_location_high_school.py --check",
@@ -360,11 +421,11 @@
    ],
    "creates": [],
    "output_provided": false,
-   "minutes": 3.1,
-   "memory_gb": 3.0
+   "minutes": 3.2,
+   "memory_gb": 6.6
   },
   {
-   "step": 11,
+   "step": 12,
    "what": "Biogeme estimation, start values = article estimates",
    "cwd": "model",
    "command": "~/.venvs/biogeme/bin/python estimate_school_location_high_school.py",
@@ -382,7 +443,7 @@
    "memory_gb": "above 8 (not run)"
   },
   {
-   "step": 12,
+   "step": 13,
    "what": "Compare the estimates with the article (reference_estimates.csv)",
    "cwd": "model",
    "command": "~/.venvs/biogeme/bin/python compare_with_reference.py",
@@ -399,21 +460,25 @@
   }
  ],
  "check": {
-  "article_LL": -1243.3,
-  "biogeme_LL_at_article_coefficients": -1243.2733,
-  "biogeme_LL_at_full_precision_estimates": -1243.2733,
+  "article_LL": -1217.0,
+  "biogeme_LL_at_article_coefficients": -1216.9605,
+  "biogeme_LL_at_full_precision_estimates": -1216.9605,
   "N": 668,
-  "K": 5
+  "K": 6
  },
  "notes": [
   "Full choice set (no sampling): all zones with enrolment of the segment; an alternative is available when it has enrolment of the student's own band.",
   "Location mixture: the survey home and school locations can each spread over several model zones (weights w_h, w_c). L_n = sum_h sum_c w_h w_c exp(V_hc) / sum_j av_hj exp(V_hj), written with Biogeme's WeightedLogSumExp (exact).",
   "Size term mu ln(sum_k exp(g_k) N_k + 1e-12) with the first enrolment component as reference (weight 1), as in the original estimator.",
   "Variables in single precision, as the original estimator computes them (t, ln(1+t), shares).",
+  "Own-race share: share of the zone's enrolment of the student's band that is of the student's race (white non-Hispanic, Black non-Hispanic, Hispanic, other); student race from the RTS person file (two race codings by region, identified by home county). In SILO the share is recomputed every simulated year from the assigned students. It is a composition effect: preference, information, transport and history are not separable. The same model without it is the comparison: hold-out LL -1,227.63 against -1,207.53.",
+  "Charter-or-magnet share: share of the zone's enrolment of the band in public charter (CCD 2024-25 directory) or magnet (CCD 2017-18 characteristics) schools.",
+  "Private enrolment enters the size term with weight 1 (log weight fixed at 0; p = 0.37 when estimated). School quality was tested and not kept: with the private log weight free it is 0.203 (t 3.2) but the BIC is 0.4 above the model without it.",
+  "The hold-out half was also used in the specification search, so its fit is not an independent test (specification search in model/README.md).",
   "The data are stored in long format (students, alternatives, candidates); the script makes the wide table itself.",
   "Memory: the estimation compiles the analytical Hessian of the whole expression (JAX). Options that change only how derivatives are computed, not the model (not tested here): in ../output/biogeme.toml set analytical_hessian_mode = \"chunked\" (with a smaller hessian_memory_fraction), or calculating_second_derivatives = \"finite_differences\". Run the school models alone, with the Java jobs stopped.",
   "Steps with output_provided = true can be skipped: their results are in input/data or 00_shared_data. Upstream project stages were not re-run for this package; their runtimes are not measured.",
-  "Measured here: --check 185 s, 3.0 GB; estimation NOT run: the college model (smaller) needed more than 8.4 GB and 31 min without finishing; the high-school expression is 15 times larger (3 x 719 utilities); expect hours and well over 8 GB.",
+  "Measured here (48 GB): --check 191 s, 6.6 GB; build 1 s, 1.0 GB; estimation NOT run (expect hours and more memory than the check).",
   "Environment: Biogeme scripts and package build scripts run with ~/.venvs/biogeme/bin/python (Biogeme 3.3.5); project scripts with /opt/homebrew/anaconda3/bin/python3 (needs geopandas)."
  ]
 }

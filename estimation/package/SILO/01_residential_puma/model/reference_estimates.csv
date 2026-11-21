@@ -1,0 +1,21 @@
+parameter,article_section,article_label,coefficient,robust_se,p,coefficient_full_precision,note
+B_ln_market_size,Size of the PUMA's market,ln market size (dwelling stock x fixed PUMA turnover rate),0.8397,0.0323,<0.001,0.839722499714645,
+B_cartime_20_60,Car time from the previous home (per min),car time 20-60 min from the previous home (min),-0.0339,0.0015,<0.001,-0.033862801405757,
+B_cartime_over60,Car time from the previous home (per min),car time over 60 min (min),-0.0087,0.0006,<0.001,-0.0086527312698212,
+B_previous_migration_area,Staying near the origin,destination inside the previous migration area (PUMA group),2.5267,0.0851,<0.001,2.52671732026537,
+B_bordering_previous_area,Staying near the origin,destination bordering the previous migration area,1.3297,0.054,<0.001,1.3296611160218714,
+B_same_state,Staying near the origin,same state,1.082,0.0347,<0.001,1.081998384087382,
+B_commute_sum_ln1p_time,Commute,"commute, sum over workers of ln(1 + min)",-1.7408,0.0283,<0.001,-1.7408424123519843,
+B_crime_x_children,PUMA attributes,crime index x children,-1.1607,0.1142,<0.001,-1.1606897596137142,
+B_ln_dwelling_density,PUMA attributes,ln dwelling density,-0.5466,0.0196,<0.001,-0.546647547702461,
+B_own_race_share,PUMA attributes,own-race share of the PUMA's households,2.0759,0.0518,<0.001,2.075902376058804,
+B_ln_density_x_single,PUMA attributes,ln dwelling density x single-person household,0.1698,0.0229,<0.001,0.169759658493763,
+B_ln_density_x_oldest_under35,PUMA attributes,ln dwelling density x oldest member under 35,0.2446,0.0217,<0.001,0.2445877399532,
+B_ln_density_x_ln_income,PUMA attributes,ln dwelling density x ln income,-0.1153,0.0105,<0.001,-0.1152580776988421,
+B_core_city_share,PUMA attributes,"core-city share of the PUMA (DC, Baltimore City)",0.5055,0.0401,<0.001,0.505513143600139,
+N,fit statistics (article),N,15163.0,,,,model statistic
+K,fit statistics (article),K,14.0,,,,model statistic
+LL(0),fit statistics (article),LL(0),-69366.3,,,,model statistic
+LL(beta),fit statistics (article),LL(beta),-34670.3,,,,model statistic
+validation N,fit statistics (article),validation N,3820.0,,,,model statistic
+validation LL,fit statistics (article),validation LL,-8773.2,,,,model statistic

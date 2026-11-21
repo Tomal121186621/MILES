@@ -21,7 +21,7 @@ Segments (replace the distance-band model of MarylandTashaGenerator.bandLocation
                 retirees): from home
   EDUCATION_daycare  daycare / preschool of persons under 5: from home
 Records: the episodes of these types (te_common.episodes; types of build_distributions.py) whose destination tract and anchor
-zones lie in the zone system; chooser attributes as ABIT sees them (destination_choice/prep_dc_data.people); time of day of the
+zones lie in the zone system; chooser attributes as MAST sees them (destination_choice/prep_dc_data.people); time of day of the
 arrival.
 """
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)

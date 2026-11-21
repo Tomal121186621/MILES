@@ -8,21 +8,22 @@ record n has candidate destination zones z_k with weights b_k and home configura
 
     L_n = sum_c w_c [ sum_k b_k exp(U_c,z_k) ] / [ sum_j exp(U_c,j) ],     LL = sum_n ln L_n
     U_pj = SCALE_p * V_pj      (SCALE_SHOPPING = 1; recreation, accompanying, other free)
-    V_pj = MU_size_p ln(1 + retail_jobs_j + sum_c exp(THETA_c,p) x_jc)            c in the purpose's size components
+    V_pj = B_ln_x_p ln(1 + x_pj)        x = retail jobs (shopping, recreation, other) or school enrolment (accompanying)
            + sum_pieces B_dist_piece * piece(d_hj)  (knots 1, 2, 5, 10, 20, 50 km; > 50 km fixed at 0)
-           + B_intrazonal_p [j = h] + area and land-use terms (purpose specific)
+           + B_intrazonal_p [j = h] + area dummies, B_ln_zone_area_km2_p ln(area_j), land-use mix (purpose specific)
            + B_outside_home_county [county_j != county_h] + B_outside_home_state [state_j != state_h]
            + ln(d_hj) * (sum of B_lndist_x * flag_x)  (no car, cars < drivers, worker, < 18, 65+, children, male,
              one-person household, AM, PM, evening, tour with stops; all shared)
            + B_car_gen_time_p cgt_hj
-SCALE_p multiplies every coefficient of V_p including MU_size (not THETA).  Coefficients are reported in V units (as in the
+SCALE_p multiplies every coefficient of V_p.  Coefficients are reported in V units (as in the
 article); the effective coefficient of purpose p is SCALE_p times the reported one.  Shared coefficients (same value in V_p of
 every purpose that has the variable): distance pieces, boundaries, all ln-distance interactions; car generalised time shared
-by shopping and other (own for recreation and accompanying); MU_size shared by shopping, recreation and other (own for
-accompanying).  Size base: retail jobs (theta 0) for every purpose; components per purpose: shopping population, office;
-recreation population, office, school; accompanying population, office, other jobs, school; other office, other jobs.
+by shopping and other (own for recreation and accompanying); all other coefficients, including the coefficient of
+ln(1 + x), are purpose specific.  area_j = zone area (km2), at least 0.05.
+Area dummies: Baltimore City, Washington DC, high job-density zone (at least 10,000 jobs per km2; parameters B_cbd_<purpose>),
+Virginia, DE/PA/WV.
 d = car distance (km), intrazonal 0.5 sqrt(area); cgt = car generalised time (min) home -> j.  Bounds as in the estimation:
-THETA in [-30, 15], MU_size (shared) in [0, 3], MU_size accompanying >= 0, SCALE in [0.01, 50].  Unweighted, robust s.e.
+SCALE in [0.01, 50].  Unweighted, robust s.e.
 Implementation: one utility per zone with per-record coefficients (purpose dummies d_<PURPOSE> of the data select the
 purpose's coefficient), so the expression has the size of one purpose's model.
 
@@ -44,10 +45,19 @@ ZONES = pd.read_csv(os.path.join(HERE, "..", "..", "00_shared_data", "zones", "z
 NZ = len(ZONES)
 ZA = {a: ZONES[a].astype(float).tolist() for a in ["bc", "dcz", "cbd", "va", "othst", "lnretden", "mix", "pop", "ret", "off", "oth", "stu"]}
 ZA["cnty"] = ZONES.countyfips.astype(float).tolist(); ZA["st"] = ZONES.state.astype(float).tolist()
+LNAREA = np.log(ZONES.area_km2.clip(lower=0.05).to_numpy(float))       # ln(zone area, km2; at least 0.05, as in the retail density)
+ZA["lnarea"] = LNAREA.tolist()
+
+
+def add_lnarea(df):
+    """candidate columns cand_lnarea_<k> from the candidate zone index cz_<k> (not stored in the Biogeme data)"""
+    for k in range(sum(c.startswith("cz_") for c in df.columns)):
+        df[f"cand_lnarea_{k}"] = LNAREA[df[f"cz_{k}"].to_numpy().astype(int)]
+    return df
 
 P = ["SHOPPING", "RECREATION", "ACCOMPANY", "OTHER"]
-COMPS = {"SHOPPING": ["pop", "off"], "RECREATION": ["pop", "off", "stu"], "ACCOMPANY": ["pop", "off", "oth", "stu"], "OTHER": ["off", "oth"]}
-CNAME = {"pop": "population", "off": "office_jobs", "oth": "other_jobs", "stu": "school_enrolment"}
+ATTR = {"SHOPPING": "ret", "RECREATION": "ret", "ACCOMPANY": "stu", "OTHER": "ret"}      # attraction variable x of each purpose
+XNAME = {"ret": "retail_jobs", "stu": "school_enrolment"}
 
 # ------------------------------------------------------------------------------------------------ parameters (V units)
 PIECES = [(0, 1), (1, 2), (2, 5), (5, 10), (10, 20), (20, 50), (50, None)]
@@ -60,21 +70,19 @@ LND = {"car0": "no_car", "car1": "fewer_cars_than_drivers", "worker": "worker", 
        "ev": "arrival_evening", "multi": "tour_with_stops"}
 B_lnd = {f: Beta(f"B_lndist_x_{n}_shared", 0.0, None, None, 0) for f, n in LND.items()}
 ZTERMS = {"intra": "intrazonal", "bc": "baltimore_city", "dcz": "washington_dc", "cbd": "cbd", "va": "virginia",
-          "othst": "de_pa_wv", "lnretden": "retail_density", "mix": "landuse_mix"}
+          "othst": "de_pa_wv", "lnarea": "ln_zone_area_km2", "mix": "landuse_mix"}
 B_z = {q: {p: Beta(f"B_{n}_{p}", 0.0, None, None, 0) for p in P} for q, n in ZTERMS.items()}
 B_cgt_SO = Beta("B_car_gen_time_SO", 0.0, None, None, 0)
 B_cgt = {"SHOPPING": B_cgt_SO, "OTHER": B_cgt_SO, "RECREATION": Beta("B_car_gen_time_RECREATION", 0.0, None, None, 0),
          "ACCOMPANY": Beta("B_car_gen_time_ACCOMPANY", 0.0, None, None, 0)}
-THETA = {p: {c: Beta(f"THETA_{CNAME[c]}_{p}", -2.0, -30.0, 15.0, 0) for c in COMPS[p]} for p in P}
-MU_SRO = Beta("MU_size_SRO", 1.0, 0.0, 3.0, 0)
-MU = {"SHOPPING": MU_SRO, "RECREATION": MU_SRO, "OTHER": MU_SRO, "ACCOMPANY": Beta("MU_size_ACCOMPANY", 1.0, 0.0, None, 0)}
+B_attr = {p: Beta(f"B_ln_{XNAME[ATTR[p]]}_{p}", 0.8, None, None, 0) for p in P}      # coefficient of ln(1 + x_p)
 SCALE = {"SHOPPING": 1.0, **{p: Beta(f"SCALE_{p}", 1.0, 0.01, 50.0, 0) for p in P[1:]}}
 
 
 def all_betas():
     out = list(B_dist.values()) + [B_outside_home_county, B_outside_home_state] + list(B_lnd.values())
     out += [b for d in B_z.values() for b in d.values()] + [B_cgt_SO, B_cgt["RECREATION"], B_cgt["ACCOMPANY"]]
-    out += [b for d in THETA.values() for b in d.values()] + [MU_SRO, MU["ACCOMPANY"]] + [SCALE[p] for p in P[1:]]
+    out += [B_attr[p] for p in P] + [SCALE[p] for p in P[1:]]
     return out
 
 
@@ -123,22 +131,17 @@ def zero(x):
 
 def utility(g):
     c = g.c; d = g.x("imp"); terms = []
-    # size term: per-record MU_size and size weights (a weight is 0 for a purpose without the component)
-    comp = []
-    for cc in ["pop", "off", "oth", "stu"]:
-        x = g.z(cc)
-        if zero(x): continue
-        wts = [D(p) * exp(THETA[p][cc]) for p in P if cc in COMPS[p]]
-        comp.append(MultipleSum(wts) * x)
-    ret = g.z("ret")
-    if comp: terms.append(per_record(MU) * log(1 + MultipleSum(([ret] if not zero(ret) else []) + comp)))
-    elif not zero(ret): terms.append(per_record(MU) * float(np.log1p(ret)))
+    # attraction: per-record coefficient of ln(1 + x), x = the purpose's attraction variable
+    for x in sorted(set(ATTR.values())):
+        v = g.z(x)
+        if zero(v): continue
+        terms.append(per_record({p: B_attr[p] for p in P if ATTR[p] == x}) * (float(np.log1p(v)) if isinstance(v, float) else log(1 + v)))
     # distance pieces (shared)
     for lo, hi in PIECES:
         piece = BinaryMax(d - lo, 0.0) if hi is None else BinaryMin(BinaryMax(d - lo, 0.0), float(hi - lo))
         terms.append(B_dist[lo] * piece)
     terms.append(per_record(B_z["intra"]) * (Variable(f"za_{c}") == g.zone()))
-    for q in ["bc", "dcz", "cbd", "va", "othst", "lnretden", "mix"]:
+    for q in ["bc", "dcz", "cbd", "va", "othst", "lnarea", "mix"]:
         x = g.z(q)
         if not zero(x): terms.append(per_record(B_z[q]) * x)
     terms.append(B_outside_home_county * (Variable(f"cnty_a_{c}") != g.z("cnty")))
@@ -178,7 +181,7 @@ def read(half, n_cfg=None):
     parts = [q for q in meta["parts"] if n_cfg is None or q["n_cfg"] == n_cfg]
     K = meta["n_cfg_max"] if n_cfg is None else n_cfg
     dfs = [pad(pd.read_parquet(os.path.join(folder, q["file"])).astype("float64"), q["n_cfg"], K) for q in parts]
-    return pd.concat(dfs, ignore_index=True), meta
+    return add_lnarea(pd.concat(dfs, ignore_index=True)), meta
 
 
 def reference(at):

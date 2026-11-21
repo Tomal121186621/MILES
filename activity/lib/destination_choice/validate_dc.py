@@ -2,12 +2,12 @@
 """Validation of the estimated destination choice on the held-out VALIDATION half (stage 3, 2026-10-22).
 
     python3 activity/lib/destination_choice/validate_dc.py heldout      # full-choice-set predictions for every record of both halves
-    python3 activity/lib/destination_choice/validate_dc.py sim          # simulated ABIT runs (survey population of the validation half, chain): before / after
+    python3 activity/lib/destination_choice/validate_dc.py sim          # simulated MAST runs (survey population of the validation half, chain): before / after
     python3 activity/lib/destination_choice/validate_dc.py figures      # figures (paperstyle, strict checks)
 
 heldout: for every segment and both halves, the probabilities of all 1,588 zones under
-  mnl      the estimated MNL (Biogeme estimates, results/biogeme_<segment>.csv), exactly as ABIT applies it;
-  gravity  primary destinations: the calibrated gravity form of ABIT (MarylandDestinationChoice, coef_calibrated:
+  mnl      the estimated MNL (Biogeme estimates, results/biogeme_<segment>.csv), exactly as MAST applies it;
+  gravity  primary destinations: the calibrated gravity form of MAST (MarylandDestinationChoice, coef_calibrated:
            P_j ~ attraction_j x [(t+1)^b1 e^(b2 t) + w2 (t+1)^p2 e^(b3 t)] x exp(band constant of d_ij));
            stops: the corridor rule of MarylandStopModel (point at U(0.15, 0.85) of the home - primary segment with a lateral
            offset U(-0.15, 0.15) x segment length, nearest zone centroid), probabilities by Monte Carlo (400 draws per record);

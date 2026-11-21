@@ -1,6 +1,6 @@
 {
  "model": "Workplace choice",
- "article_table": "est_jobchoice",
+ "article_table": "est_workplace",
  "purpose": "Zone of the usual workplace of a worker, given the home zone.",
  "depends_on": [],
  "data_sources": [
@@ -206,13 +206,14 @@
   },
   {
    "step": 8,
-   "what": "Build the estimation and hold-out tables from the inputs (same calls and random draws as the original run; asserts that the LL at the original estimates is reproduced)",
+   "what": "Build the estimation and hold-out tables from the inputs (same calls and random draws as the original run; asserts that the LL of the former and of the final model at their estimates is reproduced)",
    "cwd": "input/code",
    "command": "~/.venvs/biogeme/bin/python build_estimation_data.py",
    "reads": [
     "../data/raw/data.npz",
-    "../data/raw/w04_*.csv",
-    "2_silo/jobchoice/work_rts/logsum.npy (original location, loaded at import, not used)"
+    "../data/raw/w04_*.csv (former model)",
+    "../data/raw/final_model_*.csv",
+    "../data/raw/logsum.npy (loaded at import, not used)"
    ],
    "creates": [
     "../data/estimation/*",
@@ -239,7 +240,7 @@
   },
   {
    "step": 10,
-   "what": "Log-likelihood at the article coefficients (no estimation, nothing written)",
+   "what": "Log-likelihood at the reference coefficients (no estimation, nothing written)",
    "cwd": "model",
    "command": "~/.venvs/biogeme/bin/python estimate_workplace_choice.py --check",
    "reads": [
@@ -252,7 +253,7 @@
   },
   {
    "step": 11,
-   "what": "Biogeme estimation, start values = article estimates",
+   "what": "Biogeme estimation, start values = reference estimates",
    "cwd": "model",
    "command": "~/.venvs/biogeme/bin/python estimate_workplace_choice.py",
    "reads": [
@@ -265,12 +266,12 @@
     "../output/biogeme.toml"
    ],
    "output_provided": false,
-   "minutes": 4,
-   "memory_gb": 3
+   "minutes": 1.5,
+   "memory_gb": 7.6
   },
   {
    "step": 12,
-   "what": "Compare the estimates with the article (reference_estimates.csv)",
+   "what": "Compare the estimates with the reference (reference_estimates.csv)",
    "cwd": "model",
    "command": "~/.venvs/biogeme/bin/python compare_with_reference.py",
    "reads": [
@@ -286,18 +287,22 @@
   }
  ],
  "check": {
-  "article_LL": -21334.3,
-  "biogeme_LL_at_article_coefficients": -21334.2842,
-  "biogeme_LL_at_full_precision_estimates": -21334.2822,
+  "article_LL": -21376.54,
+  "biogeme_LL_at_article_coefficients": -21376.5448,
+  "biogeme_LL_at_full_precision_estimates": -21376.5437,
+  "holdout_LL_original": -46905.49,
   "N": 9707,
-  "K": 36
+  "K": 24
  },
  "notes": [
   "Sampled alternatives: the exact 100-zone sets of the original estimation (seed 20261106), in the data; no correction term.",
-  "Person variables of the car-time interactions are centred at their estimation-half means (columns *_c; constants in centring_constants.csv).",
-  "Bounds as in the original estimator: 0.01 <= mu <= 3, |g| <= 10 (not active).",
+  "Size term mu ln(total jobs): the job-type log weights g are fixed at 0 (Beta status 1).",
+  "Person variables of the car-time interactions are centred at their estimation-half means (columns *_c; constants in centring_constants.csv), including the household without a car (car0_c).",
+  "Robust s.e.: sandwich over the 24 estimated parameters; the original estimator counted the fixed job-type weights too (larger s.e. for the zone job-mix terms); the reference holds the corrected s.e.",
+  "The hold-out half was also used in the specification search; its log-likelihood is not a fully independent test.",
+  "Delete ../output/__workplace_choice.iter before estimating a changed specification (Biogeme starts from the values saved there).",
   "Steps with output_provided = true can be skipped: their results are in input/data or 00_shared_data. Upstream project stages were not re-run for this package; their runtimes are not measured.",
-  "Measured here: --check 15 s, 1.7 GB; estimation about 3.5 min in a test run (coefficients and robust s.e. equal to the article's to 4 decimals).",
+  "Measured here: --check 15 s; estimation about 45-75 s, 7.6 GB.",
   "Environment: Biogeme scripts and package build scripts run with ~/.venvs/biogeme/bin/python (Biogeme 3.3.5); project scripts with /opt/homebrew/anaconda3/bin/python3 (needs geopandas)."
  ]
 }

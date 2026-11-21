@@ -7,3 +7,5 @@
 - Files: RTS_raw_flat_data.csv, RTS_codebook_data_dictionary.xlsx, rts_trips_clean.csv, rts_tours.csv
 - Notes: Status: provided (copies). Licence: survey data of the MPOs; do not redistribute without their agreement.
 
+
+- Files shipped: none in this folder (2026-11-17): the chain reads the survey from 00_shared_data/rts_2017_18/raw (.csv.gz copies), not from here.

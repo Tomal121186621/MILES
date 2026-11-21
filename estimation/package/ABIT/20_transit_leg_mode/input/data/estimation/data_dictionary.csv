@@ -26,7 +26,7 @@ av_TR,availability transit (always 1),0/1,estimation rule
 av_WK,availability walk: leg km <= 8,0/1,estimation rule
 av_BK,availability bike: leg km <= 30,0/1,estimation rule
 av_CP,availability car passenger (always 1),0/1,estimation rule
-av_CD,"availability car driver: licence, age 16+, household car",0/1,estimation rule
+av_CD,"availability car driver: licence, age 16+, household car, and a household car free over the tour window (free_car.py)",0/1,estimation rule
 y,"leg mode 1 TR transit, 2 WK walk, 3 CP car passenger, 4 CD car driver, 5 BK bike",0/1 or alternative,survey
 mode,chosen leg mode TR WK CP CD BK (y = 1..5 in this order),label,"survey episodes (RTS 2017/18, typed by tasha_distributions.py)"
 w,survey weight (not used: unweighted estimation),weight,RTS
@@ -36,4 +36,5 @@ n,legs of the tour,count,"survey episodes (RTS 2017/18, typed by tasha_distribut
 county,home county FIPS,FIPS,tours
 tour_choice,"tour mode class of the tour (TW transit walk access, TD transit drive access)",label,tours
 segment,"tour purpose segment (work, school, shopping, other)",label,tours
-chosen_av,chosen mode available (all rows 1: the estimation kept only these),bool,estimation rule
+chosen_av,chosen mode available (all rows 1: only these legs are kept),bool,estimation rule
+carfree,a household car is free over the tour window: household car-driver tours overlapping the window (leave home .. arrive home) fewer than household cars at every instant,0/1,tours (free_car.py)

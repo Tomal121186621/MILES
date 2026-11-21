@@ -22,7 +22,7 @@
   {
    "id": "mstm_skims_2016",
    "name": "Maryland Statewide Transportation Model (MSTM) 2016 skims, 1,588 SMZ/RMZ zones",
-   "provider": "Maryland Department of Transportation (MDOT SHA), via the project's ABIT Maryland set-up (ABIT/input/mito_los/skims)",
+   "provider": "Maryland Department of Transportation (MDOT SHA), via the project's MAST Maryland set-up (ABIT/input/mito_los/skims)",
    "url": "https://www.roads.maryland.gov/ (verify: MSTM data are provided by MDOT on request; no download page is documented)",
    "how": "Obtain the MSTM 2016 skims in OMX format (matrix mat1, lookups origins / destinations): traveltime_auto.omx (AM-peak car time, min), distance_auto.omx (car distance, m), bus_tt.omx (bus time, min; 1000 = no path, 5 intrazonal), rail_tt00.omx (rail time, min; 0 = no rail path). convert_mstm_skims.py turns them into the csv.gz files the models read.",
    "place_in": "00_shared_data/raw/mstm_skims_2016",
@@ -37,10 +37,10 @@
   },
   {
    "id": "mstm_zone_system",
-   "name": "MSTM zone system: SMZ/RMZ polygons, zone table, ABIT zone attributes",
-   "provider": "MDOT (MSTM), via ABIT/input/mito_los/Zonal and 2_silo/input/zoneSystem.csv; ABIT/input/maryland/zone_attributes.csv (ABIT Maryland set-up)",
+   "name": "MSTM zone system: SMZ/RMZ polygons, zone table, MAST zone attributes",
+   "provider": "MDOT (MSTM), via ABIT/input/mito_los/Zonal and 2_silo/input/zoneSystem.csv; ABIT/input/maryland/zone_attributes.csv (MAST Maryland set-up)",
    "url": "https://www.roads.maryland.gov/ (verify: provided with the MSTM)",
-   "how": "Zone polygons SMZ_RMZ_02152011inMSTM_EPSG26918.shp (+ .dbf .shx .prj; field id / SMZRMZ, 1,588 zones), zoneSystem.csv (ZoneId, COUNTYFIPS, ...), zone_attributes.csv (id, centroid x/y EPSG:26985, countyfips, region types, bbsr, area_km2; built for ABIT from mstm_26985.shp and zoneSystem.csv, see 3_abit/coef_respec/PROVENANCE.md, script not in the project).",
+   "how": "Zone polygons SMZ_RMZ_02152011inMSTM_EPSG26918.shp (+ .dbf .shx .prj; field id / SMZRMZ, 1,588 zones), zoneSystem.csv (ZoneId, COUNTYFIPS, ...), zone_attributes.csv (id, centroid x/y EPSG:26985, countyfips, region types, bbsr, area_km2; built for MAST from mstm_26985.shp and zoneSystem.csv, see 3_abit/coef_respec/PROVENANCE.md, script not in the project).",
    "place_in": "00_shared_data/raw/mstm_zone_system",
    "files": [
     "SMZ_RMZ_02152011inMSTM_EPSG26918.shp/.dbf/.shx/.prj",
@@ -331,7 +331,7 @@
   {
    "step": 5,
    "shared_step_id": "S04",
-   "what": "shared preparation S04: Survey population of both halves in the ABIT input format (households, persons, dwellings, person map, workplaces)",
+   "what": "shared preparation S04: Survey population of both halves in the MAST input format (households, persons, dwellings, person map, workplaces)",
    "cwd": "../00_shared_prep/code",
    "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_survey_population.py   # uses the provided tract_zone.csv / zone_population_2016.csv; add --rebuild-zone-files for S03",
    "reads": [
@@ -634,19 +634,21 @@
   }
  ],
  "check": {
-  "article_LL": -49122.5,
-  "biogeme_LL_at_article_coefficients": -49122.5011,
-  "basis": "full estimation half, all 14,341 records (full-precision estimates: -49122.4991; project likelihood -49122.4992; hold-out half, project likelihood -47523.2327, article -47523.2)",
+  "article_LL": -49427.4,
+  "biogeme_LL_at_article_coefficients": null,
+  "basis": "full estimation half, all 14,341 records (project likelihood, full precision -49427.4083; Biogeme --evaluate not run; hold-out half, project likelihood -47778.8003)",
   "N": 14341,
-  "K": 71
+  "K": 62
  },
  "notes": [
   "Steps 1-4 need the project Python with numpy, pandas, pyarrow and torch (python3); the Biogeme venv has no torch. Their output is already in input/data.",
   "Full choice set of 1,588 zones, no sampling of alternatives.",
   "Location mixture: up to 4 possible destination zones (weights b, by jobs) and up to 4 possible home zones (weights w, by housing units) per record.",
-  "U = SCALE_p V_p; SCALE_SHOPPING = 1; SCALE multiplies all coefficients and MU_size, not THETA; coefficients reported in V units as in the article.",
-  "Fixed: distance above 50 km at 0 (shared). Bounds: THETA [-30, 15], MU_size_SRO [0, 3], MU_size_ACCOMPANY >= 0, SCALE [0.01, 50].",
+  "U = SCALE_p V_p; SCALE_SHOPPING = 1; SCALE multiplies all coefficients; coefficients reported in V units as in the article.",
+  "Attraction: one variable per purpose, B_ln_x_p ln(1 + x): retail jobs for shopping, recreation and other, school enrolment for accompanying; ln(zone area, km2; at least 0.05) per purpose.",
+  "Fixed: distance above 50 km at 0 (shared). Bounds: SCALE [0.01, 50].",
   "Unweighted; robust (sandwich) standard errors.",
+  "The hold-out half was also used in the specification search; its log-likelihood is not a fully independent test.",
   "Biogeme estimation is not feasible here: compile memory of value + gradient + BHHH measured at 1.2 / 1.4 / 2.9 GB for 50 / 100 / 200 zones (1 configuration, 20 records), extrapolated to 15-30 GB per configuration at 1,588 zones and 60-120 GB for 4 configurations plus the Hessian. Use --evaluate for the check (about 67 minutes, 2.4 GB).",
   "Shared preparation steps (cwd ../00_shared_prep/code) write to 00_shared_data/rebuilt/ and never overwrite the provided files; compare with check_against_provided.py (step S19) and, to use your rebuilt files, copy them over the provided paths in 00_shared_data before the model's own preparation steps."
  ]

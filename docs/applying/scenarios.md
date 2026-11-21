@@ -3,13 +3,13 @@
 ## 1. Pick the stage
 
 Short-run responses (route and departure time) need only the assignment. Responses in destination and mode need
-MILES-Day with new skims; long-run responses in where people live and work need the land-use model too.
+MAST with new skims; long-run responses in where people live and work need the land-use model too.
 
 | Response | Stages to rerun |
 |---|---|
 | Route, departure time | MATSim |
-| Destination, mode, trip making | MILES-Day → MATSim |
-| Residential and workplace location, car ownership | SILO → schools → MILES-Day → MATSim |
+| Destination, mode, trip making | MAST → MATSim |
+| Residential and workplace location, car ownership | SILO → schools → MAST → MATSim |
 
 ## 2. A pricing scenario in MATSim
 
@@ -36,5 +36,5 @@ utility can be summarised by income decile or by area.
 ## 4. Land-use scenarios
 
 Edit the land-use inputs (`development_*.csv` for building capacity, job control totals for employment), write a
-properties file with `landuse/run/write_properties.py`, and run SILO from 2016; then rerun schools, MILES-Day and
+properties file with `landuse/run/write_properties.py`, and run SILO from 2016; then rerun schools, MAST and
 MATSim on the scenario's 2024 population.

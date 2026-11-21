@@ -23,7 +23,7 @@ MILES/
 │   ├── schools/             school inventory, school-choice estimation, assign_schools, assign_all_seeds
 │   ├── lib/                 residential-location and workplace libraries
 │   └── validation/          validate_landuse, aggregate_seeds, final_tables
-├── activity/                Activities (MILES-Day)
+├── activity/                Activities (MAST)
 │   ├── engine/ABIT/         engine source (package abm.models.maryland); abit_changes.patch
 │   ├── parameters/          coefficients and survey distributions of the current models
 │   ├── build_parameters.py  writes parameters/ from the estimation results

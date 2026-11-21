@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Tour mode shares of the ABIT runs (output/mc_tours.csv) against the RTS tours, 10 replications, and the figures of the mode
+"""Tour mode shares of the MAST runs (output/mc_tours.csv) against the RTS tours, 10 replications, and the figures of the mode
 choice validation.
 
     python3 activity/validation/validate_mode_choice.py tables      -> results/abit_mode_validation.csv, results/reallocation.csv
     python3 activity/validation/validate_mode_choice.py figures     -> 5_reports/figures/fig_mc_*.pdf/png (+ article/figures)
 
-Settings (Roorda et al. 2008 design; mode choice of the tours ABIT generates):
+Settings (Roorda et al. 2008 design; mode choice of the tours MAST generates):
   verification  survey-population runs of the estimation half (run_survey/svy_est_<v>_s01..10), person weights of the half
   validation    survey-population runs of the held-out half (svy_val_<v>_s..), person weights
   chain         synthetic population, 5 % household sample (run/val_<v>_s..), unweighted, persons living in the counties of the

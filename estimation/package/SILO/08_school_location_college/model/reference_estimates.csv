@@ -1,17 +1,22 @@
 parameter,article_section,article_label,coefficient,robust_se,p,coefficient_full_precision,note
-MU_size,Size,size coefficient mu,0.5362,0.0309,<0.001,0.5361533207831393,
-G_private_4yr,Size,"private 4-year enrolment, log weight",-1.2928,0.2529,<0.001,-1.292784069117864,
-G_2yr,Size,"2-year enrolment, log weight",-0.8526,0.2257,<0.001,-0.8525762427648729,
-B_time,Car time,car time (min),-0.0385,0.0085,<0.001,-0.0385424640729751,
-B_ln1p_time,Car time,ln(1+time),-1.163,0.318,<0.001,-1.1630263147737254,
-B_other_county,Boundaries,other county,-0.5675,0.1325,<0.001,-0.5675028872038239,
-B_other_state,Boundaries,other state,-0.6713,0.1346,<0.001,-0.6713198366636761,
-,Interactions with car time,"time x income $40-75k, income $75-125k",,,,,reference category (no parameter)
-B_time_x_income_under40k,Interactions with car time,time x income <$40k,-0.0218,0.0118,0.064,-0.0218204286491119,
-B_time_x_income_125kplus,Interactions with car time,time x income $125k+,0.0174,0.0054,0.001,0.0174087268443386,
+MU_size,Size,size coefficient mu,0.5456,0.0321,<0.001,0.5455894404743602,
+G_private_4yr,Size,"private 4-year enrolment, log weight",-1.3251,0.254,<0.001,-1.325057738655998,
+G_2yr,Size,"2-year enrolment, log weight",-0.848,0.2227,<0.001,-0.8480215388941582,
+B_time,Car time,car time (min),-0.0395,0.0085,<0.001,-0.0394979056929087,
+B_ln1p_time,Car time,ln(1+time),-1.2011,0.3081,<0.001,-1.2010543055166518,
+,Car time,time x income <$40k,,,,,removed from the previous version (not in the model)
+B_time_x_income_125kplus,Car time,time x income $125k+,0.0195,0.0053,<0.001,0.0195241750837384,
+B_other_county,Boundaries,other county,-0.5639,0.1325,<0.001,-0.5638650462294221,
+B_other_state,Boundaries,other state,-0.6885,0.1351,<0.001,-0.6885062617568226,
+B_own_race_share,School zone,own-race share of the zone's enrolment,1.3986,0.2061,<0.001,1.398595111331569,
 N,fit statistics (article),N,673.0,,,,model statistic
 K,fit statistics (article),K,9.0,,,,model statistic
 alternatives,fit statistics (article),alternatives,141.0,,,,model statistic
-LL(0) (overview table),fit statistics (article),LL(0) (overview table),-3330.5,,,,model statistic
-"LL(beta), full set",fit statistics (article),"LL(beta), full set",-1827.8,,,,model statistic
-validation LL,fit statistics (article),validation LL,-1937.0,,,,model statistic
+LL(0),fit statistics (article),LL(0),-3330.5,,,,model statistic
+LL(beta),fit statistics (article),LL(beta),-1810.3506,,,,model statistic
+rho2,fit statistics (article),rho2,0.456,,,,model statistic
+AIC,fit statistics (article),AIC,3638.7,,,,model statistic
+BIC,fit statistics (article),BIC,3679.3,,,,model statistic
+hold-out N,fit statistics (article),hold-out N,686.0,,,,model statistic
+LL(holdout),fit statistics (article),LL(holdout),-1913.5236,,,,model statistic
+LL(holdout) without own-race share,fit statistics (article),LL(holdout) without own-race share,-1938.8681,,,,model statistic

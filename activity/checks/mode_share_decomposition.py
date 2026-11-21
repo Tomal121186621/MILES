@@ -12,7 +12,7 @@ the mode-choice estimation data, side_experiments/respec_2026-11/step_by_step/mo
      driver: the driver's u_CD, the others' u_CP), group mode = best summed utility, the group is one car-driver unit (driver's window)
   Dfix  C with the joint tours as fixed in the engine (2026-11-10): every member keeps its own choice (joint term per person, as
      estimated), no group draw; the car-driver members of a joint group are one car unit (union of windows, summed gains)
-  E  the engine on the hold-out survey population (run_survey/svy_val_respecval_s01-05, mc_tours.csv): ABIT's simulated tours
+  E  the engine on the hold-out survey population (run_survey/svy_val_respecval_s01-05, mc_tours.csv): MAST's simulated tours
 Shares per segment and mode (CD, CP, WK, BK, BUS, TRAIN), unweighted and with the RTS person weights (w); observed = choice2.
 Utilities: accessibility_new/mode_logsum_new.utilities (the Python form that the unit check matched to the engine to <= 1e-7).
     ~/.venvs/biogeme/bin/python activity/checks/mode_share_decomposition.py   -> respec_decompose.csv"""

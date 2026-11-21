@@ -2,7 +2,7 @@
 
 **MILES** stands for **Maryland Integrated Land-use and Everyday-travel Simulator**: it follows Maryland's households
 from where they live and work to the miles they travel each day. It is an agent-based modelling platform that
-links a deep-generative synthetic population, the SILO land-use model, the MILES-Day activity model and MATSim
+links a deep-generative synthetic population, the SILO land-use model, the MAST activity model and MATSim
 traffic assignment for the Baltimore region and the state of Maryland.
 
 ## Where the parts come from
@@ -10,8 +10,8 @@ traffic assignment for the Baltimore region and the state of Maryland.
 | Component | Based on | What MILES adds |
 |---|---|---|
 | Synthetic population | Conditional variational autoencoder (Borysov et al., 2019) | PUMA embedding and size conditioning, PUMA marginal loss, income within band, logical repair, zone placement, workplace assignment |
-| Land use | SILO engine | Residential location, car ownership, workplace and school models estimated for the region; calibration and out-of-sample test |
-| Activities | ABIT engine; TASHA scheduling | MILES-Day: survey distributions conditioned on the day, estimated destination, stop, outing, return-home and mode models; household car allocation; joint-tour representative |
+| Land use | SILO engine | Two-level residential location (PUMA, dwelling), car ownership, workplace and school models estimated for the region; calibration and out-of-sample test |
+| Activities | ABIT code base; TASHA scheduling | MAST (Maryland Activity Scheduling and Travel model): survey distributions conditioned on the day, estimated destination, stop, outing, return-home and mode models; household car allocation; joint-tour representative |
 | Traffic | MATSim | OpenStreetMap network with fixed speed and capacity rules; regional transit; income-based value of time; tolls |
 
 ## Principles

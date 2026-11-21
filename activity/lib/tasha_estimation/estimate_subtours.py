@@ -23,7 +23,7 @@ Components
   The destination of a stop is not estimated here: the first stop uses the estimated primary MNL of its purpose with the workplace
   in place of home (MarylandDestinationChoice.selectAnchoredZoneMnl), a further stop the sequential stop MNL between the previous
   stop and the workplace.
-Variables of the generation model (all known to ABIT when the work episode is scheduled):
+Variables of the generation model (all known to MAST when the work episode is scheduled):
   sp_0_4, sp_4_7, sp_7_inf  merged work duration in hours, piecewise linear (knots 4, 7)
   arr_early, arr_late, sw   arrival before 7:00, from 10:00 (base 7-10); secondary work episode (arrival from 15:00)
   age_u30, age_55p, female, inc_low (< $50k), inc_high (>= $100k), car0, carshort (fewer cars than licensed drivers), kids (< 16)

@@ -31,7 +31,7 @@ sys.path.insert(0, T24); import t24common as C                           # noqa:
 COL = dict(model=ps.MODEL, model2="#86b6ef", obs=ps.OBSERVED, obs2="#b5b3ab")
 FITS = []
 # Which model runs the figures show: ARTICLE_RUNS=record (default: the runs of 2026-10/11-05) or respec (re-specified models of
-# 2026-11-09: SILO seeds oos_respec_s1..5, schools on them, ABIT survey settings *_respec, ABIT 2024 run_respec, one attendance form).
+# 2026-11-09: SILO seeds oos_respec_s1..5, schools on them, MAST survey settings *_respec, MAST 2024 run_respec, one attendance form).
 RUNS = os.environ.get("ARTICLE_RUNS", "record"); RESPEC = RUNS == "respec"
 SILO_SEEDS = "oos_respec_s" if RESPEC else "oos_s"; SUF = "_respec" if RESPEC else ""
 ABIT_SET = "validation_respec" if RESPEC else "validation_sched"
@@ -262,7 +262,7 @@ def stage3():
     startP = Panel("activity start time, hold-out half", PL, [("model", psum(st.model), None, None), ("obs", psum(st.observed), None, None)], "Share of activities (%)", "pp")
     K = pd.read_csv(f"{V}/data/abit_roorda_ks.csv"); K = K[(K.setting == ABIT_SET) & (K.figure == "duration")].set_index("type").reindex(TY)
     durP = Panel("mean activity duration, hold-out half", TL, [("model", K.mean_dur_model, None, None), ("obs", K.mean_dur_obs, None, None)], "Mean duration (min)", "rel", 1, 30)
-    # modes on the survey households (ABIT tours, hold-out half)
+    # modes on the survey households (MAST tours, hold-out half)
     A = pd.read_csv(MC_FILE); A = A[(A.setting == "validation") & (A.variant == MC_VAR)]
     MO = ["CAR_DRIVER", "CAR_PASSENGER", "BUS", "TRAIN", "WALK", "BIKE"]; ML = ["Car driver", "Car passenger", "Bus", "Rail", "Walk", "Bicycle"]
     def mode(dim, group, lab, rot=30):

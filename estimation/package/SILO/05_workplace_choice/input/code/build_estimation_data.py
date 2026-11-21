@@ -6,8 +6,9 @@ Same calls as w04_sequence.py (step 'final'): wdc.Model(terms) draws, for each e
 99 zones sampled uniformly without replacement from the other zones with jobs (numpy generator, seed 20261106, the default of
 wdc.Model).  The base variables of every sampled zone are written per alternative (<variable>_<j>, j = 0..99, chosen = 0), the
 person variables once per worker (the time interactions use them centred at the estimation-half means, wdc.MEAN).
-Check: log-likelihood at the estimates of w04_coef.csv (step final) with the original estimator (wdc.Model.ll_grad) =
-w04_fit.csv; the Biogeme script must reproduce it from the exported columns.
+Checks with the original estimator (wdc.Model.ll_grad): the log-likelihood of the earlier 35-term model at its estimates
+(w04_*.csv, step 'final') and of the final 25-term model at its estimates (final_model_*.csv; size term ln of total jobs, the
+job-type log weights at 0); the Biogeme script must reproduce the latter from the exported columns.
 Hold-out: validation-half workers (person table); their choice set is all 1,587 zones with jobs (zone table zones_with_jobs.csv,
 car times from 00_shared_data/skims/auto_peak_time.csv.gz).
     python3 build_estimation_data.py   ->  ../data/estimation/workplace_estimation.parquet, ../data/holdout/*.csv"""
@@ -18,7 +19,7 @@ import wdc   # noqa: E402
 OUT = os.path.abspath(f"{HERE}/../data"); RAWD = f"{OUT}/raw"
 BASE = ["t", "lt", "intra", "cc", "cs", "dcw", "accw", "reg_bc", "reg_mopg", "reg_nvc", "reg_nvo", "reg_mdo", "reg_oth",
         "z_off_sh", "z_ret_sh", "z_ind_sh", "z_hiearn"]
-PERSON = ["female", "young", "old", "g1", "g3", "g4", "lic", "hhs", "rurh", "kids", "w2"]
+PERSON = ["female", "young", "old", "g1", "g3", "g4", "lic", "hhs", "rurh", "kids", "w2", "car0"]
 ZID = pd.read_csv(f"{wdc.HERE}/../../../00_shared_data/zone_system/zoneSystem.csv").sort_values("ZoneId").ZoneId.values
 
 
@@ -37,6 +38,11 @@ def main():
     th = coef.reindex(m.names).values; assert not np.isnan(th).any()
     ll = m.ll_grad(th)[0]
     print(f"estimation: N {m.N}, K {len(th)}, LL at w04 estimates {ll:.4f} (log {row.LL:.4f})"); assert abs(ll - row.LL) < 1e-6
+    # final model (25 terms, size term ln of total jobs: job-type log weights g = 0): same draws, LL at its estimates
+    ff = pd.read_csv(f"{RAWD}/final_model_fit.csv").iloc[0]; cf = pd.read_csv(f"{RAWD}/final_model_estimates.csv").set_index("param").coef
+    mf = wdc.Model(ff.terms.split()); assert (mf.A == m.A).all()
+    thf = np.array([cf.get(n, 0.0) for n in mf.names]); llf = mf.ll_grad(thf)[0]
+    print(f"final model: K {int(ff.K)}, LL at its estimates {llf:.4f} (original {ff.LL:.4f})"); assert abs(llf - ff.LL) < 1e-6
     P = m.P; A = m.A; d = persons_table(P); d["choice"] = np.zeros(m.N, int)
     for j in range(A.shape[1]):
         a = A[:, j:j + 1]; d[f"zone_{j}"] = ZID[A[:, j]]

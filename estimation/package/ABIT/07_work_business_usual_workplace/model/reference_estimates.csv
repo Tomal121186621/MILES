@@ -1,27 +1,23 @@
 parameter,project_name,article_group,article_label,coefficient,robust_se,p_value,article_coefficient,article_robust_se,article_p
-B_detour_0_1km,dt_0_1,Detour and impedance,"detour 0--1\,km (per km)",0.861132274089384,0.1931770315877954,8.28296917875815e-06,0.8611,0.1932,<0.001
-B_detour_1_2km,dt_1_2,Detour and impedance,"detour 1--2\,km",-0.7481917714094755,0.1748912633636951,1.8854638223531667e-05,-0.7482,0.1749,<0.001
-B_detour_2_5km,dt_2_5,Detour and impedance,"detour 2--5\,km",-0.0723774021075375,0.0602807345557637,0.22987838243980274,-0.0724,0.0603,0.230
-B_detour_5_10km,dt_5_10,Detour and impedance,"detour 5--10\,km",-0.0111436012738691,0.031545852750889,0.7239003422476507,-0.0111,0.0315,0.724
-B_detour_10_20km,dt_10_20,Detour and impedance,"detour 10--20\,km",-0.0632266622036384,0.0133575900791537,2.208023678772348e-06,-0.0632,0.0134,<0.001
-B_detour_20km_plus,dt_20_inf,Detour and impedance,"detour $>$ 20\,km",-0.0127296193795939,0.004989671228262,0.010735454488700372,-0.0127,0.005,0.011
-B_car_generalised_time,cgt,Detour and impedance,"car generalised time, detour (min)",-0.0136123896420942,0.0045618168400782,0.0028452140885583082,-0.0136,0.0046,0.003
-B_home_zone,intra_a,Same zone,stop in the home zone,1.1105889785017264,0.1215144593991144,6.27055740708084e-20,1.1106,0.1215,<0.001
-B_workplace_zone,intra_b,Same zone,stop in the workplace zone,-0.524671915254934,0.163749687677761,0.001354809807636404,-0.5247,0.1637,0.001
-B_retail_density,lnretden,Land use,ln(1 + retail jobs per km$^2$),-0.0802343495156062,0.0293980259733481,0.0063479954077774224,-0.0802,0.0294,0.006
-B_land_use_mix,mix,Land use,land-use mix (entropy),0.592782329123639,0.2661913544709106,0.025953756484775575,0.5928,0.2662,0.026
-B_outside_counties_of_both_anchors,xcounty,Boundaries,outside the counties of both anchors,-1.0161590137476342,0.0817638666570532,1.842503395042041e-35,-1.0162,0.0818,<0.001
-B_ln_detour_x_no_car,lndt_car0,Interactions with ln(1 + detour),ln(1 + detour) $\times$ no car,-0.1163437571866304,0.1177535904598622,0.3231392984603354,-0.1163,0.1178,0.323
-B_ln_detour_x_fewer_cars_than_drivers,lndt_car1,Interactions with ln(1 + detour),ln(1 + detour) $\times$ cars $<$ drivers,-0.2728531399877237,0.0722547283402484,0.00015919639436641627,-0.2729,0.0723,<0.001
-B_ln_detour_x_AM,lndt_am,Interactions with ln(1 + detour),ln(1 + detour) $\times$ AM 6--9,0.0427846870295624,0.0532398908191859,0.4216159701408366,0.0428,0.0532,0.422
-B_ln_detour_x_PM,lndt_pm,Interactions with ln(1 + detour),ln(1 + detour) $\times$ PM 15--19,-0.2423527271132532,0.0584482762593199,3.376731032766716e-05,-0.2424,0.0584,<0.001
-B_ln_detour_x_evening,lndt_ev,Interactions with ln(1 + detour),ln(1 + detour) $\times$ evening 19--6,-0.2277109999646762,0.1001199571571369,0.022943045803390853,-0.2277,0.1001,0.023
-THETA_population,theta_pop,Size,$\theta$ population (ln weight),-2.2438974839391963,0.586315742279442,0.00012965420888421737,-2.2439,0.5863,<0.001
-THETA_office_jobs,theta_off,Size,$\theta$ office jobs (ln weight),-0.2925525528104282,0.4012652881048347,0.4659556903103006,-0.2926,0.4013,0.466
-THETA_other_jobs,theta_oth,Size,$\theta$ other jobs (ln weight),-0.6868027301132532,0.4647433052042998,0.13945839544803268,-0.6868,0.4647,0.139
-THETA_school_pupils,theta_stu,Size,$\theta$ school pupils (ln weight),-2.0438788760843085,0.7482429861827437,0.006303314911579238,-2.0439,0.7482,0.006
-MU_size,mu_size,Size,"$\mu$, ln size",0.8539435788070154,0.0440517508051121,1.0328725410886135e-83,0.8539,0.0441,<0.001
+B_detour_0_1km,dt_0_1,Detour and impedance,"detour 0--1\,km (per km)",0.8718337830438241,0.1929440367854116,6.225465764782604e-06,0.8718,0.1929,<0.001
+B_detour_1_2km,dt_1_2,Detour and impedance,"detour 1--2\,km",-0.7337257473237555,0.1746924057462811,2.667959455874545e-05,-0.7337,0.1747,<0.001
+B_detour_2_5km,dt_2_5,Detour and impedance,"detour 2--5\,km",-0.0932899372981084,0.0604116049644424,0.12253052079388427,-0.0933,0.0604,0.123
+B_detour_5_10km,dt_5_10,Detour and impedance,"detour 5--10\,km",-0.0145123690324624,0.0315859657143072,0.6459065699268443,-0.0145,0.0316,0.646
+B_detour_10_20km,dt_10_20,Detour and impedance,"detour 10--20\,km",-0.0718697043739571,0.0131923806580868,5.0991157003701915e-08,-0.0719,0.0132,<0.001
+B_detour_20km_plus,dt_20_inf,Detour and impedance,"detour $>$ 20\,km",-0.0178174100769989,0.0047384753368048,0.00016980691556214448,-0.0178,0.0047,<0.001
+B_car_generalised_time,cgt,Detour and impedance,"car generalised time, detour (min)",-0.0087907965274445,0.004225659031543,0.03749459657572504,-0.0088,0.0042,0.037
+B_home_zone,intra_a,Same zone,stop in the home zone,1.130021362831652,0.122510406653281,2.8653808025286084e-20,1.13,0.1225,<0.001
+B_workplace_zone,intra_b,Same zone,stop in the workplace zone,-0.523896375109958,0.1639953411336525,0.0014003405907078413,-0.5239,0.164,0.001
+B_ln_zone_area_km2,lnarea,Land use,"ln(zone area, km$^2$)",0.1646104489007244,0.0290256120914628,1.4178939928395742e-08,0.1646,0.029,<0.001
+B_land_use_mix,mix,Land use,land-use mix (entropy),0.2989141354335683,0.1948921714803631,0.12509335581238654,0.2989,0.1949,0.125
+B_outside_counties_of_both_anchors,xcounty,Boundaries,outside the counties of both anchors,-0.9945204577456715,0.0818945961571168,6.180204853633449e-34,-0.9945,0.0819,<0.001
+B_ln_detour_x_no_car,lndt_car0,Interactions with ln(1 + detour),ln(1 + detour) $\times$ no car,-0.1520099793335461,0.1165494115910655,0.1921471601692779,-0.152,0.1165,0.192
+B_ln_detour_x_fewer_cars_than_drivers,lndt_car1,Interactions with ln(1 + detour),ln(1 + detour) $\times$ cars $<$ drivers,-0.2870358155038744,0.0712041547225025,5.5500666688065824e-05,-0.287,0.0712,<0.001
+B_ln_detour_x_AM,lndt_am,Interactions with ln(1 + detour),ln(1 + detour) $\times$ AM 6--9,0.0403240143352716,0.0527740004904534,0.44481442071102606,0.0403,0.0528,0.445
+B_ln_detour_x_PM,lndt_pm,Interactions with ln(1 + detour),ln(1 + detour) $\times$ PM 15--19,-0.2480378843754299,0.058227681407791,2.046160814537402e-05,-0.248,0.0582,<0.001
+B_ln_detour_x_evening,lndt_ev,Interactions with ln(1 + detour),ln(1 + detour) $\times$ evening 19--6,-0.23691966834846,0.0994321422599983,0.017184924643263173,-0.2369,0.0994,0.017
+B_ln_office_jobs,lnx_off,Attraction,ln(1 + office jobs),0.5579531659686241,0.0251010352161359,1.8296024994140066e-109,0.558,0.0251,<0.001
 LL0,,,LL(0): equal shares of the available alternatives (article Table 2),,,,-12240.8,,
-LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-8402.19668266653,,,-8402.2,,
+LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-8432.105553997731,,,-8432.1,,
 N,,,observations,,,,1539.0,,
-K,,,estimated parameters,,,,22.0,,
+K,,,estimated parameters,,,,18.0,,

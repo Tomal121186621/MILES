@@ -223,7 +223,7 @@
   },
   {
    "step": 7,
-   "what": "Build the estimation and hold-out tables from the inputs (same calls and random draws as the original run; asserts that the LL at the original estimates is reproduced)",
+   "what": "Build the estimation and hold-out tables from the inputs (same calls and random draws as the original run; adds the persons-16+ dummies and the Baltimore City column)",
    "cwd": "input/code",
    "command": "~/.venvs/biogeme/bin/python build_estimation_data.py",
    "reads": [
@@ -302,17 +302,20 @@
   }
  ],
  "check": {
-  "article_LL": -80664.0,
-  "biogeme_LL_at_article_coefficients": -80664.0051,
-  "biogeme_LL_at_full_precision_estimates": -80664.0043,
+  "article_LL": -78613.6,
+  "biogeme_LL_at_article_coefficients": -78613.6202,
+  "biogeme_LL_at_full_precision_estimates": -78613.6191,
   "N": 91348,
-  "K": 51
+  "K": 56,
+  "holdout_LL": -19704.5
  },
  "notes": [
   "Age = age of the oldest member (as the engine computes it), (age - 45)/10 and its square.",
   "ln income x ln density uses the density centred at the estimation-sample mean 5.485957407613654 (already in the column).",
+  "Persons aged 16+ (workers + nonworking_adults) enter as dummies for 2, 3 and 4+ (reference 0-1); nonworking_adults is not in the model. Baltimore City (PUMA 2400801-2400805) has its own term, estimated with the other coefficients.",
+  "Fixed at 0 (p > 0.3 when estimated): single person for 2 and 3+ cars, ln density for 1 car, age for 3+ cars; 56 parameters.",
   "Steps with output_provided = true can be skipped: their results are in input/data or 00_shared_data. Upstream project stages were not re-run for this package; their runtimes are not measured.",
-  "Measured here: --check 4 s, 0.8 GB; estimation a few seconds in a test run (coefficients and robust s.e. equal to the article's to 4 decimals).",
+  "Measured here: --check 4 s, 0.8 GB; estimation a few seconds (coefficients and robust s.e. equal to the article's to 4 decimals). Remove or rename an old output/__car_ownership.iter before estimating: Biogeme starts from it.",
   "Environment: Biogeme scripts and package build scripts run with ~/.venvs/biogeme/bin/python (Biogeme 3.3.5); project scripts with /opt/homebrew/anaconda3/bin/python3 (needs geopandas)."
  ]
 }

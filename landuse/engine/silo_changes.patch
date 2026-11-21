@@ -1,3 +1,32 @@
+diff --git a/siloCore/src/main/java/de/tum/bgu/msm/data/household/HouseholdDataManagerImpl.java b/siloCore/src/main/java/de/tum/bgu/msm/data/household/HouseholdDataManagerImpl.java
+index b959c5d..d718957 100644
+--- a/siloCore/src/main/java/de/tum/bgu/msm/data/household/HouseholdDataManagerImpl.java
++++ b/siloCore/src/main/java/de/tum/bgu/msm/data/household/HouseholdDataManagerImpl.java
+@@ -211,9 +211,14 @@ public class HouseholdDataManagerImpl implements HouseholdDataManager {
+         return householdData.getPerson(id);
+     }
+ 
++    /** Baltimore 2026 (2026-11-19d): observer of persons leaving the population (death, out-migration, dissolution); null = none */
++    public static volatile java.util.function.Consumer<Person> personRemovalListener = null;
++
+     @Override
+     public void removePerson(int id) {
+         removePersonFromHousehold(householdData.getPerson(id));
++        final java.util.function.Consumer<Person> l = personRemovalListener;
++        if (l != null && householdData.getPerson(id) != null) l.accept(householdData.getPerson(id));
+         householdData.removePerson(id);
+     }
+ 
+@@ -286,7 +291,8 @@ public class HouseholdDataManagerImpl implements HouseholdDataManager {
+         }
+         for (Person pp : household.getPersons().values()) {
+             pp.setHousehold(null);
+-
++            final java.util.function.Consumer<Person> l = personRemovalListener;
++            if (l != null) l.accept(pp);
+             householdData.removePerson(pp.getId());
+         }
+         householdData.removeHousehold(householdId);
 diff --git a/siloCore/src/main/java/de/tum/bgu/msm/data/job/JobDataManagerImpl.java b/siloCore/src/main/java/de/tum/bgu/msm/data/job/JobDataManagerImpl.java
 index ca4179f..0e2d4d3 100644
 --- a/siloCore/src/main/java/de/tum/bgu/msm/data/job/JobDataManagerImpl.java
@@ -109,6 +138,215 @@ index ca4179f..0e2d4d3 100644
                      final int hz = Integer.parseInt(x[wh.indexOf("home_zone")].trim());
                      final double[] eff = rtsCoefficients(sk, jcState[hz], hz);
                      final double[] v = new double[nz]; double mx = Double.NEGATIVE_INFINITY;
+diff --git a/siloCore/src/main/java/de/tum/bgu/msm/models/realEstate/pricing/PricingModelImpl.java b/siloCore/src/main/java/de/tum/bgu/msm/models/realEstate/pricing/PricingModelImpl.java
+index 99defa7..2486d86 100644
+--- a/siloCore/src/main/java/de/tum/bgu/msm/models/realEstate/pricing/PricingModelImpl.java
++++ b/siloCore/src/main/java/de/tum/bgu/msm/models/realEstate/pricing/PricingModelImpl.java
+@@ -3,6 +3,7 @@ package de.tum.bgu.msm.models.realEstate.pricing;
+ import de.tum.bgu.msm.container.DataContainer;
+ import de.tum.bgu.msm.data.dwelling.Dwelling;
+ import de.tum.bgu.msm.data.dwelling.DwellingType;
++import de.tum.bgu.msm.data.dwelling.StructuralVacancy;
+ import de.tum.bgu.msm.models.AbstractModel;
+ import de.tum.bgu.msm.properties.Properties;
+ import de.tum.bgu.msm.utils.SiloUtil;
+@@ -22,9 +23,11 @@ public final class PricingModelImpl extends AbstractModel implements PricingMode
+ 
+     private final static Logger logger = LogManager.getLogger(PricingModelImpl.class);
+     private final PricingStrategy strategy;
++    private final boolean afterEventModels;
+ 
+     public PricingModelImpl(DataContainer dataContainer, Properties properties, PricingStrategy strategy, Random rnd) {
+         super(dataContainer, properties, rnd);
++        this.afterEventModels = properties.realEstate.pricingAfterEventModels;
+         this.strategy = strategy;
+     }
+ 
+@@ -63,6 +66,9 @@ public final class PricingModelImpl extends AbstractModel implements PricingMode
+         priceWriter.flush();
+     }
+ 
++    /** Baltimore 2026-11-17: true when the price update runs after the end-of-year pass of the population control (Simulator) */
++    public boolean runsAfterEventModels() { return afterEventModels; }
++
+     @Override
+     public void endSimulation() {
+         priceWriter.close();
+@@ -88,7 +94,7 @@ public final class PricingModelImpl extends AbstractModel implements PricingMode
+             int currentPrice = dd.getPrice();
+             int region = dataContainer.getGeoData().getZones().get(dd.getZoneId()).getRegion().getId();
+             double vacancyRateAtThisRegion = vacRate[dto][region];
+-            float structuralVacancyRate = dd.getType().getStructuralVacancyRate();
++            float structuralVacancyRate = StructuralVacancy.rate(region, dd.getType());   // Baltimore 2026-11-17: by region when structural.vacancy.file is set
+             double changeRate;
+             if (vacancyRateAtThisRegion == 0) {
+                 changeRate = strategy.getPriceChangeRate(globalVacRate[dto], structuralVacancyRate);
+diff --git a/siloCore/src/main/java/de/tum/bgu/msm/models/relocation/migration/InOutMigrationImpl.java b/siloCore/src/main/java/de/tum/bgu/msm/models/relocation/migration/InOutMigrationImpl.java
+index 19af4e0..2f3b5eb 100644
+--- a/siloCore/src/main/java/de/tum/bgu/msm/models/relocation/migration/InOutMigrationImpl.java
++++ b/siloCore/src/main/java/de/tum/bgu/msm/models/relocation/migration/InOutMigrationImpl.java
+@@ -49,7 +49,11 @@ public class InOutMigrationImpl extends AbstractModel implements InOutMigration
+     private final Map<Integer, Map<Integer, Integer>> targetByYearByRegion = new HashMap<>();   // year -> region -> persons
+     private final Map<Integer, Integer> targetRegionOfInmigrant = new HashMap<>();              // clone household id -> region
+     private int outMigrationPPCounter;
++    // Baltimore 2026-11-16: out-migration propensity by age of the householder (oldest member) for the regional control
++    private int[] owFrom, owTo; private double[] owWeight; private double owMax = 0;
+     private int inMigrationPPCounter;
++    // Baltimore 2026-11-17: persons arriving from outside per person and year by region (gross control of the end-of-year pass)
++    private final Map<Integer, Double> inmigrationRate = new HashMap<>();
+     private int lackOfDwellingFailedInmigration;
+     private final java.util.TreeMap<Integer, Integer> failedByRegion = new java.util.TreeMap<>();   // Baltimore 2026 (2026-10-29): unplaced in-migrants by target region
+ 
+@@ -68,6 +72,20 @@ public class InOutMigrationImpl extends AbstractModel implements InOutMigration
+     @Override
+     public void setup() {
+         populationControlMethod = properties.moves.populationControlTotal;
++        if (!properties.moves.outmigrationAgeWeightsFile.isEmpty()) {
++            final TableDataSet w = SiloUtil.readCSVfile(properties.main.baseDirectory + properties.moves.outmigrationAgeWeightsFile);
++            final int n = w.getRowCount(); owFrom = new int[n]; owTo = new int[n]; owWeight = new double[n];
++            for (int i = 0; i < n; i++) {
++                owFrom[i] = (int) w.getValueAt(i + 1, "age_from"); owTo[i] = (int) w.getValueAt(i + 1, "age_to");
++                owWeight[i] = w.getValueAt(i + 1, "weight"); owMax = Math.max(owMax, owWeight[i]);
++            }
++            logger.info("Out-migration of the regional control weighted by the householder's age: " + n + " age bands from " + properties.moves.outmigrationAgeWeightsFile);
++        }
++        if (!properties.moves.populationControlInmigrationRateFile.isEmpty()) {
++            final TableDataSet r = SiloUtil.readCSVfile(properties.main.baseDirectory + properties.moves.populationControlInmigrationRateFile);
++            for (int i = 1; i <= r.getRowCount(); i++) inmigrationRate.put((int) r.getValueAt(i, "region"), (double) r.getValueAt(i, "rate"));
++            logger.info("Regional control with gross migration: in-migration rates of " + inmigrationRate.size() + " regions from " + properties.moves.populationControlInmigrationRateFile);
++        }
+         double scaleFactor = properties.main.scaleFactor;
+         if (populationControlMethod.equals(MovesProperties.PopulationControlTotalMethod.POPULATION)) {
+             String fileName = properties.main.baseDirectory + properties.moves.populationCOntrolTotalFile;
+@@ -132,6 +150,22 @@ public class InOutMigrationImpl extends AbstractModel implements InOutMigration
+         failedByRegion.clear();
+     }
+ 
++    /** Baltimore 2026-11-16: a household of the region to leave the state. Uniform as before, or, with outmigration.age.weights.file,
++     *  in proportion to the out-migration propensity of the householder's age (age of the oldest member; rejection sampling). */
++    private Household drawLeavingHousehold(List<Household> hhs) {
++        if (owMax <= 0) return hhs.get((int) (hhs.size() * random.nextDouble()));
++        for (int k = 0; k < 10000; k++) {
++            final Household h = hhs.get((int) (hhs.size() * random.nextDouble()));
++            int age = 0;
++            for (Person p : h.getPersons().values()) age = Math.max(age, p.getAge());
++            double w = owWeight[owWeight.length - 1];
++            for (int i = 0; i < owFrom.length; i++) if (age >= owFrom[i] && age <= owTo[i]) { w = owWeight[i]; break; }
++            if (age < owFrom[0]) w = owWeight[0];
++            if (random.nextDouble() * owMax < w) return h;
++        }
++        return hhs.get((int) (hhs.size() * random.nextDouble()));
++    }
++
+     /** Baltimore 2026: households grouped by the region of their dwelling */
+     private Map<Integer, List<Household>> householdsByRegion() {
+         final Map<Integer, List<Household>> byRegion = new HashMap<>();
+@@ -164,7 +198,7 @@ public class InOutMigrationImpl extends AbstractModel implements InOutMigration
+             if (target < current) {
+                 int created = 0;
+                 while (created < current - target) {
+-                    final Household h = hhs.get((int) (hhs.size() * random.nextDouble()));
++                    final Household h = drawLeavingHousehold(hhs);
+                     events.add(new MigrationEvent(h, MigrationEvent.Type.OUT));
+                     created += h.getHhSize();
+                 }
+@@ -186,42 +220,49 @@ public class InOutMigrationImpl extends AbstractModel implements InOutMigration
+ 
+     /** Baltimore 2026, second pass of the regional control: after all events of the year (residential moves between regions
+      *  included) the remaining gap of every region to its target is closed by out-migrating or in-migrating (cloning) randomly
+-     *  selected households of that region, so the region totals hold at the end of the year. */
++     *  selected households of that region, so the region totals hold at the end of the year.
++     *  2026-11-17, with population.control.inmigration.rate.file: gross migration.  A listed region out-migrates rate x population
++     *  plus its decline to the target and then clones in households of its own until the target holds (rate x population plus its
++     *  growth), so a declining region also receives in-migrants from outside, of its own composition.  Net only (before): a region
++     *  with a falling target only lost households and its vacancies were filled by movers from other regions. */
+     private void closeRegionalGaps(int year) {
+         final Map<Integer, Integer> targets = targetByYearByRegion.getOrDefault(year + 1, targetByYearByRegion.get(year));
+         if (targets == null) return;
+         final HouseholdDataManager householdDataManager = dataContainer.getHouseholdDataManager();
+         final Map<Integer, List<Household>> byRegion = householdsByRegion();
+-        int in = 0, out = 0, failed = 0;
++        int in = 0, out = 0, failed = 0, gross = 0;
+         for (Map.Entry<Integer, Integer> e : targets.entrySet()) {
+             final int region = e.getKey(), target = e.getValue();
+             final List<Household> hhs = byRegion.getOrDefault(region, Collections.emptyList());
+             if (hhs.isEmpty()) continue;
+             int current = 0;
+             for (Household hh : hhs) current += hh.getHhSize();
+-            int attempts = 0;
+-            if (target < current) {
+-                int removed = 0;
+-                while (removed < current - target && attempts++ < 5 * hhs.size()) {
+-                    final Household h = hhs.get((int) (hhs.size() * random.nextDouble()));
+-                    if (householdDataManager.getHouseholdFromId(h.getId()) == null) continue;   // already out-migrated
+-                    final int size = h.getHhSize();
+-                    if (outMigrateHh(h.getId(), true)) removed += size;
+-                }
+-                out += removed;
+-            } else if (target > current) {
+-                int added = 0, consecutiveFailures = 0;
+-                while (added < target - current && consecutiveFailures < 20) {   // a region without vacant dwellings cannot grow further this year
+-                    final Household h = hhs.get((int) (hhs.size() * random.nextDouble()));
+-                    if (householdDataManager.getHouseholdFromId(h.getId()) == null) continue;
+-                    final Household clone = householdDataManager.duplicateHousehold(h);
+-                    targetRegionOfInmigrant.put(clone.getId(), region);
+-                    if (inmigrateHh(clone)) { added += clone.getHhSize(); consecutiveFailures = 0; } else { failed++; consecutiveFailures++; }
+-                }
+-                in += added;
++            final int exchange = (int) Math.round(inmigrationRate.getOrDefault(region, 0.) * current);
++            gross += exchange;
++            int attempts = 0, removed = 0;
++            final int toRemove = exchange + Math.max(current - target, 0);
++            while (removed < toRemove && attempts++ < 5 * hhs.size()) {
++                final Household h = drawLeavingHousehold(hhs);
++                if (householdDataManager.getHouseholdFromId(h.getId()) == null) continue;   // already out-migrated
++                final int size = h.getHhSize();
++                if (outMigrateHh(h.getId(), true)) removed += size;
++            }
++            out += removed;
++            final int toAdd = target - (current - removed);
++            int added = 0, consecutiveFailures = 0;
++            final boolean untilNoVac = properties.moves.populationControlUntilNoVacancy;   // 2026-11-19a
++            while (added < toAdd && (untilNoVac ? consecutiveFailures < 10000 && dataContainer.getRealEstateDataManager().getNumberOfVacantDDinRegion(region) > 0
++                    : consecutiveFailures < 20)) {   // a region without vacant dwellings cannot grow further this year
++                final Household h = hhs.get((int) (hhs.size() * random.nextDouble()));
++                if (householdDataManager.getHouseholdFromId(h.getId()) == null) continue;   // out-migrated households are not copied
++                final Household clone = householdDataManager.duplicateHousehold(h);
++                targetRegionOfInmigrant.put(clone.getId(), region);
++                if (inmigrateHh(clone)) { added += clone.getHhSize(); consecutiveFailures = 0; } else { failed++; consecutiveFailures++; }
+             }
++            in += added;
+         }
+-        logger.info("  Regional population control " + year + ", end-of-year pass: " + in + " in-migrants and " + out + " out-migrants" + (failed > 0 ? " (" + failed + " in-migrations without a dwelling)" : ""));
++        logger.info("  Regional population control " + year + ", end-of-year pass: " + in + " in-migrants and " + out + " out-migrants"
++                + (gross > 0 ? " (gross exchange with outside " + gross + ")" : "") + (failed > 0 ? " (" + failed + " in-migrations without a dwelling)" : ""));
+     }
+ 
+     private void createInmigrants(int year, List<MigrationEvent> events, Household[] hhs) {
+@@ -277,7 +318,10 @@ public class InOutMigrationImpl extends AbstractModel implements InOutMigration
+         if (populationControlMethod.equals(MovesProperties.PopulationControlTotalMethod.REGION)) {
+             // Baltimore 2026: per-region targets replace the single regional total
+             targetRegionOfInmigrant.clear();
+-            migrateByRegion(year, events);
++            // 2026-11-17: the start-of-year proposal aimed at next year's target before the births and deaths of the year, so about the
++            // natural increase was cloned in at the start (filling vacancies before the residential moves) and removed again at the end
++            if (!properties.moves.populationControlEndOfYearOnly) migrateByRegion(year, events);
++            else logger.info("  Regional population control " + year + ": end-of-year pass only (population.control.end.of.year.only)");
+             outMigrationPPCounter = 0;
+             inMigrationPPCounter = 0;
+             return events;
+@@ -317,7 +361,10 @@ public class InOutMigrationImpl extends AbstractModel implements InOutMigration
+         // persons are set up.
+         // Baltimore 2026: under the regional control an in-migrant is placed inside its target region; the dwelling is searched
+         // first, so that a household that finds no dwelling takes no job (its persons are discarded with it)
+-        final Integer targetRegion = targetRegionOfInmigrant.remove(hh.getId());
++        Integer targetRegion = targetRegionOfInmigrant.remove(hh.getId());
++        // 2026-11-19a (population.control.until.no.vacancy): a target region without any vacancy -> search without the region restriction
++        if (targetRegion != null && properties.moves.populationControlUntilNoVacancy
++                && dataContainer.getRealEstateDataManager().getNumberOfVacantDDinRegion(targetRegion) == 0) targetRegion = null;
+         final int newDdId = targetRegion == null ? movesModel.searchForNewDwelling(hh)
+                 : movesModel.searchForNewDwelling(hh, dataContainer.getGeoData().getRegions().get(targetRegion));
+         if (newDdId > 0) {
 diff --git a/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/JobDataProperties.java b/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/JobDataProperties.java
 index 4efbb79..064e8c9 100644
 --- a/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/JobDataProperties.java
@@ -131,8 +369,327 @@ index 4efbb79..064e8c9 100644
          jobChangeRate = PropertiesUtil.getDoubleProperty(bundle, "job.change.rate", 0.);
          jobChangeOffers = PropertiesUtil.getIntProperty(bundle, "job.change.offers", 1);
      }
+diff --git a/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/MovesProperties.java b/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/MovesProperties.java
+index 2bfcc23..b87f890 100644
+--- a/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/MovesProperties.java
++++ b/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/MovesProperties.java
+@@ -14,6 +14,10 @@ public final class MovesProperties {
+     public final String populationCOntrolTotalFile;
+     public final String migrationFile;
+     public final String populationControlTotalByRegionFile;
++    public final String outmigrationAgeWeightsFile;
++    public final boolean populationControlEndOfYearOnly;
++    public final String populationControlInmigrationRateFile;
++    public final boolean populationControlUntilNoVacancy;
+     public final double populationGrowthRateInPercentage;
+ 
+     public final boolean trackRelocations;
+@@ -37,6 +41,21 @@ public final class MovesProperties {
+         migrationFile = PropertiesUtil.getStringProperty(bundle, "inmigration.outmigration.file", "input/assumptions/inOutMigration.csv");
+         // Baltimore 2026: population control per region (regions = counties in Maryland); long format Year,Region,Population
+         populationControlTotalByRegionFile = PropertiesUtil.getStringProperty(bundle, "population.control.total.by.region.file", "input/assumptions/populationControlTotalByRegion.csv");
++        // Baltimore 2026-11-16: leaving households of the regional control drawn by the out-migration propensity of the householder's
++        // age (CSV age_from,age_to,weight); empty = uniform draw (the behaviour before)
++        outmigrationAgeWeightsFile = PropertiesUtil.getStringProperty(bundle, "outmigration.age.weights.file", "");
++        // Baltimore 2026-11-17: regional control only in the end-of-year pass (after births, deaths and moves); false = the start-of-year
++        // proposal (gap to next year's target before the natural change of the year) plus the end-of-year pass (the behaviour before)
++        populationControlEndOfYearOnly = PropertiesUtil.getBooleanProperty(bundle, "population.control.end.of.year.only", false);
++        // Baltimore 2026-11-19a: true = the end-of-year pass places in-migrants in a region until its target holds or the region has no
++        // vacant dwelling left (a failed placement while vacancies remain does not stop it; safety stop after 10,000 consecutive failures),
++        // and an in-migrant whose target region has no vacancy searches without the region restriction; false = stop after 20
++        // consecutive failures, no fallback (the behaviour before)
++        populationControlUntilNoVacancy = PropertiesUtil.getBooleanProperty(bundle, "population.control.until.no.vacancy", false);
++        // Baltimore 2026-11-17: gross migration in the end-of-year pass: CSV region,rate (persons arriving from outside per person and year);
++        // a listed region clones rate x population from outside and out-migrates the same number plus its decline to the target; empty =
++        // net control only (a region only gains or only loses, the behaviour before)
++        populationControlInmigrationRateFile = PropertiesUtil.getStringProperty(bundle, "population.control.inmigration.rate.file", "");
+         populationGrowthRateInPercentage = PropertiesUtil.getDoubleProperty(bundle, "population.growth.rate", 0. );
+ 
+         PropertiesUtil.newPropertySubmodule("Relocation properties - social security parameters MSTM");
+diff --git a/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/RealEstateProperties.java b/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/RealEstateProperties.java
+index 9e0607f..fba1cbb 100644
+--- a/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/RealEstateProperties.java
++++ b/siloCore/src/main/java/de/tum/bgu/msm/properties/modules/RealEstateProperties.java
+@@ -27,6 +27,8 @@ public class RealEstateProperties {
+     /** Baltimore 2026 (2026-10-29): observed permits by year and region (year, region, units_1, units_2_4, units_5plus); the listed
+      * regions build exactly these units each year (1-unit split over SFD, SFA, MH by the engine's demand); replaces the shares file */
+     public final String constructionRegionPermitsFile;
++    public final boolean pricingAfterEventModels;   // Baltimore 2026-11-17: see Simulator.finishYear
++    public final String structuralVacancyFile;   // Baltimore 2026-11-17: region,rate (StructuralVacancy); empty = the dwelling-type defaults
+ 
+     public RealEstateProperties(ResourceBundle bundle) {
+         PropertiesUtil.newPropertySubmodule("Real state properties");
+@@ -50,5 +52,7 @@ public class RealEstateProperties {
+         constructionReallocateUnrealized = PropertiesUtil.getBooleanProperty(bundle, "construct.dwelling.reallocate.unrealized", true);
+         constructionRegionSharesFile = PropertiesUtil.getStringProperty(bundle, "construct.dwelling.region.shares.file", "");
+         constructionRegionPermitsFile = PropertiesUtil.getStringProperty(bundle, "construct.dwelling.region.permits.file", "");
++        structuralVacancyFile = PropertiesUtil.getStringProperty(bundle, "structural.vacancy.file", "");
++        pricingAfterEventModels = PropertiesUtil.getBooleanProperty(bundle, "pricing.after.population.control", false);
+     }
+ }
+diff --git a/siloCore/src/main/java/de/tum/bgu/msm/simulator/Simulator.java b/siloCore/src/main/java/de/tum/bgu/msm/simulator/Simulator.java
+index f69b8e0..51e94a1 100644
+--- a/siloCore/src/main/java/de/tum/bgu/msm/simulator/Simulator.java
++++ b/siloCore/src/main/java/de/tum/bgu/msm/simulator/Simulator.java
+@@ -118,12 +118,21 @@ public final class Simulator {
+     }
+ 
+     private void finishYear(int year) {
++        // Baltimore 2026-11-17: with pricing.after.population.control the price update runs after the event models' endYear (the
++        // end-of-year pass of the regional population control), so prices respond to the vacancy left at the end of the year and
++        // not to the low point before the control removes the excess of the year; every other annual model keeps its place
++        final List<ModelUpdateListener> late = new ArrayList<>();
+         for(ModelUpdateListener modelUpdateListener : modelUpdateListeners) {
++            if (modelUpdateListener instanceof de.tum.bgu.msm.models.realEstate.pricing.PricingModelImpl
++                    && ((de.tum.bgu.msm.models.realEstate.pricing.PricingModelImpl) modelUpdateListener).runsAfterEventModels()) {
++                late.add(modelUpdateListener); continue;
++            }
+             modelUpdateListener.endYear(year);
+         }
+         for(EventModel model: models.values()) {
+             model.endYear(year);
+         }
++        for (ModelUpdateListener l : late) l.endYear(year);
+ 
+         for (ResultsMonitor resultsMonitor : resultsMonitors){
+             resultsMonitor.endYear(year, eventCounter, events);
+diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/data/RealEstateDataManagerMstm.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/data/RealEstateDataManagerMstm.java
+index c13633b..07bf404 100644
+--- a/useCases/maryland/src/main/java/de/tum/bgu/msm/data/RealEstateDataManagerMstm.java
++++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/data/RealEstateDataManagerMstm.java
+@@ -18,6 +18,13 @@ public class RealEstateDataManagerMstm implements RealEstateDataManager {
+ 
+     private float[] medianRent;
+ 
++    /** Baltimore 2026 (2026-11-19a): observer of the vacancy lists (ReslocTwoLevel: exact live vacancies by PUMA); null = none */
++    public interface VacancyListener {
++        void added(Dwelling dd);
++        void removed(int dwellingId);
++    }
++    public static volatile VacancyListener vacancyListener = null;
++
+     public RealEstateDataManagerMstm (
+             DwellingFactory dwellingFactory, DwellingData dwellingData,
+             DwellingTypes dwellingTypes, HouseholdData householdData,
+@@ -135,11 +142,15 @@ public class RealEstateDataManagerMstm implements RealEstateDataManager {
+     @Override
+     public void removeDwellingFromVacancyList(int ddId) {
+         delegate.removeDwellingFromVacancyList(ddId);
++        final VacancyListener l = vacancyListener;
++        if (l != null) l.removed(ddId);
+     }
+ 
+     @Override
+     public void addDwellingToVacancyList(Dwelling dd) {
+         delegate.addDwellingToVacancyList(dd);
++        final VacancyListener l = vacancyListener;
++        if (l != null) l.added(dd);
+     }
+ 
+     @Override
+@@ -179,7 +190,9 @@ public class RealEstateDataManagerMstm implements RealEstateDataManager {
+ 
+     @Override
+     public void vacateDwelling(int idOldDD) {
+-        delegate.vacateDwelling(idOldDD);
++        delegate.vacateDwelling(idOldDD);   // adds the dwelling to the vacancy list inside the delegate
++        final VacancyListener l = vacancyListener;
++        if (l != null) l.added(delegate.getDwelling(idOldDD));
+     }
+ 
+     @Override
+diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/data/person/PersonMstm.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/data/person/PersonMstm.java
+index 7daa75f..451c64d 100644
+--- a/useCases/maryland/src/main/java/de/tum/bgu/msm/data/person/PersonMstm.java
++++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/data/person/PersonMstm.java
+@@ -55,9 +55,16 @@ public final class PersonMstm implements PersonWithSchool {
+ 
+     @Override
+     public void setOccupation(Occupation newOccupation) {
++        final Occupation old = delegate.getOccupation();
+         delegate.setOccupation(newOccupation);
++        // Baltimore 2026 (2026-11-19d, school.seat.release): a student who stops being a student (school exit, job) frees the seat
++        final java.util.function.Consumer<PersonMstm> l = studentExitListener;
++        if (l != null && old == Occupation.STUDENT && newOccupation != Occupation.STUDENT) l.accept(this);
+     }
+ 
++    /** Baltimore 2026 (2026-11-19d): set by SchoolDataMd when school.seat.release = true; null = none */
++    public static volatile java.util.function.Consumer<PersonMstm> studentExitListener = null;
++
+     @Override
+     public int getId() {
+         return delegate.getId();
+diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/data/school/SchoolDataMd.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/data/school/SchoolDataMd.java
+index d663bd1..7a1b21f 100644
+--- a/useCases/maryland/src/main/java/de/tum/bgu/msm/data/school/SchoolDataMd.java
++++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/data/school/SchoolDataMd.java
+@@ -81,6 +81,17 @@ public class SchoolDataMd implements SchoolData {
+     private int noSkimValueCount = 0;
+     private int fullTypeCount = 0;
+ 
++    // Baltimore 2026 (2026-11-18j): school.choice.model = respec1118 -> the estimated school location choice (SchoolChoiceMd) for the
++    // students assigned during the simulation; nearest (default) = the nearest school with a free seat (the rule above, unchanged)
++    private final boolean choiceModel = "respec1118".equalsIgnoreCase(de.tum.bgu.msm.models.resloc.ReslocProperties.get("school.choice.model", "nearest"));
++    private SchoolChoiceMd choice;
++    // Baltimore 2026 (2026-11-19d, school.seat.release = true; default false = as before): the seat is freed at once when a person leaves
++    // the population or stops being a student (listeners of HouseholdDataManagerImpl and PersonMstm), the education model changes the
++    // band with the age the student reaches during the year (EducationModelMd), and the live occupancy is compared with a recount from
++    // the persons at the end of every year (checkOccupancy)
++    public static final boolean SEAT_RELEASE = Boolean.parseBoolean(de.tum.bgu.msm.models.resloc.ReslocProperties.get("school.seat.release", "false"));
++    private Random choiceRandom;
++
+     public SchoolDataMd(GeoData geoData, DwellingData dwellingData, HouseholdData householdData,
+                         TravelTimes travelTimes, Properties properties) {
+         this.geoData = geoData;
+@@ -186,7 +197,7 @@ public class SchoolDataMd implements SchoolData {
+      */
+     public School assignSchool(PersonWithSchool person, int band) {
+         releaseSchool(person);
+-        School school = getClosestSchoolOfBand(person, band);
++        School school = choiceModel ? chooseSchoolByModel(person, band) : getClosestSchoolOfBand(person, band);
+         person.setSchoolType(typeForBand(band));
+         if (school == null) {
+             person.setSchoolId(-2);
+@@ -264,6 +275,48 @@ public class SchoolDataMd implements SchoolData {
+         return ranking[0];
+     }
+ 
++    /** Baltimore 2026 (2026-11-18j): school drawn from the estimated school location choice (SchoolChoiceMd); the nearest-school rule
++     *  only when the band has no record in the choice set */
++    private School chooseSchoolByModel(Person person, int band) {
++        final int zoneId = homeZone(person);
++        if (zoneId < 0) {
++            logger.warn("Person " + person.getId() + " has no dwelling with a zone; no school assigned");
++            return null;
++        }
++        final de.tum.bgu.msm.data.household.Household hh = person.getHousehold();
++        final boolean car0 = hh.getAutos() <= 0;
++        final double income = de.tum.bgu.msm.data.household.HouseholdUtil.getAnnualHhIncome(hh);
++        final int race = person instanceof de.tum.bgu.msm.data.person.PersonMstm && ((de.tum.bgu.msm.data.person.PersonMstm) person).getRace() != null
++                ? ((de.tum.bgu.msm.data.person.PersonMstm) person).getRace().ordinal() : -1;
++        final de.tum.bgu.msm.util.matrices.IndexedDoubleMatrix2D car = travelTimes.getPeakSkim(TransportMode.car);
++        final School s = choice.choose(zoneId, band, car0, income, race, (f, t) -> car.getIndexed(f, t), choiceRandom);
++        return s != null ? s : getClosestSchoolOfBand(person, band);
++    }
++
++    /** Baltimore 2026 (2026-11-18j): records by band and students by zone x band x race for the school location choice */
++    private void prepareChoice() {
++        final Map<Integer, List<SchoolChoiceMd.Rec>> byBand = new HashMap<>();
++        int noComponent = 0;
++        for (School s : schools.values()) {
++            int comp = choice.component(s.getId());
++            if (comp < 0) { noComponent++; continue; }
++            byBand.computeIfAbsent(bandOf(s), k -> new ArrayList<>()).add(new SchoolChoiceMd.Rec(s.getId(), s.getZoneId(), comp, s.getCapacity(), s));
++        }
++        choice.setRecords(byBand);
++        final Map<Long, double[]> counts = new HashMap<>();
++        for (Person person : householdData.getPersons()) {
++            if (!(person instanceof PersonWithSchool) || !(person instanceof de.tum.bgu.msm.data.person.PersonMstm)) continue;
++            final int sid = ((PersonWithSchool) person).getSchoolId();
++            if (sid <= 0) continue;
++            final School s = schools.get(sid);
++            final de.tum.bgu.msm.data.person.Race r = ((de.tum.bgu.msm.data.person.PersonMstm) person).getRace();
++            if (s == null || r == null) continue;
++            counts.computeIfAbsent(SchoolChoiceMd.raceKey(s.getZoneId(), bandOf(s)), k -> new double[4])[r.ordinal()]++;
++        }
++        choice.setRaceCounts(counts);
++        if (noComponent > 0) logger.warn("School location choice: " + noComponent + " school records without a size component (not chosen)");
++    }
++
+     @Override
+     public void removeSchool(int id) {
+         School removed = schools.remove(id);
+@@ -373,28 +426,88 @@ public class SchoolDataMd implements SchoolData {
+                 + " persons with a school, " + withoutRecord + " students without a school record");
+     }
+ 
++    /** true when the person's school record does not serve the band of the given age (2026-11-19d: the age at the end of the year) */
++    public boolean bandChangeDue(PersonWithSchool person, int age) {
++        if (person.getSchoolId() < 1) return true;
++        School school = schools.get(person.getSchoolId());
++        if (school == null) return true;
++        int wanted = bandForAge(age);
++        int band = bandOf(school);
++        if (band == BAND_ANY) return school.getType() != typeForBand(wanted);
++        return band != wanted;
++    }
++
++    /** live occupancy against a recount of the persons' school ids; logs the difference (2026-11-19d) */
++    public void checkOccupancy(String when) {
++        final Map<Integer, Integer> c = new HashMap<>();
++        for (Person person : householdData.getPersons()) {
++            if (!(person instanceof PersonWithSchool)) continue;
++            final int sid = ((PersonWithSchool) person).getSchoolId();
++            if (sid > 0 && schools.containsKey(sid)) c.merge(sid, 1, Integer::sum);
++        }
++        int bad = 0; long diff = 0, occ = 0, full = 0;
++        for (School s : schools.values()) {
++            final int n = c.getOrDefault(s.getId(), 0); occ += s.getOccupancy();
++            if (n != s.getOccupancy()) { bad++; diff += Math.abs(n - s.getOccupancy()); }
++            if (s.getCapacity() > 0 && s.getOccupancy() >= s.getCapacity()) full++;
++        }
++        if (bad > 0) logger.error("Schools, " + when + ": live occupancy differs from the recount of the persons in " + bad + " records (sum |diff| " + diff + ")");
++        else logger.info("Schools, " + when + ": live occupancy equals the recount of the persons");
++        logger.info("Schools, " + when + ": " + occ + " seats occupied, " + full + " of " + schools.size() + " records full");
++    }
++
+     @Override
+     public void setup() {
++        if (SEAT_RELEASE) {
++            de.tum.bgu.msm.data.household.HouseholdDataManagerImpl.personRemovalListener = p -> { if (p instanceof PersonWithSchool) releaseSchool((PersonWithSchool) p); };
++            de.tum.bgu.msm.data.person.PersonMstm.studentExitListener = p -> { releaseSchool(p); p.setSchoolType(0); };
++            logger.info("Schools: seats are released when a person leaves the population or school (school.seat.release)");
++        }
+         logger.info("Setup of Maryland school data (zone-based search over " + schools.size() + " school records)");
+         recountOccupancy();
++        if (choiceModel) {
++            final String b = "input/";
++            choice = new SchoolChoiceMd(new String[]{
++                    de.tum.bgu.msm.models.resloc.ReslocProperties.path("school.choice.coef.k8", b + "school_choice_coef_1118_k8.csv"),
++                    de.tum.bgu.msm.models.resloc.ReslocProperties.path("school.choice.coef.hs", b + "school_choice_coef_1118_hs.csv"),
++                    de.tum.bgu.msm.models.resloc.ReslocProperties.path("school.choice.coef.college", b + "school_choice_coef_1118_college.csv")},
++                    de.tum.bgu.msm.models.resloc.ReslocProperties.path("school.choice.records.file", b + "school_choice_records_1118.csv"),
++                    de.tum.bgu.msm.models.resloc.ReslocProperties.path("school.choice.inboundary.file", b + "school_choice_inboundary_1118.csv"),
++                    de.tum.bgu.msm.models.resloc.ReslocProperties.path("school.choice.zone.attributes.file", b + "school_choice_zone_attr_1118.csv"),
++                    properties.main.baseDirectory + properties.geo.zonalDataFile);
++            // own random stream (not drawn from SiloUtil's generator, so the other models' streams are unchanged)
++            choiceRandom = new Random(1118L * 1000003L + properties.main.randomSeed);
++            prepareChoice();
++            logger.info("School location choice: estimated model (school.choice.model = respec1118) for students assigned during the simulation");
++        }
+     }
+ 
+     @Override
+     public void prepareYear(int year) {
++        if (SEAT_RELEASE) checkOccupancy("start of " + year);
+         rankingByZoneAndType.clear();
+         recountOccupancy();
+         noSkimValueCount = 0;
+         fullTypeCount = 0;
++        if (choiceModel) {
++            prepareChoice();
++            choice.assigned = 0; choice.fallbackFull = 0; choice.noZone = 0;
++        }
+     }
+ 
+     @Override
+     public void endYear(int year) {
++        if (SEAT_RELEASE) checkOccupancy("end of " + year);
+         if (noSkimValueCount > 0) {
+             logger.info("School search " + year + ": " + noSkimValueCount + " zone-school pairs ranked by straight-line distance (no skim value)");
+         }
+         if (fullTypeCount > 0) {
+             logger.info("School search " + year + ": " + fullTypeCount + " assignments to the nearest school although every school of the type was full");
+         }
++        if (choiceModel) {
++            logger.info("School location choice " + year + ": " + choice.assigned + " students assigned by the estimated model, " + choice.fallbackFull
++                    + " of them with every zone of the band full (seat constraint dropped), " + choice.noZone + " without a zone of the band (nearest-school rule)");
++        }
+     }
+ 
+     @Override
 diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/CarOwnershipModelMd.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/CarOwnershipModelMd.java
-index ef030b2..6c38692 100644
+index ef030b2..dcefd05 100644
 --- a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/CarOwnershipModelMd.java
 +++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/CarOwnershipModelMd.java
 @@ -14,7 +14,9 @@ import org.apache.logging.log4j.Logger;
@@ -145,7 +702,23 @@ index ef030b2..6c38692 100644
  import java.util.Map;
  import java.util.Random;
  
-@@ -49,6 +51,20 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+@@ -29,7 +31,8 @@ import java.util.Random;
+  *       {asc, hhSize, workers, income_k (k = income class 1..12), transitAcc, density_k (k = job-density class 1..10),
+  *        accLogsumGain (Baltimore 2026, accessibility.model = logsum: non-work logsum accessibility of the household's income
+  *        group with cars minus without a car, A(inc_carge) - A(inc_nocar), utils, at the home zone)}
+- *   car_ownership_region_constants.csv   header: region,asc1,asc2,asc3   (additive per-region constants, calibration result)
++ *   car_ownership_region_constants.csv   header: region,asc1,asc2,asc3[,fewer]   (additive per-region constants, calibration result;
++ *       2026-11-15c optional fewer = constant on 1 <= cars < persons 16+, respec only)
+  * Income classes: < 10k, 10-15k, 15-30k, 30-40k, 40-50k, 50-60k, 60-75k, 75-100k, 100-125k, 125-150k, 150-200k, 200k+ (2016 $).
+  *
+  * Two uses:
+@@ -46,9 +49,26 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+     private final Accessibility accessibility;
+     private final Map<Integer, Map<String, Double>> coef = new HashMap<>();     // alternative -> variable -> value
+     private final Map<Integer, double[]> regionAsc = new HashMap<>();           // region -> [asc1, asc2, asc3]
++    // 2026-11-15c: optional column "fewer" of the region constants file = delta_region, added (respec) to the utility of a = 1, 2, 3+ cars
++    // when 1 <= a < persons 16+ of the household (3+ counts as 3); the 0-car alternative untouched; column absent = 0 (runs of record unchanged)
++    private final Map<Integer, Double> regionFewer = new HashMap<>();
      private final Map<Integer, long[]> lastState = new HashMap<>();             // hhId -> [size, workers]
      private int updatedThisYear, createdThisYear;
  
@@ -166,7 +739,7 @@ index ef030b2..6c38692 100644
      public CarOwnershipModelMd(DataContainer dataContainer, Accessibility accessibility, Properties properties, Random rnd) {
          super(dataContainer, properties, rnd);
          this.accessibility = accessibility;
-@@ -61,6 +77,14 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+@@ -61,6 +81,15 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
          if (properties.householdData.carOwnershipRegionConstantsFile != null && !properties.householdData.carOwnershipRegionConstantsFile.isBlank()) {
              readRegionConstants(base + properties.householdData.carOwnershipRegionConstantsFile);
          }
@@ -178,10 +751,24 @@ index ef030b2..6c38692 100644
 +            pumaStockBase = pumaStock();
 +            updateLocation();
 +        }
++        if (!regionFewer.isEmpty()) logger.info("car ownership: fewer-than-adults constants on (" + regionFewer.size() + " regions)");
          rememberState();
          logger.info("Car ownership model: coefficients for " + coef.size() + " alternatives, region constants for " + regionAsc.size() + " regions");
      }
-@@ -94,6 +118,107 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+@@ -80,10 +109,12 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+     private void readRegionConstants(String file) {
+         try (BufferedReader r = new BufferedReader(new FileReader(file))) {
+             String[] h = r.readLine().split(","); int iR = col(h, "region"), i1 = col(h, "asc1"), i2 = col(h, "asc2"), i3 = col(h, "asc3");
++            int iF = -1; for (int i = 0; i < h.length; i++) if (h[i].trim().equals("fewer")) iF = i;   // 2026-11-15c, optional
+             String line;
+             while ((line = r.readLine()) != null) {
+                 if (line.isBlank()) continue;
+                 String[] x = line.split(",");
++                if (iF >= 0 && iF < x.length && !x[iF].isBlank()) regionFewer.put(Integer.parseInt(x[iR].trim()), Double.parseDouble(x[iF].trim()));
+                 regionAsc.put(Integer.parseInt(x[iR].trim()), new double[]{Double.parseDouble(x[i1].trim()), Double.parseDouble(x[i2].trim()), Double.parseDouble(x[i3].trim())});
+             }
+         } catch (IOException e) { throw new RuntimeException("Could not read car ownership region constants " + file, e); }
+@@ -94,6 +125,108 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
          throw new RuntimeException("Column " + n + " missing in car ownership file");
      }
  
@@ -280,8 +867,9 @@ index ef030b2..6c38692 100644
 +        final double[] u = CarOwnershipRespec.utilities(coef, x);
 +        final int region = dataContainer.getGeoData().getZones().get(dd.getZoneId()).getRegion().getId();
 +        final double[] rAsc = regionAsc.getOrDefault(region, new double[]{0, 0, 0});
++        final double fewer = regionFewer.getOrDefault(region, 0.);   // 2026-11-15c
 +        final double[] e = new double[4]; e[0] = 1; double sum = 1;
-+        for (int a = 1; a <= 3; a++) { e[a] = Math.exp(u[a - 1] + rAsc[a - 1]); sum += e[a]; }
++        for (int a = 1; a <= 3; a++) { e[a] = Math.exp(u[a - 1] + rAsc[a - 1] + (a < p16 ? fewer : 0.)); sum += e[a]; }
 +        for (int a = 0; a < 4; a++) e[a] /= sum;
 +        return e;
 +    }
@@ -289,7 +877,7 @@ index ef030b2..6c38692 100644
      private static int incomeClass(int income) {
          for (int i = 0; i < INCOME_BOUNDS.length; i++) if (income < INCOME_BOUNDS[i]) return i + 1;
          return INCOME_BOUNDS.length + 1;
-@@ -103,6 +228,7 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+@@ -103,6 +236,7 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
      double[] probabilities(Household hh) {
          final Dwelling dd = dataContainer.getRealEstateDataManager().getDwelling(hh.getDwellingId());
          if (dd == null) return new double[]{1, 0, 0, 0};
@@ -297,7 +885,7 @@ index ef030b2..6c38692 100644
          final int size = hh.getHhSize();
          final int workers = HouseholdUtil.getNumberOfWorkers(hh);
          final int inc = incomeClass(HouseholdUtil.getAnnualHhIncome(hh));
-@@ -149,7 +275,10 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
+@@ -149,7 +283,10 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
      }
  
      @Override
@@ -309,11 +897,216 @@ index ef030b2..6c38692 100644
  
      @Override
      public void endYear(int year) {
+diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/EducationModelMd.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/EducationModelMd.java
+index a9bde28..42041b0 100644
+--- a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/EducationModelMd.java
++++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/EducationModelMd.java
+@@ -58,6 +58,8 @@ public class EducationModelMd extends AbstractModel implements EducationModel {
+     private final int retireeFloor;
+     private final SchoolDataMd schoolData;
+     private int noSchoolWarnings = 0;
++    // 2026-11-19d (school.seat.release): age of each student at the start of the year; the band follows the age reached during the year
++    private final java.util.Map<Integer, Integer> startAge = new java.util.HashMap<>();
+ 
+     public EducationModelMd(DataContainer dataContainer, Properties properties, Random rnd) {
+         super(dataContainer, properties, rnd);
+@@ -98,11 +100,16 @@ public class EducationModelMd extends AbstractModel implements EducationModel {
+     @Override
+     public Collection<EducationEvent> getEventsForCurrentYear(int year) {
+         final List<EducationEvent> events = new ArrayList<>();
++        startAge.clear();
+         for (Person person : dataContainer.getHouseholdDataManager().getPersons()) {
+             final Occupation occ = person.getOccupation();
+             final int age = person.getAge();
+             if (occ == Occupation.TODDLER && age >= SCHOOL_ENTRY_AGE) {
+                 events.add(new EducationEvent(person.getId()));
++            } else if (occ == Occupation.STUDENT && SchoolDataMd.SEAT_RELEASE && schoolData != null && person instanceof PersonWithSchool
++                    && schoolData.bandChangeDue((PersonWithSchool) person, age + 1)) {
++                startAge.put(person.getId(), age);   // the band of the age at the end of the year (after this year's birthday)
++                events.add(new EducationEvent(person.getId()));
+             } else if (occ == Occupation.STUDENT && (age > lastSchoolAge || schoolExit[Math.min(age, MAX_AGE)] > 0
+                     || schoolChangeDue(person))) {
+                 events.add(new EducationEvent(person.getId()));
+@@ -152,6 +159,15 @@ public class EducationModelMd extends AbstractModel implements EducationModel {
+                     if (person.getId() == SiloUtil.trackPp) SiloUtil.trackWriter.println("Person " + person.getId() + " left school at age " + age);
+                     return true;
+                 }
++                final Integer a0 = startAge.get(person.getId());
++                if (a0 != null) {   // 2026-11-19d: band of the age reached during this year
++                    if (schoolData.bandChangeDue((PersonWithSchool) person, a0 + 1)) {
++                        final School s = schoolData.assignSchool((PersonWithSchool) person, SchoolDataMd.bandForAge(a0 + 1));
++                        if (s == null && noSchoolWarnings++ < 20) logger.warn("Person " + person.getId() + " found no school of band " + SchoolDataMd.bandForAge(a0 + 1));
++                        return true;
++                    }
++                    return false;
++                }
+                 if (schoolChangeDue(person)) {
+                     assignSchool(person);
+                     return true;
+diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/HousingStrategyMstm.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/HousingStrategyMstm.java
+index 67c93f5..0010ff9 100644
+--- a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/HousingStrategyMstm.java
++++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/HousingStrategyMstm.java
+@@ -84,6 +84,8 @@ public class HousingStrategyMstm implements HousingStrategy<DwellingMstm> {
+ 
+     /** Baltimore 2026 (resloc.model = mnl): the estimated residential location model; null = the inherited MSTM scripts */
+     private ReslocModel resloc;
++    /** Baltimore 2026 (2026-11-18, resloc.twolevel = true): the two-level PUMA -> dwelling model; null = as before */
++    private de.tum.bgu.msm.models.resloc.ReslocTwoLevel twoLevel;
+     private Household reslocHh = null; private double[] reslocRegionWeights;   // Baltimore 2026: keyed by the household object (households being formed all have id -1)
+ 
+     public HousingStrategyMstm(Properties properties,
+@@ -111,6 +113,12 @@ public class HousingStrategyMstm implements HousingStrategy<DwellingMstm> {
+         selectDwellingRaceRelevance = properties.moves.racialRelevanceInZone;
+         provideRentSubsidyToLowIncomeHh = properties.moves.provideLowIncomeSubsidy;
+         calculateRacialCompositionByZoneAndRegion();
++        if (de.tum.bgu.msm.models.resloc.ReslocTwoLevel.enabled()) {
++            // 2026-11-18: search, better-dwelling rule and move-or-not of the two-level model (MovesModelMd calls its search);
++            // the estimated three-level model (resloc.model = mnl) is not built
++            twoLevel = new de.tum.bgu.msm.models.resloc.ReslocTwoLevel(dataContainer, this);
++            return;
++        }
+         if (ReslocProperties.isMnl()) {
+             if (!(accessibility instanceof AccessibilityLogsumMd)) {
+                 throw new RuntimeException("resloc.model = mnl needs accessibility.model = logsum (logsum accessibility by segment)");
+@@ -139,6 +147,10 @@ public class HousingStrategyMstm implements HousingStrategy<DwellingMstm> {
+      */
+     @Override
+     public boolean acceptsMove(Household household, DwellingMstm current, DwellingMstm chosen, double chosenUtility, double currentUtility) {
++        if (twoLevel != null) {   // 2026-11-18: u(d) of the two-level model without the origin terms
++            if (ReslocProperties.acceptanceNone()) return true;
++            return twoLevel.dwellingLevelUtility(household, chosen) > twoLevel.dwellingLevelUtility(household, current);
++        }
+         if (resloc == null) return acceptsMove(household, chosenUtility, currentUtility);
+         if (ReslocProperties.acceptanceNone()) return true;
+         return resloc.dwellingLevelUtility(household, chosen) > resloc.dwellingLevelUtility(household, current);
+@@ -151,10 +163,16 @@ public class HousingStrategyMstm implements HousingStrategy<DwellingMstm> {
+      */
+     @Override
+     public double calculateMoveProbability(Household household, DwellingMstm current) {
++        if (twoLevel != null) return twoLevel.moveProbability(household, current, properties.moves.moveOrNotShift);   // 2026-11-18
+         if (resloc == null) return -1;
+         return resloc.moveProbability(household, current, properties.moves.moveOrNotShift);
+     }
+ 
++    /** Baltimore 2026 (2026-11-18): the two-level residential location model, null when resloc.twolevel is off */
++    public de.tum.bgu.msm.models.resloc.ReslocTwoLevel getTwoLevel() {
++        return twoLevel;
++    }
++
+     @Override
+     public boolean isHouseholdEligibleToLiveHere(Household household, DwellingMstm dd) {
+         // Check if dwelling is restricted, if so check if household is
+@@ -275,6 +293,7 @@ public class HousingStrategyMstm implements HousingStrategy<DwellingMstm> {
+             resloc.prepareYear();
+             reslocHh = null;
+         }
++        if (twoLevel != null) twoLevel.prepareYear();   // 2026-11-18
+     }
+ 
+     @Override
+@@ -292,7 +311,9 @@ public class HousingStrategyMstm implements HousingStrategy<DwellingMstm> {
+                 for (int i = 0; i < u.length; i++) reslocRegionWeights[i] = Double.isInfinite(u[i]) ? 0 : Math.exp(u[i] - m);
+                 reslocHh = household;
+             }
+-            return reslocRegionWeights[resloc.regionIndex(region)];
++            // 2026-11-14: x the availability a_r of the region (resloc.region.vacancy.availability; 1 when off, ReslocModel.availability)
++            final int ri = resloc.regionIndex(region);
++            return reslocRegionWeights[ri] * resloc.availability(ri);
+         }
+         Race householdRace = ((HouseholdMstm) household).getRace();
+ 
+@@ -335,6 +356,7 @@ public class HousingStrategyMstm implements HousingStrategy<DwellingMstm> {
+         housingStrategyMstm.zonalRacialComposition = this.zonalRacialComposition;
+         housingStrategyMstm.utilityByIncomeRaceRegion = this.utilityByIncomeRaceRegion;
+         housingStrategyMstm.resloc = this.resloc;
++        housingStrategyMstm.twoLevel = this.twoLevel;
+         return housingStrategyMstm;
+     }
+ 
+diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/MovesModelMd.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/MovesModelMd.java
+index a4b7fe8..3fa336f 100644
+--- a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/MovesModelMd.java
++++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/MovesModelMd.java
+@@ -25,11 +25,40 @@ import java.util.Random;
+ public class MovesModelMd extends MovesModelImpl {
+ 
+     private final SchoolDataMd schoolData;
++    private final HousingStrategy housingStrategyMd;   // Baltimore 2026 (2026-11-18): for the two-level residential location model
+ 
+     public MovesModelMd(DataContainer dataContainer, Properties properties, MovesStrategy movesStrategy,
+                         HousingStrategy housingStrategy, Random random) {
+         super(dataContainer, properties, movesStrategy, housingStrategy, random);
+         this.schoolData = (SchoolDataMd) ((DataContainerWithSchools) dataContainer).getSchoolData();
++        this.housingStrategyMd = housingStrategy;
++    }
++
++    /** Baltimore 2026 (2026-11-18): the two-level model when resloc.twolevel is on (set up in HousingStrategyMstm.setup), else null */
++    private de.tum.bgu.msm.models.resloc.ReslocTwoLevel twoLevel() {
++        return housingStrategyMd instanceof HousingStrategyMstm ? ((HousingStrategyMstm) housingStrategyMd).getTwoLevel() : null;
++    }
++
++    /** Baltimore 2026 (2026-11-19a): end-of-year check of the two-level model's live vacancy counter against the vacancy lists */
++    @Override
++    public void endYear(int year) {
++        super.endYear(year);
++        final de.tum.bgu.msm.models.resloc.ReslocTwoLevel m = twoLevel();
++        if (m != null) m.checkVacancies("end of the moves of " + year);
++    }
++
++    /** Baltimore 2026 (2026-11-18, resloc.twolevel): PUMA, then dwelling (ReslocTwoLevel.search); otherwise region, then dwelling */
++    @Override
++    public int searchForNewDwelling(Household household) {
++        final de.tum.bgu.msm.models.resloc.ReslocTwoLevel m = twoLevel();
++        return m == null ? super.searchForNewDwelling(household) : m.search(household, null);
++    }
++
++    /** in-migrant placed inside its target region (InOutMigrationImpl regional control) */
++    @Override
++    public int searchForNewDwelling(Household household, de.tum.bgu.msm.data.Region region) {
++        final de.tum.bgu.msm.models.resloc.ReslocTwoLevel m = twoLevel();
++        return m == null ? super.searchForNewDwelling(household, region) : m.search(household, region);
+     }
+ 
+     /** Baltimore 2026 (resloc): the simulation year for the dwelling-age term of the estimated dwelling choice */
+@@ -45,6 +74,7 @@ public class MovesModelMd extends MovesModelImpl {
+         final int oldZone = oldDwelling == null ? -1 : oldDwelling.getZoneId();
+         super.moveHousehold(hh, idOldDD, idNewDD);
+         de.tum.bgu.msm.models.resloc.ReslocModel.recordMove(hh.getId());   // Baltimore 2026: years in the dwelling (move-or-not)
++        de.tum.bgu.msm.models.resloc.ReslocTwoLevel.recordMove(hh.getId());   // 2026-11-18: the same for the two-level model
+         final Dwelling newDwelling = dataContainer.getRealEstateDataManager().getDwelling(idNewDD);
+         final int newZone = newDwelling == null ? -1 : newDwelling.getZoneId();
+         if (newZone < 0) {
 diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocModel.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocModel.java
-index a4beed1..217978d 100644
+index a4beed1..d4bb714 100644
 --- a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocModel.java
 +++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocModel.java
-@@ -102,6 +102,24 @@ public class ReslocModel {
+@@ -1,5 +1,6 @@
+ package de.tum.bgu.msm.models.resloc;
+ 
++import de.tum.bgu.msm.data.dwelling.StructuralVacancy;
+ import de.tum.bgu.msm.container.DataContainer;
+ import de.tum.bgu.msm.data.Region;
+ import de.tum.bgu.msm.data.Zone;
+@@ -90,6 +91,17 @@ public class ReslocModel {
+     private final Map<String, double[]> cacheIvB = new ConcurrentHashMap<>(), cacheIvA = new ConcurrentHashMap<>();
+     private final Random random = new Random(20261022);
+     private double[] regN;                // dwellings by region index (stock)
++    // Baltimore 2026 (2026-11-14, switch resloc.region.vacancy.availability, default false = the model of record unchanged):
++    // availability of a region in the search, a_r = min(1, v_r / v*_r), v_r = vacant dwellings of region r now (live count) / its
++    // stock at the start of the year, v*_r = SILO's structural vacancy rate of the dwelling types (DwellingType.getStructuralVacancyRate,
++    // SFD/SFA/MH 3 %, MF234 4 %, MF5plus 5 %) averaged over the region's stock. The estimated region level carries the size of the
++    // stock (IV_B over ln D_zt), i.e. it assumes that vacancies are offered in proportion to the stock at the structural rate, as in
++    // the observed market; below that rate a region is offered less often (constrained logit: an alternative is available with the
++    // probability that it is not full; Martinez & Henriquez 2007, de Palma, Picard & Waddell 2007). No free parameter.
++    // The weight of region r in the region draw of the search and in the expected maximum utility of the move-or-not decision
++    // becomes exp(U_r) a_r (a_r = 1 when the switch is off, so the arithmetic of the record model is unchanged).
++    private final boolean vacancyAvailability = Boolean.parseBoolean(ReslocProperties.get("resloc.region.vacancy.availability", "false"));
++    private double[] regStructVac;        // stock-weighted structural vacancy rate by region index
+     private final double moveScale = Double.parseDouble(ReslocProperties.get("resloc.move.scale", "1.0"));
+     private final double moveDuration = Double.parseDouble(ReslocProperties.get("resloc.move.duration", "0.0"));
+     private final double lnSearch = Math.log(Double.parseDouble(ReslocProperties.get("resloc.move.search.size", "20")));
+@@ -102,6 +114,24 @@ public class ReslocModel {
      private static final Map<Integer, double[]> gapAtEntry = new ConcurrentHashMap<>();   // household -> {tenure start year, gap}
      private double diagGap, diagGapEff, diagLnDur, diagP; private long diagN;
  
@@ -338,7 +1131,7 @@ index a4beed1..217978d 100644
      public ReslocModel(DataContainer dataContainer, AccessibilityLogsumMd accessibility) {
          this.dataContainer = dataContainer;
          this.geoData = dataContainer.getGeoData();
-@@ -115,13 +133,117 @@ public class ReslocModel {
+@@ -115,13 +145,117 @@ public class ReslocModel {
          zoneRegion = new int[zoneIds.length];
          for (int i = 0; i < zoneIds.length; i++) zoneRegion[i] = rIdx.get(geoData.getZones().get(zoneIds[i]).getRegion().getId());
          regionState = new int[regionIds.length]; regSchool = new double[regionIds.length]; regCrime = new double[regionIds.length];
@@ -457,7 +1250,7 @@ index a4beed1..217978d 100644
      }
  
      // ------------------------------------------------------------------------------------------------ input
-@@ -147,6 +269,9 @@ public class ReslocModel {
+@@ -147,6 +281,9 @@ public class ReslocModel {
          try (BufferedReader r = new BufferedReader(new FileReader(file))) {
              String[] h = r.readLine().split(",");
              int iR = col(h, "region"), iS = col(h, "state"), iSc = col(h, "school"), iC = col(h, "crime");
@@ -467,7 +1260,7 @@ index a4beed1..217978d 100644
              String line;
              while ((line = r.readLine()) != null) {
                  if (line.isBlank()) continue;
-@@ -154,6 +279,7 @@ public class ReslocModel {
+@@ -154,6 +291,7 @@ public class ReslocModel {
                  Integer k = rIdx.get(Integer.parseInt(x[iR].trim()));
                  if (k == null) continue;
                  regionState[k] = Integer.parseInt(x[iS].trim()); regSchool[k] = Double.parseDouble(x[iSc].trim()); regCrime[k] = Double.parseDouble(x[iC].trim());
@@ -475,7 +1268,38 @@ index a4beed1..217978d 100644
              }
          } catch (IOException e) {
              throw new RuntimeException("Could not read resloc region attributes " + file, e);
-@@ -263,12 +389,52 @@ public class ReslocModel {
+@@ -228,18 +366,29 @@ public class ReslocModel {
+     public void prepareYear() {
+         final int nz = zoneIds.length, nr = regionIds.length;
+         D = new double[nz][4];
+-        double[] costSum = new double[nz], dd = new double[nz];
++        double[] costSum = new double[nz], dd = new double[nz], sv = new double[nz];
+         for (Dwelling d : dataContainer.getRealEstateDataManager().getDwellings()) {
+             Integer i = zIdx.get(d.getZoneId());
+             if (i == null) continue;
+             D[i][cellType(d.getType().toString())]++;
+             costSum[i] += d.getPrice(); dd[i]++;
++            sv[i] += StructuralVacancy.rate(regionIds[zoneRegion[i]], d.getType());   // 2026-11-17: by region when structural.vacancy.file is set
+         }
+         lnCostZ = new double[nz];
+         for (int i = 0; i < nz; i++) lnCostZ[i] = Math.log(Math.max(dd[i] > 0 ? costSum[i] / dd[i] : 100, 100));
+         double[] regDd = new double[nr];
+         for (int i = 0; i < nz; i++) regDd[zoneRegion[i]] += dd[i];
+         regN = regDd;
++        if (vacancyAvailability) {
++            final double[] regSv = new double[nr];
++            for (int i = 0; i < nz; i++) regSv[zoneRegion[i]] += sv[i];
++            for (int r = 0; r < nr; r++) regSv[r] = regDd[r] > 0 ? regSv[r] / regDd[r] : 0;
++            regStructVac = regSv;
++            int below = 0; double amin = 1;
++            for (int r = 0; r < nr; r++) { final double x = availability(r); if (x < 1) below++; amin = Math.min(amin, x); }
++            logger.info("Residential location: vacancy availability on (resloc.region.vacancy.availability); " + below + " of " + nr
++                    + " regions below their structural vacancy at the start of " + currentYear + ", lowest availability " + String.format("%.3f", amin));
++        }
+         final IndexedDoubleMatrix2D car = dataContainer.getTravelTimes().getPeakSkim(TransportMode.car);
+         tZoneRegion = new float[nz][nr]; tRegionZoneCar = new float[nr][nz]; tRegionZoneP = new float[nr][nz];
+         for (int a = 0; a < nz; a++) {
+@@ -263,12 +412,52 @@ public class ReslocModel {
              ivDwellings.add(new ArrayList<>(v.subList(0, Math.min(ivSample, v.size()))));
          }
          cacheIvA.clear(); cacheIvB.clear();
@@ -528,7 +1352,7 @@ index a4beed1..217978d 100644
      private static int cellType(String t) {
          switch (t) {
              case "SFD": return 0;
-@@ -285,6 +451,8 @@ public class ReslocModel {
+@@ -285,6 +474,8 @@ public class ReslocModel {
      private final class Hh {
          final Household hh; final double inc, lninc, size, need, child, age65, nocar; final String group, seg;
          final int zone, region, state; final List<Integer> jobZones = new ArrayList<>();
@@ -537,7 +1361,7 @@ index a4beed1..217978d 100644
          Hh(Household hh, double incomeOverride) {
              this.hh = hh;
              inc = Math.max(incomeOverride > 0 ? incomeOverride : HouseholdUtil.getAnnualHhIncome(hh), 5000);
-@@ -325,6 +493,9 @@ public class ReslocModel {
+@@ -325,6 +516,9 @@ public class ReslocModel {
                      if (k != null) jobZones.add(k);
                  }
              }
@@ -547,7 +1371,7 @@ index a4beed1..217978d 100644
          }
      }
  
-@@ -335,6 +506,7 @@ public class ReslocModel {
+@@ -335,6 +529,7 @@ public class ReslocModel {
  
      // ------------------------------------------------------------------------------------------------ level 3: dwelling
      private double vDwelling(Hh h, int cost, int bedrooms, String type, int yearBuilt) {
@@ -555,7 +1379,7 @@ index a4beed1..217978d 100644
          final double b = Math.min(12. * cost / h.inc, 3.);
          double v = c(cDw, "bur_lo", h.group) * Math.min(b, .3) + c(cDw, "bur_mid", h.group) * Math.min(Math.max(b - .3, 0), .2)
                  + c(cDw, "bur_hi", h.group) * Math.max(b - .5, 0) + c(cDw, "lncost", h.group) * Math.log(Math.max(cost, 100))
-@@ -351,6 +523,7 @@ public class ReslocModel {
+@@ -351,6 +546,7 @@ public class ReslocModel {
  
      // ------------------------------------------------------------------------------------------------ level 2: zone x type cell
      private double vCellNoCommute(Hh h, int z, int t) {
@@ -563,7 +1387,7 @@ index a4beed1..217978d 100644
          final double aw = accessibility.getLogsum(zoneIds[z], h.seg, "work"), an = accessibility.getLogsum(zoneIds[z], h.seg, "nonwork");
          return cZone.getOrDefault("lnD", 1.) * Math.log(D[z][t]) + cZone.getOrDefault("accW", 0.) * aw + cZone.getOrDefault("accN", 0.) * an
                  + cZone.getOrDefault("accN_x_child", 0.) * an * h.child + cZone.getOrDefault("accN_x_age65", 0.) * an * h.age65
-@@ -364,6 +537,7 @@ public class ReslocModel {
+@@ -364,6 +560,7 @@ public class ReslocModel {
              double t = h.nocar > 0 ? pt[z][j] : dataContainer.getTravelTimes().getPeakSkim(TransportMode.car).getIndexed(zoneIds[z], zoneIds[j]);
              s += Math.log1p(Math.max(0, Math.min(t, 300)));
          }
@@ -571,7 +1395,7 @@ index a4beed1..217978d 100644
          return cZone.getOrDefault("commute_log", 0.) * s + cZone.getOrDefault("commute_log_x_inc", 0.) * s * h.lninc;
      }
  
-@@ -402,7 +576,14 @@ public class ReslocModel {
+@@ -402,7 +599,14 @@ public class ReslocModel {
  
      private double[] ivB(Household household, Hh h0) {
          final double ib = incBin(h0.inc);
@@ -587,7 +1411,7 @@ index a4beed1..217978d 100644
          return cacheIvB.computeIfAbsent(key, k -> {
              Hh h = new Hh(household, ib);
              double[] s = new double[regionIds.length], mx = new double[regionIds.length];
-@@ -422,7 +603,7 @@ public class ReslocModel {
+@@ -422,7 +626,7 @@ public class ReslocModel {
  
      private double[] ivA(Household household, Hh h0) {
          final double ib = incBin(h0.inc);
@@ -596,7 +1420,7 @@ index a4beed1..217978d 100644
          return cacheIvA.computeIfAbsent(key, k -> {
              Hh h = new Hh(household, ib);
              double[] out = new double[regionIds.length];
-@@ -447,6 +628,11 @@ public class ReslocModel {
+@@ -447,6 +651,11 @@ public class ReslocModel {
      private double regionTerms(Hh h, int r, double com) {
          final boolean same = r == h.region;
          double t = (same || h.zone < 0) ? 0 : tZoneRegion[h.zone][r];
@@ -608,7 +1432,7 @@ index a4beed1..217978d 100644
          return c(cReg, "d1", h.group) * Math.min(t, 20) + c(cReg, "d2", h.group) * Math.min(Math.max(t - 20, 0), 40) + c(cReg, "d3", h.group) * Math.max(t - 60, 0)
                  + c(cReg, "same_region", h.group) * (same ? 1 : 0) + c(cReg, "same_state", h.group) * (h.state == regionState[r] ? 1 : 0)
                  + c(cReg, "commute_log", h.group) * com + c(cReg, "commute_log_x_inc", h.group) * com * h.lninc
-@@ -498,6 +684,7 @@ public class ReslocModel {
+@@ -498,6 +707,7 @@ public class ReslocModel {
  
      /** cell utility without the size term (for a dwelling whose cell is empty in the stock counts) */
      private double vCellNoCommute0(Hh h, int z) {
@@ -616,8 +1440,34 @@ index a4beed1..217978d 100644
          final double aw = accessibility.getLogsum(zoneIds[z], h.seg, "work"), an = accessibility.getLogsum(zoneIds[z], h.seg, "nonwork");
          return cZone.getOrDefault("accW", 0.) * aw + cZone.getOrDefault("accN", 0.) * an
                  + cZone.getOrDefault("accN_x_child", 0.) * an * h.child + cZone.getOrDefault("accN_x_age65", 0.) * an * h.age65
+@@ -520,9 +730,10 @@ public class ReslocModel {
+         double s = 0, e = 0;
+         for (int r = 0; r < u.length; r++) {
+             if (!ok[r]) continue;
+-            final double w = Math.exp(u[r] - m);
++            final double w = Math.exp(u[r] - m) * availability(r);   // 2026-11-14: x a_r (= 1 when resloc.region.vacancy.availability is off)
+             s += w; e += w * (u[r] + lamB * (lnSearch - Math.log(regN[r])));
+         }
++        if (!(s > 0)) return 0;
+         final double emu = e / s;
+         final double uc = dwellingUtility(h, current);
+         if (Double.isInfinite(uc)) return 1;
+@@ -538,6 +749,13 @@ public class ReslocModel {
+         return p;
+     }
+ 
++    /** Baltimore 2026 (2026-11-14): availability a_r of region index r in the search (see vacancyAvailability); 1 when the switch is off */
++    public double availability(int r) {
++        if (!vacancyAvailability || regN == null || regStructVac == null || regN[r] <= 0 || regStructVac[r] <= 0) return 1.0;
++        final double v = dataContainer.getRealEstateDataManager().getNumberOfVacantDDinRegion(regionIds[r]) / regN[r];
++        return Math.min(1.0, v / regStructVac[r]);
++    }
++
+     public int regionIndex(Region region) {
+         return rIdx.get(region.getId());
+     }
 diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocProperties.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocProperties.java
-index c322247..1445915 100644
+index c322247..d5a647b 100644
 --- a/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocProperties.java
 +++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/models/resloc/ReslocProperties.java
 @@ -14,7 +14,12 @@ import java.util.Properties;
@@ -634,3 +1484,42 @@ index c322247..1445915 100644
   *   resloc.transit.skim           transit door-to-door peak time (FROM,TO,VALUE csv.gz; >= 999 = no path), as in the estimation
   *   resloc.acceptance             satisfaction (default: a searching household moves only if the found dwelling is better than its
   *                                 current one; under mnl compared with V_A + V_B - ln D_zt, otherwise with the satisfaction utility) | none
+@@ -24,6 +29,9 @@ import java.util.Properties;
+  *   resloc.move.search.size       dwellings sampled per search, K in the log-sum ln K + ln mean exp(.) (default 20)
+  *   resloc.tenure.file            years in the dwelling of the base-year households by age (age_from,age_to,dur_from,dur_to,share)
+  *   resloc.iv.dwelling.sample     market dwellings per region for the dwelling inclusive value (default 200)
++ *   resloc.region.vacancy.availability  true: the region weight of the search and of the move-or-not expected utility is
++ *                                 multiplied by min(1, vacancy rate / structural vacancy rate of the region's stock) (2026-11-14,
++ *                                 ReslocModel.availability); false (default): the model of record
+  *   accessibility.model           hansen (default: AccessibilityImpl) | logsum (AccessibilityLogsumMd)
+  *   accessibility.logsum.file     path of the logsum accessibility file with {year} for the skim year, e.g.
+  *                                 ../../../data/accessibility_{year}.csv (relative paths are relative to base.directory)
+diff --git a/useCases/maryland/src/main/java/de/tum/bgu/msm/run/ModelBuilderMstm.java b/useCases/maryland/src/main/java/de/tum/bgu/msm/run/ModelBuilderMstm.java
+index 0e26e2e..4b7c3e2 100644
+--- a/useCases/maryland/src/main/java/de/tum/bgu/msm/run/ModelBuilderMstm.java
++++ b/useCases/maryland/src/main/java/de/tum/bgu/msm/run/ModelBuilderMstm.java
+@@ -96,7 +96,12 @@ public class ModelBuilderMstm {
+                 dataContainer, movesModel, carOwnership, hhFactory,
+                 properties, new DefaultDivorceStrategy(), SiloUtil.provideNewRandom());
+ 
+-        DriversLicenseModel driversLicenseModel = new DriversLicenseModelImpl(dataContainer, properties, new DefaultDriversLicenseStrategy(), SiloUtil.provideNewRandom());
++        // 2026-11-15b: drivers.license.targets.file set = Maryland age profile (DriversLicenseModelMd); unset = the model of record.
++        // One provideNewRandom() call either way, so the random streams of the other models stay as in the runs of record.
++        final String licenceTargets = de.tum.bgu.msm.models.resloc.ReslocProperties.path("drivers.license.targets.file", null);
++        DriversLicenseModel driversLicenseModel = licenceTargets == null
++                ? new DriversLicenseModelImpl(dataContainer, properties, new DefaultDriversLicenseStrategy(), SiloUtil.provideNewRandom())
++                : new de.tum.bgu.msm.models.DriversLicenseModelMd(dataContainer, properties, licenceTargets, SiloUtil.provideNewRandom());
+ 
+         // Baltimore 2026: age-triggered school entry, school exit and retirement from a data file (EducationModelMd)
+         EducationModel educationModel = new EducationModelMd(dataContainer, properties, SiloUtil.provideNewRandom());
+@@ -112,6 +117,10 @@ public class ModelBuilderMstm {
+                 properties, new DefaultConstructionLocationStrategy(), new ScaledConstructionDemandStrategy(properties.realEstate.constructionDemandScaler, properties.realEstate.constructionDemandScalersFile.isBlank() ? null : properties.main.baseDirectory + properties.realEstate.constructionDemandScalersFile), SiloUtil.provideNewRandom());   // Baltimore 2026: calibrated to building permits
+ 
+ 
++        // Baltimore 2026-11-17: structural vacancy by region from the 2016 base stock (pricing and the search availability of ReslocModel;
++        // construction keeps the dwelling-type defaults, its scalers are calibrated to the building permits)
++        if (!properties.realEstate.structuralVacancyFile.isBlank())
++            de.tum.bgu.msm.data.dwelling.StructuralVacancy.load(properties.main.baseDirectory + properties.realEstate.structuralVacancyFile);
+         PricingModel pricing = new PricingModelImpl(dataContainer, properties, new DefaultPricingStrategy(), SiloUtil.provideNewRandom());
+ 
+         RenovationModel renovation = new RenovationModelImpl(dataContainer, properties, new DefaultRenovationStrategy(), SiloUtil.provideNewRandom());

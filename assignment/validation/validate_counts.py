@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Count validation of the MATSim 2024 stage (validation study, 2026-11-02): five assignment seeds against the MDOT SHA 2024 counts.
 
-Model   : residents of the Baltimore region only (ABIT 2024 replication closest to the median, BMR residents, no cordon gateways,
+Model   : residents of the Baltimore region only (MAST 2024 replication closest to the median, BMR residents, no cordon gateways,
           no external-external, background or truck traffic), network 2024 (Key Bridge closed), harbor tunnel tolls, USDOT value
           of time, 10 % sample, 100 iterations, seeds 1-5.  Nothing is fitted to the counts.
           Link volume (the bus fix of PRICING_HOME/00_research/validation_core.py): cars = (final link stats, averaged over iterations

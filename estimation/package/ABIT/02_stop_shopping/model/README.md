@@ -5,10 +5,11 @@ Article table: est_stop_SHOPPING_stop (Stop location, shopping). N 3,979, K 23.
 ## Model
 Multinomial logit over all 1,588 zones (no sampling of alternatives) with sequential anchors: a = the location the person comes from, b = the next anchor of the tour (primary destination or home).
 
-V_j = MU_size ln(1 + S_j) + detour pieces + mode-choice logsum of the detour + car generalised detour time + stop in the zone of a / of b + area dummies + ln(1 + retail jobs/km²) + land-use mix + outside the counties (states) of both anchors + ln(1 + detour) × person / tour flags
+V_j = B_ln_retail_jobs ln(1 + retail jobs_j) + detour pieces + mode-choice logsum of the detour + car generalised detour time + stop in the zone of a / of b + area dummies + ln(zone area, km²) + land-use mix + outside the counties (states) of both anchors + ln(1 + detour) × person / tour flags
 
 - detour t = max(0, d(a,j) + d(j,b) - d(a,b)), car distance of the 2016 skim (km, intrazonal 0.5 √area); pieces clip(t - lo, 0, hi - lo).
-- Size S_j: retail jobs only (no other component); MU_size estimated (1.274). Bounds as estimated: THETA in [-30, 15], MU_size in [0, 3].
+- Area dummies: Baltimore City, Washington DC, high job-density zone (at least 10,000 jobs per km²), Virginia, Delaware / Pennsylvania / West Virginia. The parameter `B_central_business_district` is the high job-density zone flag (zone column `cbd`).
+- Attraction: one variable, retail jobs, entered as B_ln_retail_jobs ln(1 + retail jobs_j). Zone area: area_j in km², at least 0.05 km². No bounds.
 - Location mixture (survey traffic zones spread over model zones): up to 4 anchor configurations c (zones of a and b, weight w_c) and up to 4 possible zones z_k of the stop (weight b_k):
   L_n = Σ_c w_c Σ_k b_k exp(V_c,z_k) / Σ_j exp(V_c,j), LL = Σ_n ln L_n. Exactly the likelihood of the estimation; no sampling, no approximation.
 - Unweighted, robust (sandwich) standard errors.
@@ -33,12 +34,15 @@ The data in `../input/data` is ready (391 MB estimation, 383 MB hold-out, float3
 ## Verification (estimation half, all 3,979 records)
 | | LL |
 |---|---|
-| Article LL(β) | -9,987.8 |
+| Article LL(β) | -9,982.6 |
 | Biogeme, article estimates | not run |
-| Biogeme, full-precision estimates | -9,987.8231 |
-| Project likelihood (estimate_fullset_taz.Chunk.ll), full precision / article | -9,987.8231 / -9,987.8234 |
+| Biogeme, full-precision estimates | -9,982.6479 |
+| Project likelihood, full precision | -9,982.6479 |
+| Project likelihood, hold-out half, full precision | -9,719.1726 |
 
-Biogeme evaluation: eager (`use_jit=False`), rows grouped by their number of anchor configurations (1-4); 43.8 min, peak 1.9 GB. By group (full precision): 1 configuration(s): N 3206, LL -8015.1099; 2 configuration(s): N 636, LL -1677.3684; 3 configuration(s): N 82, LL -209.2640; 4 configuration(s): N 55, LL -86.0808.
+Biogeme evaluation: eager (`use_jit=False`), rows grouped by their number of anchor configurations (1-4); 32.4 min, peak 3.1 GB. By group (full precision): 1 configuration(s): N 3206, LL -8011.6631; 2 configuration(s): N 636, LL -1675.5422; 3 configuration(s): N 82, LL -209.1704; 4 configuration(s): N 55, LL -86.2722.
+
+The hold-out half was also used in the specification search, so its log-likelihood is not a fully independent test.
 
 ## Estimation memory
 Measured (shopping stops, Biogeme 3.3.5 default JIT): compiling and evaluating the log-likelihood, its gradient and the BHHH matrix on 20 records with ONE anchor configuration took 29 min and 6.1 GB peak memory (compile dominated; the machine was under memory pressure). The estimation expression has up to 4 configurations (4 x 1,588 utilities plus the candidate zones, about 4 times larger), so compiling alone is expected to need about 25 GB or more and several hours, and the reverse-mode intermediates at run time about (expression nodes x records x 8 bytes), i.e. roughly 10-30 GB more (4,000-8,000 records); with the default analytical Hessian more again. Expected total: about 30-50 GB. This does not fit on this machine (48 GB, about 45 GB used by other jobs): the exact full-set mixture estimation in Biogeme is infeasible here and was not run. It needs a machine with about 64 GB free; in biogeme.toml set calculating_second_derivatives = "never" (BHHH) or analytical_hessian_mode = "chunked" to limit the Hessian. The likelihood is not changed or approximated. The evaluation at given coefficients (--evaluate, use_jit=False) needs under 2 GB.

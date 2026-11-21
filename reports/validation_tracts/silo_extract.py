@@ -5,7 +5,7 @@ runs; streams the large files with usecols / chunks.
 Year convention (as landuse/validation/validate_landuse.py: the engine writes the state at the END of simulated year Y under label Y):
   state 2016 = run/base/microData/*_2016.csv (input base);  state Y (Y > 2016) = file labelled Y-1
   (microData/{dd,jj,pp}_<Y-1>.csv, microData/futureYears/hh_<Y-1>.csv).  State 2024 = files labelled 2023 (identical to
-  futureYears/*_2024.csv, which ABIT reads).
+  futureYears/*_2024.csv, which MAST reads).
 Study area: zones of the six Baltimore-region counties (zoneSystem COUNTYFIPS).
 
 Output (out/cache/):

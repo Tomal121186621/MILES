@@ -9,7 +9,7 @@ Base (identical in work, school, shopping, other; blocks of RESPEC_PROTOCOL.md):
   2 impedance        generalised cost GC = T + 60 C / VOT (VOT = 0.5 x household income / 2,080 h), one coefficient for car driver,
                      car passenger, bus and train; round-trip km on the five non-reference modes
   5 areas            home zone core city, rural; main-activity zone core city, rural (five modes)
-  7 person / hh      age, male, licence, household size, household cars, fewer cars than drivers (control, applied as 0 in ABIT);
+  7 person / hh      age, male, licence, household size, household cars, fewer cars than drivers (control, applied as 0 in MAST);
                      joint household tour (control; shopping and other: the only segments with joint tours); accompanying and
                      recreation tour (other: the purposes inside the segment)
   8 nests            auto (CD, CP), transit (BUS, TRAIN), non-motorised (WK, BK), mu >= 1 (mu = 1: no nesting)

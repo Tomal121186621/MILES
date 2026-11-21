@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage 2b/3 check of the EDUCATION tours in an ABIT run.  Usage: python3 -I activity/checks/education_check.py <run name> [year]
+"""Stage 2b/3 check of the EDUCATION tours in an MAST run.  Usage: python3 -I activity/checks/education_check.py <run name> [year]
 
 Reads 3_abit/run/<name>/output/activities_<name>.csv and legs_<name>.csv, the SILO person file of the year (ages,
 occupation 3 = student; band elementary 5-10, middle 11-13, high 14-17, postsec 18+) and 3_abit/targets_education.csv.

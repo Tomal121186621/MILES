@@ -2,7 +2,7 @@
 # Copy of side_experiments/respec_2026-11/step_by_step/residential/r08_zone_multimodal.py
 # (manual-estimation package; only file paths changed, marked "# PATH (package)")
 """Zone x structure-type part: accessibility with car-based impedance (A, current) against multimodal impedance (A_ls: the
-destination models with the ABIT mode-choice logsum as impedance, so transit, walk and bike count), in the final specification
+destination models with the MAST mode-choice logsum as impedance, so transit, walk and bike count), in the final specification
 of r03_sequence.py.  Same households and sampled choice sets; non-nested forms compared by BIC on the estimation half; the
 validation half (full choice set) is used once, for the chosen form.
     python3 r08_zone_multimodal.py   ->  r08_fit.csv, r08_coef.csv"""

@@ -7,3 +7,5 @@
 - Files: baltimore-matsim-1.0.jar, classes/, tsclasses/
 - Notes: Java 21 required.
 
+
+- Files shipped: baltimore-matsim-1.0.jar, classes/, tsclasses/, copied 2026-11-17 from Updated MATSim/code/matsim-run/target (jar, build of 2026-11-17), Validation_2026/pipeline/java/classes, Validation_2026/3_abit/mode_choice/work/tsclasses (project-relative to VAE-SILO-MITO-MATSIM).

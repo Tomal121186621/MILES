@@ -7,3 +7,5 @@
 - Files: Gaz_tracts_national.txt
 - Notes: tract_zone.csv is provided (00_shared_data/rts_2017_18/survey_pop).
 
+
+- Files shipped: Gaz_tracts_national.txt, copied 2026-11-17 from I695_pricing/data/census (project-relative to VAE-SILO-MITO-MATSIM).

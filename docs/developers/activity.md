@@ -1,6 +1,6 @@
-# MILES-Day engine
+# MAST engine
 
-MILES-Day runs on the ABIT engine ([msmobility/abit](https://github.com/msmobility/abit)). Its own code is the
+MAST is built on the ABIT code base ([msmobility/abit](https://github.com/msmobility/abit)). Its own code is the
 package `abm.models.maryland` and the run class `abm.RunAbitMarylandLos`, in `activity/engine/ABIT/src/main/java`.
 
 ## Classes
@@ -11,7 +11,7 @@ package `abm.models.maryland` and the run class `abm.RunAbitMarylandLos`, in `ac
 | `abm.models.ModelSetupMaryland` | wires the sub-models; `mode.choice.model = tour_nl` selects the tour mode model |
 | `abm.io.input.MarylandLosDataReader` | reads zones, skims, the land-use households, persons, jobs, dwellings, schools and workplaces |
 | `MarylandTashaGenerator` | generation and scheduling from the survey distributions; outings, return home, stop relocation, tours (`tasha.generation=true`) |
-| `MarylandDestinationChoice` | destination and stop logits over all zones (`dest.choice.model=mnl`) |
+| `MarylandDestinationChoice` | destination and stop logits over all zones, one log attraction term per model (`dest.choice.model=mnl`) |
 | `MarylandTourNestedModeChoice` | tour mode choice by segment; household stage (joint tours, car allocation) |
 | `WorkAttendance` | daily work attendance |
 | `MarylandFullModeChoice`, `MarylandTourModeChoice`, `MarylandFrequencyGenerator`, `MarylandStopModel`, … | earlier paths, kept but switched off |

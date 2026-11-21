@@ -7,3 +7,5 @@
 - Files: maryland-latest.osm.pbf
 - Notes: Network building is the MATSim stage of the chain, outside this package.
 
+
+- Files shipped: maryland-latest.osm.pbf, copied 2026-11-17 from inputs/osm (project-relative to VAE-SILO-MITO-MATSIM).

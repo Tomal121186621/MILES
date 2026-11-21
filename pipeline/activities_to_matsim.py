@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ABIT weekly plans -> MATSim population of the Baltimore study area (stage 3 -> stage 4 bridge of the integrated loop).
+"""MAST weekly plans -> MATSim population of the Baltimore study area (stage 3 -> stage 4 bridge of the integrated loop).
 
 Port of ABIT/validation/build_studyarea.py (the converter of the earlier chain) with the paths as arguments, so that it runs on any
 chain year.  The method: (1) one representative weekday per person (activity/lib/representative_day.py, single_day_legs: MONDAY for every person since the
@@ -12,22 +12,22 @@ SILO household and person files of the same year.
 
 Differences to the earlier script, stated: SILO column names of the rebuilt chain (hhID); EDUCATION activities keep their own
 type (the MATSim runner scores "education"; the old script folded it into "other" because its runner did not); the 18 % work-from-home
-lever is OFF by default (ABIT now samples daily work attendance in the model, wfh.attendance.file) and the gateway budget is
+lever is OFF by default (MAST now samples daily work attendance in the model, wfh.attendance.file) and the gateway budget is
 scaled by --expansion (1/sample) instead of a fixed 10.
 
 Usage: python pipeline/activities_to_matsim.py --activities A.csv --legs L.csv --pp pp_Y.csv --hh hh_Y.csv --out population.xml.gz
                              [--expansion 10] [--wfh-pct 0] [--seed 20260707] [--residents-only]
---activities / --legs may also be the parquet files of the final ABIT runs (activities_full.parquet / legs_full.parquet, all columns
+--activities / --legs may also be the parquet files of the final MAST runs (activities_full.parquet / legs_full.parquet, all columns
 as text, same column names as the CSV).  hhIncome: the SILO household file has no income column in the rebuilt chain, so the household
-income is the sum over ALL members of the household in the person file, as ABIT computes it (12 x sum of int(annual)/12, integer
+income is the sum over ALL members of the household in the person file, as MAST computes it (12 x sum of int(annual)/12, integer
 arithmetic of MarylandDataReaderManager + MarylandTourNestedModeChoice).
 --residents-only (2026-11-02, validation study): only persons whose home zone is in the BMR are kept (inflow persons = non-residents are
 dropped, as are external-external persons); the cordon gateways are switched off (no snapping to count stations, no count-derived
-budgets): activities of residents outside the BMR keep their ABIT coordinates.
+budgets): activities of residents outside the BMR keep their MAST coordinates.
 --no-gateways (2026-11-02, the definition used for the validation runs): "residents only" means no synthetic or fitted traffic (no cordon
 gateways, external-external fills or copied background), not fewer chain persons: every SILO/ABIT person with a tour touching the BMR is
 kept (intra, inflow, outflow; external-external persons dropped as before), the gateways and the count-derived inflow cap are off, and
-activities outside the BMR keep their ABIT coordinates (MATSim attaches them to the nearest network link, i.e. at the network edge).
+activities outside the BMR keep their MAST coordinates (MATSim attaches them to the nearest network link, i.e. at the network edge).
 Prints the cut statistics (tours by flow, persons kept, legs, attribute coverage, POI placement levels)."""
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..')))
@@ -56,6 +56,7 @@ ap.add_argument("--poi", default=f"{ABIT}/input/maryland/poi_index_26985.pkl")
 ap.add_argument("--home-buildings", default=f"{ABIT}/input/maryland/home_osm_buildings_26985.pkl")
 ap.add_argument("--home-streets", default=f"{ABIT}/input/maryland/home_resid_index_26985.pkl")
 ap.add_argument("--zone-shp", default=f"{ABIT}/input/mito_los/Zonal/SMZ_RMZ_02152011inMSTM_EPSG26918.shp")
+ap.add_argument("--pt-submodes", action="store_true", help="transit legs as MAST chose them, mode bus (BUS) or train (TRAIN, TRAM_METRO), routed by RunBaltimoreToll -Dpt.submodes=true on the bus-only schedule or the full schedule; default: every transit leg mode pt")
 a = ap.parse_args()
 NOGW = a.residents_only or a.no_gateways   # gateways and the inflow cap off
 for f in [a.activities, a.legs, a.pp, a.hh, a.zone_attributes, a.zone_system, a.bmr, a.gateways, a.poi, a.home_buildings, a.home_streets, a.zone_shp]:
@@ -65,7 +66,7 @@ BMR = set(int(z) for z in open(a.bmr) if z.strip().isdigit())
 zcent = {int(r["id"]): (float(r["x"]), float(r["y"])) for r in csv.DictReader(open(a.zone_attributes))}
 zcounty = {int(r["Zone"]): r["COUNTYFIPS"] for r in csv.DictReader(open(a.zone_system))}
 def rows(path):
-    """dict rows of a CSV or of a parquet file (the final ABIT runs keep legs/activities as parquet with text columns)."""
+    """dict rows of a CSV or of a parquet file (the final MAST runs keep legs/activities as parquet with text columns)."""
     if str(path).endswith(".parquet"):
         import pyarrow.parquet as pq
         for b in pq.ParquetFile(path).iter_batches(batch_size=200000):
@@ -105,7 +106,7 @@ if a.no_gateways and not a.residents_only: print("  no gateways: all chain perso
 if a.residents_only: print(f"  residents only: {n_nonres:,} non-resident persons (home outside the BMR, travelling into it) dropped; cordon gateways off")
 
 # ---- SILO attributes of the kept persons ----
-pp = {}; hhinc_m = collections.Counter()   # household monthly income = sum over all members of int(annual)/12 (ABIT)
+pp = {}; hhinc_m = collections.Counter()   # household monthly income = sum over all members of int(annual)/12 (MAST)
 for r in csv.DictReader(open(a.pp)):
     if r["id"] in kept: pp[r["id"]] = r
     try: hhinc_m[r.get("hhID", r.get("hhid"))] += int(float(r["income"])) // 12
@@ -117,6 +118,7 @@ for r in csv.DictReader(open(a.hh)):
 
 # ---- legs of the kept persons ----
 MODEMAP = {"CAR_DRIVER": "car", "CAR_PASSENGER": "ride", "BUS": "pt", "TRAIN": "pt", "TRAM_METRO": "pt", "WALK": "walk", "BIKE": "bike"}
+if a.pt_submodes: MODEMAP.update({"BUS": "bus", "TRAIN": "train", "TRAM_METRO": "train"})
 ACTMAP = {"HOME": "home", "WORK": "work", "EDUCATION": "education", "SHOPPING": "shopping", "OTHER": "other", "RECREATION": "other", "ACCOMPANY": "other", "SUBTOUR": "other"}
 legs_by = collections.defaultdict(list)
 for r in rows(a.legs):
@@ -196,8 +198,8 @@ def rand_in_zone(zone):
         px, py = random.uniform(x0, x1), random.uniform(y0, y1)
         if pg.contains(Point(px, py)): return T.transform(px, py)
     return None
-# Distance slopes (per km, knots 1, 2, 5, 10, 20, 50 km) of ABIT's primary-destination models (Tables est_dc_*); network km = 1.3 x straight line.
-# Conditional on the zone ABIT chose, a POI k is drawn with probability proportional to exp(f(1.3 d_k)), d_k its distance from the previous
+# Distance slopes (per km, knots 1, 2, 5, 10, 20, 50 km) of MAST's primary-destination models (Tables est_dc_*); network km = 1.3 x straight line.
+# Conditional on the zone MAST chose, a POI k is drawn with probability proportional to exp(f(1.3 d_k)), d_k its distance from the previous
 # placed activity: the destination model's own distance utility applied to the POIs (equal size each) inside the chosen zone.  Nothing fitted.
 DC_SLOPES = {"OTHER": [-2.0675, -1.0635, -0.3325, -0.1866, -0.0987, -0.0519, 0.0058], "SHOPPING": [-5.0864, -0.7955, -0.5628, -0.1962, -0.1546, -0.0619, 0.0147],
              "RECREATION": [-3.2715, -0.907, -0.4408, -0.1761, -0.1215, -0.0777, 0.0015], "ACCOMPANY": [-0.0462, -0.49, -0.2724, -0.1543, -0.0609, -0.0382, 0.0319]}

@@ -8,9 +8,9 @@
     | **Code** | `assignment/` |
     | **Road network** | OpenStreetMap via pt2matsim; 214,716 nodes, 474,037 links |
     | **Transit** | 18 GTFS feeds, one weekday, mapped with pt2matsim |
-    | **Demand** | MILES-Day weekday plans, 10 % sample, modes fixed |
+    | **Demand** | MAST weekday plans, 10 % sample, modes fixed |
     | **Choices** | Route, departure time |
-    | **Runs** | 100 iterations × 5 seeds |
+    | **Runs** | 100 iterations; three independent chains, seeds 1–3 |
 
 Each iteration, every agent executes one plan in a queue simulation; the plan is scored, and a share of agents
 changes its route or departure time. After 100 iterations the link volumes are read for validation.
@@ -35,7 +35,7 @@ changes its route or departure time. After 100 iterations the link volumes are r
 |---|---|---:|
 | Home | OSM residential building in the home zone<sup>a</sup> | all |
 | Other, inside the study area | OSM point of interest of the matching category in the chosen zone<sup>b</sup> | 590,509 |
-| Outside the study area | Coordinate from MILES-Day | 82,891 |
+| Outside the study area | Coordinate from MAST | 82,891 |
 
 <div class="tnote" markdown>
 
@@ -222,14 +222,14 @@ Capacity and PCE are multiplied by the sample rate (0.1) in each run.
 
 ## 4. Simulation set-up
 
-Values of the 2024 validation runs.
+Values of the final 2024 runs.
 
 **Table 11.** Simulation.
 
 | Parameter | Value |
 |---|---|
 | Iterations | 100 |
-| Random seeds | 1–5 |
+| Random seeds | 1–3 (one run per land-use seed) |
 | Flow capacity factor | 0.1 |
 | Storage capacity factor | 0.1778 (= 0.1<sup>0.75</sup>) |
 | Traffic dynamics | queue, FIFO |
@@ -249,8 +249,8 @@ Values of the 2024 validation runs.
 | Transit router | SwissRailRaptor |
 | Stop search radius | 4,000 m |
 | Extension radius | 2,000 m |
-| Transfer walk, max. | 100 m |
-| Transfer penalty | 0 |
+| Transfer walk, max. | 300 m |
+| Transfer penalty | −0.13 utils (about 10 in-vehicle minutes) |
 | Capacity constraints | off |
 
 <div class="tnote" markdown>
@@ -275,7 +275,8 @@ Plans kept per agent: 5. Innovation off after iteration 90. No mode choice.
 |---|---:|---|
 | Performing | 0.78 | utils/h |
 | Late arrival | −1.872 | utils/h |
-| Waiting for transit | −1.02 | utils/h |
+| Waiting for transit | 0 | utils/h |
+| Transfer (line switch) | −0.13 | utils |
 | Marginal utility of money | 0.78 / VOT<sup>a</sup> | utils/$ |
 
 <div class="tnote" markdown>
@@ -288,13 +289,15 @@ Plans kept per agent: 5. Innovation off after iteration 90. No mode choice.
 
 | Mode | Travel time (utils/h) | Distance cost ($/km) |
 |---|---:|---:|
-| Car | 0 | 0.075 |
-| Ride | 0 | 0.075 |
-| Transit | −1.02 | 0.50 |
-| Walk | −4.40 | — |
-| Bike | −2.345 | — |
+| Car | 0 | 0.1112 |
+| Ride | 0 | 0 |
+| Transit | 0 | 0 |
+| Walk | 0 | — |
+| Bike | 0 | — |
 
-Time spent travelling also loses the performing rate (0.78 utils/h). Mode constants have no effect (no mode choice).
+Every travel minute loses only the performing rate (0.78 utils/h), so all minutes are valued alike, as in the
+generalised cost of the MAST work tour-mode model. Car operating cost: AAA 2017; the car passenger does not pay;
+transit fares are flat per ride and do not affect the route. Mode constants are 0 (no mode choice).
 
 **Table 16.** Activity types.
 
@@ -338,8 +341,8 @@ Validation: [Traffic](../calibration-validation/validation/traffic.md),
 ```bash
 miles assignment network      # road networks 2024 and 2026
 miles assignment transit      # GTFS merge, conversion, mapping
-miles assignment plans        # MILES-Day plans -> MATSim population
+miles assignment plans        # MAST plans -> MATSim population
 miles assignment run          # one run
-miles assignment seeds        # five seeds
+miles assignment seeds        # several seeds
 miles assignment validate     # counts, screenlines, counters
 ```

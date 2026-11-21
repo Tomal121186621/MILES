@@ -6,17 +6,14 @@ Multinomial logit over the full choice set of 1,588 zones, anchor = home h, trac
 (candidate zones z_k, weights b_k).  For a record of purpose p:
 
     L_n = sum_c w_c [ sum_k b_k exp(U_c,z_k) ] / [ sum_j exp(U_c,j) ]      (one configuration, w_0 = 1);  LL = sum_n ln L_n
-    U_pj = mu_p (B_ln_distance ln d_hj + B_car_generalised_time cgt_hj + B_retail_density lnretden_j + B_land_use_mix mix_j
-                 + B_outside_home_county [county_j != county_h] + B_outside_home_state [state_j != state_h])
-           + 1 x ln(1 + S_pj)
-    S_Nj = school_pupils_j + exp(THETA_N_population) population_j + exp(THETA_N_office) office_jobs_j
-    S_Dj = retail_j + exp(THETA_D_school) school_pupils_j + exp(THETA_D_population) population_j
-    mu_N = 1 (normalised), mu_D = SCALE_daycare.
+    U_pj = mu_p (B_ln_distance ln d_hj + B_car_generalised_time cgt_hj + B_ln_zone_area_km2 ln(area_j) + B_land_use_mix mix_j
+                 + B_outside_home_county [county_j != county_h] + B_outside_home_state [state_j != state_h]
+                 + B_ln_school_enrolment_p ln(1 + school_enrolment_j))
+    mu_N = 1 (normalised), mu_D = SCALE_daycare;  area_j = zone area (km2), at least 0.05.
 
-The six linear coefficients are shared by the two purposes.  The size coefficient is held at its bound 1 for both purposes; as in
-the project estimator (pool_core.ParEngine, dc_model.Spec mu_fixed), a size coefficient held at a value is a constant and is NOT
-multiplied by the purpose scale, so the size term enters U_D as 1 x ln(1 + S_Dj).  Size weights (theta) are never scaled.
-Bounds: THETA in [-30, 15], SCALE_daycare in [0.01, 50].  The interaction terms that the pooling held at 0 (ln distance x cars,
+The six linear coefficients are shared by the two purposes; the coefficient of ln(1 + school enrolment) is purpose specific.
+All coefficients are in V units (the effective coefficient of daycare is SCALE_daycare times the reported one).
+Bounds: SCALE_daycare in [0.01, 50].  The interaction terms that the pooling held at 0 (ln distance x cars,
 age, children, worker, time of day: pool_core Structure.fixed) are left out.  Unweighted, robust (sandwich) standard errors.
 
     ~/.venvs/biogeme/bin/python estimate_school_daycare_without_record_pooled.py                 # estimate (results in ../output)
@@ -37,6 +34,15 @@ ZONES = pd.read_csv(os.path.join(HERE, "..", "..", "00_shared_data", "zones", "z
 NZ = len(ZONES)
 ZA = {a: ZONES[a].astype(float).tolist() for a in ["bc", "dcz", "cbd", "va", "othst", "lnretden", "mix", "pop", "ret", "off", "oth", "stu"]}
 ZA["cnty"] = ZONES.countyfips.astype(float).tolist(); ZA["st"] = ZONES.state.astype(float).tolist()
+LNAREA = np.log(ZONES.area_km2.clip(lower=0.05).to_numpy(float))       # ln(zone area, km2; at least 0.05, as in the retail density)
+ZA["lnarea"] = LNAREA.tolist()
+
+
+def add_lnarea(df):
+    """candidate columns cand_lnarea_<k> from the candidate zone index cz_<k> (not stored in the Biogeme data)"""
+    for k in range(sum(c.startswith("cz_") for c in df.columns)):
+        df[f"cand_lnarea_{k}"] = LNAREA[df[f"cz_{k}"].to_numpy().astype(int)]
+    return df
 
 
 class At:
@@ -78,14 +84,12 @@ def piece(d, lo, hi):
 NAME = "school_daycare_without_record_pooled"
 B_ln_distance = Beta("B_ln_distance", 0.0, None, None, 0)
 B_cgt = Beta("B_car_generalised_time", 0.0, None, None, 0)
-B_retail_density = Beta("B_retail_density", 0.0, None, None, 0)
+B_ln_zone_area = Beta("B_ln_zone_area_km2", 0.0, None, None, 0)
 B_land_use_mix = Beta("B_land_use_mix", 0.0, None, None, 0)
 B_outside_county = Beta("B_outside_home_county", 0.0, None, None, 0)
 B_outside_state = Beta("B_outside_home_state", 0.0, None, None, 0)
-THETA_N_population = Beta("THETA_nonstudent_school_population", -2.0, -30.0, 15.0, 0)   # base: school pupils
-THETA_N_office = Beta("THETA_nonstudent_school_office_jobs", -2.0, -30.0, 15.0, 0)
-THETA_D_school = Beta("THETA_daycare_school_pupils", -2.0, -30.0, 15.0, 0)               # base: retail jobs
-THETA_D_population = Beta("THETA_daycare_population", -2.0, -30.0, 15.0, 0)
+B_ln_stu_N = Beta("B_ln_school_enrolment_nonstudent_school", 0.5, None, None, 0)       # attraction: ln(1 + school enrolment)
+B_ln_stu_D = Beta("B_ln_school_enrolment_daycare", 0.5, None, None, 0)
 SCALE_daycare = Beta("SCALE_daycare", 1.0, 0.01, 50.0, 0)
 DAYCARE = Variable("purpose_id")                       # 0 non-student school, 1 daycare
 SCALE = (1 - DAYCARE) + DAYCARE * SCALE_daycare
@@ -93,11 +97,11 @@ SCALE = (1 - DAYCARE) + DAYCARE * SCALE_daycare
 
 def utility(g):
     c = g.c; d = g.x("imp")
-    lin = [B_ln_distance * log(d), B_cgt * g.x("cgt"), times(B_retail_density, g.z("lnretden")), times(B_land_use_mix, g.z("mix")),
-           B_outside_county * (Variable(f"cnty_a_{c}") != g.z("cnty")), B_outside_state * (Variable(f"st_a_{c}") != g.z("st"))]
-    sN = ln_size(g.z("stu"), [(THETA_N_population, g.z("pop")), (THETA_N_office, g.z("off"))])
-    sD = ln_size(g.z("ret"), [(THETA_D_school, g.z("stu")), (THETA_D_population, g.z("pop"))])
-    return SCALE * MultipleSum([t for t in lin if t is not None]) + (1 - DAYCARE) * sN + DAYCARE * sD
+    lnstu = ln_size(g.z("stu"), [])
+    lin = [B_ln_distance * log(d), B_cgt * g.x("cgt"), times(B_ln_zone_area, g.z("lnarea")), times(B_land_use_mix, g.z("mix")),
+           B_outside_county * (Variable(f"cnty_a_{c}") != g.z("cnty")), B_outside_state * (Variable(f"st_a_{c}") != g.z("st")),
+           times((1 - DAYCARE) * B_ln_stu_N + DAYCARE * B_ln_stu_D, lnstu)]
+    return SCALE * MultipleSum([t for t in lin if t is not None])
 
 
 def loglike(n_cfg, n_cand):
@@ -113,7 +117,7 @@ def read(half):
     folder = os.path.join(DATA, "estimation" if half == "estimation" else "holdout")
     meta = json.load(open(os.path.join(folder, "biogeme_meta.json")))
     df = pd.concat([pd.read_parquet(f) for f in sorted(glob.glob(os.path.join(folder, "biogeme_part*.parquet")))], ignore_index=True)
-    return df.astype("float64"), meta
+    return add_lnarea(df.astype("float64")), meta
 
 
 def reference(at):

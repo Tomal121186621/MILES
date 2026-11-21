@@ -1,0 +1,485 @@
+{
+ "model": "Residential location: PUMA of moving households (two-level model, upper level)",
+ "article_table": "est_resloc_puma",
+ "purpose": "Upper level of the two-level residential location model: which PUMA a moving household chooses; the dwelling level enters through its inclusive value with coefficient 1.",
+ "depends_on": [
+  {
+   "folder": "02_residential_dwelling",
+   "why": "the inclusive value of the dwelling level is a data column (computed with the dwelling-level estimates)"
+  }
+ ],
+ "data_sources": [
+  {
+   "name": "ACS PUMS 2014-2018 5-year, household and person files",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www2.census.gov/programs-surveys/acs/data/pums/2018/5-Year/",
+   "how": "Download csv_h<st>.zip and csv_p<st>.zip for st = dc, de, md, pa, va, wv from the 2018 5-Year folder (CSV, not SAS). Variables used: SERIALNO, ST, PUMA, MIGPUMA, MIGSP, POWPUMA, POWSP, MIG, MV, RELP, AGEP, ESR, JWMNP, SCHG, NP, TYPE, BDSP, BLD, TEN, GRNTP, SMOCP, VALP, HINCP, VEH, YBL, WGTP; ADJINC (income adjustment) and ADJHSG (housing-cost adjustment) are columns of the same files.",
+   "place_in": "00_shared_data/raw/acs_pums_2014_2018_5yr/",
+   "files": [
+    "csv_hdc.zip",
+    "csv_hde.zip",
+    "csv_hmd.zip",
+    "csv_hpa.zip",
+    "csv_hva.zip",
+    "csv_hwv.zip",
+    "csv_pdc.zip",
+    "csv_pde.zip",
+    "csv_pmd.zip",
+    "csv_ppa.zip",
+    "csv_pva.zip",
+    "csv_pwv.zip"
+   ],
+   "notes": [
+    "URL: the folder of the documented 2019 and 2024 5-Year files (2_silo/data_sources.md) with the year 2018: verify.",
+    "The package copy is 00_shared_data/acs_pums_2014_2018_5yr/ (project: ../inputs/pums_2018_5yr/). The package scripts read the package copy; replace its files by your download."
+   ]
+  },
+  {
+   "name": "2010 Census tract to 2010 PUMA relationship file",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www2.census.gov/geo/docs/maps-data/data/rel/2010_Census_Tract_to_2010_PUMA.txt",
+   "how": "Download the national text file.",
+   "place_in": "00_shared_data/raw/geo/",
+   "files": [
+    "2010_Census_Tract_to_2010_PUMA.txt"
+   ],
+   "notes": [
+    "Project location: data/raw/resloc/ (read by s01_geography.py through RAW).",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/geo/\" ../../../data/raw/resloc (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "PUMA to MIGPUMA and POWPUMA crosswalk (2010 geography)",
+   "provider": "IPUMS USA",
+   "url": "https://usa.ipums.org/usa/resources/volii/puma_migpuma1_pwpuma00.xls",
+   "how": "Download the xls.",
+   "place_in": "00_shared_data/raw/geo/",
+   "files": [
+    "puma_migpuma1_pwpuma00.xls"
+   ],
+   "notes": [
+    "Project location: data/raw/resloc/.",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/geo/\" ../../../data/raw/resloc (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "Census Gazetteer, national tract file (land area, internal points)",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html",
+   "how": "Gazetteer files, census tracts, national file (the project uses Gaz_tracts_national.txt).",
+   "place_in": "00_shared_data/raw/geo/",
+   "files": [
+    "Gaz_tracts_national.txt"
+   ],
+   "notes": [
+    "verify: URL not documented in the project; landing page given.",
+    "Project location: ../I695_pricing/data/census/ (rc.GAZ)."
+   ]
+  },
+  {
+   "name": "MSTM zone system, zone polygons and peak car skim (Maryland Statewide Transportation Model)",
+   "provider": "Maryland Department of Transportation State Highway Administration (MDOT SHA), provided to the project",
+   "url": "https://roads.maryland.gov",
+   "how": "Not a public download: the 1,588-zone MSTM system (zoneSystem.csv), zone polygons (SMZ_RMZ_02152011inMSTM_EPSG26918.shp) and the AM-peak auto travel-time skim were provided by MDOT. Request them from MDOT SHA (MSTM / travel forecasting).",
+   "place_in": "00_shared_data/raw/mstm/",
+   "files": [
+    "zoneSystem.csv",
+    "SMZ_RMZ_02152011inMSTM_EPSG26918.shp/.shx/.dbf/.prj",
+    "auto_peak_time.csv.gz"
+   ],
+   "notes": [
+    "verify: landing page only; the data are MDOT-provided.",
+    "Project copies: 2_silo/input/zoneSystem.csv, ../ABIT/input/mito_los/Zonal/*.shp, 2_silo/input/skims/auto_peak_time.csv.gz; package copies in 00_shared_data/zone_system and 00_shared_data/skims (used by the package scripts)."
+   ]
+  },
+  {
+   "name": "CPI-U, U.S. city average, all items (annual averages 2014-2023)",
+   "provider": "U.S. Bureau of Labor Statistics",
+   "url": "https://data.bls.gov/timeseries/CUUR0000SA0",
+   "how": "Series CUUR0000SA0, annual averages; the values are typed in rc.py (CPI dict) and used to express incomes in 2016 dollars.",
+   "place_in": "00_shared_data/raw/cpi/",
+   "files": [],
+   "notes": [
+    "verify: landing page of the series; no file is read (constants in rc.py)."
+   ]
+  },
+  {
+   "name": "Uniform Crime Reporting 2016, index offenses by county",
+   "provider": "MD Statistical Analysis Center / Maryland Open Data; FBI UCR; Pennsylvania State Police; Delaware SAC",
+   "url": "https://opendata.maryland.gov/api/views/jwfa-fdxs/rows.csv?accessType=DOWNLOAD",
+   "how": "Maryland: Open Data CSV 'Violent Crime & Property Crime by County: 1975 to Present', year 2016. Other states: FBI Crime in the United States 2016 Table 3 (https://ucr.fbi.gov/crime-in-the-u.s/2016/crime-in-the-u.s.-2016/tables/table-3) and Tables 6 and 8 state cuts for DE, DC, VA, WV (.../table-6/table-6-state-cuts/<state>.xls, .../table-8/table-8-state-cuts/<state>.xls); Pennsylvania https://www.ucr.pa.gov/paucrspublic/Publication/Archived/21.2016AnnualReport.pdf (Table 2); Delaware https://sac.delaware.gov/wp-content/uploads/sites/64/2017/04/Crime-in-Delaware-2012-2016.pdf. Denominator: Census PEP co-est2020-alldata.csv (see pep).",
+   "place_in": "00_shared_data/raw/crime/",
+   "files": [
+    "rows.csv (Maryland)",
+    "table-6/table-8 state-cut .xls files",
+    "21.2016AnnualReport.pdf",
+    "Crime-in-Delaware-2012-2016.pdf"
+   ],
+   "notes": [
+    "Built into crimeIndex.csv by 2_silo/input_build/build_crime_index.py (per-county source in data/crime_index_sources.csv).",
+    "Project location: data/raw/crime/.",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/crime/\" ../../../data/raw/crime (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "Census Population Estimates, county totals 2010-2020",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www2.census.gov/programs-surveys/popest/datasets/2010-2020/counties/totals/co-est2020-alldata.csv",
+   "how": "Download the CSV.",
+   "place_in": "00_shared_data/raw/pep/",
+   "files": [
+    "co-est2020-alldata.csv"
+   ],
+   "notes": [
+    "Project location: data/raw/pep/ (crime-rate denominators).",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/pep/\" ../../../data/raw/pep (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "Regional Travel Survey 2017/18 (household, person, trip records)",
+   "provider": "Baltimore Metropolitan Council (BMC) and National Capital Region Transportation Planning Board (TPB/MWCOG)",
+   "url": "https://www.baltometro.org",
+   "how": "Restricted: request the 2017/2018 Regional Travel Survey data from BMC / TPB. File used: RTS_raw_flat_data.csv (flat person-level file with household fields: household_id, person_id, home_state_county_fips, home_tract_fips, home_type, hhsize, numvehicle, numdrivers, hh_income_detailed, wthhfin, wtperfin, age, age_group, employment_status, j1_workplace_loc, work_state_county_fips, work_tract_fips, license, school locations and BMC/TPB TAZ codes). Also rts_trips_clean.csv (cleaned trips) for the synthetic-population workplace step.",
+   "place_in": "00_shared_data/raw/rts_2017_18/",
+   "files": [
+    "RTS_raw_flat_data.csv",
+    "rts_trips_clean.csv"
+   ],
+   "notes": [
+    "verify: landing page only; restricted data.",
+    "Project location: ../ABIT/input/rts/. Package copy: 00_shared_data/rts_2017_18/ (with rts_split.csv, the project's random 50/50 household split, and tract_zone.csv, the tract-to-zone table of 3_abit/survey_pop)."
+   ]
+  },
+  {
+   "name": "LEHD LODES 8, Workplace Area Characteristics 2016 and geography crosswalk, Maryland",
+   "provider": "U.S. Census Bureau, LEHD",
+   "url": "https://lehd.ces.census.gov/data/lodes/LODES8/md/wac/md_wac_S000_JT00_2016.csv.gz",
+   "how": "Download md_wac_S000_JT00_2016.csv.gz and https://lehd.ces.census.gov/data/lodes/LODES8/md/md_xwalk.csv.gz (other states: .../LODES8/<st>/wac/<st>_wac_S000_JT00_<year>.csv.gz). Workplace zone attributes (high-earning share CE03/C000) use the 2017 WAC files of md, dc, va, pa, de, wv: https://lehd.ces.census.gov/data/lodes/LODES8/<st>/wac/<st>_wac_S000_JT00_2017.csv.gz (project: data/raw/lodes_wac/ and data/raw/lodes_wac_2017_extra/).",
+   "place_in": "00_shared_data/raw/lodes_wac/",
+   "files": [
+    "md_wac_S000_JT00_2016.csv.gz",
+    "md_xwalk.csv.gz",
+    "<st>_wac_S000_JT00_2017.csv.gz (st = md, dc, va, pa, de, wv)"
+   ],
+   "notes": [
+    "Project location: data/raw/lodes_wac/ (2016 jobs of the synthetic population; job types and high-earning shares of the workplace zones).",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/lodes_wac/\" ../../../data/raw/lodes_wac (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "BLS JOLTS job-openings rate, Maryland",
+   "provider": "U.S. Bureau of Labor Statistics",
+   "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/JTS000000240000000JOR",
+   "how": "BLS public API v1, series JTS000000240000000JOR (Maryland) and JTS000000000000000JOR (U.S.), annual mean of monthly SA values.",
+   "place_in": "00_shared_data/raw/jolts/",
+   "files": [
+    "jolts_bls_api.json"
+   ],
+   "notes": [
+    "URL: API endpoint built from the series ids documented in 2_silo/data_sources.md: verify.",
+    "Project result: 1_vae/vacancy_rate.json."
+   ]
+  },
+  {
+   "name": "Census 2010 Redistricting (PL 94-171) Maryland file and TIGER 2010 blocks and tracts",
+   "provider": "U.S. Census Bureau",
+   "url": "https://www2.census.gov/census_2010/01-Redistricting_File--PL_94-171/Maryland/",
+   "how": "md2010.pl.zip (geo file and segment 2, housing units H1) and TIGER/Line 2010 tl_2010_24_tabblock10.zip; tracts tl_2010_<st>_tract10.zip for st = 10, 11, 24, 42, 51, 54 (https://www2.census.gov/geo/tiger/TIGER2010/TRACT/2010/).",
+   "place_in": "00_shared_data/raw/census2010/",
+   "files": [
+    "md2010.pl.zip",
+    "tl_2010_24_tabblock10.zip",
+    "tl_2010_<st>_tract10.zip"
+   ],
+   "notes": [
+    "verify: URLs not documented in the project (folders of the Census site).",
+    "Project locations: data/raw/census2010/, data/raw/tiger_tracts_2010/.",
+    "The project scripts read the project locations given in 'notes' (paths relative to Validation_2026/). After downloading into place_in, link it there, e.g. ln -s \"$PWD/../00_shared_data/raw/census2010/\" ../../../data/raw/census2010 (run from the model folder; back up the existing folder first)."
+   ]
+  },
+  {
+   "name": "GTFS schedules: MTA Maryland and the regional operators",
+   "provider": "MDOT MTA and 14 regional operators",
+   "url": "https://feeds.mta.maryland.gov/gtfs/<feed>",
+   "how": "MTA feeds local bus, light rail, metro, MARC, commuter bus (4_matsim/network/data_sources.md); regional feeds by 4_matsim/transit/fetch_gtfs_regional.sh.",
+   "place_in": "00_shared_data/raw/gtfs/",
+   "files": [
+    "mta_<feed>.zip",
+    "<agency>_gtfs.zip"
+   ],
+   "notes": [
+    "Used only to build the transit door-to-door skim (pipeline/transit_skim.py: MATSim SwissRailRaptor, Java). Package copy of the result: 00_shared_data/skims/transit_peak_time_d2d_2024.csv.gz."
+   ]
+  }
+ ],
+ "steps": [
+  {
+   "step": 1,
+   "what": "Synthetic population, VAE generation (upstream project stage; output provided (redo only for a rebuild from raw data; writes into the project folders: back them up first)); the generative model is in the Updated VAE project outside Validation_2026",
+   "cwd": "../../../../Updated VAE",
+   "command": "see the README of that project (steps 01-04: preprocessing of ACS PUMS, training, generation)",
+   "reads": [
+    "ACS PUMS (pums5_2018)",
+    "zone system (mstm)"
+   ],
+   "creates": [
+    "../Updated VAE/outputs/04_generated/hh.parquet, pp.parquet"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 2,
+   "what": "Synthetic population 2016, corrections, jobs, workplaces, dwellings, vacancies (upstream project stage; output provided (redo only for a rebuild from raw data; writes into the project folders: back them up first))",
+   "cwd": "../../../1_vae",
+   "command": "/opt/homebrew/anaconda3/bin/python3 zone_weights_2020.py && /opt/homebrew/anaconda3/bin/python3 zone_weights_2016.py && /opt/homebrew/anaconda3/bin/python3 rebalance_population.py && /opt/homebrew/anaconda3/bin/python3 employment_2016_lodes.py && /opt/homebrew/anaconda3/bin/python3 workplace_balanced.py && /opt/homebrew/anaconda3/bin/python3 export_silo_base.py && /opt/homebrew/anaconda3/bin/python3 zone_vacancy_2016.py && /opt/homebrew/anaconda3/bin/python3 market_vacancy_2016.py",
+   "reads": [
+    "census2010",
+    "census2020 (Maryland 2020 block housing, data/raw/census2020/)",
+    "lodes",
+    "jolts (1_vae/vacancy_rate.json)",
+    "rts (rts_trips_clean.csv)",
+    "pums5 2013-2017 Maryland (market vacancies)"
+   ],
+   "creates": [
+    "1_vae/output/*",
+    "1_vae/vae_outputs/06_silo_input/{hh,pp,dd,jj}_2016.csv"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 3,
+   "what": "SILO base-year microdata (upstream project stage; output provided (redo only for a rebuild from raw data; writes into the project folders: back them up first))",
+   "cwd": "../../../2_silo/input_build",
+   "command": "/opt/homebrew/anaconda3/bin/python3 build_microdata.py && /opt/homebrew/anaconda3/bin/python3 build_base_v2.py",
+   "reads": [
+    "1_vae outputs"
+   ],
+   "creates": [
+    "2_silo/input/microData/{hh,pp,dd,jj}_2016*.csv; copy dd_2016.csv and hh_2016.csv to 00_shared_data/synthetic_population_2016/"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 4,
+   "what": "Transit door-to-door AM-peak skim, 2024 network (upstream project stage; output provided (redo only for a rebuild from raw data; writes into the project folders: back them up first); MATSim SwissRailRaptor, Java)",
+   "cwd": "../../../pipeline",
+   "command": "/opt/homebrew/anaconda3/bin/python3 transit_skim.py  (see its docstring for the network-year arguments)",
+   "reads": [
+    "gtfs",
+    "mstm zone polygons",
+    "MATSim 2024 network"
+   ],
+   "creates": [
+    "pipeline/test/skims/transit_2024/transit_peak_time.csv.gz; copy in 00_shared_data/skims/transit_peak_time_d2d_2024.csv.gz"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 5,
+   "what": "County crime index (upstream project stage; output provided (redo only for a rebuild from raw data; writes into the project folders: back them up first))",
+   "cwd": "../../../2_silo/input_build",
+   "command": "/opt/homebrew/anaconda3/bin/python3 build_crime_index.py",
+   "reads": [
+    "crime",
+    "pep"
+   ],
+   "creates": [
+    "2_silo/input/crimeIndex.csv; copy in 00_shared_data/zone_system/crimeIndex.csv"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 6,
+   "what": "Zone land-use attributes: ln dwellings per acre of each zone from the 2016 synthetic dwellings and the zone areas (upstream project stage; output provided: redo only for a rebuild from raw data; writes into the project folders: back them up first)",
+   "cwd": "(project residential scripts)",
+   "command": "not part of this package; the result is 00_shared_data/resloc_work/zone_landuse_2016.csv",
+   "reads": [
+    "synthetic population 2016 (dd)",
+    "zone system (ACRES)"
+   ],
+   "creates": [
+    "00_shared_data/resloc_work/zone_landuse_2016.csv"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 7,
+   "what": "Geography: zone / PUMA / MIGPUMA tables (package copy; writes 00_shared_data/resloc_work/geo_*.csv). Needs jj_2016.csv in 00_shared_data/synthetic_population_2016 (copy it from 2_silo/input/microData), the tract-PUMA file in 00_shared_data/county_attributes (rc.RAW) and the Gazetteer file at rc.GAZ",
+   "cwd": "input/code",
+   "command": "/opt/homebrew/anaconda3/bin/python3 s01_geography.py",
+   "reads": [
+    "tract_puma_2010",
+    "gazetteer_tracts",
+    "ipums_migpuma (read through geo_puma_mig)",
+    "synthetic population"
+   ],
+   "creates": [
+    "../../../00_shared_data/resloc_work/geo_zone.csv, geo_puma_region.csv, geo_puma_zone.csv, geo_puma_mig.csv, geo_mig_zone.csv"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 8,
+   "what": "ACS PUMS movers and the year's dwelling market, estimation file 2014-2018 (package copy; writes 00_shared_data/resloc_work/pums_*_est.parquet)",
+   "cwd": "input/code",
+   "command": "/opt/homebrew/anaconda3/bin/python3 s03_pums.py est",
+   "reads": [
+    "pums5_2018",
+    "geo_*.csv"
+   ],
+   "creates": [
+    "../../../00_shared_data/resloc_work/pums_movers_est.parquet, pums_pool_est.parquet"
+   ],
+   "output_provided": true,
+   "minutes": "not measured (not re-run for this package)",
+   "memory_gb": "not measured (not re-run for this package)"
+  },
+  {
+   "step": 9,
+   "what": "input_check, part 1: keep a copy of the provided estimation and hold-out tables",
+   "cwd": "input/data",
+   "command": "rm -rf provided_estimation provided_holdout && cp -R estimation provided_estimation && cp -R holdout provided_holdout",
+   "reads": [],
+   "creates": [
+    "input/data/provided_estimation/",
+    "input/data/provided_holdout/"
+   ],
+   "output_provided": false,
+   "minutes": 0.1,
+   "memory_gb": 0.1
+  },
+  {
+   "step": 10,
+   "what": "Crosswalk with every zone: the 252 zones without a 2010 tract internal point get the PUMA and migration PUMA of their centroid (output provided; needs geopandas and the project's TIGER 2010 tracts and tract-to-PUMA file)",
+   "cwd": "input/code",
+   "command": "/opt/homebrew/anaconda3/bin/python3 crosswalk.py",
+   "reads": [
+    "00_shared_data/resloc_work/geo_puma_zone.csv, geo_mig_zone.csv, geo_puma_mig.csv, geo_zone.csv",
+    "00_shared_data/zone_system/zones.shp, zoneSystem.csv",
+    "data/raw/tiger_tracts_2010, data/raw/tiger_puma, data/raw/resloc/2010_Census_Tract_to_2010_PUMA.txt (project)"
+   ],
+   "creates": [
+    "00_shared_data/resloc_work/geo_puma_zone_all.csv, geo_mig_zone_all.csv, zone_puma_added.csv"
+   ],
+   "output_provided": true,
+   "minutes": 1,
+   "memory_gb": 1
+  },
+  {
+   "step": 11,
+   "what": "Build the estimation and hold-out tables (same random draws as the original run: dwelling sets, then the 200 market dwellings per PUMA of the inclusive values; asserts the LL of the original run on both halves). Needs geopandas (bordering PUMAs from zones.shp). Optional: DWELLING_ESTIMATES=../../../02_residential_dwelling/output/residential_dwelling_estimates.csv computes the inclusive values with your dwelling-level estimates",
+   "cwd": "input/code",
+   "command": "/opt/homebrew/anaconda3/bin/python3 build_estimation_data.py",
+   "reads": [
+    "00_shared_data/resloc_work (movers, market, geography, zone land use)",
+    "00_shared_data/skims",
+    "00_shared_data/zone_system (crimeIndex.csv, zones.shp)",
+    "00_shared_data/synthetic_population_2016",
+    "../data/raw/original_*.csv"
+   ],
+   "creates": [
+    "../data/estimation/*",
+    "../data/holdout/*"
+   ],
+   "output_provided": true,
+   "minutes": 2.5,
+   "memory_gb": 4.1
+  },
+  {
+   "step": 12,
+   "what": "input_check, part 2: compare the rebuilt tables with the provided ones (rows, column sums, largest difference); must print ALL TABLES MATCH",
+   "cwd": "input/code",
+   "command": "~/.venvs/biogeme/bin/python check_against_provided.py",
+   "reads": [
+    "../data/provided_*",
+    "../data/estimation",
+    "../data/holdout"
+   ],
+   "creates": [],
+   "output_provided": false,
+   "minutes": 0.5,
+   "memory_gb": 1
+  },
+  {
+   "step": 13,
+   "what": "Log-likelihood at the reference coefficients (no estimation, nothing written); add --holdout for the hold-out sample",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_residential_puma.py --evaluate",
+   "reads": [
+    "../input/data/estimation/*"
+   ],
+   "creates": [],
+   "output_provided": false,
+   "minutes": 0.1,
+   "memory_gb": 1.5
+  },
+  {
+   "step": 14,
+   "what": "Biogeme estimation, start values = reference estimates",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python estimate_residential_puma.py",
+   "reads": [
+    "../input/data/estimation/*"
+   ],
+   "creates": [
+    "../output/<model>.html",
+    "../output/<model>.yaml",
+    "../output/<model>_estimates.csv",
+    "../output/biogeme.toml"
+   ],
+   "output_provided": false,
+   "minutes": 0.5,
+   "memory_gb": 4.5
+  },
+  {
+   "step": 15,
+   "what": "Compare the estimates with the reference (reference_estimates.csv)",
+   "cwd": "model",
+   "command": "~/.venvs/biogeme/bin/python compare_with_reference.py",
+   "reads": [
+    "../output/<model>_estimates.csv",
+    "reference_estimates.csv"
+   ],
+   "creates": [
+    "../output/comparison_with_article.csv"
+   ],
+   "output_provided": false,
+   "minutes": 0.1,
+   "memory_gb": 0.2
+  }
+ ],
+ "check": {
+  "article_LL": -34670.3,
+  "biogeme_LL_at_article_coefficients": -34670.3308,
+  "biogeme_LL_at_full_precision_estimates": -34670.3212,
+  "holdout_LL_original": -8773.2,
+  "biogeme_holdout_LL_at_full_precision_estimates": -8773.1592,
+  "N": 15163,
+  "K": 14
+ },
+ "notes": [
+  "Alternatives: the 97 PUMAs of the zone-system area, all available to every record; no mover is dropped (estimation 15,163, hold-out 3,820). Zones without a 2010 tract internal point are assigned to the PUMA and migration PUMA of their centroid (crosswalk.py).",
+  "Market size: M_p = r_p x dwellings of the PUMA, r_p fixed = PUMS movers' dwellings x the PUMA's share of housing units in the zone system / its 2016 dwellings (input/data/estimation/market.csv); ln M_p is a separate term.",
+  "PUMA terms added to correct the city-vs-suburb bias: ln dwelling density x single-person household, x oldest member under 35, x ln income, and the core-city share (dwellings in DC or Baltimore City); built by input/code/build_estimation_data.py. Fairfax (VA) remains over-predicted by about 2 percentage points.",
+  "Inclusive value of the dwelling level: a data column; its coefficient LAMBDA_dwelling is fixed at 1 (Beta status 1).",
+  "Weights: dest_cov x orig_cov divided by its mean, written inside the log-likelihood (w ln P), which gives the WESML sandwich robust s.e. of the original estimator; option --biogeme-weight uses Biogeme's 'weight' formula (same estimates, other robust s.e.). The hold-out table has weight 1 (unweighted hold-out LL).",
+  "The hold-out sample was also used in the specification search; its log-likelihood is not a fully independent test.",
+  "Steps with output_provided = true can be skipped: their results are in input/data or 00_shared_data. Upstream project stages were not re-run for this package; their runtimes are not measured.",
+  "Measured here: --evaluate 4 s, 1.5 GB; estimation 42 s (coefficients within 0.0001 and robust s.e. within 0.00005 of the reference).",
+  "Environment: Biogeme scripts run with ~/.venvs/biogeme/bin/python (Biogeme 3.3.5); the build script with /opt/homebrew/anaconda3/bin/python3 (needs geopandas)."
+ ]
+}

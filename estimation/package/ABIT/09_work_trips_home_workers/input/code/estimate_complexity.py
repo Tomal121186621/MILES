@@ -10,7 +10,7 @@ applies the primary MNL to the main episode of every chain, so with the pooled m
 those of chains with stops too near.  Here each final specification F is extended by ln(distance) x multi (multi = the tour has
 at least one stop, rts_tours.n_stops > 0) and re-estimated by maximum likelihood on the estimation half with the same engine
 and sampled choice sets (dc_model, R = 40, seed 2026; robust standard errors), warm-started at the F estimates; LR test against
-F; held-out check on the validation half (mean distance from home by tour type, full choice set).  In ABIT the flag is 0 for the
+F; held-out check on the validation half (mean distance from home by tour type, full choice set).  In MAST the flag is 0 for the
 draw before scheduling and for the main of a single-episode chain, and 1 when the main discretionary episode of a chain with
 stops is relocated after the chains are formed (MarylandTashaGenerator.buildTourObjects, MarylandDestinationChoice.selectPrimaryZoneMnl).
 """

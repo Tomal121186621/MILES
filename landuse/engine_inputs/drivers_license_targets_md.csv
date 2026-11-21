@@ -1,0 +1,37 @@
+area,age_from,age_to,target,source
+city,16,17,0.244,RTS 2017-18 estimation half
+city,18,19,0.452,RTS 2017-18 estimation half
+city,20,24,0.742,RTS 2017-18 estimation half
+city,25,34,0.87,RTS 2017-18 estimation half
+city,35,44,0.843,RTS 2017-18 estimation half
+city,45,54,0.83,RTS 2017-18 estimation half
+city,55,64,0.784,RTS 2017-18 estimation half
+city,65,74,0.807,RTS 2017-18 estimation half
+city,75,120,0.684,RTS 2017-18 estimation half
+study,16,17,0.352,RTS 2017-18 estimation half
+study,18,19,0.696,RTS 2017-18 estimation half
+study,20,24,0.789,RTS 2017-18 estimation half
+study,25,34,0.904,RTS 2017-18 estimation half
+study,35,44,0.96,RTS 2017-18 estimation half
+study,45,54,0.948,RTS 2017-18 estimation half
+study,55,64,0.945,RTS 2017-18 estimation half
+study,65,74,0.9,RTS 2017-18 estimation half
+study,75,120,0.832,RTS 2017-18 estimation half
+rest,16,17,0.321,RTS 2017-18 estimation half
+rest,18,19,0.508,RTS 2017-18 estimation half
+rest,20,24,0.723,RTS 2017-18 estimation half
+rest,25,34,0.893,RTS 2017-18 estimation half
+rest,35,44,0.927,RTS 2017-18 estimation half
+rest,45,54,0.95,RTS 2017-18 estimation half
+rest,55,64,0.95,RTS 2017-18 estimation half
+rest,65,74,0.921,RTS 2017-18 estimation half
+rest,75,120,0.862,RTS 2017-18 estimation half
+outside,16,17,0.6619,corrected 2016 base (outside Maryland)
+outside,18,19,0.6613,corrected 2016 base (outside Maryland)
+outside,20,24,0.912,corrected 2016 base (outside Maryland)
+outside,25,34,0.93,corrected 2016 base (outside Maryland)
+outside,35,44,0.9578,corrected 2016 base (outside Maryland)
+outside,45,54,0.9688,corrected 2016 base (outside Maryland)
+outside,55,64,0.9726,corrected 2016 base (outside Maryland)
+outside,65,74,0.9773,corrected 2016 base (outside Maryland)
+outside,75,120,0.9823,corrected 2016 base (outside Maryland)

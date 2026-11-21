@@ -7,3 +7,5 @@
 - Files: pp_2016.csv, dd_2016.csv, hh_2016.csv, jj_2016.csv, schools_2016.csv
 - Notes: Status: the derived tables are provided (00_shared_data/zones: zone_population_2016.csv, jobs_2016_zone_type.parquet, schools_2016.csv). Rebuilding the population itself is the VAE stage (Updated VAE pipeline; inputs ACS PUMS 2012-2016 5-year, LODES 2016, JOLTS), outside this package.
 
+
+- Files shipped: dd_2016.csv, hh_2016.csv, jj_2016.csv, pp_2016.csv, schools_2016.csv, copied 2026-11-17 from Validation_2026/2_silo/input/microData (pp/dd/hh/jj_2016.csv of 2026-10-22) and Validation_2026/2_silo/input/schools_2016.csv (project-relative to VAE-SILO-MITO-MATSIM).

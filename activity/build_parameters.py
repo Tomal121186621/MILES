@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Coefficient set activity/parameters (formerly 3_abit/coef_respec): a copy of the model of record <workspace>/3_abit/coef_tasha
-with the re-specified ABIT models of the estimation results (ESTIMATION_RESULTS, adopted 2026-11-09) written into the engine's
+with the re-specified MAST models of the estimation results (ESTIMATION_RESULTS, adopted 2026-11-09) written into the engine's
 files.  coef_tasha is never written.  Paths in run_params.csv are written with the placeholders {PARAMETERS} (the coefficient
 directory of the run) and {WORKSPACE}; activity/write_properties.py substitutes them.  build_state.json and TASHA_STATE.json
 record workspace paths as <workspace>/...

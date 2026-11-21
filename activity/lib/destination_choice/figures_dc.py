@@ -10,7 +10,7 @@
   fig_dc_tld_primary  held-out half: observed and predicted trip-length distributions of primary destinations by purpose
                       (estimated MNL and the former gravity form; full-choice-set expectations)
   fig_dc_tld_stop     the same for stops (former rule: the corridor rule)
-  fig_dc_sim_tld      ABIT runs on the survey population of the validation half (10 seeds): discretionary trip lengths by
+  fig_dc_sim_tld      MAST runs on the survey population of the validation half (10 seeds): discretionary trip lengths by
                       purpose, before (gravity) and after (estimated MNL), against the survey
 Output: 3_abit/figures/fig_dc_*.pdf/png.
 """

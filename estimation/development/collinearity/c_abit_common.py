@@ -1,4 +1,4 @@
-"""Shared helpers of the ABIT half of the collinearity check (c_abit_*.py).  Builds on c_silo_common (same within-situation
+"""Shared helpers of the MAST half of the collinearity check (c_abit_*.py).  Builds on c_silo_common (same within-situation
 correlations, VIF, robust estimate correlations, heatmap style, flags, pair classification and refit rows); adds
   - within_corr_partial: within-situation correlation after partialling out alternative constants (wide models with person
     variables in alternative-specific utilities: z_n 1[j = a] demeaned within the situation and net of the constants equals the

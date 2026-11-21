@@ -26,6 +26,8 @@ import java.util.*;
  *                      member (SILO stores no householder)
  *   inc_x_dens         ln income x (ln_density - c), c = estimation-sample mean of ln_density (coefficient file: alternative 0,
  *                      variable ln_density_centre)
+ *   p16_2, p16_3, p16_4p   (2026-11-16a) persons 16+ = 2, 3, 4+ (reference 0-1), alternative-specific dummies replacing nonworking_adults in
+ *                      car_ownership_coefficients_respec7.csv; a coefficient file without them (respec) scores as before
  * Coefficient file: alternative,variable,value (alternative 1, 2, 3 = 3+ cars; 0 = constants of the specification).
  */
 public final class CarOwnershipRespec {
@@ -33,7 +35,8 @@ public final class CarOwnershipRespec {
     private CarOwnershipRespec() {}
 
     public static final String[] VARS = {"workers", "nonworking_adults", "children", "single_person", "sfd", "multifamily", "bedrooms",
-            "ln_density", "acc_gain", "inc_lt25", "inc_25_50", "inc_50_100", "inc_gt100", "age10", "age10_sq", "inc_x_dens"};
+            "ln_density", "acc_gain", "inc_lt25", "inc_25_50", "inc_50_100", "inc_gt100", "age10", "age10_sq", "inc_x_dens",
+            "p16_2", "p16_3", "p16_4p"};   // 2026-11-16a: persons 16+ = 2, 3, 4+ (reference 0-1); absent in a coefficient file = 0
     private static final double K0 = Math.log(0.5), K1 = 0, K2 = Math.log(2.0);
 
     /** variable vector in the order of VARS */
@@ -45,7 +48,8 @@ public final class CarOwnershipRespec {
         return new double[]{w, na, ch, size == 1 ? 1 : 0, "SFD".equals(dwellingType) ? 1 : 0,
                 ("MF234".equals(dwellingType) || "MF5plus".equals(dwellingType)) ? 1 : 0, Math.min(bedrooms, 5), lnDensity, accGain,
                 Math.min(x, K0), Math.min(Math.max(x - K0, 0), K1 - K0), Math.min(Math.max(x - K1, 0), K2 - K1), Math.max(x - K2, 0),
-                a10, a10 * a10, x * (lnDensity - densityCentre)};
+                a10, a10 * a10, x * (lnDensity - densityCentre),
+                persons16 == 2 ? 1 : 0, persons16 == 3 ? 1 : 0, persons16 >= 4 ? 1 : 0};
     }
 
     /** utilities of 1, 2, 3+ cars (0 cars = 0) */

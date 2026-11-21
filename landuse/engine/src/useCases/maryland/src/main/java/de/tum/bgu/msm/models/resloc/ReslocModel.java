@@ -1,5 +1,6 @@
 package de.tum.bgu.msm.models.resloc;
 
+import de.tum.bgu.msm.data.dwelling.StructuralVacancy;
 import de.tum.bgu.msm.container.DataContainer;
 import de.tum.bgu.msm.data.Region;
 import de.tum.bgu.msm.data.Zone;
@@ -90,6 +91,17 @@ public class ReslocModel {
     private final Map<String, double[]> cacheIvB = new ConcurrentHashMap<>(), cacheIvA = new ConcurrentHashMap<>();
     private final Random random = new Random(20261022);
     private double[] regN;                // dwellings by region index (stock)
+    // Baltimore 2026 (2026-11-14, switch resloc.region.vacancy.availability, default false = the model of record unchanged):
+    // availability of a region in the search, a_r = min(1, v_r / v*_r), v_r = vacant dwellings of region r now (live count) / its
+    // stock at the start of the year, v*_r = SILO's structural vacancy rate of the dwelling types (DwellingType.getStructuralVacancyRate,
+    // SFD/SFA/MH 3 %, MF234 4 %, MF5plus 5 %) averaged over the region's stock. The estimated region level carries the size of the
+    // stock (IV_B over ln D_zt), i.e. it assumes that vacancies are offered in proportion to the stock at the structural rate, as in
+    // the observed market; below that rate a region is offered less often (constrained logit: an alternative is available with the
+    // probability that it is not full; Martinez & Henriquez 2007, de Palma, Picard & Waddell 2007). No free parameter.
+    // The weight of region r in the region draw of the search and in the expected maximum utility of the move-or-not decision
+    // becomes exp(U_r) a_r (a_r = 1 when the switch is off, so the arithmetic of the record model is unchanged).
+    private final boolean vacancyAvailability = Boolean.parseBoolean(ReslocProperties.get("resloc.region.vacancy.availability", "false"));
+    private double[] regStructVac;        // stock-weighted structural vacancy rate by region index
     private final double moveScale = Double.parseDouble(ReslocProperties.get("resloc.move.scale", "1.0"));
     private final double moveDuration = Double.parseDouble(ReslocProperties.get("resloc.move.duration", "0.0"));
     private final double lnSearch = Math.log(Double.parseDouble(ReslocProperties.get("resloc.move.search.size", "20")));
@@ -354,18 +366,29 @@ public class ReslocModel {
     public void prepareYear() {
         final int nz = zoneIds.length, nr = regionIds.length;
         D = new double[nz][4];
-        double[] costSum = new double[nz], dd = new double[nz];
+        double[] costSum = new double[nz], dd = new double[nz], sv = new double[nz];
         for (Dwelling d : dataContainer.getRealEstateDataManager().getDwellings()) {
             Integer i = zIdx.get(d.getZoneId());
             if (i == null) continue;
             D[i][cellType(d.getType().toString())]++;
             costSum[i] += d.getPrice(); dd[i]++;
+            sv[i] += StructuralVacancy.rate(regionIds[zoneRegion[i]], d.getType());   // 2026-11-17: by region when structural.vacancy.file is set
         }
         lnCostZ = new double[nz];
         for (int i = 0; i < nz; i++) lnCostZ[i] = Math.log(Math.max(dd[i] > 0 ? costSum[i] / dd[i] : 100, 100));
         double[] regDd = new double[nr];
         for (int i = 0; i < nz; i++) regDd[zoneRegion[i]] += dd[i];
         regN = regDd;
+        if (vacancyAvailability) {
+            final double[] regSv = new double[nr];
+            for (int i = 0; i < nz; i++) regSv[zoneRegion[i]] += sv[i];
+            for (int r = 0; r < nr; r++) regSv[r] = regDd[r] > 0 ? regSv[r] / regDd[r] : 0;
+            regStructVac = regSv;
+            int below = 0; double amin = 1;
+            for (int r = 0; r < nr; r++) { final double x = availability(r); if (x < 1) below++; amin = Math.min(amin, x); }
+            logger.info("Residential location: vacancy availability on (resloc.region.vacancy.availability); " + below + " of " + nr
+                    + " regions below their structural vacancy at the start of " + currentYear + ", lowest availability " + String.format("%.3f", amin));
+        }
         final IndexedDoubleMatrix2D car = dataContainer.getTravelTimes().getPeakSkim(TransportMode.car);
         tZoneRegion = new float[nz][nr]; tRegionZoneCar = new float[nr][nz]; tRegionZoneP = new float[nr][nz];
         for (int a = 0; a < nz; a++) {
@@ -707,9 +730,10 @@ public class ReslocModel {
         double s = 0, e = 0;
         for (int r = 0; r < u.length; r++) {
             if (!ok[r]) continue;
-            final double w = Math.exp(u[r] - m);
+            final double w = Math.exp(u[r] - m) * availability(r);   // 2026-11-14: x a_r (= 1 when resloc.region.vacancy.availability is off)
             s += w; e += w * (u[r] + lamB * (lnSearch - Math.log(regN[r])));
         }
+        if (!(s > 0)) return 0;
         final double emu = e / s;
         final double uc = dwellingUtility(h, current);
         if (Double.isInfinite(uc)) return 1;
@@ -723,6 +747,13 @@ public class ReslocModel {
         final double p = 1 - 1 / (1 + shift * Math.exp(Math.max(-700, Math.min(700, x))));
         diagGap += gap; diagGapEff += gapEff; diagLnDur += Math.log1p(years); diagP += p; diagN++;
         return p;
+    }
+
+    /** Baltimore 2026 (2026-11-14): availability a_r of region index r in the search (see vacancyAvailability); 1 when the switch is off */
+    public double availability(int r) {
+        if (!vacancyAvailability || regN == null || regStructVac == null || regN[r] <= 0 || regStructVac[r] <= 0) return 1.0;
+        final double v = dataContainer.getRealEstateDataManager().getNumberOfVacantDDinRegion(regionIds[r]) / regN[r];
+        return Math.min(1.0, v / regStructVac[r]);
     }
 
     public int regionIndex(Region region) {

@@ -2,7 +2,7 @@
 """Diagnostic of the re-specified mode models with the TASHA car allocation (coefficient set activity/parameters, 2026-11-10):
 model consistency versus population composition.
 
-    python3 activity/checks/survey_mode_shares.py run       ABIT on the hold-out (validation-half) survey population, seeds 1-5, as the
+    python3 activity/checks/survey_mode_shares.py run       MAST on the hold-out (validation-half) survey population, seeds 1-5, as the
                                                   unit-check run (survey_population.run, skims base_transit2024)
                                                   -> run_survey/svy_val_respecval_s0N
     python3 activity/checks/survey_mode_shares.py compare   -> respec_survey_modeshares.csv (tour and trip shares by segment: survey-population

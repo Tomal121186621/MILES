@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Survey-population and chain-test runs of the re-specified ABIT (coefficient set activity/parameters, all its switches; 2026-11-10) for the
+"""Survey-population and chain-test runs of the re-specified MAST (coefficient set activity/parameters, all its switches; 2026-11-10) for the
 verification / validation / chain test of the validation report (validate_survey.py settings verification_respec, validation_respec,
 chain_respec): ten replications (seeds 1-10) on the households of the estimation half and of the held-out half (run_survey/
 svy_est_respec_sNN, svy_val_respec_sNN; skims base_transit2024), and ten on a 5 % sample of the synthetic 2016 population

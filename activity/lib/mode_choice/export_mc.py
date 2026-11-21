@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the tour mode choice (GC specification, estimate_gc.py) for ABIT (MarylandTourNestedModeChoice).
+"""Export the tour mode choice (GC specification, estimate_gc.py) for MAST (MarylandTourNestedModeChoice).
 
     python3 activity/lib/mode_choice/export_mc.py los      -> export/los/: zones.csv (idx, id, bbsr, wmata) and float32 matrices (little endian, row-major
                                      n x n, NaN = no path): dist, car_<P>, walk_<P>_{bus,all,rail}, drive_<P>_{all,rail,acc},

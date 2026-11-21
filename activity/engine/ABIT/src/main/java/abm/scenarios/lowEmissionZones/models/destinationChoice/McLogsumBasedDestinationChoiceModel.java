@@ -96,7 +96,7 @@ public class McLogsumBasedDestinationChoiceModel implements DestinationChoice {
             expUtilityMatrixByPurposeByRole.put(purpose, new HashMap<>());
             for (String role : roles) {
                 IndexedDoubleMatrix2D expUtilityMatrix = new IndexedDoubleMatrix2D(dataSet.getZones().values(), dataSet.getZones().values());
-                //PrintWriter inputWriter = new PrintWriter("C:/Users/Wei/Documents/output/distributionDistanceLogsums_main_" + purpose.toString().toLowerCase() + "_" + role.toLowerCase()+ ".csv");
+                //PrintWriter inputWriter = new PrintWriter("<output folder>/distributionDistanceLogsums_main_" + purpose.toString().toLowerCase() + "_" + role.toLowerCase()+ ".csv");
                 //inputWriter.println("origin, destination, distance, logsum, utility_distance, utility_logsum, attractor");
                 for (Zone origin : dataSet.getZones().values()) {
                     for (Zone destination : dataSet.getZones().values()) {
@@ -137,7 +137,7 @@ public class McLogsumBasedDestinationChoiceModel implements DestinationChoice {
             expUtilityMatrixByPurposeByRole.put(purpose, new HashMap<>());
             for (String role : roles) {
                 IndexedDoubleMatrix2D expUtilityMatrix = new IndexedDoubleMatrix2D(dataSet.getZones().values(), dataSet.getZones().values());
-                //PrintWriter inputWriter = new PrintWriter("C:/Users/Wei/Documents/output/distributionDistanceLogsums_stop_" + purpose.toString().toLowerCase() + "_" + role.toLowerCase()+ ".csv");
+                //PrintWriter inputWriter = new PrintWriter("<output folder>/distributionDistanceLogsums_stop_" + purpose.toString().toLowerCase() + "_" + role.toLowerCase()+ ".csv");
                 //inputWriter.println("origin, destination, distance, logsum, utility_distance, utility_logsum, attractor");
                 for (Zone origin : dataSet.getZones().values()) {
                     for (Zone destination : dataSet.getZones().values()) {

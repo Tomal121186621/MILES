@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tables-only PDFs (SILO and ABIT): the article's current estimation tables in order, with est_cars replaced by the re-specified car ownership
+"""Tables-only PDFs (SILO and MAST): the article's current estimation tables in order, with est_cars replaced by the re-specified car ownership
 model (ESTIMATION_RESULTS/car_ownership/est_cars_new.tex).
 Usage: python3 estimation/development/reports/make_pdf.py   (build/ and the PDFs in <workspace>/side_experiments/respec_2026-11/final_tables)"""
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
@@ -23,6 +23,17 @@ for _p in ["SHOPPING", "RECREATION", "ACCOMPANY", "OTHER"]:
 NEW["est_mc_joint"] = os.path.join(ESTIMATION_RESULTS, "mode_choice", "est_mc_joint_new.tex")
 NEW["est_dc_pooled"] = os.path.join(ESTIMATION_RESULTS, "dest_pooled", "est_dc_pooled.tex")
 NEW["est_loc_edu"] = os.path.join(ESTIMATION_RESULTS, "tables_new", "est_loc_edu_new.tex")
+# the location models with one attraction variable (size_logs/t_single_tables.py) are written into the article tables directly;
+# their older per-step copies are not used
+for _t in ["est_dc_pooled", "est_subtour", "est_loc_wahb", "est_loc_wbhome", "est_loc_wbwork", "est_loc_edu"] + [f"est_stop_{_p}_stop" for _p in ["SHOPPING", "RECREATION", "ACCOMPANY", "OTHER"]]:
+    NEW.pop(_t, None)
+# residential location is the two-level model (article sections est_resloc_puma, est_resloc_dwelling, read from the article folder);
+# the three-level tables est_region, est_zone, est_dwelling are no longer in the SILO tables document
+for _t in ["est_region", "est_zone", "est_dwelling"]:
+    NEW.pop(_t, None)
+# car ownership and school location are the final models of the article tables (est_cars.tex, est_school.tex)
+NEW.pop("est_cars", None)
+NEW.pop("est_school", None)
 B = os.path.join(HERE, "build")
 
 

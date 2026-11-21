@@ -8,7 +8,7 @@ wthhfin for the imputed non-travelling members; trip weight wttrdfin).  Nothing 
 
 Episodes.  One episode per trip destination of a person-day (rts_trips_clean.csv, sorted by tripno): start = arrival, duration =
 departure of the next trip minus the arrival (unknown for the last trip of the day).  Activity types (TASHA's ten, as far as the
-RTS identifies them; the 'other' categories are split by the ABIT purpose because location and mode choice are purpose-specific):
+RTS identifies them; the 'other' categories are split by the MAST purpose because location and mode choice are purpose-specific):
   WB    work business            work trip (d_activity 2) not at the usual work tract (incl. every work trip of persons
                                  without a usual work tract: workplace varies / drives for a living without a tract, non-workers)
   WAHB  work-at-home business    work trip of a person whose usual workplace is home (j1_workplace_loc 3)
@@ -21,14 +21,14 @@ RTS identifies them; the 'other' categories are split by the ABIT purpose becaus
   IO_REC, IO_ACC, IO_OTH  individual other (drop-off / pick-up is always individual: the escort's episode)
   IS    individual shopping
   (precedence of the scheduling = this order, TASHA's.)
-Joint episodes.  Trips of one household with the same ABIT purpose (SHOPPING, RECREATION, OTHER), the same destination tract and
+Joint episodes.  Trips of one household with the same MAST purpose (SHOPPING, RECREATION, OTHER), the same destination tract and
 arrival times within 15 min of each other (travelers_hh >= 2 on every trip) form one joint episode if at least two members
 report it; a party trip reported by one member only stays individual.  Joint frequencies are household-level (households of 2+
 persons); participants: P(k | type, household size) and a participation propensity by person segment.
-Person segments (reproducible from the SILO person and household in ABIT):
+Person segments (reproducible from the SILO person and household in MAST):
   worker_usual / worker_home / worker_none  employed, by usual workplace (fixed / varying / driving with a work tract; at home;
                                             no tract).  The RTS and SILO carry no full/part-time flag; the workplace type is a
-                                            person attribute drawn in ABIT from P(type | age band) of the survey workers.
+                                            person attribute drawn in MAST from P(type | age band) of the survey workers.
   student_elementary / _middle / _high / _postsec, nonworker, retiree, toddler (under 5)
   groups for the fallback: worker, student (incl. toddler), other (nonworker, retiree)
   household class: single, multi_nochild, multi_child (a member under 16)

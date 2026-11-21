@@ -5,9 +5,9 @@
 | Software | Version | Used by |
 |---|---|---|
 | Python | 3.10 or later | every step |
-| Java (JDK) | 21 | SILO, MILES-Day, MATSim |
+| Java (JDK) | 21 | SILO, MAST, MATSim |
 | Maven | 3.9 or later | building the Java engines |
-| Memory | 32 GB or more | SILO (24–28 GB heap), MILES-Day (13 GB), MATSim (32 GB) |
+| Memory | 32 GB or more | SILO (24–28 GB heap), MAST (13 GB), MATSim (32 GB) |
 
 ## 1. Get the code and the `miles` command
 
@@ -56,7 +56,7 @@ Set `python.biogeme` in `miles.toml` to this interpreter.
     mvn compile -pl siloCore,extensions/schools,useCases/maryland
     ```
 
-=== "MILES-Day"
+=== "MAST"
 
     ```bash
     cd activity/engine/ABIT

@@ -12,7 +12,7 @@ from (the origin of the trip to the stop: home, the primary destination or the p
 the other variables as in F (intra_a / intra_b = the stop in the zone of a / b).  Maximum likelihood on the estimation half,
 same engine and sampling (dc_model, R = 40, seed 2026; robust s.e.), warm start at the F estimates.  Held-out test (both halves,
 full choice set): the mean distance of the leg to the stop (from a), observed against predicted, for the pooled-anchor model F
-applied with anchors (home, primary) and the sequential model applied with (a, b).  ABIT: MarylandTashaGenerator relocates the
+applied with anchors (home, primary) and the sequential model applied with (a, b).  MAST: MarylandTashaGenerator relocates the
 stops of a chain in time order with these anchors when the coefficient file carries the sequential models (relocate.stops.sequential).
 """
 # COPY of Validation_2026/3_abit/tasha_estimation/estimate_stops_seq.py (manual-estimation package, 2026-11-13); only path constants changed (lines marked PATH).
@@ -75,7 +75,7 @@ def main():
         for half in ["estimation", "validation"]:
             rh, ch = E.load(half, seg); rh = with_seq(rh); ch = ch[ch.rec.isin(rh.rec)]
             ok = rh.dzone_pt.values >= 0; obs = np.average(sk["d"][rh.a_idx.values[ok], rh.dzone_pt.values[ok]], weights=rh.w.values[ok])
-            # pooled F with the anchors home, primary (as ABIT applied it)
+            # pooled F with the anchors home, primary (as MAST applied it)
             r0 = rh.assign(home_idx=rh.home0, anchor_b=rh.prim0)
             pF = leg_pred(r0, ch, spec, np.array([x0[p] for p in spec.params()]), pur, sk, "a_idx")
             pS = leg_pred(rh, ch, spec, r1["x"].numpy(), pur, sk, "a_idx")

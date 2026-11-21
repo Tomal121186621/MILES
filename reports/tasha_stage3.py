@@ -4,8 +4,8 @@ Transportation Research Part A 42, 360-375: Table 1/2 (activity frequency compar
 trips per chain, distance by start time), for the verification (estimation half of the 2017/18 RTS, survey population as
 input), the validation (held-out half) and the chain test (synthetic population).
 
-    python3 reports/tasha_stage3.py                                   # current data, one ABIT variant
-    python3 reports/tasha_stage3.py --variants "_behav=ABIT, behavioural (no calibration);=ABIT, calibrated"
+    python3 reports/tasha_stage3.py                                   # current data, one MAST variant
+    python3 reports/tasha_stage3.py --variants "_behav=MAST, behavioural (no calibration);=MAST, calibrated"
 
 Also run by `python3 reports/figures_validation.py 3` (stage 3) and by the full build.
 
@@ -13,7 +13,7 @@ Input (written by activity/validation/validate_survey.py): data/abit_roorda_tabl
 internal trips), abit_roorda_ks.csv (Roorda's KS on the hourly values: D_hourly, P_hourly), abit_roorda_curves.parquet,
 abit_roorda_duration_counts.csv, abit_roorda_extra.csv (trips per chain).
 
-ABIT variants: each variant is a suffix of the setting names in the data files ('' -> verification, validation, chain;
+MAST variants: each variant is a suffix of the setting names in the data files ('' -> verification, validation, chain;
 '_behav' -> verification_behav, ...) and a label.  The first variant is the primary one (TASHA design: no calibration);
 a second variant is added as a second row block in the tables and as a second (light-blue) bar or line series in the figures.
 Variants whose settings are missing from the data are skipped with a message.
@@ -49,7 +49,7 @@ SHALF = {"verification": "verification (estimation half)", "validation": "valida
          "chain": "chain test (synthetic population, held-out half)"}
 LABEL = {"verification": "tab:s3_ver", "validation": "tab:s3_val", "chain": "tab:s3_chain"}
 MIN_ACT = 30                       # duration curves end at the first night hour with fewer than 30 observed activities
-BAR = [ps.MODEL, "#86b6ef"]        # ABIT variant 1 (primary), variant 2
+BAR = [ps.MODEL, "#86b6ef"]        # MAST variant 1 (primary), variant 2
 LINE = [dict(color=ps.MODEL, ls="-"), dict(color="#86b6ef", ls="-")]
 OBS_BAR = ps.OBSERVED; OBS_LINE = dict(color=ps.OBSERVED, ls=(0, (5, 2.5)))
 Y_START = "Share of daily activities (%)"; X_START = "Activity start time (hour)"
@@ -188,7 +188,7 @@ def _band_arrow(ax, lo, hi, curves, ymax, fmax=0.93):
 
 
 def fig_duration(D, s):
-    """Roorda Fig. 3/7: average duration (min) by activity start time, ABIT solid, RTS dashed, 90 % band, KS D and P."""
+    """Roorda Fig. 3/7: average duration (min) by activity start time, MAST solid, RTS dashed, 90 % band, KS D and P."""
     fig = ps.new_figure(4.6); gs = fig.add_gridspec(2, 2); xh = np.arange(24) + 4 + 0.5
     for k, ty in enumerate(["WORK", "SCHOOL", "SHOPPING", "OTHER"]):
         ax = fig.add_subplot(gs[k // 2, k % 2]); th = D.thin(s, ty); curves = []; rows = []

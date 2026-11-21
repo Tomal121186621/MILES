@@ -22,7 +22,7 @@
   {
    "id": "mstm_skims_2016",
    "name": "Maryland Statewide Transportation Model (MSTM) 2016 skims, 1,588 SMZ/RMZ zones",
-   "provider": "Maryland Department of Transportation (MDOT SHA), via the project's ABIT Maryland set-up (ABIT/input/mito_los/skims)",
+   "provider": "Maryland Department of Transportation (MDOT SHA), via the project's MAST Maryland set-up (ABIT/input/mito_los/skims)",
    "url": "https://www.roads.maryland.gov/ (verify: MSTM data are provided by MDOT on request; no download page is documented)",
    "how": "Obtain the MSTM 2016 skims in OMX format (matrix mat1, lookups origins / destinations): traveltime_auto.omx (AM-peak car time, min), distance_auto.omx (car distance, m), bus_tt.omx (bus time, min; 1000 = no path, 5 intrazonal), rail_tt00.omx (rail time, min; 0 = no rail path). convert_mstm_skims.py turns them into the csv.gz files the models read.",
    "place_in": "00_shared_data/raw/mstm_skims_2016",
@@ -37,10 +37,10 @@
   },
   {
    "id": "mstm_zone_system",
-   "name": "MSTM zone system: SMZ/RMZ polygons, zone table, ABIT zone attributes",
-   "provider": "MDOT (MSTM), via ABIT/input/mito_los/Zonal and 2_silo/input/zoneSystem.csv; ABIT/input/maryland/zone_attributes.csv (ABIT Maryland set-up)",
+   "name": "MSTM zone system: SMZ/RMZ polygons, zone table, MAST zone attributes",
+   "provider": "MDOT (MSTM), via ABIT/input/mito_los/Zonal and 2_silo/input/zoneSystem.csv; ABIT/input/maryland/zone_attributes.csv (MAST Maryland set-up)",
    "url": "https://www.roads.maryland.gov/ (verify: provided with the MSTM)",
-   "how": "Zone polygons SMZ_RMZ_02152011inMSTM_EPSG26918.shp (+ .dbf .shx .prj; field id / SMZRMZ, 1,588 zones), zoneSystem.csv (ZoneId, COUNTYFIPS, ...), zone_attributes.csv (id, centroid x/y EPSG:26985, countyfips, region types, bbsr, area_km2; built for ABIT from mstm_26985.shp and zoneSystem.csv, see 3_abit/coef_respec/PROVENANCE.md, script not in the project).",
+   "how": "Zone polygons SMZ_RMZ_02152011inMSTM_EPSG26918.shp (+ .dbf .shx .prj; field id / SMZRMZ, 1,588 zones), zoneSystem.csv (ZoneId, COUNTYFIPS, ...), zone_attributes.csv (id, centroid x/y EPSG:26985, countyfips, region types, bbsr, area_km2; built for MAST from mstm_26985.shp and zoneSystem.csv, see 3_abit/coef_respec/PROVENANCE.md, script not in the project).",
    "place_in": "00_shared_data/raw/mstm_zone_system",
    "files": [
     "SMZ_RMZ_02152011inMSTM_EPSG26918.shp/.dbf/.shx/.prj",
@@ -257,7 +257,7 @@
   {
    "step": 5,
    "shared_step_id": "S04",
-   "what": "shared preparation S04: Survey population of both halves in the ABIT input format (households, persons, dwellings, person map, workplaces)",
+   "what": "shared preparation S04: Survey population of both halves in the MAST input format (households, persons, dwellings, person map, workplaces)",
    "cwd": "../00_shared_prep/code",
    "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_survey_population.py   # uses the provided tract_zone.csv / zone_population_2016.csv; add --rebuild-zone-files for S03",
    "reads": [
@@ -479,19 +479,21 @@
   }
  ],
  "check": {
-  "article_LL": -8402.2,
-  "biogeme_LL_at_article_coefficients": -8402.1978,
-  "basis": "full estimation half, all 1539 records (full-precision coefficients -8402.1967; hold-out half -8472.7180)",
+  "article_LL": -8432.1,
+  "biogeme_LL_at_article_coefficients": -8432.1056,
+  "basis": "full estimation half, all 1539 records (full-precision coefficients -8432.1056; hold-out half -8492.7914)",
   "N": 1539,
-  "K": 22
+  "K": 18
  },
  "notes": [
   "Steps 1-2 need the project Python with numpy, pandas, pyarrow and torch (python3); the Biogeme venv has no torch. The data they write is already in input/data.",
   "Full choice set of 1,588 zones, no sampling of alternatives.",
   "Destination mixture: sum of b_k exp(V) over the zones overlapping the survey's destination tract (up to 13 zones) divided by the sum of exp(V) over all zones; one anchor configuration per record (weight 1).",
-  "The detour form was chosen over the distance from the workplace by BIC in block 1 of the model development (l_locations.py).",
+  "Attraction: one variable, B_ln_office_jobs ln(1 + office jobs); no bounds. Zone area term: ln(zone area, km2; at least 0.05).",
+  "The detour form was chosen over the distance from the workplace by BIC in the specification search.",
   "Records are loaded with form `stop`: home_idx = home zone, anchor_b = workplace zone.",
   "Unweighted; robust (sandwich) standard errors.",
+  "The hold-out half was also used in the specification search; its log-likelihood is not a fully independent test.",
   "The model has 1,588 utilities per record; use --evaluate (eager, small memory) for checks.",
   "Shared preparation steps (cwd ../00_shared_prep/code) write to 00_shared_data/rebuilt/ and never overwrite the provided files; compare with check_against_provided.py (step S19) and, to use your rebuilt files, copy them over the provided paths in 00_shared_data before the model's own preparation steps."
  ]

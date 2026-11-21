@@ -7,3 +7,5 @@
 - Files: 2010_Census_Tract_to_2010_PUMA.txt
 - Notes: Joins counties sharing a PUMA into the WESML strata.
 
+
+- Files shipped: 2010_Census_Tract_to_2010_PUMA.txt, copied 2026-11-17 from Validation_2026/data/raw/resloc (project-relative to VAE-SILO-MITO-MATSIM).

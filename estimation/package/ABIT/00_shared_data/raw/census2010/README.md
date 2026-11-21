@@ -6,3 +6,5 @@
 - How: md2010.pl.zip unzipped (mdgeo2010.pl, md000012010.pl, md000022010.pl) in census2010/; dc2020.pl.zip, va2020.pl.zip, wv2020.pl.zip in census2020_pl_dc_va_wv/ (documented in 2_silo/jobchoice/TAZ_CROSSWALK.md). Housing-unit weights of the TAZ and tract splits.
 - Files: md2010.pl.zip (+ unzipped .pl files), dc2020.pl.zip, va2020.pl.zip, wv2020.pl.zip
 
+
+- Files shipped: md000012010.pl, md000022010.pl, md2010.pl.prd.packinglist.txt, md2010.pl.zip, mdgeo2010.pl, copied 2026-11-17 from Validation_2026/data/raw/census2010 (block shapefile tl_2010_24_tabblock10 not copied: not read by the chain) (project-relative to VAE-SILO-MITO-MATSIM).

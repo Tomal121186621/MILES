@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Validation of ABIT 2024 on the final land-use population (fin24), in the form of Roorda, Miller & Habib (2008) and of
+"""Validation of MAST 2024 on the final land-use population (fin24), in the form of Roorda, Miller & Habib (2008) and of
 3_abit/temporal_2024 (same measures: temporal_2024/t24common.py, measures.measure).
 
     python3 activity/validation/report_2024.py measures      per-run measures -> final_2024/data/measures/<form>_s<NN>.pkl, data/run_totals.csv
     python3 activity/validation/report_2024.py report        tables/fin24_*.md|csv, figures/fig_fin24_*.pdf|png, the MATSim input choice
-    python3 activity/validation/report_2024.py matsim-csv    rewrites the chosen run's legs/activities CSV (ABIT format) for the MATSim converter
+    python3 activity/validation/report_2024.py matsim-csv    rewrites the chosen run's legs/activities CSV (MAST format) for the MATSim converter
 
 Forms: fin24 (attendance from the set's base-year table), fin24_tw (with the ACS 2024 work-at-home input; the form of the MATSim
-input).  Model = mean and s.d. (ddof 1) over the 10 replications (ABIT seeds 1-10) on one SILO population (seed 5).
+input).  Model = mean and s.d. (ddof 1) over the 10 replications (MAST seeds 1-10) on one SILO population (seed 5).
 Observed: ACS 2024 1-year (commute), ATUS 2021-24 Maryland diaries, LODES 2022 OD, NHTS 2017 Baltimore CBSA, RTS 2017/18; the
 2017/18 model is the survey-household run of the temporal study (mc_base, tour mode choice; survey-population tour runs are not
 affected by the gender recode).  Chain-test comparison: data/abit_roorda_tables.csv (settings *_behav)."""

@@ -27,7 +27,7 @@ import os, sys, numpy as np, pandas as pd
 from scipy.optimize import minimize
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import sc_common as C   # noqa: E402
 z = C.zones(); NZ = len(z); ST = z.state.values; CT = z.county.values; TT = C.tt().astype(np.float32); zi = C.zidx()
-LSUM = np.load(f"{C.SC}/work/logsum.npy", mmap_mode="r")   # PATH (package): school-tour logsums (363 MB), not copied: not in the final models
+LSUM = np.load(f"{C.W}/logsum.npy", mmap_mode="r")   # PATH (package): school-tour logsums (363 MB, copy in 00_shared_data/school_choice_work); not in the final models
 SIZE = C.size()
 REF_AGE = {"k8": 10, "hs": 16, "col": 25}; DECAY = {"k8": 0.15, "hs": 0.10, "col": 0.05}; ND = 50; NC = 4; HS = 4
 COMPS = {"k8": ["pub_out", "pub_in", "priv"], "hs": ["pub_out", "pub_in", "priv"], "col": ["pub4", "priv4", "cc"]}

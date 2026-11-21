@@ -22,7 +22,7 @@ public class OutputWriter {
         try {
             final String runId = AbitResources.instance.getString("run.id");
             String outputFolder = AbitResources.instance.getString("base.directory") + "/output/" + runId + "/";
-            //String outputFolder = "C:/Users/Wei/Documents" + "/output/" + runId + "/";
+            //String outputFolder = "<output folder>" + "/output/" + runId + "/";
 
             new File(outputFolder).mkdirs();
 

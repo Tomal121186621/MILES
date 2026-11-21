@@ -1,0 +1,21 @@
+column,definition,unit,source
+household,PUMS household serial number,,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+choice,index j of the destination PUMA (puma_index.csv),,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+weight,"expected in-area share of destination and origin, dest_cov x orig_cov, divided by its mean (hold-out table: 1)",,00_shared_data/resloc_work (geo_puma_region.csv; geo_mig_zone.csv)
+weight_coverage,hold-out table only: dest_cov x orig_cov (not used; the hold-out log-likelihood is unweighted),,
+av_<j>,"availability of PUMA j (j = 0..96, puma_index.csv); 0 for the four PUMAs whose zone weights are undefined (see the model README)",,
+IV_<j>,"inclusive value of the dwelling level: ln mean over 200 market dwellings of PUMA j of exp(V_d), V_d with the dwelling-level estimates; coefficient fixed at 1",,two_level.upper_data
+lnM_<j>,ln market size M_j = r_j x dwellings of PUMA j; in estimation the weighted number (WGTP) of PUMA j's dwellings occupied by households that moved in within 12 months x the PUMA's share of housing units in the zone system (market.csv),,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr); geo_puma_region.csv
+d2_<j>,"car time from the previous home, part 20-60 min: min(max(t - 20, 0), 40); t = AM-peak car time from the origin migration area to PUMA j (zones weighted by 2016 dwellings) x (1 - same)",min,00_shared_data/skims/auto_peak_time.csv.gz
+d3_<j>,"car time over 60 min: max(t - 60, 0)",min,
+same_<j>,share of the dwellings of the origin migration area (MIGPUMA) in zones of PUMA j: the probability that j is the previous PUMA when only the migration area is known (1 for a single-PUMA migration area),share,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr); 00_shared_data/resloc_work/geo_mig_zone.csv
+adjacent_<j>,"share of the dwellings of the origin migration area in PUMAs bordering j, x (1 - same); bordering: zone polygons dissolved by PUMA touch within 50 m",share,00_shared_data/zone_system/zones.shp
+same_state_<j>,1 if PUMA j is in the state lived in a year earlier (MIGSP),,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+commute_log_<j>,"sum over the household's workers of ln(1 + T), T = time (min) from PUMA j (zones weighted by dwellings) to the place-of-work PUMA (POWPUMA; zones weighted by 2016 jobs): AM-peak car time; households without a car: transit door-to-door time (at most 180 min)",,00_shared_data/skims
+crime_x_child_<j>,"crime index of PUMA j (county index offences per 100,000 relative to Baltimore City; zones weighted by dwellings) x 1 if any person under 18",,00_shared_data/zone_system/crimeIndex.csv
+lnddens_<j>,ln dwelling density of PUMA j: mean over its zones (weighted by 2016 dwellings) of ln(dwellings / acre),,00_shared_data/resloc_work/zone_landuse_2016.csv
+own_race_<j>,"share of PUMA j's 2016 households whose householder race category (white, Black, Hispanic, other) equals the mover's householder's",share,00_shared_data/synthetic_population_2016 (hh_2016.csv race; dd_2016.csv zone); PUMS RAC1P and HISP
+lnddens_x_single_<j>,lnddens_<j> x 1 if the household has one person,,lnddens; PUMS NP
+lnddens_x_young35_<j>,lnddens_<j> x 1 if the oldest member is under 35,,lnddens; PUMS AGEP
+lnddens_x_lninc_<j>,"lnddens_<j> x ln(max(household income, 5000) / 50000), 2016 $",,"lnddens; PUMS HINCP x ADJINC, CPI-U"
+core_share_<j>,core-city share of PUMA j: share of its 2016 dwellings (zone weights of the PUMA attributes) in DC or Baltimore City,share,"00_shared_data/zone_system/zoneSystem.csv COUNTYFIPS 11001, 24510; synthetic_population_2016/dd_2016.csv"

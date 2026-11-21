@@ -1,39 +1,30 @@
 #!/usr/bin/env python3
 """School location choice, K-8 (elementary and middle school): writes the estimation and hold-out tables of model/estimate_school_location_K8.py.
 
-Same data, choice set and likelihood as l07_school.py (final model, full choice set): sc_03_engine.Design("k8", half, "full").
-Every student has up to H possible home zones (weights w_h, location mixture of the survey home location) and up to C possible
-school zones (weights w_c); the choice set of every home zone is all 1,144 zones with enrolment of the segment's bands, an
-alternative being available when it has enrolment of the student's own band.  Values are those of the original estimator
-(features in single precision, as sc_03_engine.Design.X computes them).
+Same data, choice set and likelihood as the final model of school_final_spec.py (copy of l10_school.py; full choice set; engine
+sc_03_engine.Design / Model with the extensions of school_model_ext.py and school_final_spec.py).  Every student has up to H possible home zones (weights
+w_h, location mixture of the survey home location) and up to C possible school zones (weights w_c); the choice set of every
+home zone is all 1,144 zones with enrolment of the segment's bands, an alternative being available when it has enrolment of
+the student's own band.  Values are those of the original estimator (features in single precision, as Design.X computes them).
 Tables (long format; the Biogeme script makes them wide):
-  students   one row per student: person variables, and for each home slot h and school slot c the zone and the weight
-             (missing slots: weight 0)
+  students   one row per student: person variables (with race), and for each home slot h and school slot c the zone and the
+             weight (missing slots: weight 0)
   alternatives  one row per student x home slot x alternative j: zone, car time t, ln(1+t), same zone, other county,
-             other county x public share, other state, enrolment components nk0..nk2, availability
+             other county x public share, other state, charter-or-magnet share cm, quality of the public part qpub, share of public enrolment without a score qnone, own-race share own, enrolment components nk0..nk2, availability
   candidates one row per student x home slot x school slot: the same variables at the student's school zone (its alternative j)
-Check: log-likelihood at the estimates of l07_school_k8_coef.csv (step final) with the original estimator
-(sc_03_engine.Model.scores) = l07_school_k8_fit.csv; and the same LL recomputed from the exported tables (numpy).
+Inputs besides 00_shared_data/school_choice_work (students, location mixtures, enrolment): school_zone_attr.parquet and
+school_student_race.parquet in the same folder (written by school_attributes_data.py).
+Check: log-likelihood at the final estimates (../data/raw/l10_school_k8_coef.csv, step final) with the original
+estimator = l10_school_k8_fit.csv (estimation and validation half); and the same LL recomputed from the exported tables (numpy).
     python3 build_estimation_data.py   ->  ../data/estimation/*.parquet, ../data/holdout/*.parquet"""
 import os, sys
 import numpy as np, pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
-import sc_03_engine as G   # noqa: E402
-import sc_04_stepwise as S   # noqa: E402
+import school_final_spec as X10   # noqa: E402  (imports school_model_ext: engine extensions and the zone / race data)
+X9 = X10.X9; G = X9.G; S = X9.S
 OUT = os.path.abspath(f"{HERE}/../data"); RAWD = f"{OUT}/raw"
 SEG, BAND = "k8", "k8"
-BASES = ["t", "lt", "intra", "cc", "ccpub", "cs"]
-
-
-def spec_of(names):
-    """parameter names of the l07 coefficient file -> model terms (inverse of sc_04_stepwise.pname)"""
-    terms, si, sabs = [], [], False
-    for n in names:
-        if n in ("mu_size",) or (n.startswith("g_") and n != "g_pub_in"): continue
-        if n == "g_pub_in": sabs = True
-        elif n.startswith("h_"): si.append(n[2:].replace("X", ":", 1))
-        else: terms.append(n[2:].replace("X", "*"))
-    return terms, si, sabs
+BASES = ["t", "lt", "intra", "cc", "ccpub", "cs", "cm", "qpub", "qnone", "own"]
 
 
 def tables(D, M, th):
@@ -42,7 +33,8 @@ def tables(D, M, th):
     slot = np.zeros(D.R, int)
     for r in range(1, D.R): slot[r] = slot[r - 1] + 1 if D.rec[r] == D.rec[r - 1] else 0
     st = pd.DataFrame({"student": np.arange(D.N), "person_id": P.person_id.values, "household_id": P.household_id.values, "band": P.band.values,
-                       "age": P.age.values, "female": P.female.values, "income_group": P.g.values, "car0": P.car0.values, "carlow": P.carlow.values})
+                       "age": P.age.values, "female": P.female.values, "income_group": P.g.values, "car0": P.car0.values, "carlow": P.carlow.values,
+                       "race": P.race.values})
     for v in ["g1", "g3", "g4", "agec", "a25"]: st[v] = G.pvar(v, P, np.arange(D.N))
     for h in range(H):
         st[f"home_zone_{h}"] = -1; st[f"w_home_{h}"] = 0.0
@@ -50,7 +42,7 @@ def tables(D, M, th):
         st[f"school_zone_{c}"] = np.where(D.Sz[:, c] >= 0, G.z.zone.values[np.maximum(D.Sz[:, c], 0)], -1); st[f"w_school_{c}"] = D.Sw[:, c]
     for r in range(D.R):
         st.loc[D.rec[r], f"home_zone_{slot[r]}"] = G.z.zone.values[D.h[r]]; st.loc[D.rec[r], f"w_home_{slot[r]}"] = np.exp(D.lw[r])
-    base = {b: D.base(b).astype(np.float32).astype(np.float64) for b in BASES if not (b == "ccpub" and SEG == "col")}
+    base = {b: D.base(b).astype(np.float32).astype(np.float64) for b in BASES}
     alt = {"student": np.repeat(D.rec, J), "home_slot": np.repeat(slot, J), "j": np.tile(np.arange(J), D.R), "zone": G.z.zone.values[D.A].ravel()}
     for b, x in base.items(): alt[b] = x.ravel()
     for k in range(3): alt[f"nk{k}"] = D.NK[k].astype(np.float64).ravel()
@@ -67,7 +59,8 @@ def tables(D, M, th):
 
 
 def ll_numpy(st, A, cand, x, terms, gfree, H, C, J):
-    """the likelihood of the Biogeme script, in numpy, from the exported tables (independent check of the export)"""
+    """the likelihood of the Biogeme script, in numpy, from the exported tables (independent check of the export);
+    size components without a free log weight (reference, or fixed at 0) have weight 1"""
     comps = G.COMPS[SEG]; lw = np.zeros(3)
     for c in gfree: lw[comps.index(c)] = x[f"g_{c}"]
 
@@ -88,11 +81,12 @@ def ll_numpy(st, A, cand, x, terms, gfree, H, C, J):
 
 
 def main():
-    fit = pd.read_csv(f"{RAWD}/l07_school_{BAND}_fit.csv"); row = fit[fit.step == "final"].iloc[0]
-    coef = pd.read_csv(f"{RAWD}/l07_school_{BAND}_coef.csv"); coef = coef[coef.step == "final"]
-    x = dict(zip(coef.param, coef.coef)); terms, si, sabs = spec_of(coef.param.tolist()); assert not si
+    fit = pd.read_csv(f"{RAWD}/l10_school_{BAND}_fit.csv"); row = fit[fit.step == "final"].iloc[0]
+    coef = pd.read_csv(f"{RAWD}/l10_school_{BAND}_coef.csv"); coef = coef[coef.step == "final"]
+    x = dict(zip(coef.param, coef.coef)); spec = row.spec.split(); gfix = tuple(str(row.gfix).split(",")) if isinstance(row.gfix, str) and row.gfix else ()
+    terms, si, sabs = S.split(spec); assert not si
     for half, sub, ref in (("estimation", "estimation", row.LL), ("validation", "holdout", row.validation_LL)):
-        D = G.Design(SEG, half, "full"); M = G.Model(D, terms, si, sabs); assert set(M.names) == set(x), (M.names, list(x))
+        D = X9.Design2(SEG, half); M = X9.Model2(D, terms, si, sabs, None, gfix); assert set(M.names) == set(x), (M.names, list(x))
         th = np.array([x[n] for n in M.names])
         st, A, cand, LL, (H, C, J) = tables(D, M, th)
         lln = ll_numpy(st, A, cand, x, terms, M.gfree, H, C, J)
@@ -102,7 +96,7 @@ def main():
         st.to_parquet(f"{OUT}/{sub}/school_{SEG}_{sub}_students.parquet", index=False)
         A.to_parquet(f"{OUT}/{sub}/school_{SEG}_{sub}_alternatives.parquet", index=False)
         cand.to_parquet(f"{OUT}/{sub}/school_{SEG}_{sub}_candidates.parquet", index=False)
-    print("model terms:", terms, "free size weights:", M.gfree)
+    print("model terms:", terms, "free size weights:", M.gfree, "fixed at 0:", gfix)
 
 
 if __name__ == "__main__":

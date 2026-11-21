@@ -1,17 +1,26 @@
 parameter,article_section,article_label,coefficient,robust_se,p,coefficient_full_precision,note
-MU_size,Size,size coefficient mu,0.4954,0.0491,<0.001,0.4954325193488095,
-G_in_boundary_public,Size,"in-boundary public enrolment, log weight",6.0411,0.5019,<0.001,6.0410756789630815,
-G_private,Size,"private enrolment, log weight",0.7823,0.3358,0.020,0.7822882481890988,
-B_time,Car time,car time (min),-0.0963,0.0183,<0.001,-0.0963423878878413,
-B_ln1p_time,Car time,ln(1+time),-0.7727,0.3649,0.034,-0.7727188914220914,
-B_same_zone,Boundaries,same zone,0.3406,0.1021,<0.001,0.3405857935967468,
-B_other_county_x_public_share,Boundaries,other county x public share,-2.2521,0.2016,<0.001,-2.252144952250956,
-,Interactions with car time,time x at least as many cars as drivers,,,,,reference category (no parameter)
-B_time_x_no_car,Interactions with car time,time x no car,-0.11,0.0353,0.002,-0.1099542835971949,
-B_time_x_fewer_cars_than_drivers,Interactions with car time,time x fewer cars than drivers,-0.0282,0.0149,0.058,-0.0282425211282322,
+MU_size,Size,size coefficient mu,0.4947,0.048,<0.001,0.4947003364660725,
+G_in_boundary_public,Size,"in-boundary public enrolment, log weight",6.1465,0.511,<0.001,6.146535648305272,
+G_private,Size,"private enrolment, log weight",1.3654,0.3146,<0.001,1.365404579177568,
+B_time,Car time,car time (min),-0.0857,0.0172,<0.001,-0.0857006193439857,
+B_ln1p_time,Car time,ln(1+time),-1.0211,0.3478,0.003,-1.0210870876507532,
+B_time_x_no_car,Car time,time x no car,-0.0999,0.0355,0.005,-0.0999161306214967,
+,Car time,time x fewer cars than drivers,,,,,removed from the previous version (not in the model)
+B_same_zone,Boundaries,same zone,0.3165,0.1015,0.002,0.3165013271329168,
+B_other_county_x_public_share,Boundaries,other county x public share,-2.3277,0.1999,<0.001,-2.327732691545545,
+B_charter_or_magnet_share,School zone,charter-or-magnet share,0.569,0.1554,<0.001,0.5689773415074121,
+B_quality_public,School zone,"quality of the public part (per 10 points, centred)",0.2047,0.0326,<0.001,0.204672042722306,
+B_quality_x_income_under40k,School zone,quality x income <$40k,-0.3536,0.1184,0.003,-0.3536176229918294,
+B_no_score_share,School zone,share of public enrolment without a score,0.8633,0.2104,<0.001,0.8632551989543413,
+B_own_race_share,School zone,own-race share of the zone's enrolment,1.1184,0.1958,<0.001,1.1183518039140687,
 N,fit statistics (article),N,1509.0,,,,model statistic
-K,fit statistics (article),K,9.0,,,,model statistic
+K,fit statistics (article),K,13.0,,,,model statistic
 alternatives,fit statistics (article),alternatives,1144.0,,,,model statistic
-LL(0) (overview table),fit statistics (article),LL(0) (overview table),-10407.1,,,,model statistic
-"LL(beta), full set",fit statistics (article),"LL(beta), full set",-2941.0,,,,model statistic
-validation LL,fit statistics (article),validation LL,-3041.5,,,,model statistic
+LL(0),fit statistics (article),LL(0),-10407.1,,,,model statistic
+LL(beta),fit statistics (article),LL(beta),-2885.6038,,,,model statistic
+rho2,fit statistics (article),rho2,0.723,,,,model statistic
+AIC,fit statistics (article),AIC,5797.2,,,,model statistic
+BIC,fit statistics (article),BIC,5866.4,,,,model statistic
+hold-out N,fit statistics (article),hold-out N,1534.0,,,,model statistic
+LL(holdout),fit statistics (article),LL(holdout),-2995.8347,,,,model statistic
+LL(holdout) without own-race share,fit statistics (article),LL(holdout) without own-race share,-3016.0094,,,,model statistic

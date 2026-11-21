@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage 3, Roorda-style validation: the observed survey population as ABIT input, and the ABIT runs on it.
+"""Stage 3, Roorda-style validation: the observed survey population as MAST input, and the MAST runs on it.
 
     python3 survey_population.py build                 # both halves -> 3_abit/survey_pop/<half>/
     python3 survey_population.py run --half estimation --seeds 1-10 [--xmx 8g]
@@ -19,7 +19,7 @@ Households (RTS_raw_flat_data.csv, one record per household)
   autos           numvehicle;  income: midpoint of hh_income_detailed (unknown: the weighted median class of the half).
 Persons
   travellers      every person of the file (the file holds the persons with at least one trip on the travel day): age, gender
-                  (RTS 1 female / 2 male written as the SILO codes 2 / 1; -9 -> drawn 50/50), licence (license 1; -9 -> licensed when 16+), occupation as the SILO codes ABIT reads:
+                  (RTS 1 female / 2 male written as the SILO codes 2 / 1; -9 -> drawn 50/50), licence (license 1; -9 -> licensed when 16+), occupation as the SILO codes MAST reads:
                   age < 5 -> 0 toddler, employment_status 0 -> 1 employed, student_status 1 -> 3 student, employment_status 1 ->
                   4 retiree, else 2 unemployed (rts_common.person_type).
   non-travellers  hhsize minus the travellers of the household (the survey keeps their count, not their records).  Their role
@@ -29,14 +29,14 @@ Persons
   weight          wtperfin for travellers, the household weight wthhfin for the imputed members (used to weight model output).
   workplace       employed persons with a usual work location (j1_workplace_loc 1, 2 or 4) and a work tract inside the zone
                   system: the zone of the work tract (workplace.reassign.file); the rest (work at home, unknown tract, imputed
-                  workers): ABIT's own fallback, the RTS home-based work gravity (MarylandLosDataReader.sampleWorkZone).
+                  workers): MAST's own fallback, the RTS home-based work gravity (MarylandLosDataReader.sampleWorkZone).
   school          students with a school tract inside the zone system: the school record of the person's band (elementary 5-10,
                   middle 11-13, high 14-17, postsec 18+, as SILO) nearest to the tract point (schoolId of schools_2016.csv);
                   others schoolId -2, i.e. the SILO rule: the nearest school of the band from home.
 Ids: households 10,000,001+, persons 20,000,001+ (outside the SILO id ranges, so the SILO job file read for the zone job counts
 never attaches a synthetic job to a survey person); the map to the survey ids is in persons_map.csv.
 
-Run (one ABIT at a time, <= 8 GB heap): the properties of the synthetic-population runs (make_abit_properties.py, coefficient
+Run (one MAST at a time, <= 8 GB heap): the properties of the synthetic-population runs (make_abit_properties.py, coefficient
 set coef_calibrated copied into the run as in run_abit.py) with households / persons / dwellings replaced by the survey
 files, sample.fraction = 1, workplace.reassign.file, and zone.population.file = the 2016 base population per zone, read by the
 class overlay survey_overlay/ (MarylandLosDataReader with the one optional property; 3_abit/classes is unchanged): the residents
@@ -179,7 +179,7 @@ def build(half, seed=2026):
         pa.loc[g.index, "schoolId"] = s.id.values[d2.argmin(axis=1)]
     log["students"] = int((pa.occ == 3).sum()); log["students_school_record"] = int((pa.schoolId > 0).sum())
     log["persons_total"] = len(pa); log["households_total"] = len(h)
-    # files in the SILO formats ABIT reads
+    # files in the SILO formats MAST reads
     od = f"{OUTD}/{half}"; os.makedirs(od, exist_ok=True)
     hh = pd.DataFrame({"id": hid_new.values, "dwelling": hid_new.values, "hhSize": pa.groupby("hhID").size().reindex(hid_new.values).values,
                        "autos": h.numvehicle.clip(lower=0).astype(int).values, "income": h.income.values, "race": "other"})
@@ -199,7 +199,7 @@ def build(half, seed=2026):
     return log
 
 
-# ------------------------------------------------------------------------------------------------ ABIT run
+# ------------------------------------------------------------------------------------------------ MAST run
 def run(half, seed, xmx="8g", threads=6, coef=f"{A3}/coef_calibrated", force=False, tag="", skims=f"{A3}/skims"):
     """tag: run-name infix (svy_<half>_<tag>_s<seed>), e.g. 'mnl' for the runs with the estimated destination MNL (2026-10-22);
     the coefficient set decides the model (dest.choice.model in <coef>/run_params.csv)."""

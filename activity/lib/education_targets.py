@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Stage 2b/3: survey targets for the ABIT EDUCATION tours (school tours of students), by age band.
+"""Stage 2b/3: survey targets for the MAST EDUCATION tours (school tours of students), by age band.
 
 Run with `python3 -I activity/lib/education_targets.py [--split estimation|validation] [--out FILE]` from the repository root. Writes `targets_education.csv` (read by
-ABIT `models/maryland/MarylandFrequencyGenerator` through the property `education.targets.file`) and, with
+MAST `models/maryland/MarylandFrequencyGenerator` through the property `education.targets.file`) and, with
 `--write-mode-targets`, replaces the EDUCATION rows of `ABIT/input/maryland/coef/rt_mode_by_purpose.csv`
 (the ASC re-anchor targets of `MarylandFullModeChoice`).
 
@@ -16,7 +16,7 @@ travel days are weekdays (`tdate_dow` 1-5).
 
 Band = traveller's age: elementary 5-10, middle 11-13, high 14-17, postsec 18+ (the SILO bands of
 `2_silo/schools/assign_base_students.py`); students = `student_status` 1 and age >= 5 and not a worker (employment_status 0:
-a working student is EMPLOYED in SILO and makes work tours in ABIT, so the school-day probability is that of the
+a working student is EMPLOYED in SILO and makes work tours in MAST, so the school-day probability is that of the
 non-working students; stage 3, 2026-10-22).
 Stage 3 (2026-10-22): `--split estimation` restricts persons and trips to the households of that half of
 `Validation_2026/data/rts_split.csv` (the calibration targets come from the estimation half only); `--out` sets the
@@ -25,11 +25,11 @@ the environment variable ABIT_COEF_DIR (default the pristine coef folder).
 Metrics per band (person weight wtperfin for per-student rates, trip weight wttrdfin for trip attributes):
   school_tour_rate        arrivals at school (d_activity 4 from a non-school origin) per student per weekday
   school_day_prob         share of students with at least one such arrival on the travel day
-                          (= attendance probability per weekday used by ABIT; 1 - share without a school trip)
+                          (= attendance probability per weekday used by MAST; 1 - share without a school trip)
   no_school_trip_share    1 - school_day_prob
   attend_days_per_week    cross-check from the person question school_freq (5/4/3/2/1 weekdays, weekends only,
                           < 4 weekdays a month, online only), mean over students who answered
-  mode_<M>                share of school trips by survey mode (codebook travel_mode) and by ABIT mode after the
+  mode_<M>                share of school trips by survey mode (codebook travel_mode) and by MAST mode after the
                           rule: school bus (6), paratransit (10), taxi (11), rideshare (12) -> CAR_PASSENGER
                           (MATSim `ride`: a passenger leg that puts no vehicle on the network, as the school-bus
                           fleet is not part of the network supply and not in the GTFS schedule); private bus (9)
@@ -62,7 +62,7 @@ def band_of(age):
     return pd.cut(age, [4, 10, 13, 17, 200], labels=BANDS)
 
 
-# survey mode code -> (survey label, ABIT mode)
+# survey mode code -> (survey label, MAST mode)
 MODE = {1: ("walk", "WALK"), 2: ("bike", "BIKE"), 3: ("motorcycle", "CAR_DRIVER"), 4: ("auto_driver", "CAR_DRIVER"),
         5: ("auto_passenger", "CAR_PASSENGER"), 6: ("school_bus", "CAR_PASSENGER"), 7: ("rail", "TRAIN"),
         8: ("bus", "BUS"), 9: ("private_bus", "BUS"), 10: ("paratransit", "CAR_PASSENGER"),

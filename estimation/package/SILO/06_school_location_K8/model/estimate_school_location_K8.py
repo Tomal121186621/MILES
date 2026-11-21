@@ -13,6 +13,8 @@ estimator, sc_03_engine.Model.scores):
     log L_n = WeightedLogSumExp_{h,c}( V_hc - WeightedLogSumExp_j(V_hj; av_hj) ; w_h w_c )
 w_h: weight of possible home zone h (up to 4), w_c: weight of possible school zone c (up to 2); unused slots carry a copy of
 slot 0 and weight 0. V_hc is the utility of the school zone c from home zone h (columns c<var>_h_c of the candidates table).
+Variables (data_dictionary.csv): car time, ln(1+t), boundary terms, charter-or-magnet share (cm), quality of the public
+part (qpub) and share of public enrolment without a score (qnone), own-race share of the zone's enrolment (own).
 Bound as in the original estimator: mu >= 0.01. Start values = article estimates (Table est_school, column K-8).
 
 Memory / time: see README.md (the expression has 4 x 1,144 utilities).
@@ -33,15 +35,19 @@ DATA = f"{HERE}/../input/data/estimation/school_k8_estimation"
 OUT = os.path.abspath(f"{HERE}/../output")
 
 START = {
-    'MU_size': 0.4954,
-    'G_in_boundary_public': 6.0411,
-    'G_private': 0.7823,
-    'B_time': -0.0963,
-    'B_ln1p_time': -0.7727,
-    'B_same_zone': 0.3406,
-    'B_other_county_x_public_share': -2.2521,
-    'B_time_x_no_car': -0.11,
-    'B_time_x_fewer_cars_than_drivers': -0.0282,
+    'MU_size': 0.4947,
+    'G_in_boundary_public': 6.1465,
+    'G_private': 1.3654,
+    'B_time': -0.0857,
+    'B_ln1p_time': -1.0211,
+    'B_same_zone': 0.3165,
+    'B_other_county_x_public_share': -2.3277,
+    'B_time_x_no_car': -0.0999,
+    'B_charter_or_magnet_share': 0.569,
+    'B_quality_public': 0.2047,
+    'B_no_score_share': 0.8633,
+    'B_quality_x_income_under40k': -0.3536,
+    'B_own_race_share': 1.1184,
 }
 SIZE_W = [None, 'G_in_boundary_public', 'G_private']          # size components nk0, nk1, nk2: None = reference (weight 1), else the log-weight parameter
 TERMS = {
@@ -50,7 +56,11 @@ TERMS = {
     'B_same_zone': ('intra', None),
     'B_other_county_x_public_share': ('ccpub', None),
     'B_time_x_no_car': ('t', 'car0'),
-    'B_time_x_fewer_cars_than_drivers': ('t', 'carlow'),
+    'B_charter_or_magnet_share': ('cm', None),
+    'B_quality_public': ('qpub', None),
+    'B_no_score_share': ('qnone', None),
+    'B_quality_x_income_under40k': ('qpub', 'g1'),
+    'B_own_race_share': ('own', None),
 }           # parameter -> (alternative variable, person variable or None)
 ALTVARS = sorted({v for v, _ in TERMS.values()} | {"nk0", "nk1", "nk2"})
 

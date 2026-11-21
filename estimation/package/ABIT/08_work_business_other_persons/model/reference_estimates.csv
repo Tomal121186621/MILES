@@ -1,24 +1,21 @@
 parameter,project_name,article_group,article_label,coefficient,robust_se,p_value,article_coefficient,article_robust_se,article_p
-B_distance_1_2km,d_1_2,Distance and impedance,"distance 1--2\,km",-2.2205084925691256,0.2555210319151039,3.62056074166039e-18,-2.2205,0.2555,<0.001
-B_distance_2_5km,d_2_5,Distance and impedance,"distance 2--5\,km",-0.1197628866815737,0.0818288746062579,0.14330946753453583,-0.1198,0.0818,0.143
-B_distance_5_10km,d_5_10,Distance and impedance,"distance 5--10\,km",-0.171469580697836,0.0326820051867224,1.5492733955619826e-07,-0.1715,0.0327,<0.001
-B_distance_10_20km,d_10_20,Distance and impedance,"distance 10--20\,km",-0.1153089978077088,0.0138390720142946,7.939823302052664e-17,-0.1153,0.0138,<0.001
-B_distance_20_50km,d_20_50,Distance and impedance,"distance 20--50\,km",-0.0798254275486353,0.0053496290419311,2.3821647590853045e-50,-0.0798,0.0053,<0.001
-B_distance_50km_plus,d_50_inf,Distance and impedance,"distance $>$ 50\,km",-0.0389614809251684,0.0032693562945643,9.632299415501145e-33,-0.039,0.0033,<0.001
-B_intrazonal,intra,Same zone,intrazonal (destination = home zone),0.6269258189170188,0.1781592198656329,0.00043332772827197393,0.6269,0.1782,<0.001
-B_Baltimore_City,bc,Area,Baltimore City,-0.1408702117055306,0.0998949815911049,0.158485633852943,-0.1409,0.0999,0.158
-B_Washington_DC,dcz,Area,Washington DC,0.1273278588394418,0.1406350637652395,0.3652652944296695,0.1273,0.1406,0.365
-B_Virginia,va,Area,Virginia,-0.1644923233116,0.1281103963647821,0.1991458491134338,-0.1645,0.1281,0.199
-B_Delaware_Pennsylvania_West_Virginia,othst,Area,"Delaware, Pennsylvania, West Virginia",-0.8010052136049508,0.2142020959745641,0.0001843987164354063,-0.801,0.2142,<0.001
-B_outside_home_county,xcounty,Boundaries,outside the origin county,-0.2971841469887435,0.0863124094808433,0.0005750400623624192,-0.2972,0.0863,<0.001
-B_ln_distance_x_income_below_50k,lnd_inc0,Interactions with ln(distance),ln(distance) $\times$ income $<$ \$50k,-0.1223002721062095,0.0670755253149072,0.06825465616229666,-0.1223,0.0671,0.068
-B_ln_distance_x_income_100k_plus,lnd_inc2,Interactions with ln(distance),ln(distance) $\times$ income $\geq$ \$100k,0.104297781758575,0.0638932033867804,0.10260013710704576,0.1043,0.0639,0.103
-B_ln_distance_x_worker,lnd_worker,Interactions with ln(distance),ln(distance) $\times$ worker,0.3669395391162469,0.0564540616058685,8.043226614011061e-11,0.3669,0.0565,<0.001
-THETA_office_jobs,theta_off,Size,$\theta$ office jobs (ln weight),-0.5587109113680548,0.3015342878861804,0.0638976300340997,-0.5587,0.3015,0.064
-THETA_other_jobs,theta_oth,Size,$\theta$ other jobs (ln weight),-0.0792064128318665,0.3269800557117728,0.8085971308281222,-0.0792,0.327,0.809
-THETA_school_pupils,theta_stu,Size,$\theta$ school pupils (ln weight),-3.0742054449851928,1.399931497799672,0.02809419944461569,-3.0742,1.3999,0.028
-MU_size,mu_size,Size,"$\mu$, ln size",0.7309285424315369,0.0342127525299829,2.876579481248206e-101,0.7309,0.0342,<0.001
+B_distance_1_2km,d_1_2,Distance and impedance,"distance 1--2\,km",-2.1253100045287807,0.2528036482243548,4.2077668330252146e-17,-2.1253,0.2528,<0.001
+B_distance_2_5km,d_2_5,Distance and impedance,"distance 2--5\,km",-0.1182656888546525,0.0814313836186145,0.14640834248910475,-0.1183,0.0814,0.146
+B_distance_5_10km,d_5_10,Distance and impedance,"distance 5--10\,km",-0.1706161931586665,0.0325366642047325,1.572913469412173e-07,-0.1706,0.0325,<0.001
+B_distance_10_20km,d_10_20,Distance and impedance,"distance 10--20\,km",-0.1145001504497503,0.013835313629162,1.274519657367128e-16,-0.1145,0.0138,<0.001
+B_distance_20_50km,d_20_50,Distance and impedance,"distance 20--50\,km",-0.0811358950440504,0.0053800638327008,2.1648888526739714e-51,-0.0811,0.0054,<0.001
+B_distance_50km_plus,d_50_inf,Distance and impedance,"distance $>$ 50\,km",-0.0391550712660529,0.003274470320693,5.919198258184826e-33,-0.0392,0.0033,<0.001
+B_intrazonal,intra,Same zone,intrazonal (destination = home zone),0.7504291023485433,0.1791821091525079,2.813237021027561e-05,0.7504,0.1792,<0.001
+B_Baltimore_City,bc,Area,Baltimore City,-0.2364097928133444,0.0983375751650539,0.016213948616233435,-0.2364,0.0983,0.016
+B_Washington_DC,dcz,Area,Washington DC,0.374231438015019,0.1269268217937548,0.003194202344307143,0.3742,0.1269,0.003
+B_Virginia,va,Area,Virginia,0.2042694287450089,0.1197160666634602,0.08795549593289649,0.2043,0.1197,0.088
+B_Delaware_Pennsylvania_West_Virginia,othst,Area,"Delaware, Pennsylvania, West Virginia",-0.2775354488777264,0.2093694222245585,0.1849795982419571,-0.2775,0.2094,0.185
+B_outside_home_county,xcounty,Boundaries,outside the origin county,-0.312392709427538,0.0860825965884128,0.00028453447299228273,-0.3124,0.0861,<0.001
+B_ln_distance_x_income_below_50k,lnd_inc0,Interactions with ln(distance),ln(distance) $\times$ income $<$ \$50k,-0.1206496806898619,0.0663977006124409,0.06920544834718458,-0.1206,0.0664,0.069
+B_ln_distance_x_income_100k_plus,lnd_inc2,Interactions with ln(distance),ln(distance) $\times$ income $\geq$ \$100k,0.1157329436052301,0.0634257919813774,0.06804654900547956,0.1157,0.0634,0.068
+B_ln_distance_x_worker,lnd_worker,Interactions with ln(distance),ln(distance) $\times$ worker,0.3775055036420495,0.0555526672953938,1.0797319926845308e-11,0.3775,0.0556,<0.001
+B_ln_office_jobs,lnx_off,Attraction,ln(1 + office jobs),0.5439876594105184,0.0239070036154645,1.3003664418953675e-114,0.544,0.0239,<0.001
 LL0,,,LL(0): equal shares of the available alternatives (article Table 2),,,,-9657.1,,
-LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-6766.724809492578,,,-6766.7,,
+LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-6819.349498162193,,,-6819.3,,
 N,,,observations,,,,1259.0,,
-K,,,estimated parameters,,,,19.0,,
+K,,,estimated parameters,,,,16.0,,

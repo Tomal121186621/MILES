@@ -5,13 +5,13 @@ Multinomial logit over the full choice set of 1,588 zones, anchor = the usual wo
 measurement model of the destination (candidate zones z_k of the destination tract, weights b_k = overlap area / zone area):
 
     L_n = sum_c w_c [ sum_k b_k exp(V_c,z_k) ] / [ sum_j exp(V_c,j) ]      (one configuration, w_0 = 1);  LL = sum_n ln L_n
-    V_j = MU_size ln(1 + retail_j + exp(THETA_office) office_j + exp(THETA_population) population_j + exp(THETA_other) other_jobs_j)
+    V_j = B_ln_retail_jobs ln(1 + retail_jobs_j)
           + sum_b B_distance_b piece_b(d_wj)        pieces 0-1, 1-2, 2-5, 5-10, 10-20, 20-50 km (slope per km; > 50 km: 0)
           + B_car_generalised_time cgt_wj + B_intrazonal [j = w] + B_outside_workplace_county [county_j != county_w]
 
 d = car distance (km, 2016 skim, intrazonal 0.5 sqrt(area)); cgt = car generalised time (min): time + 0.12 $/km x km x 60 / VOT,
 VOT = 30 $/h x household income factor (dc_common.car_gt).  The distance piece above 50 km was fixed at 0 (final stage, rule C:
-dropped with car generalised time in the model).  Bounds as in the estimation: THETA in [-30, 15], MU_size in [0, 3].
+dropped with car generalised time in the model).  No bounds.
 Unweighted, robust (sandwich) standard errors.
 
     ~/.venvs/biogeme/bin/python estimate_outing_first_stop_destination.py                 # estimate (results in ../output)
@@ -80,15 +80,12 @@ B_d2050 = Beta("B_distance_20_50km", 0.0, None, None, 0)
 B_cgt = Beta("B_car_generalised_time", 0.0, None, None, 0)
 B_intrazonal = Beta("B_intrazonal_workplace_zone", 0.0, None, None, 0)
 B_outside_county = Beta("B_outside_workplace_county", 0.0, None, None, 0)
-THETA_population = Beta("THETA_population", -2.0, -30.0, 15.0, 0)      # size base: retail jobs (theta = 0)
-THETA_office = Beta("THETA_office_jobs", -2.0, -30.0, 15.0, 0)
-THETA_other = Beta("THETA_other_jobs", -2.0, -30.0, 15.0, 0)
-MU_size = Beta("MU_size", 0.8, 0.0, 3.0, 0)
+B_ln_retail_jobs = Beta("B_ln_retail_jobs", 0.8, None, None, 0)       # attraction: ln(1 + retail jobs)
 
 
 def utility(g):
     c = g.c; d = g.x("imp")
-    size = MU_size * ln_size(g.z("ret"), [(THETA_office, g.z("off")), (THETA_population, g.z("pop")), (THETA_other, g.z("oth"))])
+    size = B_ln_retail_jobs * ln_size(g.z("ret"), [])
     terms = [size, B_d01 * piece(d, 0, 1), B_d12 * piece(d, 1, 2), B_d25 * piece(d, 2, 5), B_d510 * piece(d, 5, 10),
              B_d1020 * piece(d, 10, 20), B_d2050 * piece(d, 20, 50), B_cgt * g.x("cgt"),
              B_intrazonal * (Variable(f"za_{c}") == g.zone()),

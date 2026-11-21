@@ -7,3 +7,5 @@
 - Files: work_rts/workers.parquet, work/zones.parquet
 - Notes: Needed only to rebuild the TAZ crosswalks and tract splits (taz_crosswalk.py, rts_11_data_v2.py); the results are provided in 00_shared_data/taz_crosswalks.
 
+
+- Files shipped: work/zones.parquet, work_rts/workers.parquet, copied 2026-11-17 from Validation_2026/2_silo/jobchoice (work_rts/, work/) (project-relative to VAE-SILO-MITO-MATSIM).

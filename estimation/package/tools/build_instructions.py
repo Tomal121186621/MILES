@@ -3,7 +3,7 @@
 
 Reads <stage>/<model>/RUN.json and <stage>/RUN_ORDER.json and writes
   <stage>/<model>/INSTRUCTIONS.pdf   one page (or two) per model folder
-  RUN_ORDER.pdf                      the run order of all folders, SILO then ABIT
+  RUN_ORDER.pdf                      the run order of all folders, SILO then MAST
 Usage: python3 tools/build_instructions.py        (from manual_estimation/; needs tectonic)
 """
 import json, os, re, subprocess, sys, tempfile, shutil
@@ -63,12 +63,45 @@ def fmt(v):
         return f"{v:,}"
     return tex(v)
 
+def md_to_tex(md):
+    """the small Markdown of nb_reader.glance_md (## headings, **bold**, pipe tables, paragraphs) as LaTeX"""
+    out, tab = [], []
+    def inline(t):
+        parts = re.split(r"(\*\*[^*]+\*\*|`[^`]+`)", t)
+        return "".join(r"\textbf{" + tex(x[2:-2]) + "}" if x.startswith("**") else r"\texttt{" + tex(x[1:-1]) + "}" if x.startswith("`") else tex(x) for x in parts)
+    def flush():
+        if not tab: return
+        rows = [r for r in tab if not re.match(r"^\|[-|]+\|$", r.replace(" ", ""))]
+        n = len(rows[0].strip("|").split("|")); w = {3: [40, 70, 50], 4: [24, 46, 62, 24], 6: [20, 40, 50, 16, 16, 16]}.get(n, [160 // n] * n)
+        out.append(r"{\small\begin{longtable}{@{}" + "".join(f"L{{{x}mm}}" for x in w) + r"@{}}\toprule")
+        for k, r in enumerate(rows):
+            out.append(" & ".join(inline(c.strip()) for c in r.strip().strip("|").split("|")) + r" \\" + (r" \midrule" if k == 0 else ""))
+        out.append(r"\bottomrule\end{longtable}}"); tab.clear()
+    for line in md.split("\n"):
+        if line.startswith("|"): tab.append(line); continue
+        flush()
+        if line.startswith("## "): out.append(r"\section*{" + tex(line[3:]) + "}")
+        elif line.strip(): out.append(r"\par " + inline(line.strip()))
+    flush()
+    return "\n".join(out)
+
+
 def model_doc(stage, folder, R):
     out = [PREAMBLE]
     out.append(r"{\Large\bfseries " + tex(R.get("model", folder)) + r"}\\[2pt]")
     out.append(r"{\small " + tex(stage) + r" \,/\, \texttt{" + tex(folder) + r"}}")
     if R.get("purpose"):
         out.append(r"\par " + tex(R["purpose"]))
+    # model at a glance (the same text as the notebook, generated from the folder's files)
+    try:
+        import nb_reader as RD
+        if stage == "SILO" and folder in RD.SPEC:
+            out.append(md_to_tex(RD.glance_md(folder)))
+        elif stage == "ABIT" and folder in RD.ABIT_SPEC:
+            import abit_figs as AF
+            out.append(md_to_tex(RD.abit_glance_md(folder, AF.coef_rows(folder), (R.get("check") or {}).get("N"))))
+    except Exception as e:   # the instructions build must not fail on the summary
+        print(f"  (no 'at a glance' for {folder}: {e})")
     # folder layout
     out.append(r"\section*{Folder}")
     out.append(r"\begin{tabular}{@{}L{38mm}L{120mm}@{}}\toprule")
@@ -165,7 +198,7 @@ def order_doc(orders):
     out = [PREAMBLE, r"{\Large\bfseries Manual estimation: what to run, in which order}\par",
            r"Each folder holds one model with its own \texttt{INSTRUCTIONS.pdf}. Run the folders top to bottom; a folder needs only the folders listed before it. All commands use the Biogeme environment \texttt{\textasciitilde/.venvs/biogeme}. Your results go to each folder's \texttt{output/}; compare them with \texttt{model/reference\_estimates.csv}. The tables produced by Claude are in \texttt{CLAUDE\_TABLES/} (current article tables, and the Route B proposals in \texttt{route\_B\_2026-11-13/}, which are not in the model runs)."]
     for stage, items in orders:
-        out.append(r"\section*{" + stage + "}")
+        out.append(r"\section*{" + {"SILO": "SILO (folder SILO)", "ABIT": "MAST, Maryland Activity Scheduling and Travel model (folder ABIT)"}.get(stage, stage) + "}")
         out.append(r"\begin{longtable}{@{}r L{62mm} L{96mm}@{}}\toprule No. & Folder & Why at this point \\ \midrule")
         for i, it in enumerate(items, 1):
             f = it.get("folder", it) if isinstance(it, dict) else it

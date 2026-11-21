@@ -1,236 +1,203 @@
 # Land use and workplaces
 
-Residential location (three levels), car ownership and workplace choice, estimated on ACS PUMS households and the estimation half of the 2017/18 Regional Travel Survey.
+Residential location (two levels: PUMA, then dwelling), car ownership and workplace choice. The residential and car-ownership models are estimated on ACS PUMS households, the workplace model on the estimation half of the 2017/18 Regional Travel Survey.
 
 !!! note "Reading the tables"
-    Coefficient: maximum-likelihood estimate with robust (sandwich) standard error; \*\*\* p < 0.001, \*\* p < 0.01, \* p < 0.05. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. The same tables can be re-estimated with Biogeme from the estimation package.
+    Coefficient: maximum-likelihood estimate, with significance stars \*\*\* p < 0.01, \*\* p < 0.05, \* p < 0.10; robust (sandwich) standard error; two-sided p-value. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. Hold-out: fit on the held-out half of the data, which was also used in the specification search. "Reference": the omitted category; "—": removed from the model.
 
-### Residential location: county
+### Residential location: PUMA
 
-Upper level of the nested residential-location model: the county a moving household chooses, with the inclusive values of the zone and dwelling levels. ACS PUMS movers 2014–18.
+Upper level: the PUMA a moving household chooses among the 97 PUMAs of the zone-system area, with the inclusive value of the dwelling level (coefficient held at 1), the market size, distance from the previous home, the commute, PUMA attributes and the share of the PUMA's households whose householder is of the mover's race category. ACS PUMS movers 2014–2018.
 
-<div class="estfit"><span>N = 15,163</span><span>K = 14</span><span>LL(β̂) = −15,959.4</span><span>ρ̄² = 0.714</span><span>Hold-out: ρ² 0.714</span></div>
-
-| Variable | Coefficient | Robust s.e. | p |
-|---|---:|---:|---:|
-| ***Car time to another county (per min)*** | | | |
-| Under 20 min | 0 (reference) | | |
-| 20–60 min | −0.0305\*\*\* | 0.0019 | < 0.001 |
-| Over 60 min | −0.0085\*\*\* | 0.0007 | < 0.001 |
-| 20–60 min × ln income | 0.0047\*\*\* | 0.0009 | < 0.001 |
-| Over 60 min × ln income | 0.0032\*\*\* | 0.0006 | < 0.001 |
-| ***Staying near the origin*** | | | |
-| Previous county | 2.1962\*\*\* | 0.0840 | < 0.001 |
-| County bordering the previous county | 0.9149\*\*\* | 0.0522 | < 0.001 |
-| Same state as the origin | 0.9090\*\*\* | 0.0373 | < 0.001 |
-| ***Inclusive values of the dwelling choice*** | | | |
-| Zone × structure type, λB | 0.3885\*\*\* | 0.0165 | < 0.001 |
-| Dwelling, λA | 0.9240\*\*\* | 0.0582 | < 0.001 |
-| ***Commute*** | | | |
-| Commute: sum_workers ln(1+t) | −2.1432\*\*\* | 0.0386 | < 0.001 |
-| Commute × ln income | 0.4514\*\*\* | 0.0362 | < 0.001 |
-| ***Age of the oldest member*** | | | |
-| Previous county × (age - 50)/10 | 0.0816\*\*\* | 0.0138 | < 0.001 |
-| ***Schools and crime*** | | | |
-| School learning growth (SD per grade) | 1.9934\*\*\* | 0.5232 | < 0.001 |
-| Crime index × children | −1.0535\*\*\* | 0.1110 | < 0.001 |
-
-### Residential location: zone and structure type
-
-Middle level: the zone and dwelling type within the county; 30 sampled alternatives, weighted by the survey household weights. Survey estimation half.
-
-<div class="estfit"><span>N = 10,655</span><span>K = 15</span><span>LL(β̂) = −28,089.7</span><span>ρ̄² = 0.224</span><span>Hold-out: ρ² 0.139 (full choice set)</span></div>
+<div class="estfit"><span>N = 15,163</span><span>K = 14</span><span>LL(β̂) = −34,670.3 (weighted)</span><span>ρ̄² = 0.500</span><span>Hold-out: LL per mover −2.297</span></div>
 
 | Variable | Coefficient | Robust s.e. | p |
 |---|---:|---:|---:|
-| ***Size*** | | | |
-| Ln dwellings of the structure type in the zone (theta) | 1.0875\*\*\* | 0.0164 | < 0.001 |
-| ***Accessibility (logsum of the household's segment)*** | | | |
-| Non-work accessibility | 0.5123\*\*\* | 0.0738 | < 0.001 |
-| Non-work accessibility × oldest member under 35 | 0.4388\*\*\* | 0.0870 | < 0.001 |
-| Non-work accessibility × oldest member 50–64 | −0.3431\*\*\* | 0.0627 | < 0.001 |
-| Non-work accessibility × oldest member 65+ | −0.1515\* | 0.0671 | 0.024 |
-| Non-work accessibility × (household size - 1, at most 5) | −0.1441\*\*\* | 0.0226 | < 0.001 |
-| ***Commute*** | | | |
-| Commute: sum_workers ln(1+t) | −1.3012\*\*\* | 0.0495 | < 0.001 |
-| ***Zone price level*** | | | |
-| Ln mean monthly housing cost of the zone | −0.5048\*\* | 0.1552 | 0.001 |
-| Ln zone cost × ln income | 1.2163\*\*\* | 0.2090 | < 0.001 |
-| Ln zone cost × (household size - 1, at most 5) | −0.3643\*\*\* | 0.0871 | < 0.001 |
-| ***Neighbours*** | | | |
-| Share of same-income households in the zone | 1.7169\*\*\* | 0.4655 | < 0.001 |
-| ***Land use of the zone*** | | | |
-| Ln dwellings per acre | −0.3847\*\*\* | 0.0317 | < 0.001 |
-| Ln dwellings per acre × no car | 0.5085\*\*\* | 0.1018 | < 0.001 |
-| Ln dwellings per acre × children | −0.0569 | 0.0349 | 0.103 |
-| Ln(1 + retail jobs per km^2) | 0.0305\* | 0.0134 | 0.023 |
+| ***Inclusive value of the dwelling level*** |  |  |  |
+| Inclusive value IV<sub>p</sub> | 1 | fixed |  |
+| ***Size of the market*** |  |  |  |
+| Ln market size M<sub>p</sub> | 0.8397\*\*\* | 0.0323 | <0.001 |
+| ***Car time from the previous home (per min)*** |  |  |  |
+| Under 20 min | 0 | fixed |  |
+| 20–60 min | −0.0339\*\*\* | 0.0015 | <0.001 |
+| Over 60 min | −0.0087\*\*\* | 0.0006 | <0.001 |
+| ***Staying near the origin*** |  |  |  |
+| Inside the previous migration area | 2.5267\*\*\* | 0.0851 | <0.001 |
+| Bordering the previous migration area | 1.3297\*\*\* | 0.0540 | <0.001 |
+| Same state as the origin | 1.0820\*\*\* | 0.0347 | <0.001 |
+| ***Commute*** |  |  |  |
+| Commute: Σ<sub>workers</sub> ln(1+t) | −1.7408\*\*\* | 0.0283 | <0.001 |
+| ***PUMA attributes*** |  |  |  |
+| Crime index × children | −1.1607\*\*\* | 0.1142 | <0.001 |
+| Ln dwelling density | −0.5466\*\*\* | 0.0196 | <0.001 |
+| &emsp;× single-person household | 0.1698\*\*\* | 0.0229 | <0.001 |
+| &emsp;× oldest member under 35 | 0.2446\*\*\* | 0.0217 | <0.001 |
+| &emsp;× ln income | −0.1153\*\*\* | 0.0105 | <0.001 |
+| Core-city share (DC, Baltimore City) | 0.5055\*\*\* | 0.0401 | <0.001 |
+| Own-race share of the PUMA's households | 2.0759\*\*\* | 0.0518 | <0.001 |
+
+<p class='estnote'>Observations: 15,163 ACS PUMS movers 2014–2018 (estimation sample), weighted by the expected in-area share of origin and destination (mean 1); alternatives: the 97 PUMAs of the zone-system area, all available (no sampling); parameters: 14. Inclusive value: ln of the mean of exp V of the dwelling level over 200 dwellings drawn at random from the PUMA's movers' dwellings; ln M<sub>p</sub> enters as its own term. Market size: M<sub>p</sub> = r<sub>p</sub> × dwellings of the PUMA, with the fixed turnover rate r<sub>p</sub> = PUMS dwellings of recent movers (moved in within 12 months) × the PUMA's share of housing units in the zone system / 2016 dwellings of the PUMA; in the simulation M<sub>p</sub> changes only with construction and demolition. LL(0) = −69,366.3; LL(β̂) = −34,670.3 (weighted); ρ² = 0.500; AIC = 69,368.6; BIC = 69,475.4. Hold-out movers (3,820; this half was also used in the specification search; unweighted): LL = −8,773.2, −2.297 per mover. Car time applies to the part of the move outside the previous migration area; no effect below 20 min. Previous migration area: share of the dwellings of the household's migration PUMA (ACS) that lie in the PUMA. Commute t: peak car time (min) from the PUMA to the jobs of the worker's place-of-work PUMA, transit door-to-door time for households without a car. Own-race share: share of the PUMA's households whose householder is of the mover's race category (white, Black, Hispanic, other); 2016 in estimation, recomputed every year in the simulation. Density interactions: the main density coefficient is that of a household of $50k with two or more persons and an oldest member of 35 or older; ln income = ln(income / $50k). Core-city share: share of the PUMA's dwellings in DC or Baltimore City (zones weighted as for the other attributes). Dependent variable: destination PUMA of ACS PUMS movers 2014–2018 (estimation sample).</p>
+
+![Residential location: destination PUMAs of the hold-out movers, observed and model, and model minus observed.](../../assets/img/estimates/fig_resloc_holdout_map.png)
+<p class="estnote">Residential location: destination PUMAs of the hold-out movers, observed and model, and model minus observed.</p>
 
 ### Residential location: dwelling
 
-Lower level: the dwelling within the PUMA; 30 sampled alternatives. ACS PUMS movers 2014–18.
+Lower level: the dwelling within the chosen PUMA, among the chosen dwelling and 29 drawn at random from the PUMA's dwellings of recent movers. Each term also enters times ln income. ACS PUMS movers 2014–2018.
 
-<div class="estfit"><span>N = 15,163</span><span>K = 38</span><span>LL(β̂) = −47,688.2</span><span>ρ̄² = 0.075</span><span>Hold-out: ρ² 0.082</span></div>
+<div class="estfit"><span>N = 15,163</span><span>K = 18</span><span>LL(β̂) = −47,478.6</span><span>ρ̄² = 0.079</span><span>Hold-out: LL per mover −3.115</span></div>
 
 | Variable | Coefficient | Robust s.e. | p |
 |---|---:|---:|---:|
-| ***Housing cost*** | | | |
-| Cost share of income, slope below 30 % | 2.2014\*\*\* | 0.4618 | < 0.001 |
-| Cost share of income, slope 30–50 % | −6.7986\*\*\* | 0.2920 | < 0.001 |
-| X ln income | −4.6584\*\*\* | 0.3474 | < 0.001 |
-| Cost share of income, slope above 50 % | −2.7052\*\*\* | 0.2000 | < 0.001 |
-| X ln income | −1.1702\*\*\* | 0.0863 | < 0.001 |
-| Ln monthly housing cost | 0.1868\* | 0.0752 | 0.013 |
-| X ln income | 0.3830\*\*\* | 0.0341 | < 0.001 |
-| ***Size and age of the dwelling*** | | | |
-| Bedroom shortfall (per bedroom) | −0.8743\*\*\* | 0.0297 | < 0.001 |
-| X ln income | −0.2195\*\*\* | 0.0265 | < 0.001 |
-| Bedroom excess (per bedroom) | −0.2528\*\*\* | 0.0140 | < 0.001 |
-| X ln income | 0.1543\*\*\* | 0.0138 | < 0.001 |
-| Built in the last five years | −0.0274 | 0.0364 | 0.452 |
-| X ln income | 0.1153\*\* | 0.0356 | 0.001 |
-| ***Structure type: single-family attached (reference: single-family detached)*** | | | |
-| Constant | 0.1309\* | 0.0590 | 0.027 |
-| X children | −0.2164\*\*\* | 0.0557 | < 0.001 |
-| X oldest member under 35 | 0.1610\* | 0.0636 | 0.011 |
-| X oldest member 50–64 | −0.1778\* | 0.0761 | 0.019 |
-| X oldest member 65+ | −0.1530 | 0.1015 | 0.132 |
-| X ln income | −0.1220\*\*\* | 0.0313 | < 0.001 |
-| ***Structure type: multifamily 2-4 units (reference: single-family detached)*** | | | |
-| Constant | 0.0780 | 0.0882 | 0.377 |
-| X (household size - 1) | −0.1011\* | 0.0448 | 0.024 |
-| X children | −0.1970 | 0.1102 | 0.074 |
-| X oldest member under 35 | 0.2743\*\* | 0.0898 | 0.002 |
-| X oldest member 50–64 | −0.2671\* | 0.1146 | 0.020 |
-| X oldest member 65+ | −0.3780\*\* | 0.1454 | 0.009 |
-| X ln income | −0.3138\*\*\* | 0.0438 | < 0.001 |
-| ***Structure type: multifamily 5+ units (reference: single-family detached)*** | | | |
-| Constant | −0.0494 | 0.0626 | 0.430 |
-| X (household size - 1) | −0.1557\*\*\* | 0.0304 | < 0.001 |
-| X children | −0.1819\* | 0.0721 | 0.012 |
-| X oldest member under 35 | 0.4494\*\*\* | 0.0612 | < 0.001 |
-| X oldest member 50–64 | −0.0327 | 0.0745 | 0.660 |
-| X oldest member 65+ | 0.4850\*\*\* | 0.0897 | < 0.001 |
-| X ln income | −0.2448\*\*\* | 0.0363 | < 0.001 |
-| ***Structure type: mobile home or other (reference: single-family detached)*** | | | |
-| Constant | −0.2142 | 0.1275 | 0.093 |
-| X oldest member under 35 | −0.0801 | 0.1665 | 0.630 |
-| X oldest member 50–64 | 0.2580 | 0.1741 | 0.138 |
-| X oldest member 65+ | 0.1130 | 0.2199 | 0.607 |
-| X ln income | −0.4740\*\*\* | 0.0665 | < 0.001 |
+| ***Affordability*** |  |  |  |
+| Cost above 30 % of income (share) | −4.5411\*\*\* | 0.1518 | <0.001 |
+| &emsp;× ln income | −1.9322\*\*\* | 0.0686 | <0.001 |
+| ***Quality*** |  |  |  |
+| Ln monthly housing cost | 0.4398\*\*\* | 0.0256 | <0.001 |
+| &emsp;× ln income | 0.2652\*\*\* | 0.0262 | <0.001 |
+| ***Size and age of the dwelling*** |  |  |  |
+| Bedroom shortfall (per bedroom) | −0.6566\*\*\* | 0.0166 | <0.001 |
+| &emsp;× ln income | −0.1424\*\*\* | 0.0169 | <0.001 |
+| Bedroom excess (per bedroom) | −0.5353\*\*\* | 0.0176 | <0.001 |
+| &emsp;× ln income | 0.1621\*\*\* | 0.0179 | <0.001 |
+| Built in the last five years | −0.0414 | 0.0363 | 0.253 |
+| &emsp;× ln income | 0.1306\*\*\* | 0.0351 | <0.001 |
+| ***Structure type (reference: single-family detached)*** |  |  |  |
+| Single-family attached | 0.0314 | 0.0292 | 0.282 |
+| &emsp;× ln income | −0.1641\*\*\* | 0.0309 | <0.001 |
+| Multifamily 2–4 units | −0.1255\*\*\* | 0.0404 | 0.002 |
+| &emsp;× ln income | −0.3343\*\*\* | 0.0414 | <0.001 |
+| Multifamily 5+ units | −0.0781\*\* | 0.0316 | 0.014 |
+| &emsp;× ln income | −0.3099\*\*\* | 0.0344 | <0.001 |
+| Mobile home or other | −0.2092\*\*\* | 0.0707 | 0.003 |
+| &emsp;× ln income | −0.4727\*\*\* | 0.0654 | <0.001 |
+
+<p class='estnote'>Observations: 15,163 ACS PUMS movers 2014–2018 (estimation sample, unweighted); alternatives: 30 (chosen + 29 drawn uniformly from the PUMA's dwellings occupied by recent movers); parameters: 18. Choice set: the mover's dwelling and 29 dwellings drawn uniformly at random from the PUMA's market of movers' dwellings. A uniform draw gives consistent estimates and costs only precision (McFadden, 1978); with a second draw, or with 60 or 100 alternatives, no coefficient moves by more than 0.67 robust s.e. In SILO the household sees 30 vacant dwellings drawn at random in the chosen PUMA (all if fewer). LL(0) = −51,572.4; LL(β̂) = −47,478.6; ρ² = 0.079; AIC = 94,993.2; BIC = 95,130.5. Hold-out movers (3,820; this half was also used in the specification search): LL = −11,900.3, −3.115 per mover. Cost above 30 % of income: \max(0, 12 × cost / income - 0.30), income at least $5k, share at most 3; 30 % is the standard housing-cost-burden threshold (fixed). Cost: gross rent (renters) or selected monthly owner costs (owners), 2016 $; ln cost of at least $100. Income: ln(household income / $50k), 2016 $. Bedroom need: household size (at most 5).</p>
 
 ### Car ownership
 
-Multinomial logit over 0, 1, 2 and 3+ cars; every variable has its own coefficient for each alternative (0 cars = reference). ACS PUMS households 2014–18.
+Multinomial logit over 0, 1, 2 and 3 or more cars; every variable has its own coefficient for each alternative (no car = reference). The Baltimore City term is estimated with the other coefficients; no constant is calibrated. Maryland ACS PUMS households 2014–2018.
 
-<div class="estfit"><span>N = 91,348</span><span>K = 51</span><span>LL(β̂) = −80,664.0</span><span>ρ̄² = 0.363</span><span>Hold-out: ρ² 0.358</span></div>
+<div class="estfit"><span>N = 91,348</span><span>K = 56</span><span>LL(β̂) = −78,613.6</span><span>ρ̄² = 0.379</span><span>Hold-out: ρ² 0.375</span></div>
 
 | Variable | Coefficient | Robust s.e. | p |
 |---|---:|---:|---:|
-| ***One car versus none*** | | | |
-| Constant | 1.5342\*\*\* | 0.2176 | < 0.001 |
-| Workers | −0.5910\*\*\* | 0.0453 | < 0.001 |
-| Non-working persons aged 16+ | −0.7173\*\*\* | 0.0399 | < 0.001 |
-| Children under 16 | −0.1733\*\*\* | 0.0219 | < 0.001 |
-| Single-person household | −0.3179\*\*\* | 0.0557 | < 0.001 |
-| Age of the oldest member ((age - 45) / 10) | −0.0613\*\*\* | 0.0132 | < 0.001 |
-| Age of the oldest member, squared | −0.0341\*\*\* | 0.0040 | < 0.001 |
-| Ln income, slope under 25k | 0.5075\*\*\* | 0.0369 | < 0.001 |
-| Ln income, slope 25–50k | 1.7727\*\*\* | 0.0856 | < 0.001 |
-| Ln income, slope 50–100k | 0.4458\*\*\* | 0.0989 | < 0.001 |
-| Ln income, slope above 100k | −0.3512\*\*\* | 0.1002 | < 0.001 |
-| Single-family detached dwelling | 0.3662\*\*\* | 0.0433 | < 0.001 |
-| Multifamily dwelling | −0.2275\*\*\* | 0.0416 | < 0.001 |
-| Bedrooms | 0.3465\*\*\* | 0.0206 | < 0.001 |
-| Ln dwelling density of the PUMA (per km^2) | −0.1135\*\*\* | 0.0195 | < 0.001 |
-| Non-work accessibility gain from a car (logsum) | 1.4236\*\*\* | 0.1252 | < 0.001 |
-| Ln income × ln dwelling density (centred) | 0.0605\*\*\* | 0.0139 | < 0.001 |
-| ***Two cars versus none*** | | | |
-| Constant | 0.8291\*\*\* | 0.2396 | < 0.001 |
-| Workers | −0.1209\*\* | 0.0429 | 0.005 |
-| Non-working persons aged 16+ | −0.4847\*\*\* | 0.0363 | < 0.001 |
-| Children under 16 | −0.2778\*\*\* | 0.0224 | < 0.001 |
-| Single-person household | −2.2801\*\*\* | 0.0567 | < 0.001 |
-| Age of the oldest member ((age - 45) / 10) | −0.1115\*\*\* | 0.0152 | < 0.001 |
-| Age of the oldest member, squared | −0.0430\*\*\* | 0.0046 | < 0.001 |
-| Ln income, slope under 25k | 0.4565\*\*\* | 0.0522 | < 0.001 |
-| Ln income, slope 25–50k | 2.4088\*\*\* | 0.1014 | < 0.001 |
-| Ln income, slope 50–100k | 1.4280\*\*\* | 0.1024 | < 0.001 |
-| Ln income, slope above 100k | 0.1358 | 0.0999 | 0.174 |
-| Single-family detached dwelling | 0.9722\*\*\* | 0.0459 | < 0.001 |
-| Multifamily dwelling | −0.6951\*\*\* | 0.0467 | < 0.001 |
-| Bedrooms | 0.4924\*\*\* | 0.0229 | < 0.001 |
-| Ln dwelling density of the PUMA (per km^2) | −0.2619\*\*\* | 0.0206 | < 0.001 |
-| Non-work accessibility gain from a car (logsum) | 1.8495\*\*\* | 0.1445 | < 0.001 |
-| Ln income × ln dwelling density (centred) | 0.0241 | 0.0156 | 0.122 |
-| ***Three or more cars versus none*** | | | |
-| Constant | −3.0365\*\*\* | 0.2832 | < 0.001 |
-| Workers | 1.0537\*\*\* | 0.0454 | < 0.001 |
-| Non-working persons aged 16+ | 0.3677\*\*\* | 0.0381 | < 0.001 |
-| Children under 16 | −0.4315\*\*\* | 0.0246 | < 0.001 |
-| Single-person household | −1.7009\*\*\* | 0.0699 | < 0.001 |
-| Age of the oldest member ((age - 45) / 10) | 0.0468\* | 0.0190 | 0.014 |
-| Age of the oldest member, squared | −0.1010\*\*\* | 0.0058 | < 0.001 |
-| Ln income, slope under 25k | 0.1754\* | 0.0822 | 0.033 |
-| Ln income, slope 25–50k | 2.4995\*\*\* | 0.1370 | < 0.001 |
-| Ln income, slope 50–100k | 1.5995\*\*\* | 0.1131 | < 0.001 |
-| Ln income, slope above 100k | 0.2591\* | 0.1025 | 0.011 |
-| Single-family detached dwelling | 1.6895\*\*\* | 0.0521 | < 0.001 |
-| Multifamily dwelling | −1.1689\*\*\* | 0.0689 | < 0.001 |
-| Bedrooms | 0.6110\*\*\* | 0.0253 | < 0.001 |
-| Ln dwelling density of the PUMA (per km^2) | −0.4176\*\*\* | 0.0226 | < 0.001 |
-| Non-work accessibility gain from a car (logsum) | 2.2972\*\*\* | 0.1764 | < 0.001 |
-| Ln income × ln dwelling density (centred) | −0.0352\* | 0.0175 | 0.045 |
+| ***One car versus none*** |  |  |  |
+| Constant | 1.2652\*\*\* | 0.1440 | <0.001 |
+| Workers | 0.1062\*\*\* | 0.0300 | <0.001 |
+| Persons aged 16+: 2 | −0.6235\*\*\* | 0.0566 | <0.001 |
+| Persons aged 16+: 3 | −1.3456\*\*\* | 0.0764 | <0.001 |
+| Persons aged 16+: 4 or more | −1.6925\*\*\* | 0.1020 | <0.001 |
+| Children under 16 | −0.2038\*\*\* | 0.0230 | <0.001 |
+| Single-person household | −0.2501\*\*\* | 0.0508 | <0.001 |
+| Age of the oldest member ((age − 45) / 10) | −0.0656\*\*\* | 0.0104 | <0.001 |
+| Age of the oldest member, squared | −0.0347\*\*\* | 0.0036 | <0.001 |
+| Ln income, slope under \$25k | 0.5127\*\*\* | 0.0367 | <0.001 |
+| Ln income, slope \$25–50k | 1.4038\*\*\* | 0.0872 | <0.001 |
+| Ln income, slope \$50–100k | 0.3798\*\*\* | 0.0999 | <0.001 |
+| Ln income, slope above \$100k | −0.2813\*\*\* | 0.1000 | 0.005 |
+| Single-family attached and other dwelling | reference |  |  |
+| Single-family detached dwelling | 0.2074\*\*\* | 0.0444 | <0.001 |
+| Multifamily dwelling | −0.3958\*\*\* | 0.0424 | <0.001 |
+| Bedrooms | 0.3471\*\*\* | 0.0206 | <0.001 |
+| Ln dwelling density of the PUMA (per km²) | — |  |  |
+| Non-work accessibility gain from a car (logsum) | 0.4632\*\*\* | 0.1210 | <0.001 |
+| Ln income × ln dwelling density (centred) | 0.0616\*\*\* | 0.0105 | <0.001 |
+| Baltimore City | −0.9227\*\*\* | 0.0430 | <0.001 |
+| ***Two cars versus none*** |  |  |  |
+| Constant | −1.2532\*\*\* | 0.1889 | <0.001 |
+| Workers | 0.3319\*\*\* | 0.0311 | <0.001 |
+| Persons aged 16+: 2 | 2.0214\*\*\* | 0.0404 | <0.001 |
+| Persons aged 16+: 3 | 1.0266\*\*\* | 0.0662 | <0.001 |
+| Persons aged 16+: 4 or more | 0.3075\*\*\* | 0.0970 | 0.002 |
+| Children under 16 | −0.1821\*\*\* | 0.0227 | <0.001 |
+| Single-person household | — |  |  |
+| Age of the oldest member ((age − 45) / 10) | −0.1364\*\*\* | 0.0102 | <0.001 |
+| Age of the oldest member, squared | −0.0459\*\*\* | 0.0040 | <0.001 |
+| Ln income, slope under \$25k | 0.3837\*\*\* | 0.0537 | <0.001 |
+| Ln income, slope \$25–50k | 1.9106\*\*\* | 0.1052 | <0.001 |
+| Ln income, slope \$50–100k | 1.2820\*\*\* | 0.1040 | <0.001 |
+| Ln income, slope above \$100k | 0.1458 | 0.1004 | 0.146 |
+| Single-family attached and other dwelling | reference |  |  |
+| Single-family detached dwelling | 0.7446\*\*\* | 0.0475 | <0.001 |
+| Multifamily dwelling | −0.9090\*\*\* | 0.0485 | <0.001 |
+| Bedrooms | 0.5272\*\*\* | 0.0230 | <0.001 |
+| Ln dwelling density of the PUMA (per km²) | −0.1391\*\*\* | 0.0105 | <0.001 |
+| Non-work accessibility gain from a car (logsum) | 0.6501\*\*\* | 0.1480 | <0.001 |
+| Ln income × ln dwelling density (centred) | 0.0285\*\* | 0.0128 | 0.026 |
+| Baltimore City | −1.1812\*\*\* | 0.0523 | <0.001 |
+| ***Three or more cars versus none*** |  |  |  |
+| Constant | −3.6183\*\*\* | 0.2405 | <0.001 |
+| Workers | 0.6294\*\*\* | 0.0327 | <0.001 |
+| Persons aged 16+: 2 | 2.1165\*\*\* | 0.0545 | <0.001 |
+| Persons aged 16+: 3 | 2.6169\*\*\* | 0.0755 | <0.001 |
+| Persons aged 16+: 4 or more | 2.3784\*\*\* | 0.1026 | <0.001 |
+| Children under 16 | −0.3410\*\*\* | 0.0243 | <0.001 |
+| Single-person household | — |  |  |
+| Age of the oldest member ((age − 45) / 10) | — |  |  |
+| Age of the oldest member, squared | −0.0958\*\*\* | 0.0040 | <0.001 |
+| Ln income, slope under \$25k | 0.1625\* | 0.0834 | 0.051 |
+| Ln income, slope \$25–50k | 2.0388\*\*\* | 0.1393 | <0.001 |
+| Ln income, slope \$50–100k | 1.4880\*\*\* | 0.1141 | <0.001 |
+| Ln income, slope above \$100k | 0.2811\*\*\* | 0.1027 | 0.006 |
+| Single-family attached and other dwelling | reference |  |  |
+| Single-family detached dwelling | 1.4866\*\*\* | 0.0530 | <0.001 |
+| Multifamily dwelling | −1.3346\*\*\* | 0.0676 | <0.001 |
+| Bedrooms | 0.6396\*\*\* | 0.0252 | <0.001 |
+| Ln dwelling density of the PUMA (per km²) | −0.3054\*\*\* | 0.0139 | <0.001 |
+| Non-work accessibility gain from a car (logsum) | 1.1430\*\*\* | 0.1783 | <0.001 |
+| Ln income × ln dwelling density (centred) | −0.0299\*\* | 0.0150 | 0.047 |
+| Baltimore City | −1.0775\*\*\* | 0.0671 | <0.001 |
+
+<p class='estnote'>Observations: 91,348 Maryland households (ACS PUMS 2014–2018, estimation sample: 80%); alternatives: 4 (0, 1, 2, 3 or more cars); parameters: 56. LL(0) = −126,635.2; LL(constants) = −116,008.5; LL(β̂) = −78,613.6; ρ² = 0.379; ρ² against constants = 0.322; AIC = 157,339.2; BIC = 157,866.9. Hold-out sample (20%, 22,730 households): LL(0) = −31,510.5; LL(β̂) = −19,704.5; ρ² = 0.375. The hold-out sample was also used in the specification search. Estimation: unweighted multinomial logit (maximum likelihood, Newton); robust (sandwich) standard errors. Income in 2016 $, ln(income / $50k), at least $5k, piecewise linear with bends at $25k, $50k and $100k. Density centred at its mean (5.49). Persons aged 16+: reference 0 or 1. Baltimore City: estimated with the other coefficients; it captures what makes the City different (transit, parking, history) and is not a behavioural effect. The accessibility gain is that of the household's income group (under $40k, $40–75k, $75–125k, $125k or more). —: fixed at 0 (p > 0.3 when estimated).</p>
 
 ### Workplace choice
 
-Choice of the workplace zone among the zones with jobs, with a size term over job types; the chosen zone and 99 sampled zones. Survey estimation half.
+Choice of the workplace zone, with the chosen zone and 99 zones drawn at random from the 1,587 zones with jobs; 24 parameters. Survey estimation half.
 
-<div class="estfit"><span>N = 9,707</span><span>K = 36</span><span>LL(β̂) = −21,334.3</span><span>ρ̄² = 0.522</span><span>Hold-out: LL per worker −4.808 (all zones)</span></div>
+<div class="estfit"><span>N = 9,707</span><span>K = 24</span><span>LL(β̂) = −21,376.5</span><span>ρ̄² = 0.521</span><span>Hold-out: LL per worker −4.811 (all zones)</span></div>
 
 | Variable | Coefficient | Robust s.e. | p |
 |---|---:|---:|---:|
-| ***Size*** | | | |
-| Size coefficient mu | 0.8489\*\*\* | 0.0151 | < 0.001 |
-| Office jobs, log weight | −0.5350\*\* | 0.1795 | 0.003 |
-| Industrial jobs, log weight | −0.6907\*\*\* | 0.2001 | < 0.001 |
-| Other jobs, log weight | −0.1777 | 0.2113 | 0.400 |
-| ***Car time*** | | | |
-| Time (min) | −0.0692\*\*\* | 0.0032 | < 0.001 |
-| Ln(1+time) | −0.4844\*\*\* | 0.1041 | < 0.001 |
-| ***Car time x person*** | | | |
-| Time × woman | −0.0155\*\*\* | 0.0017 | < 0.001 |
-| Time × age <30 | −0.0158\*\*\* | 0.0030 | < 0.001 |
-| Time × age 55+ | −0.0049\* | 0.0021 | 0.018 |
-| Time × income <40k | −0.0195\*\*\* | 0.0055 | < 0.001 |
-| Time × income 75–125k | 0.0076\*\* | 0.0024 | 0.002 |
-| Time × income 125k+ | 0.0122\*\*\* | 0.0027 | < 0.001 |
-| Time × driving licence | 0.0280\*\*\* | 0.0073 | < 0.001 |
-| Time × household size | −0.0022\* | 0.0011 | 0.034 |
-| Time × children in the household | 0.0031 | 0.0026 | 0.229 |
-| Time × two or more workers | −0.0014 | 0.0021 | 0.514 |
-| Time × rural home zone | 0.0077\*\*\* | 0.0019 | < 0.001 |
-| ***Borders and the District*** | | | |
-| Same zone | 0.6405\*\*\* | 0.0869 | < 0.001 |
-| Other county | −0.2794\*\*\* | 0.0372 | < 0.001 |
-| Other state | −0.7637\*\*\* | 0.0554 | < 0.001 |
-| DC workplace, home outside DC | 1.0973\*\*\* | 0.0999 | < 0.001 |
-| ***Accessibility of the workplace*** | | | |
-| Non-work accessibility (logsum) of the workplace zone | −0.0889\*\* | 0.0285 | 0.002 |
-| ***Workplace regions*** | | | |
-| Baltimore City | −0.0830 | 0.0557 | 0.136 |
-| Montgomery and Prince George's | 0.1126\* | 0.0460 | 0.014 |
-| Arlington and Alexandria | 0.4285\*\*\* | 0.0775 | < 0.001 |
-| Other Northern Virginia | 0.0478 | 0.0731 | 0.513 |
-| Rest of Maryland | 0.0822 | 0.0960 | 0.392 |
-| Other states | −0.1437 | 0.1436 | 0.317 |
-| ***Job mix x person*** | | | |
-| Office share × income <40k | −0.5725\* | 0.2623 | 0.029 |
-| Office share × income 125k+ | 0.0903 | 0.1427 | 0.527 |
-| Retail share × age <30 | 1.2806\*\*\* | 0.2194 | < 0.001 |
-| Industrial share × woman | −1.3588\*\*\* | 0.1758 | < 0.001 |
-| ***Wage proxy*** | | | |
-| High-wage share | 1.8532\*\*\* | 0.2009 | < 0.001 |
-| High-wage share × income <40k | −1.0012\* | 0.3920 | 0.011 |
-| High-wage share × income 75–125k | 1.0819\*\*\* | 0.2006 | < 0.001 |
-| High-wage share × income 125k+ | 1.6792\*\*\* | 0.2318 | < 0.001 |
+| ***Size*** |  |  |  |
+| Size coefficient μ (ln of total jobs) | 0.8369\*\*\* | 0.0122 | <0.001 |
+| ***Car time*** |  |  |  |
+| Time (min) | −0.0701\*\*\* | 0.0031 | <0.001 |
+| Ln(1+time) | −0.4756\*\*\* | 0.1015 | <0.001 |
+| ***Car time × person*** |  |  |  |
+| Time × woman | −0.0158\*\*\* | 0.0017 | <0.001 |
+| Time × age 30–54 | reference |  |  |
+| Time × age <30 | −0.0164\*\*\* | 0.0029 | <0.001 |
+| Time × age 55+ | −0.0057\*\*\* | 0.0020 | 0.004 |
+| Time × income \$40–75k | reference |  |  |
+| Time × income <\$40k | −0.0179\*\*\* | 0.0055 | 0.001 |
+| Time × income \$75–125k | 0.0068\*\*\* | 0.0024 | 0.005 |
+| Time × income \$125k+ | 0.0107\*\*\* | 0.0026 | <0.001 |
+| Time × driving licence | 0.0236\*\*\* | 0.0072 | 0.001 |
+| Time × household size | −0.0018\*\* | 0.0007 | 0.012 |
+| Time × rural home zone | 0.0058\*\*\* | 0.0018 | 0.002 |
+| Time × household without a car | −0.0203\*\*\* | 0.0074 | 0.006 |
+| ***Borders and the District*** |  |  |  |
+| Same zone | 0.6814\*\*\* | 0.0865 | <0.001 |
+| Other county | −0.2653\*\*\* | 0.0368 | <0.001 |
+| Other state | −0.6772\*\*\* | 0.0496 | <0.001 |
+| DC workplace, home outside DC | 0.8340\*\*\* | 0.0531 | <0.001 |
+| ***Job mix × person*** |  |  |  |
+| Office share × income \$40k or more | reference |  |  |
+| Office share × income <\$40k | −0.7702\*\*\* | 0.2432 | 0.002 |
+| Retail share × age <30 | 1.5432\*\*\* | 0.1977 | <0.001 |
+| Industrial share × woman | −1.4910\*\*\* | 0.1285 | <0.001 |
+| ***Wage proxy*** |  |  |  |
+| High-wage share | 1.5238\*\*\* | 0.1751 | <0.001 |
+| High-wage share × income \$40–75k | reference |  |  |
+| High-wage share × income <\$40k | −0.8870\*\* | 0.3839 | 0.021 |
+| High-wage share × income \$75–125k | 1.1052\*\*\* | 0.2005 | <0.001 |
+| High-wage share × income \$125k+ | 1.7629\*\*\* | 0.2076 | <0.001 |
 
+<p class='estnote'>Observations: 9,707 workers; alternatives: chosen zone + 99 zones sampled uniformly from the 1,587 zones with jobs (no correction needed); parameters: 24. LL(0) = −44,702.4; LL(β̂) = −21,376.5; ρ² = 0.522; AIC = 42,801.1; BIC = 42,973.4. Hold-out half (9,749 workers, all 1,587 zones; also used in the specification search): LL = −46,905.5 (−4.811 per worker). Estimation: maximum likelihood with analytic gradient; robust (sandwich) standard errors. Dependent variable: zone of the usual workplace of workers with a fixed workplace outside their home (estimation half of the Regional Travel Survey 2017/18). Size term μln S<sub>j</sub>, S<sub>j</sub> = total jobs of the zone (the four job types weighted equally). Income groups: reference $40–75k. Car time: peak car time home–workplace (min). Shares: job shares of the workplace zone; high-wage share: share of high-earning jobs. Person variables in the time interactions are centred at their estimation-half means, so the time coefficient is the effect for the mean worker.</p>
+
+![Workplace choice: estimates with 95 % robust intervals.](../../assets/img/estimates/fig_workplace_coef.png)
+<p class="estnote">Workplace choice: estimates with 95 % robust intervals.</p>
+
+![Workplace choice: workplaces of the hold-out workers by PUMA, observed and model, and model minus observed.](../../assets/img/estimates/fig_workplace_holdout_map.png)
+<p class="estnote">Workplace choice: workplaces of the hold-out workers by PUMA, observed and model, and model minus observed.</p>

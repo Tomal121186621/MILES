@@ -21,6 +21,21 @@
 **Moves after 2020.**
 : The calibrated move rate stays at its 2017–2020 level, while the observed rate fell after 2020.
 
+**Tight housing in some counties.**
+: When a county has no vacant dwelling left, in-migrants that the population control would add are not placed. In a
+  2016–2024 run with one seed, the 2024 population is 1.6 to 4.0 % below the Census estimate in Carroll, Caroline,
+  Wicomico, Queen Anne's, Calvert, Cecil and Frederick counties.
+
+**Racial composition drifts.**
+: With the own-race share in the residential location model, the composition drifts toward stronger local majorities
+  from 2016 to 2024 (for example, the white share in Baltimore County rises from 60.3 to 62.7 %, against 53.0 % in the
+  ACS 2020–2024). Holding the shares at their 2016 values changes this by only about 0.7 points, so the drift comes
+  from the own-race term itself. The term describes where households of each group move; it does not separate
+  preference from discrimination, steering or history.
+
+**Residential location by PUMA.**
+: Fairfax County (Virginia) remains over-predicted by about 2 percentage points of hold-out movers.
+
 **Residents only on the roads.**
 : Trucks, commercial vehicles, visitors and through traffic are not modelled. Volumes fall short of counts outside
   the peaks and on roads with much freight.

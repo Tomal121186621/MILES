@@ -90,6 +90,22 @@ public class RunBaltimoreToll {
         {
             ch.sbb.matsim.config.SwissRailRaptorConfigGroup srr = ConfigUtils.addOrGetModule(config, ch.sbb.matsim.config.SwissRailRaptorConfigGroup.class);
             srr.setTransferPenaltyBaseCost(Double.parseDouble(System.getProperty("pt.transfer.penalty", "0.0")));
+            // 2026-11-16 -Dpt.car.access=true: intermodal access and egress of the SwissRailRaptor (SBB). Walk to every stop as before
+            // (initial radius = pt.search.radius, extended by pt.extension.radius until a stop is found, as the non-intermodal router does); car only for persons with ptCarAccess = true
+            // (household car and licence, set below) and only to stops with parkAndRide = true, routed to their accessLinkId_car link
+            // (both stop attributes written by PreparePseudoPt). Car: initial 10 km, extended by 5 km up to -Dpt.car.radius (default 25 km).
+            if (Boolean.getBoolean("pt.car.access")) {
+                double sr = config.transitRouter().getSearchRadius(), er = config.transitRouter().getExtensionRadius();
+                srr.setUseIntermodalAccessEgress(true);
+                srr.addIntermodalAccessEgress(new ch.sbb.matsim.config.SwissRailRaptorConfigGroup.IntermodalAccessEgressParameterSet()
+                        .setMode(TransportMode.walk).setInitialSearchRadius(sr).setSearchExtensionRadius(er).setMaxRadius(100000.0));
+                double cr = Double.parseDouble(System.getProperty("pt.car.radius", "25000"));
+                srr.addIntermodalAccessEgress(new ch.sbb.matsim.config.SwissRailRaptorConfigGroup.IntermodalAccessEgressParameterSet()
+                        .setMode(TransportMode.car).setInitialSearchRadius(Math.min(10000.0, cr)).setSearchExtensionRadius(5000.0).setMaxRadius(cr)
+                        .setPersonFilterAttribute("ptCarAccess").setPersonFilterValue("true")
+                        .setStopFilterAttribute("parkAndRide").setStopFilterValue("true").setLinkIdAttribute("accessLinkId_car"));
+                System.out.println("[RunBaltimoreToll] pt intermodal access: walk " + sr + " m, +" + er + " m steps; car " + cr + " m to park-and-ride stops");
+            }
         }
 
         // --- controller ---
@@ -144,7 +160,13 @@ public class RunBaltimoreToll {
         }
         config.qsim().setInsertingWaitingVehiclesBeforeDrivingVehicles(true);
         config.qsim().setStuckTime(120.0);
-        config.qsim().setRemoveStuckVehicles(true);
+        // 2026-11-16 transit practice (Open Berlin scenario, MATSim developers): -Dqsim.remove.stuck=false keeps stuck vehicles in the
+        // simulation (the MATSim default; true = all earlier runs, where a removed bus stranded everyone waiting for it).
+        config.qsim().setRemoveStuckVehicles(Boolean.parseBoolean(System.getProperty("qsim.remove.stuck", "true")));
+        // -Dpt.boarding=checkStopOnly: a passenger boards any vehicle that serves the planned alighting stop (matsim-code-examples
+        // issue 119); default checkLineAndStop = all earlier runs.
+        config.transit().setBoardingAcceptance(org.matsim.pt.config.TransitConfigGroup.BoardingAcceptance.valueOf(
+                System.getProperty("pt.boarding", "checkLineAndStop")));
 
         // --- routing: car AND ride on the network; walk/bike teleported; pt via transit router ---
         // ride (car-passenger) is ROUTED ON THE CAR NETWORK so it experiences the SAME congested travel
@@ -218,7 +240,7 @@ public class RunBaltimoreToll {
         addMode(config, "car",  ascCar,   0.00, 0.0,       -0.000075);
         // pt: BUS-based, normalized (-1.80 + 0.78 = -1.02/h). fare $0.50/km.
         addMode(config, "pt",   ascPt,   -1.02, 0.0,       -0.0005);
-        // ride: passenger time valued AS CAR TIME (performing channel only), matching ABIT's GC where
+        // ride: passenger time valued AS CAR TIME (performing channel only), matching MAST's GC where
         // passenger time enters identically to driver time (VOT divides only the money term). The
         // earlier -1.11/h blend (bus-like published tables) made ride's time disutility 2.4x car's,
         // which under full-scale congestion crushed the switchable margin (measured: ride response to
@@ -239,6 +261,38 @@ public class RunBaltimoreToll {
         addMode(config, "walk", ascWalk, -4.40,  0.0,  0.0);
         addMode(config, "bike", ascBike, -2.345, 0.0,  0.0);
 
+        // 2026-11-16 -Dscoring=milesday: the travel terms of the MAST commute tour-mode model (estimates of the current models,
+        // estimation package 3_abit/mode_choice/mc_common.py), replacing the port of the earlier model above:
+        //   generalised cost GC = minutes + 60 x cost / VOT, VOT = 0.5 x household income / 2,080 h (the usdot money utility of this
+        //   runner), with every minute weighted alike: car, car passenger, transit door to door (walk access and egress, waits,
+        //   in-vehicle, transfers; no transfer penalty) and drive access -> marginalUtilityOfTraveling 0 for every mode (net
+        //   -performing), waiting for transit 0, utilityOfLineSwitch 0;
+        //   money: car driver 0.1112 $/km (AAA 2017 fuel + maintenance, the estimation's operating cost), car passenger 0 (the
+        //   driver pays), transit fares flat per ride (MTA $1.80, Metrobus $2.00) and so without effect on the route -> 0 per km;
+        //   mode constants 0 (modes are fixed; a constant would only bias the access mode of transit trips).
+        // Walk and bike enter the MAST mode models by distance only, which matters for the choice of mode, not here (modes fixed).
+        if ("milesday".equals(System.getProperty("scoring"))) {
+            // addModeParams replaces the parameter set of the same mode
+            addMode(config, "car",  0.0, 0.0, 0.0, -0.0001112);
+            addMode(config, "ride", 0.0, 0.0, 0.0, 0.0);
+            addMode(config, "pt",   0.0, 0.0, 0.0, 0.0);
+            addMode(config, "walk", 0.0, 0.0, 0.0, 0.0);
+            addMode(config, "bike", 0.0, 0.0, 0.0, 0.0);
+            if (trucks) { addMode(config, "truck", 0.0, 0.0, 0.0, -0.0001112); addMode(config, "truckhz", 0.0, 0.0, 0.0, -0.0001112); }
+            config.scoring().setMarginalUtlOfWaitingPt_utils_hr(0.0);
+            // 2026-11-16 -Dpt.lineswitch (utils per transfer, default 0 = no transfer penalty). The SwissRailRaptor of MATSim 2024.0 takes
+            // -utilityOfLineSwitch as the transfer cost when transferPenaltyCostPerTravelTimeHour = 0 (RaptorUtils), and costs travel time here
+            // at performing = 0.78 utils/h, so -0.13 = 10 in-vehicle minutes (Open Berlin about 9 min; literature 5-20 min).
+            config.scoring().setUtilityOfLineSwitch(Double.parseDouble(System.getProperty("pt.lineswitch", "0.0")));
+            // a transit trip of MAST stays a transit trip: the router does not replace it by a walk when a transit route exists
+            // (MAST's walk mode carries a distance penalty, not the minutes valued here)
+            config.transitRouter().setDirectWalkFactor(Double.POSITIVE_INFINITY);
+            // 2026-11-16 -Dpt.beeline: longest walk between two stops for a transfer (m; MATSim default 100, Open Berlin and the other VSP scenarios 300)
+            if (System.getProperty("pt.beeline") != null)
+                config.transitRouter().setMaxBeelineWalkConnectionDistance(Double.parseDouble(System.getProperty("pt.beeline")));
+            System.out.println("[RunBaltimoreToll] scoring = milesday: every travel minute at -performing, car 0.1112 $/km, line switch " + config.scoring().getUtilityOfLineSwitch() + ", beeline " + config.transitRouter().getMaxBeelineWalkConnectionDistance() + " m, constants 0");
+        }
+
         // --- replanning: inner-loop mode choice ON (residents may switch) ---
         // Plan-memory cap: with 3 innovation strategies each agent accumulates plans; on the full 280k
         // population this overflowed -Xmx13g (18 GB machine) and hung at ~it.11's mobsim start. Keep it
@@ -252,7 +306,7 @@ public class RunBaltimoreToll {
         strat.setFractionOfIterationsToDisableInnovation(
                 Double.parseDouble(System.getProperty("innovoff", "0.8")));
 
-        // HYBRID design: mode choice is done by ABIT in the OUTER loop (price-elastic, on tolled skims);
+        // HYBRID design: mode choice is done by MAST in the OUTER loop (price-elastic, on tolled skims);
         // MATSim's INNER loop only does route + departure-time (modes FIXED from the input plans). So
         // SubtourModeChoice is OFF by default. Set -Dmodechoice=true to re-enable the inner-loop mode
         // choice (legacy scorer-calibration path).
@@ -352,10 +406,10 @@ public class RunBaltimoreToll {
         }
 
         // Set MATSim carAvail ("always"/"never") for SubtourModeChoice's considerCarAvailability.
-        // PRIMARY: seed from ABIT's assigned mode -- any agent whose ABIT plan has a "car" (CAR_DRIVER)
+        // PRIMARY: seed from MAST's assigned mode -- any agent whose MAST plan has a "car" (CAR_DRIVER)
         // leg demonstrably HAD a car for that trip, so carAvail=always. This guarantees MATSim can
-        // reproduce ABIT's ~77% car-driver share and removes an artificial ceiling (the household
-        // autos+license attributes marked ~4.7% of ABIT car-drivers as carless, e.g. autos=0 rounding or
+        // reproduce MAST's ~77% car-driver share and removes an artificial ceiling (the household
+        // autos+license attributes marked ~4.7% of MAST car-drivers as carless, e.g. autos=0 rounding or
         // a licensed 2nd driver in a 0-car record). FALLBACK for agents with no car leg: autos>0 & license.
         int carless = 0, seededByMode = 0;
         for (Person p : scenario.getPopulation().getPersons().values()) {
@@ -374,14 +428,15 @@ public class RunBaltimoreToll {
                         : (autosAttr != null ? parseIntSafe(autosAttr.toString()) : 1);
             boolean licensed = licenseAttr == null || Boolean.parseBoolean(licenseAttr.toString());
             boolean carAvail = hadCarLeg || (autos > 0 && licensed);
-            if (carAvail && !(autos > 0 && licensed)) seededByMode++;   // recovered by the ABIT-mode seed
+            if (carAvail && !(autos > 0 && licensed)) seededByMode++;   // recovered by the MAST-mode seed
             PersonUtils.setCarAvail(p, carAvail ? "always" : "never");
+            if (autos > 0 && licensed) p.getAttributes().putAttribute("ptCarAccess", "true");   // intermodal car access filter
             if (!carAvail) carless++;
         }
         int nPop = scenario.getPopulation().getPersons().size();
         System.out.println("[RunBaltimoreToll] carAvail=never for " + carless + " / " + nPop
                 + " residents (" + String.format("%.1f", 100.0 * (nPop - carless) / nPop)
-                + "% always; " + seededByMode + " recovered by ABIT-mode seed)");
+                + "% always; " + seededByMode + " recovered by MAST-mode seed)");
         System.out.println("[RunBaltimoreToll] ASCs  car=" + ascCar + " pt=" + ascPt + " ride=" + ascRide
                 + " walk=" + ascWalk + " bike=" + ascBike + "  toll=" + (toll ? tollFile : "NONE"));
 
@@ -393,21 +448,21 @@ public class RunBaltimoreToll {
         System.out.println("[RunBaltimoreToll] walk.maxdist=" + walkMaxDist + "m  bike.maxdist=" + bikeMaxDist + "m");
 
         // --- INCOME-DEPENDENT MONEY UTILITY (equity response; 2026-07-12) ---
-        // POWER FORM (2026-10-01, = the paper's Eq. votscale and ABIT's MarylandFullModeChoice):
+        // POWER FORM (2026-10-01, = the paper's Eq. votscale and MAST's MarylandFullModeChoice):
         //   VOT_n = VOT_ref * clamp((hhIncome_n / refIncome)^elasticity, 0.4, 2.5)
         //   marginalUtilityOfMoney(person) = base / that factor
         // elasticity 0.6 (-Dincome.vot.elasticity; 0 = uniform), refIncome = -Dincome.vot.median if given
-        // (ABIT uses $84,216/yr = 7018/month), else the population median. -Dincome.vot.form=linear
+        // (MAST uses $84,216/yr = 7018/month), else the population median. -Dincome.vot.form=linear
         // restores the earlier Bas Vicente & Cirillo linear-lambda form (kept for sensitivity only: it turns
         // negative above ~$210k and pinned 23% of residents on the clamp).
         final double votElast = Double.parseDouble(System.getProperty("income.vot.elasticity", "0.6"));
         final String votForm = System.getProperty("income.vot.form", "power");
         final double votMedianOverride = Double.parseDouble(System.getProperty("income.vot.median", "0"));
-        // USDOT FORM (2026-11-02, -Dincome.vot.form=usdot; validation study): the value of time of ABIT's tour mode choice
+        // USDOT FORM (2026-11-02, -Dincome.vot.form=usdot; validation study): the value of time of MAST's tour mode choice
         // (MarylandTourNestedModeChoice): VOT_n [$/h] = s x max(hhIncome_n, floor) / H, s = -Dvot.share (0.5, USDOT 2016 guidance for
         // local personal travel: 50 % of the hourly household income), H = -Dvot.hours (2,080 h/yr), floor = -Dvot.income.floor ($5,000/yr);
         // hhIncome = the person attribute 'hhIncome' (annual household income = 12 x sum over members of int(annual SILO income)/12, as
-        // ABIT reads it; a missing attribute counts as 0 -> floor).  Car time costs the performing rate (car travel utility 0), so the
+        // MAST reads it; a missing attribute counts as 0 -> floor).  Car time costs the performing rate (car travel utility 0), so the
         // person's marginal utility of money = performing [utils/h] / VOT_n [$/h]; elasticity, median and the [0.4, 2.5] clamp are not used.
         final boolean usdot = "usdot".equals(votForm);
         final double votShare = Double.parseDouble(System.getProperty("vot.share", "0.5"));
@@ -454,6 +509,19 @@ public class RunBaltimoreToll {
                 addTravelDisutilityFactoryBinding(TransportMode.ride).to(carTravelDisutilityFactoryKey());
                 bind(org.matsim.core.population.algorithms.PermissibleModesCalculator.class)
                         .toInstance(new DistanceConstrainedPermissibleModes(scModes, walkMaxDist, bikeMaxDist));
+                // park-and-ride tour rule for the intermodal car access (-Dpt.car.access): car access from home, car egress to home only
+                if (Boolean.getBoolean("pt.car.access")) {
+                    bind(ch.sbb.matsim.routing.pt.raptor.RaptorIntermodalAccessEgress.class).toInstance(new HomeCarAccessEgress());
+                    // car access only for rail, metro and light rail (MAST's train alternative)
+                    addRoutingModuleBinding(TransportMode.pt).toProvider(RailOnlyCarAccessRouting.RoutingProvider.class);
+                }
+                // 2026-11-17 -Dpt.submodes=true: MAST's sub-mode kept (population converter --pt-submodes): leg mode bus routed on the
+                // bus routes only with walk access (BusOnlyRouting), leg mode train on the full schedule with car access to rail only, again on the rail routes when that rides no rail (TrainRouting)
+                // (RailOnlyCarAccessRouting); both produce pt and walk legs, simulated and scored as pt
+                if (Boolean.getBoolean("pt.submodes")) {
+                    addRoutingModuleBinding("bus").toProvider(BusOnlyRouting.RoutingProvider.class);
+                    addRoutingModuleBinding("train").toProvider(TrainRouting.RoutingProvider.class);
+                }
                 if (usdot) {
                     bind(org.matsim.core.scoring.functions.ScoringParametersForPerson.class)
                             .toInstance(new IncomeScoringParams(cfgF, votShare, votHours, votFloor));
@@ -503,7 +571,7 @@ public class RunBaltimoreToll {
     }
 
     /** Person-specific money utility. DEFAULT since 2026-10-01 = power form (see main): VOT scales with
-     *  (hhIncome/reference)^0.6, clamped to [0.4, 2.5], identical to ABIT and the paper. The base (median)
+     *  (hhIncome/reference)^0.6, clamped to [0.4, 2.5], identical to MAST and the paper. The base (median)
      *  money utility 0.0245 utils/$ = $31.8/h is anchored to Lin, Spissu & Cirillo (2024, TR-A 182), a
      *  revealed-preference study of two Express Lanes in VIRGINIA ($26-28/h before the pandemic, no income data).
      *  LEGACY linear form (income.vot.form=linear), kept for sensitivity:
@@ -522,7 +590,7 @@ public class RunBaltimoreToll {
         // SILO incomes are maintained in 2016 dollars; the coefficients are scaled to the survey's
         // 2011 dollars -> deflate incomes before evaluating lambda (CPI 2011->2016 ~ +6.7%).
         static final double INCOME_2016_TO_2011 = 1.0 / 1.067;
-        static final double FACTOR_MIN = 0.4, FACTOR_MAX = 2.5;     // tail clamp = ABIT precedent (VOT_FACTOR_MIN/MAX in MarylandFullModeChoice); 0.25 variant = sensitivity run
+        static final double FACTOR_MIN = 0.4, FACTOR_MAX = 2.5;     // tail clamp = MAST precedent (VOT_FACTOR_MIN/MAX in MarylandFullModeChoice); 0.25 variant = sensitivity run
         private final Config config;
         private final double medianIncome, elasticity; private final String form;
         private double votShare, votHours, votFloor;   // usdot form only

@@ -359,6 +359,8 @@ public class MarylandDestinationChoice implements DestinationChoice {
     //   intra, intra_a, intra_b      j = home / j = first anchor / j = second anchor
     //   bc, dcz, va, othst, cbd      Baltimore City, DC, Virginia, DE/PA/WV, >= 10,000 jobs per km2
     //   lnretden, mix                ln(1 + retail jobs per km2), land-use mix entropy of (pop, retail, office, other jobs)
+    //   lnarea                       ln(zone area, km2, at least 0.05) (2026-11-17: one attraction variable per model, mu_size ln(1 + x)
+    //                                with size weight 1 = beta ln(1 + x); ln area in place of the retail density)
     //   xcounty, xstate              j outside the county / state of the origin (stops: of both anchors)
     //   ptav, ptav_car0              bus door-to-door time from home < 120 min (x household without a car)
     // chooser flags x: inc0 (household < $50k), inc2 (>= $100k), car0 (no car), car1 (0 < cars < licensed drivers), child
@@ -376,7 +378,7 @@ public class MarylandDestinationChoice implements DestinationChoice {
     // rec / acc; work -> work; education -> school); stops: LS(a, j) + LS(j, b) - LS(a, b), primary and anchored: LS(a, j).
     private static final String[] FLAGS = {"inc0", "inc2", "car0", "car1", "child", "kid", "senior", "worker", "am", "pm", "ev", "nonauto", "worktour", "inbound", "multi",
             "male", "hh1", "hhsize"};
-    private static final String[] ZVARS = {"bc", "dcz", "va", "othst", "cbd", "lnretden", "mix"};
+    private static final String[] ZVARS = {"bc", "dcz", "va", "othst", "cbd", "lnretden", "mix", "lnarea"};
     private static final String[] SIZE = {"pop", "ret", "off", "oth", "stu"};
     private static final double[] KNOTS = {1, 2, 5, 10, 20, 50}, DKNOTS = {1, 2, 5, 10, 20};
     private static final int T_PIECE = 1, T_LIN = 2, T_LN = 3, T_LNX = 4, T_CTIME = 5, T_LS = 6, T_INTRA = 7, T_INTRA_A = 8, T_INTRA_B = 9,
@@ -520,6 +522,7 @@ public class MarylandDestinationChoice implements DestinationChoice {
             double[] s = {zPop[i], zRet[i], zOff[i], zOth[i]}; double tot = 0; for (double v : s) tot += v; double ent = 0;
             for (double v : s) { double sh = v / Math.max(tot, 1e-9); ent -= sh * Math.log(Math.max(sh, 1e-12)); }
             zVar[6][i] = ent / Math.log(4);
+            zVar[7][i] = Math.log(area);
         }
         mTcar = new float[n * n]; mDraw = new float[n * n]; mDkm = new float[n * n]; mBus = new float[n * n]; mTrain = new float[n * n];
         for (int i = 0; i < n; i++) for (int j = 0; j < n; j++) {

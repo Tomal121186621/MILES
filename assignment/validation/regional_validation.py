@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Regional traffic validation of the UPSTREAM models through the assignment (validation only: nothing is fitted or adjusted).
 
-Chain CVAE -> SILO -> ABIT -> MATSim, Baltimore region (24003, 24005, 24013, 24025, 24027, 24510), 2024, 10 % sample (x 10),
+Chain CVAE -> SILO -> MAST -> MATSim, Baltimore region (24003, 24005, 24013, 24025, 24027, 24510), 2024, 10 % sample (x 10),
 one representative weekday.  Every MATSim seed under RUNS_ROOT/2024_s<N> with a .done.json is used; statistics are given per
 seed and as mean, minimum and maximum over the seeds.
 
@@ -11,7 +11,7 @@ Checks (observed sources: see SOURCES in this file and REPORT.md):
               bus shares of the region's 2024 count stations (both MDOT SHA data; no model quantity used).
  2 Commute    time and departure of the home->work commute of resident workers by home county vs ACS 2024 1-year B08303, B08302,
               and drivers alone vs ACS 2020-2024 5-year B08134 / B08136.
- 3 Skims      MATSim congested car trip times vs the fixed AM-peak car skim read by SILO and ABIT (no feedback), by distance band.
+ 3 Skims      MATSim congested car trip times vs the fixed AM-peak car skim read by SILO and MAST (no feedback), by distance band.
  4 Transit    weekday boardings by MTA mode vs NTD 2024 average typical weekday, and vs its 2017/18 equivalent (x mean annual UPT
               2017-2018 / annual UPT 2024 of the mode), the period of the survey the behaviour is estimated on.
  5 Trip length car-driver trip distance and time of residents vs RTS 2017/18 (weighted) and NHTS 2022 (Baltimore MSA, weekday).

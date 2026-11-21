@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Stage 3, step 1: split the 2017/18 Regional Travel Survey by household into an estimation half and a validation
-half, and build the ABIT calibration targets from the ESTIMATION half only.
+half, and build the MAST calibration targets from the ESTIMATION half only.
 
 Run: python3 activity/lib/build_targets.py [--half estimation|validation]
 
@@ -10,7 +10,7 @@ Outputs
   Validation_2026/3_abit/targets_estimation.csv   section, purpose, segment, county, metric, value, n  (n = unweighted records)
   Validation_2026/3_abit/estimation_distributions/{tod_rts.csv, duration.distributions.csv, stop_purpose.csv}
                                                   the 15-min start-time and primary-activity-duration distributions by purpose
-                                                  in the format of the ABIT coefficient files (replace tod_rts.csv and
+                                                  in the format of the MAST coefficient files (replace tod_rts.csv and
                                                   duration.distributions.csv of the calibrated coefficient set), and the
                                                   stop-purpose split by tour purpose and position (stop_purpose_split; the
                                                   stop.purpose.file of MarylandStopModel, second pass 2026-10-22)
@@ -217,7 +217,7 @@ def write_distribution_files(hb, out_dir):
     """tod_rts.csv (time,purpose,probability; 15-min bins of the ARRIVAL at the primary activity: MarylandTimeAssignment uses the
     sampled minute as the start of the main activity and PlanTools derives the home departure from it, so the survey's primary
     arrival is the consistent quantity; found 2026-10-22, the earlier file held the home departure) and duration.distributions.csv
-    (duration_min,purpose,start_from_h,start_to_h,duration_prob) from the estimation half, in the format ABIT reads
+    (duration_min,purpose,start_from_h,start_to_h,duration_prob) from the estimation half, in the format MAST reads
     (MarylandTimeAssignment.readDist: bins of 15 min, columns found by name)."""
     os.makedirs(out_dir, exist_ok=True)
     rows = []

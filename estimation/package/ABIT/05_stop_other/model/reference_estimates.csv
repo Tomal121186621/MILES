@@ -1,28 +1,25 @@
 parameter,project_name,article_group,article_label,coefficient,robust_se,p_value,article_coefficient,article_robust_se,article_p
-B_detour_1_2km,dt_1_2,Detour and impedance,"detour 1--2\,km",-0.3802727142876791,0.0519118953167015,2.3827902635691307e-13,-0.3803,0.0519,<0.001
-B_detour_2_5km,dt_2_5,Detour and impedance,"detour 2--5\,km",-0.2099880766203457,0.0222979709566298,4.625607238883308e-21,-0.21,0.0223,<0.001
-B_detour_5_10km,dt_5_10,Detour and impedance,"detour 5--10\,km",-0.0745922586247064,0.014006314186541,1.0061117877861263e-07,-0.0746,0.014,<0.001
-B_detour_10_20km,dt_10_20,Detour and impedance,"detour 10--20\,km",-0.1483837907472092,0.0083464571714908,1.045407560512737e-70,-0.1484,0.0083,<0.001
-B_detour_over_20km,dt_20_inf,Detour and impedance,"detour $>$ 20\,km",-0.0229695322188978,0.0043962962065052,1.7439407754592444e-07,-0.023,0.0044,<0.001
-B_mode_choice_logsum_detour,ls,Detour and impedance,"mode-choice logsum, detour",1.5253888665360218,0.1011499800333911,2.1772577300116456e-51,1.5254,0.1011,<0.001
-B_car_generalised_time_detour_min,cgt,Detour and impedance,"car generalised time, detour (min)",-0.0088644579914945,0.0035509657438848,0.012547826146456265,-0.0089,0.0036,0.013
-B_stop_in_zone_of_previous_location,intra_a,Anchor zones,stop in the zone of the previous location,0.5333263526244212,0.0413775138073212,5.172458901005288e-38,0.5333,0.0414,<0.001
-B_stop_in_zone_of_next_anchor,intra_b,Anchor zones,stop in the zone of the next anchor,0.1903089453685257,0.0433403170223325,1.128112234542821e-05,0.1903,0.0433,<0.001
-B_baltimore_city,bc,Area,Baltimore City,-0.1197736663099398,0.0867644514236077,0.16744927158679945,-0.1198,0.0868,0.167
-B_washington_dc,dcz,Area,Washington DC,-0.1639974924690935,0.0965887252810198,0.08952762264796102,-0.164,0.0966,0.090
-B_central_business_district,cbd,Area,central business district,0.342546439454693,0.0774603139338653,9.769255028691386e-06,0.3425,0.0775,<0.001
-B_virginia,va,Area,Virginia,0.1239748574731292,0.091423651977205,0.1750839064763834,0.124,0.0914,0.175
-B_delaware_pennsylvania_west_virginia,othst,Area,"Delaware, Pennsylvania, West Virginia",-0.3284645169647379,0.2441179234246971,0.17845873042790816,-0.3285,0.2441,0.178
-B_ln_retail_jobs_per_km2,lnretden,Land use,ln(1 + retail jobs per km$^2$),-0.3612001503608968,0.0249178843168258,1.2913352433687004e-47,-0.3612,0.0249,<0.001
-B_land_use_mix,mix,Land use,land-use mix (entropy),-0.0611052816802953,0.0993991476567539,0.5387221222061391,-0.0611,0.0994,0.539
-B_outside_counties_of_both_anchors,xcounty,Boundaries,outside the counties of both anchors,-1.035289715004465,0.0586789863300624,1.1461343209054918e-69,-1.0353,0.0587,<0.001
-B_outside_states_of_both_anchors,xstate,Boundaries,outside the states of both anchors,-0.2521752312462608,0.1012041709979214,0.012711640025338776,-0.2522,0.1012,0.013
-B_ln_detour_x_tour_mode_not_car,lndt_nonauto,Interactions with ln(1 + detour),ln(1 + detour) $\times$ tour mode not car,-0.3296786458827895,0.0458006071389621,6.104469761367635e-13,-0.3297,0.0458,<0.001
-THETA_office_jobs,theta_off,Size,$\theta$ office jobs (ln weight),-3.828510843247715,0.2137428330415182,9.546440374381062e-72,-3.8285,0.2137,<0.001
-THETA_other_jobs,theta_oth,Size,$\theta$ other jobs (ln weight),-3.377984519121832,0.2347765051629078,6.147382207512232e-47,-3.378,0.2348,<0.001
-THETA_school_pupils,theta_stu,Size,$\theta$ school pupils (ln weight),-6.271929532062816,1.1855979388622513,1.2225069931310347e-07,-6.2719,1.1856,<0.001
-MU_size,mu_size,Size,"$\mu$, ln size",0.9388251533533788,0.0251283246544185,1.6661333748031732e-305,0.9388,0.0251,<0.001
+B_detour_1_2km,dt_1_2,Detour and impedance,"detour 1--2\,km",-0.3645403082250452,0.0515146004697921,1.4789793687703704e-12,-0.3645,0.0515,<0.001
+B_detour_2_5km,dt_2_5,Detour and impedance,"detour 2--5\,km",-0.2201519727886777,0.0221135310186893,2.3854281226630647e-23,-0.2202,0.0221,<0.001
+B_detour_5_10km,dt_5_10,Detour and impedance,"detour 5--10\,km",-0.0760950442472565,0.0139927849697798,5.383274184407691e-08,-0.0761,0.014,<0.001
+B_detour_10_20km,dt_10_20,Detour and impedance,"detour 10--20\,km",-0.1517238488519712,0.0082501428951262,1.5667124117145246e-75,-0.1517,0.0083,<0.001
+B_detour_over_20km,dt_20_inf,Detour and impedance,"detour $>$ 20\,km",-0.0256566870888757,0.0043269562646593,3.038585477032962e-09,-0.0257,0.0043,<0.001
+B_mode_choice_logsum_detour,ls,Detour and impedance,"mode-choice logsum, detour",1.5476441544581991,0.1019481505774294,4.746983542868482e-52,1.5476,0.1019,<0.001
+B_car_generalised_time_detour_min,cgt,Detour and impedance,"car generalised time, detour (min)",-0.0062946176985861,0.0034156834759886,0.06534982799582666,-0.0063,0.0034,0.065
+B_stop_in_zone_of_previous_location,intra_a,Anchor zones,stop in the zone of the previous location,0.5395907663854168,0.0410957977306129,2.2144706891679744e-39,0.5396,0.0411,<0.001
+B_stop_in_zone_of_next_anchor,intra_b,Anchor zones,stop in the zone of the next anchor,0.1942526625407659,0.0429876343967473,6.219014843553554e-06,0.1943,0.043,<0.001
+B_baltimore_city,bc,Area,Baltimore City,-0.0797976137558034,0.0867479890574702,0.35763623303541936,-0.0798,0.0867,0.358
+B_washington_dc,dcz,Area,Washington DC,0.0757054809719109,0.088725141517874,0.39351596968131564,0.0757,0.0887,0.394
+B_central_business_district,cbd,Area,high job-density zone,0.6556502113874301,0.0611730745293286,8.383716585462857e-27,0.6557,0.0612,<0.001
+B_virginia,va,Area,Virginia,0.1931250965161211,0.0909147129511873,0.033649687787439805,0.1931,0.0909,0.034
+B_delaware_pennsylvania_west_virginia,othst,Area,"Delaware, Pennsylvania, West Virginia",-0.2740439815554762,0.2351242859335803,0.24380525940679798,-0.274,0.2351,0.244
+B_ln_zone_area_km2,lnarea,Land use,"ln(zone area, km$^2$)",0.3882304866534504,0.0209934108715081,2.352408172555847e-76,0.3882,0.021,<0.001
+B_land_use_mix,mix,Land use,land-use mix (entropy),0.2763202705205071,0.0873833066583192,0.0015660180938695625,0.2763,0.0874,0.002
+B_outside_counties_of_both_anchors,xcounty,Boundaries,outside the counties of both anchors,-1.0293267397954082,0.0586035595309679,4.6288553595665683e-69,-1.0293,0.0586,<0.001
+B_outside_states_of_both_anchors,xstate,Boundaries,outside the states of both anchors,-0.2535826236246766,0.1010089301821167,0.012056132141743121,-0.2536,0.101,0.012
+B_ln_detour_x_tour_mode_not_car,lndt_nonauto,Interactions with ln(1 + detour),ln(1 + detour) $\times$ tour mode not car,-0.3263733016945227,0.045754739954809,9.813061613470532e-13,-0.3264,0.0458,<0.001
+B_ln_retail_jobs,lnx_ret,Attraction,ln(1 + retail jobs),0.4635228248977867,0.0146519495502652,1.1975934668653022e-219,0.4635,0.0147,<0.001
 LL0,,,LL(0): equal shares of the available alternatives (article Table 2),,,,-59367.2,,
-LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-24580.140651636117,,,-24580.1,,
+LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-24653.300679357115,,,-24653.3,,
 N,,,observations,,,,8055.0,,
-K,,,estimated parameters,,,,23.0,,
+K,,,estimated parameters,,,,20.0,,

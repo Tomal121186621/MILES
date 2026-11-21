@@ -5,7 +5,7 @@ work_zone,chosen workplace zone,,Regional Travel Survey 2017/18 (00_shared_data/
 income_group,"1 <40k, 2 40-75k, 3 75-125k, 4 125k+",,Regional Travel Survey 2017/18 (00_shared_data/rts_2017_18)
 car_seg,"0 no car, 1 fewer cars than drivers, 2 other",,Regional Travel Survey 2017/18 (00_shared_data/rts_2017_18)
 age,age,years,Regional Travel Survey 2017/18 (00_shared_data/rts_2017_18)
-"female, young, old, g1, g3, g4, lic, hhs, rurh, kids, w2",woman; age < 30; age >= 55; income <40k; 75-125k; 125k+; driving licence; household size; rural home zone; children; 2+ workers,,Regional Travel Survey 2017/18 (00_shared_data/rts_2017_18)
+"female, young, old, g1, g3, g4, lic, hhs, rurh, kids, w2, car0",woman; age < 30; age >= 55; income <40k; 75-125k; 125k+; driving licence; household size; rural home zone; children; 2+ workers; household without a car (car_seg 0),,Regional Travel Survey 2017/18 (00_shared_data/rts_2017_18)
 <person variable>_c,the same minus its estimation-half mean (centring_constants.csv); used in the car-time interactions,,wdc.pvar
 choice,chosen alternative (always 0),,
 zone_<j>,zone of alternative j; j = 0..99 (0 = chosen zone),,wdc.Model (seed 20261106)
@@ -15,8 +15,8 @@ intra_<j>,1 if zone j = home zone,,
 cc_<j>,1 if other county,,
 cs_<j>,1 if other state,,
 dcw_<j>,1 if zone j is in DC and the home is not,,
-accw_<j>,non-work accessibility (logsum) of zone j for the worker's segment,utils,00_shared_data/accessibility/accessibility_2016.csv
-"reg_bc_<j>, reg_mopg_<j>, reg_nvc_<j>, reg_nvo_<j>, reg_mdo_<j>, reg_oth_<j>",workplace area: Baltimore City; Montgomery / Prince George's; Arlington / Alexandria; other Northern Virginia; rest of Maryland; other (reference: Baltimore suburbs; DC through dcw),,wdc.REG
+accw_<j>,non-work accessibility (logsum) of zone j for the worker's segment (not in the final model),utils,00_shared_data/accessibility/accessibility_2016.csv
+"reg_bc_<j>, reg_mopg_<j>, reg_nvc_<j>, reg_nvo_<j>, reg_mdo_<j>, reg_oth_<j>",workplace area: Baltimore City; Montgomery / Prince George's; Arlington / Alexandria; other Northern Virginia; rest of Maryland; other (reference: Baltimore suburbs; DC through dcw) (not in the final model),,wdc.REG
 "z_off_sh_<j>, z_ret_sh_<j>, z_ind_sh_<j>","office, retail, industrial share of the zone's jobs",share,raw/zone_attrs_v2x.parquet
 z_hiearn_<j>,share of high-earning jobs in the zone,share,raw/zone_attrs_v2x.parquet
 "jobs_RET_<j>, jobs_OFF_<j>, jobs_IND_<j>, jobs_OTH_<j>",jobs by type in the zone (size term),jobs,raw/zones.parquet

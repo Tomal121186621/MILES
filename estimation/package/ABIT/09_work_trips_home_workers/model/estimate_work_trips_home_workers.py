@@ -7,11 +7,11 @@ weights b_k = overlap area / zone area):
 
     L_n  = sum_c w_c * [ sum_k b_k exp(V_c,z_k) ] / [ sum_j exp(V_c,j) ]          (one anchor configuration, w_0 = 1)
     LL   = sum_n ln L_n
-    V_j  = MU_size ln(1 + office_jobs_j + exp(THETA_population) population_j)
+    V_j  = B_ln_office_jobs ln(1 + office_jobs_j)
            + B_distance d_hj + B_ln_distance ln d_hj + B_intrazonal [j = h] + B_outside_home_county [county_j != county_h]
 
-d = car distance (km) of the 2016 car skim from the home zone h, intrazonal 0.5 sqrt(zone area).  Bounds as in the
-estimation: THETA in [-30, 15], MU_size in [0, 3].  Unweighted, robust (sandwich) standard errors.
+d = car distance (km) of the 2016 car skim from the home zone h, intrazonal 0.5 sqrt(zone area).  No bounds.
+Unweighted, robust (sandwich) standard errors.
 
     ~/.venvs/biogeme/bin/python estimate_work_trips_home_workers.py                 # estimate (results in ../output)
     ~/.venvs/biogeme/bin/python estimate_work_trips_home_workers.py --evaluate      # LL at the article estimates, no estimation
@@ -37,8 +37,7 @@ B_distance = Beta("B_distance_km", 0.0, None, None, 0)
 B_ln_distance = Beta("B_ln_distance", 0.0, None, None, 0)
 B_intrazonal = Beta("B_intrazonal", 0.0, None, None, 0)
 B_outside_home_county = Beta("B_outside_home_county", 0.0, None, None, 0)
-THETA_population = Beta("THETA_population", -2.0, -30.0, 15.0, 0)      # size base: office jobs (theta = 0)
-MU_size = Beta("MU_size", 0.8, 0.0, 3.0, 0)
+B_ln_office_jobs = Beta("B_ln_office_jobs", 0.8, None, None, 0)       # attraction: ln(1 + office jobs)
 
 
 class At:
@@ -63,11 +62,8 @@ def term(beta, x):
 
 def utility(g):
     c = g.c; d = g.x("imp")
-    size = g.z("off")
-    pop = g.z("pop")
-    size = size + (exp(THETA_population) * pop if not (isinstance(pop, float) and pop == 0.0) else 0.0)
-    if isinstance(size, float): size_term = MU_size * float(np.log1p(size))
-    else: size_term = MU_size * log(1 + size)
+    off = g.z("off")
+    size_term = B_ln_office_jobs * (float(np.log1p(off)) if isinstance(off, float) else log(1 + off))
     terms = [size_term, B_distance * d, B_ln_distance * log(d),
              B_intrazonal * (Variable(f"za_{c}") == g.zone()),
              B_outside_home_county * (Variable(f"cnty_a_{c}") != g.z("cnty"))]

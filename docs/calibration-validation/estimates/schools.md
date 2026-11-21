@@ -1,68 +1,70 @@
 # School location
 
-Three multinomial logits over the zones with enrolment of the student's band, estimated on the survey estimation half with the full choice set.
+Three multinomial logits over the zones with enrolment of the student's band (K–8, high school, college), estimated on the survey estimation half with the full choice set.
 
 !!! note "Reading the tables"
-    Coefficient: maximum-likelihood estimate with robust (sandwich) standard error; \*\*\* p < 0.001, \*\* p < 0.01, \* p < 0.05. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. The same tables can be re-estimated with Biogeme from the estimation package.
+    Coefficient: maximum-likelihood estimate, with significance stars \*\*\* p < 0.01, \*\* p < 0.05, \* p < 0.10; robust (sandwich) standard error; two-sided p-value. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. Hold-out: fit on the held-out half of the data, which was also used in the specification search. "Reference": the omitted category; "—": removed from the model.
 
-### School location: kindergarten to grade 8
+### School location: K–8, high school and college
 
-Choice of the school zone over all zones with K–8 enrolment, with the attendance boundary as a separate size component. Survey estimation half.
+Size term with public enrolment inside the home's attendance boundary as a separate component, car time, boundary terms and the own-race share of the zone's enrolment; the K–12 models add the charter-or-magnet share, and the K–8 model the test-score quality of the zone's public schools.
 
-<div class="estfit"><span>N = 1,509</span><span>K = 9</span><span>LL(β̂) = −2,941.0</span><span>ρ̄² = 0.717</span><span>Hold-out: LL per student −1.983</span></div>
-
-| Variable | Coefficient | Robust s.e. | p |
-|---|---:|---:|---:|
-| ***Size*** | | | |
-| Size coefficient mu | 0.4954\*\*\* | 0.0491 | < 0.001 |
-| In-boundary public enrolment, log weight | 6.0411\*\*\* | 0.5019 | < 0.001 |
-| Private enrolment, log weight | 0.7823\* | 0.3358 | 0.020 |
-| ***Car time*** | | | |
-| Car time (min) | −0.0963\*\*\* | 0.0183 | < 0.001 |
-| Ln(1+time) | −0.7727\* | 0.3649 | 0.034 |
-| ***Boundaries*** | | | |
-| Same zone | 0.3406\*\*\* | 0.1021 | < 0.001 |
-| Other county × public share | −2.2521\*\*\* | 0.2016 | < 0.001 |
-| ***Interactions with car time*** | | | |
-| Time × no car | −0.1100\*\* | 0.0353 | 0.002 |
-| Time × fewer cars than drivers | −0.0282 | 0.0149 | 0.058 |
-
-### School location: high school
-
-Choice of the school zone over all zones with high-school enrolment. Survey estimation half.
-
-<div class="estfit"><span>N = 668</span><span>K = 5</span><span>LL(β̂) = −1,243.3</span><span>ρ̄² = 0.716</span><span>Hold-out: LL per student −1.853</span></div>
+| Band | N | K | LL(β̂) | ρ̄² | Hold-out LL per student |
+|---|---:|---:|---:|---:|---:|
+| K–8 | 1,509 | 13 | −2,885.6 | 0.721 | −1.953 |
+| High school | 668 | 6 | −1,217.0 | 0.722 | −1.810 |
+| College | 673 | 9 | −1,810.4 | 0.454 | −2.789 |
 
 | Variable | Coefficient | Robust s.e. | p |
 |---|---:|---:|---:|
-| ***Size*** | | | |
-| Size coefficient mu | 0.6788\*\*\* | 0.0613 | < 0.001 |
-| In-boundary public enrolment, log weight | 4.2150\*\*\* | 0.4252 | < 0.001 |
-| Private enrolment, log weight | 0.2471 | 0.2737 | 0.366 |
-| ***Car time*** | | | |
-| Car time (min) | −0.1044\*\*\* | 0.0071 | < 0.001 |
-| ***Boundaries*** | | | |
-| Other county × public share | −2.5167\*\*\* | 0.3076 | < 0.001 |
+| **K–8** |  |  |  |
+| ***Size*** |  |  |  |
+| &emsp;size coefficient μ | 0.4947\*\*\* | 0.0480 | <0.001 |
+| &emsp;in-boundary public enrolment, log weight | 6.1465\*\*\* | 0.5110 | <0.001 |
+| &emsp;private enrolment, log weight | 1.3654\*\*\* | 0.3146 | <0.001 |
+| ***Car time*** |  |  |  |
+| &emsp;car time (min) | −0.0857\*\*\* | 0.0172 | <0.001 |
+| &emsp;ln(1+time) | −1.0211\*\*\* | 0.3478 | 0.003 |
+| &emsp;time × no car | −0.0999\*\*\* | 0.0355 | 0.005 |
+| &emsp;time × fewer cars than drivers | — |  |  |
+| ***Boundaries*** |  |  |  |
+| &emsp;same zone | 0.3165\*\*\* | 0.1015 | 0.002 |
+| &emsp;other county × public share | −2.3277\*\*\* | 0.1999 | <0.001 |
+| ***School zone*** |  |  |  |
+| &emsp;charter-or-magnet share | 0.5690\*\*\* | 0.1554 | <0.001 |
+| &emsp;quality of the public part (per 10 points, centred) | 0.2047\*\*\* | 0.0326 | <0.001 |
+| &emsp;quality × income <\$40k | −0.3536\*\*\* | 0.1184 | 0.003 |
+| &emsp;share of public enrolment without a score | 0.8633\*\*\* | 0.2104 | <0.001 |
+| &emsp;own-race share of the zone's enrolment | 1.1184\*\*\* | 0.1958 | <0.001 |
+| **High school** |  |  |  |
+| ***Size*** |  |  |  |
+| &emsp;size coefficient μ | 0.6637\*\*\* | 0.0591 | <0.001 |
+| &emsp;in-boundary public enrolment, log weight | 4.2834\*\*\* | 0.4414 | <0.001 |
+| &emsp;private enrolment, log weight | — |  |  |
+| ***Car time*** |  |  |  |
+| &emsp;car time (min) | −0.1028\*\*\* | 0.0070 | <0.001 |
+| ***Boundaries*** |  |  |  |
+| &emsp;other county × public share | −2.5892\*\*\* | 0.2993 | <0.001 |
+| ***School zone*** |  |  |  |
+| &emsp;charter-or-magnet share | 0.7409\*\*\* | 0.1778 | <0.001 |
+| &emsp;own-race share of the zone's enrolment | 1.6429\*\*\* | 0.2582 | <0.001 |
+| **College** |  |  |  |
+| ***Size*** |  |  |  |
+| &emsp;size coefficient μ | 0.5456\*\*\* | 0.0321 | <0.001 |
+| &emsp;private 4-year enrolment, log weight | −1.3251\*\*\* | 0.2540 | <0.001 |
+| &emsp;2-year enrolment, log weight | −0.8480\*\*\* | 0.2227 | <0.001 |
+| ***Car time*** |  |  |  |
+| &emsp;car time (min) | −0.0395\*\*\* | 0.0085 | <0.001 |
+| &emsp;ln(1+time) | −1.2011\*\*\* | 0.3081 | <0.001 |
+| &emsp;time × income <\$40k | — |  |  |
+| &emsp;time × income \$125k+ | 0.0195\*\*\* | 0.0053 | <0.001 |
+| ***Boundaries*** |  |  |  |
+| &emsp;other county | −0.5639\*\*\* | 0.1325 | <0.001 |
+| &emsp;other state | −0.6885\*\*\* | 0.1351 | <0.001 |
+| ***School zone*** |  |  |  |
+| &emsp;own-race share of the zone's enrolment | 1.3986\*\*\* | 0.2061 | <0.001 |
 
-### School location: college
+<p class='estnote'>Choice set: all zones with enrolment of the student's band (no sampling). Dependent variable: school zone of students with a school record, estimation half of the Regional Travel Survey 2017/18; hold-out half on the full choice set. Unweighted; robust (sandwich) standard errors. K–8: N = 1,509 students, 1,144 zones with enrolment, K = 13; LL(0) = −10,407.1; LL(β̂) = −2,885.6; ρ² = 0.723; AIC = 5,797.2; BIC = 5,866.4. Hold-out (1,534 students): LL = −2,995.8 (−1.953 per student); without the own-race share −3,016.0. High school: N = 668 students, 719 zones with enrolment, K = 6; LL(0) = −4,394.0; LL(β̂) = −1,217.0; ρ² = 0.723; AIC = 2,445.9; BIC = 2,472.9. Hold-out (667 students): LL = −1,207.5 (−1.810 per student); without the own-race share −1,227.6. College: N = 673 students, 141 zones with enrolment, K = 9; LL(0) = −3,330.5; LL(β̂) = −1,810.4; ρ² = 0.456; AIC = 3,638.7; BIC = 3,679.3. Hold-out (686 students): LL = −1,913.5 (−2.789 per student); without the own-race share −1,938.9. The hold-out half was also used in the specification search, so its fit is not an independent test. Size term μln S<sub>j</sub> with the public enrolment of the band outside the home's attendance boundary as reference (college: public 4-year); log weights of the other enrolment types relative to it. Car time: AM-peak car time from the home zone (min). Public share: share of public enrolment in the zone's enrolment of the band. Interactions: no car, reference households with a car; income $125k+, reference all other incomes. Charter-or-magnet share: share of the zone's enrolment of the band in public charter or magnet schools. Quality: enrolment-weighted mean % proficient (ELA and math, Maryland public schools) minus the Maryland mean (38.3), per 10 points, times the share of the zone's enrolment in schools with a score. Own-race share: share of the zone's enrolment of the band that is of the student's race (white, Black, Hispanic, other); it describes the composition of the schools and does not separate preference from information, transport or history. —: K–8 time × fewer cars than drivers and college time × income &lt;$40k: removed (college: BIC); high-school private log weight: fixed at 0 (p = 0.37 when estimated). High school: school quality was tested and not kept (BIC).</p>
 
-Choice of the college zone over all zones with college enrolment. Survey estimation half.
-
-<div class="estfit"><span>N = 673</span><span>K = 9</span><span>LL(β̂) = −1,827.8</span><span>ρ̄² = 0.448</span><span>Hold-out: LL per student −2.824</span></div>
-
-| Variable | Coefficient | Robust s.e. | p |
-|---|---:|---:|---:|
-| ***Size*** | | | |
-| Size coefficient mu | 0.5362\*\*\* | 0.0309 | < 0.001 |
-| Private 4-year enrolment, log weight | −1.2928\*\*\* | 0.2529 | < 0.001 |
-| 2-year enrolment, log weight | −0.8526\*\*\* | 0.2257 | < 0.001 |
-| ***Car time*** | | | |
-| Car time (min) | −0.0385\*\*\* | 0.0085 | < 0.001 |
-| Ln(1+time) | −1.1630\*\*\* | 0.3180 | < 0.001 |
-| ***Boundaries*** | | | |
-| Other county | −0.5675\*\*\* | 0.1325 | < 0.001 |
-| Other state | −0.6713\*\*\* | 0.1346 | < 0.001 |
-| ***Interactions with car time*** | | | |
-| Time × income <40k | −0.0218 | 0.0118 | 0.064 |
-| Time × income 125k+ | 0.0174\*\* | 0.0054 | 0.001 |
-
+![School location: hold-out students by school zone](../../assets/img/estimates/fig_school_holdout_map.png)
+<p class="estnote">School location: schools of the hold-out students, observed and model, and model minus observed.</p>

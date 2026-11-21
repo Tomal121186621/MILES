@@ -31,7 +31,8 @@ import java.util.Random;
  *       {asc, hhSize, workers, income_k (k = income class 1..12), transitAcc, density_k (k = job-density class 1..10),
  *        accLogsumGain (Baltimore 2026, accessibility.model = logsum: non-work logsum accessibility of the household's income
  *        group with cars minus without a car, A(inc_carge) - A(inc_nocar), utils, at the home zone)}
- *   car_ownership_region_constants.csv   header: region,asc1,asc2,asc3   (additive per-region constants, calibration result)
+ *   car_ownership_region_constants.csv   header: region,asc1,asc2,asc3[,fewer]   (additive per-region constants, calibration result;
+ *       2026-11-15c optional fewer = constant on 1 <= cars < persons 16+, respec only)
  * Income classes: < 10k, 10-15k, 15-30k, 30-40k, 40-50k, 50-60k, 60-75k, 75-100k, 100-125k, 125-150k, 150-200k, 200k+ (2016 $).
  *
  * Two uses:
@@ -48,6 +49,9 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
     private final Accessibility accessibility;
     private final Map<Integer, Map<String, Double>> coef = new HashMap<>();     // alternative -> variable -> value
     private final Map<Integer, double[]> regionAsc = new HashMap<>();           // region -> [asc1, asc2, asc3]
+    // 2026-11-15c: optional column "fewer" of the region constants file = delta_region, added (respec) to the utility of a = 1, 2, 3+ cars
+    // when 1 <= a < persons 16+ of the household (3+ counts as 3); the 0-car alternative untouched; column absent = 0 (runs of record unchanged)
+    private final Map<Integer, Double> regionFewer = new HashMap<>();
     private final Map<Integer, long[]> lastState = new HashMap<>();             // hhId -> [size, workers]
     private int updatedThisYear, createdThisYear;
 
@@ -85,6 +89,7 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
             pumaStockBase = pumaStock();
             updateLocation();
         }
+        if (!regionFewer.isEmpty()) logger.info("car ownership: fewer-than-adults constants on (" + regionFewer.size() + " regions)");
         rememberState();
         logger.info("Car ownership model: coefficients for " + coef.size() + " alternatives, region constants for " + regionAsc.size() + " regions");
     }
@@ -104,10 +109,12 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
     private void readRegionConstants(String file) {
         try (BufferedReader r = new BufferedReader(new FileReader(file))) {
             String[] h = r.readLine().split(","); int iR = col(h, "region"), i1 = col(h, "asc1"), i2 = col(h, "asc2"), i3 = col(h, "asc3");
+            int iF = -1; for (int i = 0; i < h.length; i++) if (h[i].trim().equals("fewer")) iF = i;   // 2026-11-15c, optional
             String line;
             while ((line = r.readLine()) != null) {
                 if (line.isBlank()) continue;
                 String[] x = line.split(",");
+                if (iF >= 0 && iF < x.length && !x[iF].isBlank()) regionFewer.put(Integer.parseInt(x[iR].trim()), Double.parseDouble(x[iF].trim()));
                 regionAsc.put(Integer.parseInt(x[iR].trim()), new double[]{Double.parseDouble(x[i1].trim()), Double.parseDouble(x[i2].trim()), Double.parseDouble(x[i3].trim())});
             }
         } catch (IOException e) { throw new RuntimeException("Could not read car ownership region constants " + file, e); }
@@ -213,8 +220,9 @@ public class CarOwnershipModelMd extends AbstractModel implements CreateCarOwner
         final double[] u = CarOwnershipRespec.utilities(coef, x);
         final int region = dataContainer.getGeoData().getZones().get(dd.getZoneId()).getRegion().getId();
         final double[] rAsc = regionAsc.getOrDefault(region, new double[]{0, 0, 0});
+        final double fewer = regionFewer.getOrDefault(region, 0.);   // 2026-11-15c
         final double[] e = new double[4]; e[0] = 1; double sum = 1;
-        for (int a = 1; a <= 3; a++) { e[a] = Math.exp(u[a - 1] + rAsc[a - 1]); sum += e[a]; }
+        for (int a = 1; a <= 3; a++) { e[a] = Math.exp(u[a - 1] + rAsc[a - 1] + (a < p16 ? fewer : 0.)); sum += e[a]; }
         for (int a = 0; a < 4; a++) e[a] /= sum;
         return e;
     }

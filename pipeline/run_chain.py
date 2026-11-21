@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Orchestration of the integrated land-use / travel loop (see pipeline/README.md and the documentation site).
 
-    skims(2016) <- MATSim 2016 base (ABIT on the 2016 population, network_2024, the earliest network built)
+    skims(2016) <- MATSim 2016 base (MAST on the 2016 population, network_2024, the earliest network built)
     for Y in 2018, 2020, 2022, 2024, 2026:
         silo-step  Y-2 -> Y   with skims(Y-2), restart from the Y-2 microdata of the previous step (hash-checked)
         abit  Y               activity plans of the Y population with skims(Y-2)
-        matsim-pop Y          ABIT weekly plans -> one-weekday MATSim population of the study area
+        matsim-pop Y          MAST weekly plans -> one-weekday MATSim population of the study area
         matsim Y net seed     assignment on the network of year Y (2024 for Y <= 2024, 2026 for 2026); 5 seeds in 2024 and 2026
         skims Y               AM-peak congested zone-to-zone car times (mean over the seeds) and the transit times of the year's network
                               (SwissRailRaptor on the pt2matsim-mapped MTA schedule, once per network year) -> 2_silo/input/skims/<Y>, 3_abit/skims/<Y>
@@ -19,8 +19,8 @@ pipeline/test/ on a 1 % sample with 2 MATSim iterations and never starts SILO (i
 
 Commands (run_chain.py [--test] [--force] [--dry-run] <command> ...):
   silo-step Y0 Y1 [--iter K] [--seed S] [--skims TAG] [--from-scen NAME]    SILO Y0 -> Y1 (scenario chain_<Y0>_<Y1>[_itK])
-  abit Y [--iter K] [--skims TAG] [--sample F]                                ABIT on the SILO population of year Y
-  matsim-pop Y [--iter K]                                                     ABIT plans -> MATSim population
+  abit Y [--iter K] [--skims TAG] [--sample F]                                MAST on the SILO population of year Y
+  matsim-pop Y [--iter K]                                                     MAST plans -> MATSim population
   matsim Y NETWORK SEED [--iter K] [--iterations N] [--sample F] [--toll F]   MATSim run (NETWORK = 2024 | 2026 | path)
   skims Y [--iter K] [--seeds a,b,c]                                          car skims from the MATSim run(s) of year Y + transit skims of its network
   loop [--skip-2016-base] [--max-inner 3] [--seeds-validation 1,2,3,4,5]      the whole chain 2016 -> 2026
@@ -36,7 +36,7 @@ V = f"{WORKSPACE}"; P = f"{V}/pipeline"; S = f"{V}/2_silo"; A3 = f"{V}/3_abit"; 
 ABIT = f"{ABIT_HOME}"; MAT = f"{MATSIM_HOME}"; LOGS = f"{P}/logs"
 JAVA_HOME = subprocess.run(["/usr/libexec/java_home", "-v", "21"], capture_output=True, text=True).stdout.strip(); JAVA = f"{JAVA_HOME}/bin/java"
 # MATSim: the runner of the I-695 study (Updated MATSim/code/matsim-run, class RunBaltimoreToll, MATSim 2024.0), run as in
-# I695_pricing/02_run/run_matsim.sh with the constants of I695_pricing/config.py (STRAT, JVM, ASCS); mode choice stays in ABIT (hybrid design).
+# I695_pricing/02_run/run_matsim.sh with the constants of I695_pricing/config.py (STRAT, JVM, ASCS); mode choice stays in MAST (hybrid design).
 MATSIM_JAR = f"{MAT}/code/matsim-run/target/baltimore-matsim-1.0.jar"; MATSIM_MAIN = "de.umd.matsim.RunBaltimoreToll"
 NETWORKS = {2024: f"{M4}/network/network_2024.xml.gz", 2026: f"{M4}/network/network_2026.xml.gz"}
 NETWORK_OF_YEAR = {2016: 2024, 2018: 2024, 2020: 2024, 2022: 2024, 2024: 2024, 2026: 2026}
@@ -45,16 +45,34 @@ NETWORK_OF_YEAR = {2016: 2024, 2018: 2024, 2020: 2024, 2022: 2024, 2024: 2024, 2
 # unchanged plus the artificial transit links the schedule references); the transit skims of the year are routed on the same schedule.
 TRANSIT = {y: {"schedule": f"{M4}/transit/transitSchedule_{y}.xml.gz", "vehicles": f"{M4}/transit/transitVehicles_{y}.xml.gz", "network": f"{M4}/transit/network_{y}_pt.xml.gz"} for y in (2024, 2026)}
 TRANSIT_SKIM_ARGS = ["--peak", "7", "9", "--step", "15", "--radius", "1600", "--extension", "0", "--max-tt", "180"]   # transit_skim.py: AM peak, departures every 15 min, one-mile walk access/egress, 3 h cap
-# value of time (2026-11-02, author decision for the validation study): the USDOT rule of ABIT's tour mode choice, VOT_n = 0.5 x max(hhIncome_n, $5,000)
-# / 2,080 h ($/h; hhIncome = annual household income, person attribute written by activities_to_matsim.py as ABIT computes it); marginal utility of
+# value of time (2026-11-02, author decision for the validation study): the USDOT rule of MAST's tour mode choice, VOT_n = 0.5 x max(hhIncome_n, $5,000)
+# / 2,080 h ($/h; hhIncome = annual household income, person attribute written by activities_to_matsim.py as MAST computes it); marginal utility of
 # money = performing (0.78 utils/h) / VOT_n (RunBaltimoreToll -Dincome.vot.form=usdot).  Before: income.vot.form=power, elasticity 0.6, median 84216.
 MATSIM_STRAT = {"reroute.weight": "0.15", "tam.weight": "0.10", "tam.range": "1800", "tam.affectduration": "false", "income.vot.form": "usdot", "vot.share": "0.5", "vot.hours": "2080", "vot.income.floor": "5000"}
 MATSIM_JVM = {"modechoice": "false", "innovoff": "0.9", "plan.memory": "5", "write.outputs": "true"}
+# MATSIM_PT=berlin (final runs): transit as in the Open Berlin scenario and SBB's router: every transit vehicle on its own links and on
+# schedule (PreparePseudoPt; schedule and network in WORKSPACE/4_matsim/transit/pt_berlin), stuck vehicles kept, boarding by alighting stop
+# only, car access to park-and-ride stops for persons with a household car and a licence, travel scoring of the MAST commute model
+# (RunBaltimoreToll -Dscoring=milesday; the property value keeps its original name). Unset = the earlier runs.
+if os.environ.get("MATSIM_PT") == "berlin":
+    TRANSIT[2024] = {"schedule": f"{M4}/transit/pt_berlin/transitSchedule_2024_ptpseudo.xml.gz", "vehicles": f"{M4}/transit/transitVehicles_2024.xml.gz",
+                     "network": f"{M4}/transit/pt_berlin/network_2024_ptpseudo.xml.gz"}
+    MATSIM_JVM.update({"qsim.remove.stuck": "false", "pt.boarding": "checkStopOnly", "pt.car.access": "true", "scoring": "milesday"})
+    # MATSIM_SCORING=earlier: the transit set-up above with the travel scoring of the earlier runs (transfer -1, waiting -1.02/h,
+    # car 0.075 $/km; diagnostic run separating the scoring from the transit set-up)
+    if os.environ.get("MATSIM_SCORING") == "earlier": MATSIM_JVM.pop("scoring")
+    # MATSIM_PT_LIT=1 (final runs): transfer cost of about 10 in-vehicle minutes (-0.13 utils at performing 0.78/h; Open Berlin about
+    # 9 min, literature 5-20 min) and transfer walks between stops up to 300 m (Open Berlin and the other VSP scenarios; MATSim default 100)
+    if os.environ.get("MATSIM_PT_LIT") == "1": MATSIM_JVM.update({"pt.lineswitch": "-0.13", "pt.beeline": "300"})
+    # MATSIM_PT_SUB=1: MAST's transit sub-mode kept (population from activities_to_matsim.py --pt-submodes: legs bus / train); bus trips
+    # routed on the bus routes with walk access, train trips on the full schedule (car access to rail), again on the rail routes when that
+    # rides no rail (RunBaltimoreToll -Dpt.submodes, BusOnlyRouting / TrainRouting)
+    if os.environ.get("MATSIM_PT_SUB") == "1": MATSIM_JVM.update({"pt.submodes": "true"})
 ASC_FILE = f"{PRICING_HOME}/02_run/ascs_frozen.json"; ASCS = {"car": "0.00", "pt": "0.75", "ride": "-0.60", "walk": "0.10", "bike": "-2.10"}
 # SILO: the rebuilt engine (landuse/run/run_silo.sh), properties from landuse/run/write_properties.py with the calibrated parameters of
 # WORKSPACE/2_silo/calibration/params.json
 SILO_RUN = f"{MILES_HOME}/landuse/run/run_silo.sh"; SILO_PARAMS = f"{S}/calibration/params.json"; ZONES = f"{S}/input/zoneSystem.csv"
-# ABIT: compiled with javac into WORKSPACE/3_abit/classes (compile_abit()); classpath activity/abit_classpath.txt (jar paths, $HOME expanded);
+# MAST: compiled with javac into WORKSPACE/3_abit/classes (compile_abit()); classpath activity/abit_classpath.txt (jar paths, $HOME expanded);
 # native libs for the omx reader
 ABIT_CLASSES = f"{A3}/classes"; ABIT_CP = f"{MILES_HOME}/activity/abit_classpath.txt"; ABIT_MAIN = "abm.RunAbitMarylandLos"; ABIT_LIB = f"{ABIT}/src/main/resources/lib/macosx64"
 # coefficient set of the abit stage (2026-10-23): the model of record, the behavioural TASHA-style set 3_abit/coef_tasha (TASHA generation,
@@ -119,8 +137,8 @@ def state_save(cfg, st): json.dump(st, open(f"{cfg.R}/state.json", "w"), indent=
 
 # ---------------------------------------------------------------- locations
 def skim_dirs(cfg, tag):
-    """(SILO skim dir, ABIT skim dir) of a skim tag. 'base' = the MSTM-derived 2016 skims the stages start from."""
-    # ABIT side of 'base' (2026-10-23): the base car skims with the 2024 door-to-door transit skims (3_abit/skims/base_transit2024),
+    """(SILO skim dir, MAST skim dir) of a skim tag. 'base' = the MSTM-derived 2016 skims the stages start from."""
+    # MAST side of 'base' (2026-10-23): the base car skims with the 2024 door-to-door transit skims (3_abit/skims/base_transit2024),
     # the skims the destination MNL of the model of record was estimated and validated with; ABIT_BASE_SKIM_DIR overrides it
     if tag == "base": return f"{S}/input/skims", os.environ.get("ABIT_BASE_SKIM_DIR") or f"{A3}/skims/base_transit2024"
     if cfg.test: return f"{cfg.R}/skims/{tag}/silo", f"{cfg.R}/skims/{tag}/abit"
@@ -255,9 +273,9 @@ def convergence(cfg, prev_scen, scen, year, prev_tag=None, cur_tag=None):
     log(f"convergence {year} {prev_scen} -> {scen}: max |dpop| by county {rec['max_rel_dpop_county']:.4%} ({rec['county_max']}), {msg} -> {'CONVERGED' if rec['converged'] else 'not converged'}")
     return rec
 
-# ---------------------------------------------------------------- stage: ABIT
+# ---------------------------------------------------------------- stage: MAST
 def abit_classpath():
-    """Maven classpath of ABIT (activity/abit_classpath.txt); a literal $HOME in it stands for the user's home directory."""
+    """Maven classpath of MAST (activity/abit_classpath.txt); a literal $HOME in it stands for the user's home directory."""
     return open(ABIT_CP).read().strip().replace("$HOME", os.path.expanduser("~"))
 def compile_abit(cfg):
     if os.path.exists(f"{ABIT_CLASSES}/abm/RunAbitMarylandLos.class") and not cfg.force: return
@@ -296,9 +314,9 @@ def abit(cfg, y, k=0, skims_tag=None, silo_scen=None, sample=None):
     mark_done(cfg, "abit", tag, d, list(files.values()) + [props] + [f"{sk_abit}/{s}.csv.gz" for s in ["traveltime_auto"] + ABIT_BASE_SKIMS + TRANSIT_SKIMS], outs, t0, {"year": y, "skims": skims_tag, "sample": sample, "persons": persons, "silo_scen": scen})
     return d
 
-# ---------------------------------------------------------------- stage: ABIT plans -> MATSim population
+# ---------------------------------------------------------------- stage: MAST plans -> MATSim population
 def matsim_pop(cfg, y, k=0, silo_scen=None, src=None, residents_only=False, no_gateways=False):
-    """src (optional, validation study 2026-11-02): {"activities", "legs", "pp", "hh"} of an ABIT run outside the chain (e.g. the final 2024
+    """src (optional, validation study 2026-11-02): {"activities", "legs", "pp", "hh"} of an MAST run outside the chain (e.g. the final 2024
     replication, parquet); residents_only: activities_to_matsim.py --residents-only (BMR residents, no cordon gateways)."""
     tag = cfg.tag(y, k); d = f"{cfg.R}/matsim_pop/{tag}"; out = f"{d}/population_{tag}.xml.gz"; t0 = time.time()
     if is_done(cfg, d): log(f"matsim-pop {tag}: done, skipped"); return out
@@ -421,7 +439,7 @@ def skims(cfg, y, k=0, seeds=None, net=None):
 
 # ---------------------------------------------------------------- the loop
 def year_block(cfg, y, k, seeds, skims_tag_in):
-    """ABIT, population, MATSim (all seeds) and skims of one year / inner iteration."""
+    """MAST, population, MATSim (all seeds) and skims of one year / inner iteration."""
     abit(cfg, y, k, skims_tag=skims_tag_in); matsim_pop(cfg, y, k)
     for s in seeds: matsim(cfg, y, NETWORK_OF_YEAR[y], s, k)
     return skims(cfg, y, k)
@@ -478,7 +496,7 @@ def main():
     elif a.command == "skims": skims(cfg, a.y, a.iter, [int(s) for s in a.seeds.split(",")] if a.seeds else None, a.network)
     elif a.command == "loop": loop(cfg, a)
     elif a.command == "status": status(cfg)
-    elif a.command == "test":   # the smoke test of the framework: ABIT 1 % of the 2016 base population, MATSim 2 iterations, skims; SILO command printed
+    elif a.command == "test":   # the smoke test of the framework: MAST 1 % of the 2016 base population, MATSim 2 iterations, skims; SILO command printed
         t0 = time.time(); abit(cfg, 2016, 0, skims_tag="base"); matsim_pop(cfg, 2016); matsim(cfg, 2016, 2024, 1); skims(cfg, 2016, net=2024)
         silo_step(cfg, 2016, 2018, 0, skims_tag="2016"); log(f"test finished in {time.time() - t0:.0f} s; stages: `run_chain.py --test status`")
 

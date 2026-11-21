@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Candidate zone attributes that are not in the current ABIT models (re-specification 2026-11-06).
+"""Candidate zone attributes that are not in the current MAST models (re-specification 2026-11-06).
 
     python3 estimation/development/selection/zone_extras.py      -> side_experiments/respec_2026-11/abit/zone_extras.csv (one row per model zone, index order of dc_common.zones)
 

@@ -1,15 +1,16 @@
 # 01 primary destination of discretionary tours, pooled (article Table est_dc_pooled)
 
-Multinomial logit over all 1,588 zones for the main activity of shopping, recreation, accompanying and other tours, estimated jointly with a scale per purpose (shopping = 1). N 14,341 (shopping 5,058, recreation 4,159, accompanying 1,593, other 3,531), K 71, LL -49,122.5.
+Multinomial logit over all 1,588 zones for the main activity of shopping, recreation, accompanying and other tours, estimated jointly with a scale per purpose (shopping = 1). N 14,341 (shopping 5,058, recreation 4,159, accompanying 1,593, other 3,531), K 62, LL -49,427.4.
 
 ## Likelihood
 
 - Location mixture: each record has up to 4 possible destination zones (survey traffic zone spread over model zones by jobs, weights b_k) and up to 4 possible home zones (spread by housing units, weights w_c). L_n = sum_c w_c [sum_k b_k exp(U_c,z_k)] / [sum_j exp(U_c,j)], over all 1,588 zones. No sampling of alternatives.
-- U = SCALE_p x V_p. SCALE multiplies every coefficient including MU_size, not THETA. Coefficients are in V units as in the article (the effective coefficient of purpose p is SCALE_p times the value). The project optimised purpose-specific scaled coefficients as gamma = SCALE_p x beta for conditioning; this is a reparametrisation (same maximum).
-- Shared: distance pieces, outside home county / state, all ln(distance) interactions; car generalised time shared by shopping and other; MU_size shared by shopping, recreation, other. Purpose specific: intrazonal, area, land use, THETA, MU_size of accompanying, car generalised time of recreation and of accompanying.
+- U = SCALE_p x V_p. SCALE multiplies every coefficient. Coefficients are in V units as in the article (the effective coefficient of purpose p is SCALE_p times the value). The project optimised purpose-specific scaled coefficients as gamma = SCALE_p x beta for conditioning; this is a reparametrisation (same maximum).
+- Shared: distance pieces, outside home county / state, all ln(distance) interactions; car generalised time shared by shopping and other. Purpose specific: intrazonal, area dummies, ln(zone area), land-use mix, the coefficient of ln(1 + x), car generalised time of recreation and of accompanying.
+- Area dummies: Baltimore City, Washington DC, high job-density zone (at least 10,000 jobs per km²), Virginia, Delaware / Pennsylvania / West Virginia. The parameters `B_cbd_<purpose>` are the high job-density zone flag (zone column `cbd`).
 - Fixed: distance > 50 km at 0 (`B_dist_50km_plus_shared`, status 1); SCALE_SHOPPING = 1.
-- Size term MU ln(1 + retail jobs + sum exp(THETA) x); retail jobs base (THETA 0); components: shopping population, office; recreation population, office, school; accompanying population, office, other jobs, school; other office, other jobs.
-- Bounds as in the estimation: THETA [-30, 15], MU_size_SRO [0, 3], MU_size_ACCOMPANY >= 0, SCALE [0.01, 50]. Unweighted, robust s.e.
+- Attraction: one variable per purpose, entered as B_ln_x_p ln(1 + x_j): retail jobs for shopping, recreation and other (B_ln_retail_jobs_SHOPPING, _RECREATION, _OTHER), school enrolment for accompanying (B_ln_school_enrolment_ACCOMPANY). Zone area: B_ln_zone_area_km2_p ln(area_j), area in km², at least 0.05 km².
+- Bounds as in the estimation: SCALE [0.01, 50]. Unweighted, robust s.e.
 - One utility per zone with per-record coefficients (purpose dummies), so the expression is the size of one purpose's model.
 
 ## Run
@@ -21,19 +22,18 @@ Multinomial logit over all 1,588 zones for the main activity of shopping, recrea
 ```
 `--evaluate` computes the log-likelihood at the reference values without estimating (eager evaluation, records grouped by number of home configurations, writes nothing). The data are in `../input/data` (parts per purpose and number of configurations; the script pads to 4 configurations with weight 0 for estimation).
 
-`reference_estimates.csv`: the 71 parameters (project output, full precision; article values), plus LL0, LL_beta, N, K. `p_value` is against 0; the article's p of the scales is against 1.
+`reference_estimates.csv`: the 62 parameters (project output, full precision; article values), plus LL0, LL_beta, N, K. `p_value` is against 0; the article's p of the scales is against 1.
 
 ## Verification
 
 | | estimation half |
 |---|---|
-| article LL(beta) | -49,122.5 |
-| project likelihood (copied code, `../input/code/check_project_likelihood.py`), full-precision estimates | -49,122.4992 |
-| project likelihood, article (4-decimal) estimates | -49,122.5011 |
-| Biogeme `--evaluate`, full-precision estimates (all 14,341 records) | -49,122.4991 |
-| Biogeme `--evaluate`, article estimates (all 14,341 records; 67 min, 2.4 GB) | -49,122.5011 |
+| article LL(beta) | -49,427.4 |
+| project likelihood, full-precision estimates | -49,427.4083 |
+| Biogeme `--evaluate`, full-precision estimates | not run (about 67 min) |
+| Biogeme `--evaluate`, article estimates | not run |
 
-Biogeme by group of records (full-precision estimates): 1 home configuration -45,030.0235 (13,116 records), 2 -3,634.8406 (1,092), 3 -436.8399 (124), 4 -20.7951 (9). Project likelihood by group: 1 config -45,030.0235 (13,116), 2 -3,634.8406 (1,092), 3 -436.8399 (124), 4 -20.7951 (9). Hold-out half, project likelihood: -47,523.2327 (article -47,523.2; not evaluated with Biogeme: time).
+Hold-out half, project likelihood, full-precision estimates: -47,778.8003 (not evaluated with Biogeme: time). The hold-out half was also used in the specification search, so its log-likelihood is not a fully independent test.
 
 ## Estimation with Biogeme: memory
 

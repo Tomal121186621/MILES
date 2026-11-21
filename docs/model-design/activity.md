@@ -1,10 +1,12 @@
-# Activities (MILES-Day)
+# Activities (MAST)
+
+MAST is the Maryland Activity Scheduling and Travel model, the activity model of MILES.
 
 !!! abstract "At a glance"
 
     | | |
     |---|---|
-    | **Engine** | MILES-Day on the ABIT engine, Java |
+    | **Engine** | MAST, Java, built on the ABIT code base |
     | **Code** | `activity/` (coefficients, run scripts, Java source) |
     | **Estimated on** | 2017/18 Regional Travel Survey, estimation half |
     | **Models** | 3,946 survey distributions, 13 location and tour-formation logits, 7 mode-choice models |
@@ -12,20 +14,20 @@
     | **Produces** | One weekday plan per person: activities, locations, times, modes |
 
 
-**MILES-Day** generates, schedules and locates the activity episodes of every person for one weekday and assigns
+**MAST** generates, schedules and locates the activity episodes of every person for one weekday and assigns
 their tour modes. Work and school episodes go to the job and school the person holds in the land-use model; every
 other episode is located by an estimated model. All distributions and parameters come from the estimation half of
 the travel survey, and **no calibration factor is applied**.
 
 <figure markdown>
   ![](../assets/img/activity_flow.png)
-  <figcaption>How the estimated parts of MILES-Day work together. Yellow: survey distributions; blue: estimated logit models; green: household rules; grey: inputs; red: output.</figcaption>
+  <figcaption>How the estimated parts of MAST work together. Yellow: survey distributions; blue: estimated logit models; green: household rules; grey: inputs; red: output.</figcaption>
 </figure>
 
 ## Lineage
 
-MILES-Day runs on the engine of the ABIT activity-based model of the Maryland set-up and adopts the scheduling idea of
-TASHA. Against the original set-up it changes the following:
+MAST is built on the code base of the ABIT activity-based model of the Maryland set-up and adopts the scheduling
+idea of TASHA. Against the original set-up it changes the following:
 
 | Part | What it does |
 |---|---|
@@ -34,6 +36,7 @@ TASHA. Against the original set-up it changes the following:
 | Licence split | Shopping, recreation, accompanying and other frequencies of persons 16+ split by driving licence |
 | Joint activities by work or school | Joint frequency, membership and start time depend on the members' work or school that day |
 | Pooled primary destination model | One logit for four purposes with purpose scales, over all 1,588 zones |
+| Attraction terms | One attraction variable per location model, as its own log term, with ln zone area |
 | Stop models | Stops located by their detour and the mode-choice logsum |
 | Outings from the workplace | Whether, where and by which mode |
 | Return-home model | Whether a person goes home between two out-of-home episodes |
@@ -98,15 +101,16 @@ for four purposes (shopping, recreation, accompanying, other errands), estimated
 purpose:
 
 \[
-U_{pj} = \mu_p \Big[ \mu \ln(1 + S_j) + f_p(d_{hj}) + \beta_g\, GT_{hj} + \boldsymbol\beta^{\top}\mathbf z_j
- + \boldsymbol\gamma^{\top} (\ln d_{hj} \times \mathbf w_n) \Big], \qquad S_j = \text{retail}_j + \sum_c e^{\theta_c} x_{jc}
+U_{pj} = \mu_p \Big[ \beta_p \ln(1 + x_{pj}) + f(d_{hj}) + \beta_{g,p}\, GT_{hj} + \boldsymbol\beta_p^{\top}\mathbf z_j
+ + \boldsymbol\gamma^{\top} (\ln d_{hj} \times \mathbf w_n) \Big]
 \]
 
-\(S_j\) is the size of zone \(j\) (retail jobs as base, other components with estimated log weights), \(f_p\) a
-piecewise-linear car distance with knots at 1, 2, 5, 10, 20 and 50 km, \(GT_{hj}\) the car generalised time,
-\(\mathbf z_j\) zone attributes (intrazonal, CBD, retail density, land-use mix, county and state) and \(\mathbf w_n\)
-person, household, time-of-day and tour flags interacting with log distance. The mode-choice logsum was tested as the
-impedance and lost to car time for every purpose. Estimated on 14,341 tours (71 parameters).
+\(x_{pj}\) is the one attraction variable of the purpose (retail jobs; school enrolment for accompanying), entered as
+its own log term. \(f\) is a piecewise-linear car distance with knots at 1, 2, 5, 10, 20 and 50 km, \(GT_{hj}\) the car
+generalised time, \(\mathbf z_j\) zone attributes (intrazonal, ln zone area, land-use mix, high job density, Baltimore
+City, the District, other states, county and state boundaries) and \(\mathbf w_n\) person, household, time-of-day and
+tour flags interacting with log distance. The mode-choice logsum was tested as the impedance and lost to car time for
+every purpose. Estimated on 14,341 tours (62 parameters).
 
 ### Stops
 
@@ -118,21 +122,23 @@ Intermediate stops are located in time order by their detour between the previou
 \]
 
 where \(LS\) is the logsum of the tour mode-choice model of the stop's purpose. One model per stop purpose: shopping,
-recreation, accompanying and other errands.
+recreation, accompanying and other errands. As in the main destination model, each has one attraction variable as a
+log term (retail jobs for shopping, school enrolment for accompanying).
 
 ### Other locations
 
 Logits of the same form locate work business (workers with a usual workplace; other persons), the work trips of
-persons who work at home, and school and daycare episodes of persons without a school record (one pooled model).
+persons who work at home (office jobs as attraction), and school and daycare episodes of persons without a school
+record (one pooled model, school enrolment as attraction).
 
 ### Outings and returns home
 
 - **Outing from the workplace** (binary logit): whether a work episode contains an outing, from work duration,
   arrival time, a CBD workplace and the home–work distance. A location logit places its first stop, and a binary
-  logit decides whether it is walked.
+  logit with 7 parameters decides whether it is walked or keeps the mode of the work tour.
 - **Return home** (binary logit): for every pair of consecutive out-of-home episodes, whether the person goes home
-  in between, from the detour via home, the distance from home, the episode types, person and household variables and
-  the time of day.
+  in between, from the detour via home, the distance from home, the episode types, person and household variables
+  (including fewer cars than drivers) and the time of day; 33 parameters.
 
 ## Stage 3: modes
 
@@ -154,7 +160,8 @@ V_{nm} = \alpha_{sm} + \boldsymbol{\gamma}_{sm}^{\top}\mathbf{z}_n + f_{s}(T_{nm
 
 \(\mathbf z_n\) holds person, household and area-type variables, the paid-parking share at the destination and
 whether the tour has stops; \(d_n\) is the round-trip car distance. On work tours a dollar is worth 2.96 minutes for a
-household with an income of \$84,216. Race is not used in any choice model.
+household with an income of \$84,216. The tour models have no term for fewer cars than drivers, because cars are
+allocated in the household stage. Race is not used in any MAST model.
 
 ### Household stage
 
@@ -164,8 +171,10 @@ household with an income of \$84,216. Race is not used in any choice model.
 - **Joint tours:** a household representative (the oldest member who can drive, otherwise the oldest member) chooses
   the mode with a group-level model for joint shopping and for joint recreation and other tours; when the
   representative drives, the other members ride as car passengers.
-- **Transit legs:** a multinomial logit gives the mode of each leg of a transit tour (transit, walk, car passenger,
-  car driver, bicycle).
+- **Transit legs:** a multinomial logit with 35 parameters gives the mode of each leg of a transit tour (transit,
+  walk, car passenger, car driver, bicycle). Car driver is available only when a household car is free over the tour
+  window, the rule under which the model was estimated. The model keeps a term for fewer cars than drivers, because
+  the car allocation covers only part of that effect.
 
 ## Output
 

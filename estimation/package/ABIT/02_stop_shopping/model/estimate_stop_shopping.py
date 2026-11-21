@@ -8,14 +8,15 @@ stop (weight b_k).  The likelihood is
 
     L_n = sum_c w_c * [ sum_k b_k exp(V_c,z_k) ] / [ sum_j exp(V_c,j) ]          LL = sum_n ln L_n
 
-    V_c,j = MU_size ln(1 + S_j) + sum of the terms below, S_j = retail_jobs_j
+    V_c,j = B_ln_retail_jobs ln(1 + x_j) + sum of the terms below, x_j = retail jobs
     detour t = max(0, d(a,j) + d(j,b) - d(a,b)), d = car distance of the 2016 skim (km, intrazonal 0.5 sqrt(area))
     piecewise-linear detour (pieces clip(t - lo, 0, hi - lo)) 1-2 km, 2-5 km, 5-10 km, 10-20 km, 20-inf km (no 0-1 km piece: the slope below 1 km is 0)
-    stop in the zone of a / of b; area dummies; ln(1 + retail jobs / km2); land-use mix;
+    stop in the zone of a / of b; area dummies (Baltimore City, Washington DC, high job-density zone (at least 10,000 jobs
+    per km2; parameter B_central_business_district), Virginia, DE/PA/WV); ln(zone area, km2; at least 0.05); land-use mix;
     outside the counties (states) of BOTH anchors;
     ln(1 + t) x no car, cars < drivers, household size, tour mode not car; car generalised detour time (min)
     mode-choice logsum of the detour: LS(a,j) + LS(j,b) - LS(a,b) (tour mode models of the run, see README)
-Bounds as in the estimation: THETA in [-30, 15], MU_size in [0, 3].  Unweighted; robust (sandwich) standard errors.
+No bounds.  Unweighted; robust (sandwich) standard errors.
 
     ~/.venvs/biogeme/bin/python estimate_stop_shopping.py                 # estimate (results in ../output)
     ~/.venvs/biogeme/bin/python estimate_stop_shopping.py --evaluate      # LL at the article estimates, no estimation
@@ -35,15 +36,23 @@ ZONES = pd.read_csv(os.path.join(HERE, "..", "..", "00_shared_data", "zones", "z
 NZ = len(ZONES)
 ZA = {a: ZONES[a].astype(float).tolist() for a in ["bc", "dcz", "cbd", "va", "othst", "lnretden", "mix", "pop", "ret", "off", "oth", "stu"]}
 ZA["cnty"] = ZONES.countyfips.astype(float).tolist(); ZA["st"] = ZONES.state.astype(float).tolist()
+LNAREA = np.log(ZONES.area_km2.clip(lower=0.05).to_numpy(float))       # ln(zone area, km2; at least 0.05, as in the retail density)
+ZA["lnarea"] = LNAREA.tolist()
+
+
+def add_lnarea(df):
+    """candidate columns cand_lnarea_<k> from the candidate zone index cz_<k> (not stored in the Biogeme data)"""
+    for k in range(sum(c.startswith("cz_") for c in df.columns)):
+        df[f"cand_lnarea_{k}"] = LNAREA[df[f"cz_{k}"].to_numpy().astype(int)]
+    return df
 
 # ------------------------------------------------------------------------------------------------ specification
-SIZE_BASE = "ret"                                     # size component with theta = 0
-SIZE_COMPS = []                                     # components with a free weight exp(theta)
+SIZE_BASE = "ret"                                     # attraction variable x: ln(1 + x) with coefficient B_ln_<x>
+SIZE_COMPS = []                                     # no further size components (no theta)
 PIECES = [(1, 2), (2, 5), (5, 10), (10, 20), (20, None)]                                        # detour pieces (lo, hi km; None = open)
 FLAGS = ['car0', 'car1', 'hhsize', 'nonauto']                                          # ln(1 + detour) x chooser flag (data column f_<flag>)
-ZONE_TERMS = ["bc", "dcz", "cbd", "va", "othst", "lnretden", "mix"]
+ZONE_TERMS = ["bc", "dcz", "cbd", "va", "othst", "lnarea", "mix"]
 CGT = True                                              # car generalised detour time in the model
-MU_FIXED = None                                     # value at which MU_size is held (None: estimated)
 
 # ------------------------------------------------------------------------------------------------ parameters (article names)
 def B(name, start=0.0, lo=None, hi=None, fixed=0):
@@ -58,7 +67,7 @@ B_cgt = B("B_car_generalised_time_detour_min") if CGT else None
 B_zone_previous = B("B_stop_in_zone_of_previous_location")
 B_zone_next = B("B_stop_in_zone_of_next_anchor")
 ZONE_NAME = {"bc": "B_baltimore_city", "dcz": "B_washington_dc", "cbd": "B_central_business_district", "va": "B_virginia",
-             "othst": "B_delaware_pennsylvania_west_virginia", "lnretden": "B_ln_retail_jobs_per_km2", "mix": "B_land_use_mix"}
+             "othst": "B_delaware_pennsylvania_west_virginia", "lnarea": "B_ln_zone_area_km2", "mix": "B_land_use_mix"}
 B_zone = {a: B(ZONE_NAME[a]) for a in ZONE_TERMS}
 B_outside_counties = B("B_outside_counties_of_both_anchors")
 B_outside_states = B("B_outside_states_of_both_anchors")
@@ -68,7 +77,8 @@ B_flag = {f: B(FLAG_NAME[f]) for f in FLAGS}
 THETA_NAME = {"pop": "THETA_population", "ret": "THETA_retail_jobs", "off": "THETA_office_jobs", "oth": "THETA_other_jobs",
               "stu": "THETA_school_pupils"}
 THETA = {c: B(THETA_NAME[c], -2.0, -30.0, 15.0) for c in SIZE_COMPS}
-MU_size = B("MU_size", 1.0, None, None, 1) if MU_FIXED is not None else B("MU_size", 0.8, 0.0, 3.0)
+ATTR_NAME = {"ret": "B_ln_retail_jobs", "off": "B_ln_office_jobs", "stu": "B_ln_school_enrolment"}
+B_attraction = B(ATTR_NAME[SIZE_BASE], 0.8)                          # coefficient of ln(1 + x)
 
 
 class At:
@@ -96,8 +106,8 @@ def size_term(g):
         x = g.z(c)
         if not is0(x): parts.append(exp(THETA[c]) * x)
     if not parts: return None                                            # ln(1 + 0) = 0
-    if all(isinstance(p, float) for p in parts): return MU_size * float(np.log1p(sum(parts)))
-    return MU_size * log(1 + MultipleSum(parts) if len(parts) > 1 else 1 + parts[0])
+    if all(isinstance(p, float) for p in parts): return B_attraction * float(np.log1p(sum(parts)))
+    return B_attraction * log(1 + MultipleSum(parts) if len(parts) > 1 else 1 + parts[0])
 
 
 FLAG_COEF = MultipleSum([B_flag[f] * Variable(f"f_{f}") for f in FLAGS]) if len(FLAGS) > 1 else (B_flag[FLAGS[0]] * Variable(f"f_{FLAGS[0]}") if FLAGS else None)
@@ -137,7 +147,7 @@ def parts(half):
 
 def read(half):
     meta, files = parts(half)
-    return pd.concat([pd.read_parquet(f) for f in files], ignore_index=True).astype("float64"), meta
+    return add_lnarea(pd.concat([pd.read_parquet(f) for f in files], ignore_index=True).astype("float64")), meta
 
 
 def reference(at):
@@ -162,7 +172,7 @@ def evaluate(half, at):
                 d = pd.read_parquet(f); d = d[d.n_cfg == g]
                 drop = [c for c in d.columns if any(c.startswith(p) for p in ("w_", "za_", "zb_", "cnty_a_", "cnty_b_", "st_a_", "st_b_", "imp_", "cgt_", "ls_", "cimp_", "ccgt_", "cls_"))
                         and int(c.split("_")[2 if c.startswith(("cnty_", "st_")) else 1]) >= g]
-                dfs.append(d.drop(columns=drop).astype("float64"))
+                dfs.append(add_lnarea(d.drop(columns=drop).astype("float64")))
             part = pd.concat(dfs, ignore_index=True); del dfs
             m = bio.BIOGEME(db.Database(f"eval{g}", part), loglike(g, meta["n_cand_max"]), use_jit=False, generate_html=False,
                             generate_yaml=False, save_iterations=False)

@@ -5,14 +5,14 @@ Multinomial logit over the full choice set of 1,588 zones, anchor = home h, trac
 (candidate zones z_k, weights b_k):
 
     L_n = sum_c w_c [ sum_k b_k exp(V_c,z_k) ] / [ sum_j exp(V_c,j) ]      (one configuration, w_0 = 1);  LL = sum_n ln L_n
-    V_j = MU_size ln(1 + retail_j + exp(THETA_office) office_j + exp(THETA_other) other_jobs_j + exp(THETA_school) school_pupils_j)
+    V_j = B_ln_office_jobs ln(1 + office_jobs_j)
           + sum_b B_distance_b piece_b(d_hj)        pieces 1-2, 2-5, 5-10, 10-20, 20-50, > 50 km (slope per km; 0-1 km: 0)
           + B_intrazonal [j = h] + B_Baltimore_City bc_j + B_Washington_DC dc_j + B_Virginia va_j + B_DE_PA_WV othst_j
           + B_outside_home_county [county_j != county_h]
           + ln d_hj (B_income_below_50k + B_income_100k_plus + B_worker, by the record's flags)
 
 d = car distance (km, 2016 skim, intrazonal 0.5 sqrt(area)).  The 0-1 km piece is not in the model (final stage, rule C: a
-positive first piece is fixed at 0).  Bounds: THETA in [-30, 15], MU_size in [0, 3].  Unweighted, robust standard errors.
+positive first piece is fixed at 0).  No bounds.  Unweighted, robust standard errors.
 
     ~/.venvs/biogeme/bin/python estimate_work_business_other_persons.py                 # estimate (results in ../output)
     ~/.venvs/biogeme/bin/python estimate_work_business_other_persons.py --evaluate      # LL at the article estimates, no estimation
@@ -86,16 +86,13 @@ B_outside_county = Beta("B_outside_home_county", 0.0, None, None, 0)
 B_lnd_inc0 = Beta("B_ln_distance_x_income_below_50k", 0.0, None, None, 0)
 B_lnd_inc2 = Beta("B_ln_distance_x_income_100k_plus", 0.0, None, None, 0)
 B_lnd_worker = Beta("B_ln_distance_x_worker", 0.0, None, None, 0)
-THETA_office = Beta("THETA_office_jobs", -2.0, -30.0, 15.0, 0)          # size base: retail jobs (theta = 0)
-THETA_other = Beta("THETA_other_jobs", -2.0, -30.0, 15.0, 0)
-THETA_school = Beta("THETA_school_pupils", -2.0, -30.0, 15.0, 0)
-MU_size = Beta("MU_size", 0.8, 0.0, 3.0, 0)
+B_ln_office_jobs = Beta("B_ln_office_jobs", 0.8, None, None, 0)         # attraction: ln(1 + office jobs)
 LND_COEF = B_lnd_inc0 * Variable("f_inc0") + B_lnd_inc2 * Variable("f_inc2") + B_lnd_worker * Variable("f_worker")
 
 
 def utility(g):
     c = g.c; d = g.x("imp")
-    size = MU_size * ln_size(g.z("ret"), [(THETA_office, g.z("off")), (THETA_other, g.z("oth")), (THETA_school, g.z("stu"))])
+    size = B_ln_office_jobs * ln_size(g.z("off"), [])
     terms = [size, B_d12 * piece(d, 1, 2), B_d25 * piece(d, 2, 5), B_d510 * piece(d, 5, 10), B_d1020 * piece(d, 10, 20),
              B_d2050 * piece(d, 20, 50), B_d50 * piece(d, 50, None),
              B_intrazonal * (Variable(f"za_{c}") == g.zone()),

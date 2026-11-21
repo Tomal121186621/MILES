@@ -1,8 +1,8 @@
 # Configuration
 
 Each engine reads one properties file. The keys below are the ones that switch on MILES's models; the values are
-those of the reported runs. In the SILO engine, the value `respec` of the `*.spec` and `job.choice.model` keys selects
-the estimated models documented on this site; `miles landuse …` sets it for you.
+those of the final runs. The SILO settings of the final runs are collected in `landuse/run/adopted_settings.sh`, and
+`miles landuse …` sets the model switches for you.
 
 ## Land use (SILO)
 
@@ -24,13 +24,16 @@ Written by `landuse/run/write_properties.py <scenario> <start> <end> [skim_years
 
     | Key | Value |
     |---|---|
-    | `resloc.model` | `mnl` |
-    | `resloc.spec` | `respec` (the estimated three-level model) |
-    | `resloc.region.coefficients` | `input/residential_county_coefficients.csv` |
-    | `resloc.dwelling.coefficients` | `input/residential_zone_dwelling_coefficients.csv` (zone and dwelling levels) |
-    | `resloc.region.attributes`, `resloc.region.adjacency` | county attributes and adjacency |
-    | `resloc.respec.zone.attributes` | zone attributes of the zone level |
-    | `resloc.respec.accessibility.file` | multimodal non-work accessibility by year |
+    | `resloc.twolevel` | `true` (PUMA, then dwelling) |
+    | `resloc.twolevel.puma.coefficients` | `input/residential_puma_coefficients.csv` |
+    | `resloc.twolevel.dwelling.coefficients` | `input/residential_dwelling_coefficients.csv` |
+    | `resloc.twolevel.puma.zone.file`, `resloc.twolevel.mig.zone.file` | zones of each PUMA and migration PUMA |
+    | `resloc.twolevel.zone.attributes.file`, `resloc.twolevel.zone.core.file` | zone attributes; DC and Baltimore City zones |
+    | `resloc.twolevel.puma.adjacency.file` | PUMA adjacency |
+    | `resloc.marketsize`, `resloc.turnover.file` | `stock_turnover`; turnover rate by PUMA |
+    | `resloc.puma.vacancy.availability` | `true` (PUMA weight scaled by its vacancy rate relative to 2016) |
+    | `resloc.race.share.fixed2016` | `false` (own-race shares recomputed every year) |
+    | `population.control.until.no.vacancy` | `true` |
     | `resloc.move.duration` | −0.982 |
     | `resloc.iv.dwelling.sample` | 200 |
 
@@ -38,37 +41,37 @@ Written by `landuse/run/write_properties.py <scenario> <start> <end> [skim_years
 
     | Key | Value |
     |---|---|
-    | `car.ownership.spec` | `respec` |
     | `car.ownership.coefficients.file` | `input/car_ownership_estimated_coefficients.csv` |
-    | `car.ownership.region.constants.file` | calibrated county constants |
-    | `car.ownership.respec.location.file` | PUMA density and accessibility gain |
+    | `car.ownership.region.constants.file` | `input/car_ownership_county_constants.csv` (the estimated Baltimore City term; 0 elsewhere) |
 
-=== "Jobs"
+=== "Jobs and schools"
 
     | Key | Value |
     |---|---|
-    | `job.choice.model` | `respec` |
-    | `job.choice.coefficients.file` | `input/workplace_choice_coefficients.csv` (District term anchored to the ACS) |
+    | `job.choice.coefficients.file` | `input/workplace_choice_coefficients.csv` (24 terms; District term as estimated) |
+    | `job.choice.size` | `jobs` (all job types weighted equally) |
     | `job.change.rate` | 0.252 |
     | `job.control.total` | QCEW-based job controls |
     | `employment.types` | `RET,OFF,IND,OTH` |
+    | `school.choice.coef.k8`, `.hs`, `.college` | `input/school_location_coefficients_{k8,hs,college}.csv` |
+    | `school.seat.release` | `true` (seat released when a student leaves school or the population) |
 
 === "Demography and calibration"
 
     | Key | Calibrated value |
     |---|---|
-    | `demographics.local.birth.rate.adjuster` | 2.1002 |
-    | `demographics.local.marriage.rate.adjuster` | 1.3944 |
-    | `demographics.local.divorce.rate.adjuster` | 0.6716 |
-    | `demographics.local.leave.parents.adjuster` | 2.578 |
-    | `move.or.not.binomial.log.shift.parameter` | 1.6742 |
+    | `demographics.local.birth.rate.adjuster` | 2.1724 |
+    | `demographics.local.marriage.rate.adjuster` | 1.3436 |
+    | `demographics.local.divorce.rate.adjuster` | 0.6867 |
+    | `demographics.local.leave.parents.adjuster` | 2.7775 |
+    | `move.or.not.binomial.log.shift.parameter` | 1.1114 |
     | `construct.dwelling.demand.scaler` | 0.2871 |
     | `marriage.partner.distance.decay` | 0.0462 |
     | `population.control.total` | `region` (county controls) |
 
     The levers are kept in `landuse/calibration/calibrated_parameters.json`.
 
-## Activities (MILES-Day)
+## Activities (MAST)
 
 Written by `activity/write_properties.py <name> <silo_scenario> <year> [sample] [skims]`; the switches of the
 coefficient set (`activity/parameters/run_params.csv`) are appended.
@@ -111,5 +114,8 @@ java -Xmx32g -Dseed=1 -Dthreads=12 -Dincome.vot.form=usdot -cp baltimore-matsim-
 | `asc.car`, `asc.pt`, `asc.ride`, `asc.walk`, `asc.bike` | | mode constants of the scoring |
 | `walk.maxdist`, `bike.maxdist` | 2000 m, 5000 m | |
 | `trucks` | false | optional truck layer |
+
+Transit settings of the final runs: transfer penalty `-Dpt.lineswitch=-0.13` (about 10 in-vehicle minutes) and
+transfer walks up to `-Dpt.beeline=300` m, set by `pipeline/run_chain.py` with `MATSIM_PT=berlin MATSIM_PT_LIT=1`.
 
 Chain settings: flow capacity = sample (0.1), storage capacity = sample^0.75 (0.178), 100 iterations.

@@ -48,8 +48,8 @@ PhD supervisor
 MILES builds on open-source software and public data:
 
 - **SILO**, the land-use microsimulation of the Technical University of Munich ([msmobility/silo](https://github.com/msmobility/silo));
-- **ABIT**, the activity-based model of the Maryland set-up, whose engine runs MILES-Day;
-- **TASHA**, whose scheduling approach MILES-Day adopts;
+- **ABIT**, the activity-based model of the Maryland set-up, whose code base MAST is built on;
+- **TASHA**, whose scheduling approach MAST adopts;
 - **MATSim** and **pt2matsim** for the traffic and transit assignment;
 - **Biogeme** for the estimation of every choice model;
 - data of the U.S. Census Bureau, the Bureau of Labor Statistics, FHWA, NCES, MDOT and MDOT SHA, the Baltimore

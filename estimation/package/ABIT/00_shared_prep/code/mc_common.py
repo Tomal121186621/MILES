@@ -4,7 +4,7 @@ utility variables.  Every quantity here has a one-to-one counterpart in
 ABIT/src/main/java/abm/models/maryland/MarylandTourNestedModeChoice.java, so that the application uses the estimated utility.
 
 Tour level of service (round trip).  Outbound half: home -> main activity in the period of the START of the main activity;
-return half: main activity -> home in the period of its END (ABIT knows both times when it chooses the tour mode).
+return half: main activity -> home in the period of its END (MAST knows both times when it chooses the tour mode).
 Periods: AM 06-09, MD 09-15, PM 15-19, NT 19-06 (start / end time modulo 24 h).
   car       minutes: base AM car skim x the MATSim period profile (car_period_skims.py); intrazonal: the skim diagonal
             km: car-distance skim, intrazonal 0.5 sqrt(area) (the stage-3 distance convention)
@@ -22,7 +22,7 @@ Money (2017 dollars):
             share of paid parking at the destination area (estimation half), see PARK_AREA
   fare      per half-tour, fare_rule: MTA $1.80, WMATA Metrorail by distance and period, Metrobus $2.00, MARC by distance
   toll      the toll hook adds a per-half-tour amount (MarylandTourNestedModeChoice.setToll) to the car-driver cost
-Income: household income as ABIT sums it (12 x sum of persons' int(annual/12), USD/yr).
+Income: household income as MAST sums it (12 x sum of persons' int(annual/12), USD/yr).
 """
 # COPY of Validation_2026/3_abit/mode_choice/mc_common.py (manual-estimation package, 2026-11-13); only path constants changed (lines marked PATH).
 import os as _os_pkg  # PACKAGE: paths of the manual-estimation package
@@ -165,7 +165,7 @@ def park_share():
 
 
 def features(t):
-    """Model variables of the tours t (columns of prep_tours / of the ABIT application).  Returns a DataFrame of numbers."""
+    """Model variables of the tours t (columns of prep_tours / of the MAST application).  Returns a DataFrame of numbers."""
     f = pd.DataFrame(index=t.index)
     f["car_min"] = t.car_min; f["km"] = t.km
     f["cost_cd"] = t.km * OPC_KM + t.get("toll", 0.0)

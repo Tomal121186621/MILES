@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Figures of activity generation and scheduling (ABIT) and of destination/location choice.  Visual system: composite.py.
+"""Figures of activity generation and scheduling (MAST) and of destination/location choice.  Visual system: composite.py.
 
 NOTE (2026-10-26): fig_activity, fig_s_duration and fig_s_chains are superseded in the article by the TASHA-form set of
 fig_abit_tasha.py (start, duration, chains, distance; validation in the article, verification and chain test in the

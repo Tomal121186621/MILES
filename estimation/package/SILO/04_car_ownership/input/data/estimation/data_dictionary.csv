@@ -3,7 +3,7 @@ serial,PUMS household serial number,,ACS PUMS 2014-2018 5-year (00_shared_data/a
 puma7,PUMA (24 x 100000 + PUMA),,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
 cars,"chosen alternative: vehicles available VEH, capped at 3 (0, 1, 2, 3+)",,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
 workers,"persons with ESR 1, 2, 4, 5 (max 6)",persons,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
-nonworking_adults,persons 16+ minus workers (max 6),persons,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
+nonworking_adults,persons 16+ minus workers (max 6); not a model variable: workers + nonworking_adults = persons aged 16+,persons,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
 children,persons under 16 (max 6),persons,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
 single_person,1 if household size 1,,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
 sfd,1 if single-family detached (BLD 2),,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr)
@@ -15,3 +15,7 @@ acc_gain,"non-work accessibility with a car minus without a car, household's inc
 age10,(age of the oldest member - 45) / 10,,ACS PUMS 2014-2018 5-year (00_shared_data/acs_pums_2014_2018_5yr) person file
 age10_sq,age10 squared,,
 inc_x_dens,"ln income x (ln_density - 5.485957407613654, the estimation-sample mean)",,s06_age.prep
+p16_2,1 if 2 persons aged 16+ (workers + nonworking_adults; reference 0-1),,build_estimation_data.add_p16_city
+p16_3,1 if 3 persons aged 16+,,build_estimation_data.add_p16_city
+p16_4p,1 if 4 or more persons aged 16+,,build_estimation_data.add_p16_city
+city,"1 if the PUMA is in Baltimore City (puma7 2400801-2400805; region 24510 in SILO)",,build_estimation_data.add_p16_city

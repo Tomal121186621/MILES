@@ -1,18 +1,19 @@
 # Estimation package
 
 The estimation package lets anyone re-estimate every model of MILES with **Python Biogeme** and check the result
-against the published estimates. It lives in `estimation/package/`; the specification search behind each model is in `estimation/development/`.
+against the published estimates. The folder `ABIT/` holds the models of MAST (named after the code base MAST is built
+on). It lives in `estimation/package/`; the specification search behind each model is in `estimation/development/`.
 
 ## Layout
 
 ```text
 estimation/package/
 ├── RUN_ORDER.pdf                 which folder to run, in which order
-├── SILO/                         land-use, workplace and school models (8)
+├── SILO/                         land-use, workplace and school models (7)
 │   ├── 00_shared_data/           (not in the repository) census microdata, survey, zones, skims
-│   ├── 01_residential_county/
+│   ├── 01_residential_puma/
 │   │   ├── INSTRUCTIONS.pdf      from data download to output, step by step
-│   │   ├── 01_residential_county_estimation.ipynb
+│   │   ├── 01_residential_puma_estimation.ipynb
 │   │   ├── input/code/           data preparation scripts
 │   │   ├── input/data/raw/       source extracts
 │   │   ├── input/data/estimation/  the estimation table and its data dictionary
@@ -20,7 +21,7 @@ estimation/package/
 │   │   ├── model/                Biogeme script, published estimates
 │   │   └── output/               your results
 │   └── ...
-├── ABIT/                         MILES-Day: distributions and 20 models
+├── ABIT/                         MAST models: distributions and 20 models
 │   ├── 00_tasha_distributions/   activity distributions (not a Biogeme model)
 │   ├── 01_primary_destination_pooled/
 │   └── ...
@@ -31,9 +32,8 @@ estimation/package/
 
 | Folder | Model |
 |---|---|
-| SILO/01 | Residential location: county |
-| SILO/02 | Residential location: zone × structure type |
-| SILO/03 | Residential location: dwelling |
+| SILO/01 | Residential location: PUMA |
+| SILO/02 | Residential location: dwelling |
 | SILO/04 | Car ownership |
 | SILO/05 | Workplace choice |
 | SILO/06–08 | School location: K–8, high school, college |
@@ -91,5 +91,5 @@ they are built from the census microdata and the travel survey by each folder's 
 | Return home, outings | `activity/parameters/tasha/tasha_return_home.csv`, `tasha_subtour.csv` |
 | Activity distributions | `activity/parameters/tasha/tasha_frequency.csv`, `tasha_start.csv`, `tasha_duration.csv` |
 
-`activity/build_parameters.py` writes the activity files and `TERM_MAP.csv`, which maps all 699 estimated terms to
+`activity/build_parameters.py` writes the activity files and `TERM_MAP.csv`, which maps every estimated term to
 their engine file and variable.

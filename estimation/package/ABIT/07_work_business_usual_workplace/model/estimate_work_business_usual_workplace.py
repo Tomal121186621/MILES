@@ -5,17 +5,16 @@ Multinomial logit over the full choice set of 1,588 zones, detour form with two 
 workplace w (anchor b); tract-to-zone measurement model of the destination (candidate zones z_k, weights b_k):
 
     L_n = sum_c w_c [ sum_k b_k exp(V_c,z_k) ] / [ sum_j exp(V_c,j) ]      (one configuration, w_0 = 1);  LL = sum_n ln L_n
-    V_j = MU_size ln(1 + retail_j + exp(THETA_office) office_j + exp(THETA_population) population_j
-                       + exp(THETA_other) other_jobs_j + exp(THETA_school) school_pupils_j)
+    V_j = B_ln_office_jobs ln(1 + office_jobs_j)
           + sum_b B_detour_b piece_b(dt_j)           pieces 0-1, 1-2, 2-5, 5-10, 10-20, > 20 km (slope per km)
           + B_car_generalised_time cgt_j + B_home_zone [j = h] + B_workplace_zone [j = w]
-          + B_retail_density lnretden_j + B_land_use_mix mix_j
+          + B_ln_zone_area_km2 ln(area_j) + B_land_use_mix mix_j
           + B_outside_both_counties [county_j != county_h and county_j != county_w]
           + ln(1 + dt_j) (B_no_car + B_fewer_cars_than_drivers + B_AM + B_PM + B_evening, by the record's flags)
 
 dt_j = max(0, d(h,j) + d(j,w) - d(h,w)), d = car distance (km, 2016 skim, intrazonal 0.5 sqrt(area)); cgt_j = the same detour
 of car generalised time (min; dc_common.car_gt, >= 0).  Flags: no car, cars < drivers; arrival AM 6-9, PM 15-19, evening 19-6
-(reference midday).  Bounds: THETA in [-30, 15], MU_size in [0, 3].  Unweighted, robust (sandwich) standard errors.
+(reference midday).  area_j = zone area (km2), at least 0.05.  No bounds.  Unweighted, robust (sandwich) standard errors.
 
     ~/.venvs/biogeme/bin/python estimate_work_business_usual_workplace.py                 # estimate (results in ../output)
     ~/.venvs/biogeme/bin/python estimate_work_business_usual_workplace.py --evaluate      # LL at the article estimates, no estimation
@@ -35,6 +34,15 @@ ZONES = pd.read_csv(os.path.join(HERE, "..", "..", "00_shared_data", "zones", "z
 NZ = len(ZONES)
 ZA = {a: ZONES[a].astype(float).tolist() for a in ["bc", "dcz", "cbd", "va", "othst", "lnretden", "mix", "pop", "ret", "off", "oth", "stu"]}
 ZA["cnty"] = ZONES.countyfips.astype(float).tolist(); ZA["st"] = ZONES.state.astype(float).tolist()
+LNAREA = np.log(ZONES.area_km2.clip(lower=0.05).to_numpy(float))       # ln(zone area, km2; at least 0.05, as in the retail density)
+ZA["lnarea"] = LNAREA.tolist()
+
+
+def add_lnarea(df):
+    """candidate columns cand_lnarea_<k> from the candidate zone index cz_<k> (not stored in the Biogeme data)"""
+    for k in range(sum(c.startswith("cz_") for c in df.columns)):
+        df[f"cand_lnarea_{k}"] = LNAREA[df[f"cz_{k}"].to_numpy().astype(int)]
+    return df
 
 
 class At:
@@ -83,7 +91,7 @@ B_dt20 = Beta("B_detour_20km_plus", 0.0, None, None, 0)
 B_cgt = Beta("B_car_generalised_time", 0.0, None, None, 0)
 B_home_zone = Beta("B_home_zone", 0.0, None, None, 0)
 B_workplace_zone = Beta("B_workplace_zone", 0.0, None, None, 0)
-B_retail_density = Beta("B_retail_density", 0.0, None, None, 0)
+B_ln_zone_area = Beta("B_ln_zone_area_km2", 0.0, None, None, 0)
 B_land_use_mix = Beta("B_land_use_mix", 0.0, None, None, 0)
 B_outside_county = Beta("B_outside_counties_of_both_anchors", 0.0, None, None, 0)
 B_lndt_no_car = Beta("B_ln_detour_x_no_car", 0.0, None, None, 0)
@@ -91,11 +99,7 @@ B_lndt_fewer_cars = Beta("B_ln_detour_x_fewer_cars_than_drivers", 0.0, None, Non
 B_lndt_am = Beta("B_ln_detour_x_AM", 0.0, None, None, 0)
 B_lndt_pm = Beta("B_ln_detour_x_PM", 0.0, None, None, 0)
 B_lndt_ev = Beta("B_ln_detour_x_evening", 0.0, None, None, 0)
-THETA_office = Beta("THETA_office_jobs", -2.0, -30.0, 15.0, 0)          # size base: retail jobs (theta = 0)
-THETA_population = Beta("THETA_population", -2.0, -30.0, 15.0, 0)
-THETA_other = Beta("THETA_other_jobs", -2.0, -30.0, 15.0, 0)
-THETA_school = Beta("THETA_school_pupils", -2.0, -30.0, 15.0, 0)
-MU_size = Beta("MU_size", 0.8, 0.0, 3.0, 0)
+B_ln_office_jobs = Beta("B_ln_office_jobs", 0.8, None, None, 0)         # attraction: ln(1 + office jobs)
 # person / time-of-day coefficient of ln(1 + detour), one expression per record
 LNDT_COEF = (B_lndt_no_car * Variable("f_car0") + B_lndt_fewer_cars * Variable("f_car1") + B_lndt_am * Variable("f_am")
              + B_lndt_pm * Variable("f_pm") + B_lndt_ev * Variable("f_ev"))
@@ -103,12 +107,11 @@ LNDT_COEF = (B_lndt_no_car * Variable("f_car0") + B_lndt_fewer_cars * Variable("
 
 def utility(g):
     c = g.c; dt = g.x("imp"); cj = g.z("cnty")
-    size = MU_size * ln_size(g.z("ret"), [(THETA_office, g.z("off")), (THETA_population, g.z("pop")), (THETA_other, g.z("oth")),
-                                          (THETA_school, g.z("stu"))])
+    size = B_ln_office_jobs * ln_size(g.z("off"), [])
     terms = [size, B_dt01 * piece(dt, 0, 1), B_dt12 * piece(dt, 1, 2), B_dt25 * piece(dt, 2, 5), B_dt510 * piece(dt, 5, 10),
              B_dt1020 * piece(dt, 10, 20), B_dt20 * piece(dt, 20, None), B_cgt * g.x("cgt"),
              B_home_zone * (Variable(f"za_{c}") == g.zone()), B_workplace_zone * (Variable(f"zb_{c}") == g.zone()),
-             times(B_retail_density, g.z("lnretden")), times(B_land_use_mix, g.z("mix")),
+             times(B_ln_zone_area, g.z("lnarea")), times(B_land_use_mix, g.z("mix")),
              B_outside_county * ((Variable(f"cnty_a_{c}") != cj) * (Variable(f"cnty_b_{c}") != cj)),
              LNDT_COEF * log(1 + dt)]
     return MultipleSum([t for t in terms if t is not None])
@@ -127,7 +130,7 @@ def read(half):
     folder = os.path.join(DATA, "estimation" if half == "estimation" else "holdout")
     meta = json.load(open(os.path.join(folder, "biogeme_meta.json")))
     df = pd.concat([pd.read_parquet(f) for f in sorted(glob.glob(os.path.join(folder, "biogeme_part*.parquet")))], ignore_index=True)
-    return df.astype("float64"), meta
+    return add_lnarea(df.astype("float64")), meta
 
 
 def reference(at):

@@ -7,3 +7,5 @@
 - Files: network_2024_pt.xml.gz, transitSchedule_2024.xml.gz, transitVehicles_2024.xml.gz
 - Notes: Needed only to rebuild the transit skims (Java).
 
+
+- Files shipped: network_2024_pt.xml.gz, transitSchedule_2024.xml.gz, transitVehicles_2024.xml.gz, copied 2026-11-17 from Validation_2026/4_matsim/transit (project-relative to VAE-SILO-MITO-MATSIM).

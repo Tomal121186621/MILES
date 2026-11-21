@@ -298,3 +298,13 @@ body:has(.mh) .md-main { display: none; }
 .md-typeset p > strong:first-child:is(:only-child, :first-child) { }
 .md-typeset .tnote { font-size: .74rem; color: var(--miles-muted); margin: -.6rem 0 1.2rem; line-height: 1.5; }
 .md-typeset .tnote p { margin: .15rem 0; }
+
+/* colour key of the validation figures: swatches, then the fit-measure table */
+.miles-key { border: 1px solid var(--miles-border); border-radius: 12px; padding: .8rem 1rem .2rem; margin: 0 0 1.6rem; background: var(--miles-card-bg); }
+.miles-key-sw { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; font-size: .78rem; margin-bottom: .5rem; }
+.miles-key-sw span { display: inline-flex; align-items: center; gap: .45rem; white-space: nowrap; }
+.miles-key-sw i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; }
+.miles-key-sw i.bar { width: 2px; height: 16px; border-radius: 0; background: var(--md-default-fg-color); position: relative; }
+.miles-key-sw i.bar::before, .miles-key-sw i.bar::after { content: ""; position: absolute; left: -4px; width: 10px; height: 2px; background: var(--md-default-fg-color); }
+.miles-key-sw i.bar::before { top: 0; } .miles-key-sw i.bar::after { bottom: 0; }
+.md-typeset .miles-key table:not([class]) { font-size: .72rem; margin: .2rem 0 .6rem; }

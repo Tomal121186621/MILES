@@ -6,12 +6,12 @@ built on the RE-ESTIMATED tour mode-choice models (mode_logsum_new.py).
 
 Segments, representative traveller, hansen, nonwork pooling and output contract as pipeline/accessibility.py (imported):
   A      ln sum_j exp(V_ij) of the final model of ../dest_primary/d_<p> (final rows of d_<p>_coef.csv; specification from the
-         'final specification' line of d_<p>.log), its own impedance (car generalised time cgt; an old ABIT logsum term 'ls'
+         'final specification' line of d_<p>.log), its own impedance (car generalised time cgt; an old MAST logsum term 'ls'
          would be evaluated with mode_logsum_new); work: the home -> workplace model of pipeline/accessibility.py (unchanged)
   A_ls   the final specification with cgt (or ls) replaced by lambda x LS_new, LS_new = mode_logsum_new for the purpose
          (shopping -> shopping model, recreation / accompany / other -> other model with rec / acc flags), lambda and every other
          coefficient re-estimated on the same estimation records with the same full-set mixture estimator (d_primary.Run.estimate);
-         work: the logsum specification S9 of pipeline/accessibility.py (old ABIT logsum; the workplace model is not re-estimated)
+         work: the logsum specification S9 of pipeline/accessibility.py (old MAST logsum; the workplace model is not re-estimated)
 LS_new of an estimation record: home zone of each location configuration -> every zone; outbound period = the record's arrival
 period (tod), return period = that of the survey tour containing the record's trip when its outbound period agrees, else the
 most frequent return period for that outbound period (tours of the purpose, estimation half); joint = the tour's flag (else the

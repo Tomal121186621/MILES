@@ -6,13 +6,16 @@ school locations. Unweighted.
 Utility of zone j for home zone h:
     V_hj = mu * ln( sum_k exp(g_k) N_k,hj + 1e-12 ) + sum_m b_m x_m,hj
 Size components: nk0 public enrolment of the band outside the home's attendance boundary (reference, weight 1), nk1
-public enrolment inside the boundary (SABS 2015-16; log weight G_in_boundary_public), nk2 private enrolment (G_private).
+public enrolment inside the boundary (SABS 2015-16; log weight G_in_boundary_public),
+nk2 private enrolment: weight 1 (its log weight is fixed at 0, p = 0.37 when estimated).
 Availability: enrolment of the student's own band in zone j (av_h_j). Likelihood of student n (exactly that of the original
 estimator, sc_03_engine.Model.scores):
     L_n = sum_h sum_c w_h w_c exp(V_hc) / sum_j av_hj exp(V_hj)
     log L_n = WeightedLogSumExp_{h,c}( V_hc - WeightedLogSumExp_j(V_hj; av_hj) ; w_h w_c )
 w_h: weight of possible home zone h (up to 3), w_c: weight of possible school zone c (up to 2); unused slots carry a copy of
 slot 0 and weight 0. V_hc is the utility of the school zone c from home zone h (columns c<var>_h_c of the candidates table).
+Variables (data_dictionary.csv): car time, other county x public share, charter-or-magnet share (cm), own-race share of
+the zone's enrolment (own). The quality variables qpub and qnone are in the tables (tested, not in the model).
 Bound as in the original estimator: mu >= 0.01. Start values = article estimates (Table est_school, column high school).
 
 Memory / time: see README.md (the expression has 3 x 719 utilities).
@@ -33,16 +36,19 @@ DATA = f"{HERE}/../input/data/estimation/school_hs_estimation"
 OUT = os.path.abspath(f"{HERE}/../output")
 
 START = {
-    'MU_size': 0.6788,
-    'G_in_boundary_public': 4.215,
-    'G_private': 0.2471,
-    'B_time': -0.1044,
-    'B_other_county_x_public_share': -2.5167,
+    'MU_size': 0.6637,
+    'G_in_boundary_public': 4.2834,
+    'B_time': -0.1028,
+    'B_other_county_x_public_share': -2.5892,
+    'B_charter_or_magnet_share': 0.7409,
+    'B_own_race_share': 1.6429,
 }
-SIZE_W = [None, 'G_in_boundary_public', 'G_private']          # size components nk0, nk1, nk2: None = reference (weight 1), else the log-weight parameter
+SIZE_W = [None, 'G_in_boundary_public', None]          # size components nk0, nk1, nk2: None = reference (weight 1), else the log-weight parameter
 TERMS = {
     'B_time': ('t', None),
     'B_other_county_x_public_share': ('ccpub', None),
+    'B_charter_or_magnet_share': ('cm', None),
+    'B_own_race_share': ('own', None),
 }           # parameter -> (alternative variable, person variable or None)
 ALTVARS = sorted({v for v, _ in TERMS.values()} | {"nk0", "nk1", "nk2"})
 

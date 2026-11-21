@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ABIT runs with the TASHA-style generator (MarylandTashaGenerator, 2026-10-22), one ABIT at a time (waits while any other
+"""MAST runs with the TASHA-style generator (MarylandTashaGenerator, 2026-10-22), one MAST at a time (waits while any other
 RunAbit process is active; <= 8 GB heap).
 
     python3 activity/survey/survey_runs.py survey --set tasha|tcal|behav|cal [--half both] [--seeds 1-10]   -> run_survey/svy_<est|val>_<set>_s<seed>
@@ -37,7 +37,7 @@ _RES = None
 
 
 def reserve():
-    """Hold the ABIT slot for this batch: a sleeping process named RunAbitReservation, which the waiting loops of the other run
+    """Hold the MAST slot for this batch: a sleeping process named RunAbitReservation, which the waiting loops of the other run
     drivers (pgrep -f RunAbit) see as an active run, so they pause after their current run; ours waits only for java runs."""
     global _RES
     if _RES is None:
@@ -51,7 +51,7 @@ def release():
 
 
 def wait():
-    """Block while an ABIT java run is active (one ABIT at a time), then hold the slot."""
+    """Block while an MAST java run is active (one MAST at a time), then hold the slot."""
     reserve()
     while subprocess.run(["pgrep", "-f", "bin/java.*RunAbit"], capture_output=True).returncode == 0: time.sleep(5)
 

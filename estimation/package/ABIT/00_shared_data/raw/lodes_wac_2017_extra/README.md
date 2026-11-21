@@ -6,3 +6,5 @@
 - How: Maryland files in lodes_wac/ (Validation_2026/data/raw/manifest.csv), the other five states in lodes_wac_2017_extra/ (and their xwalk files in lodes_wac/). Job weights of the TAZ and tract splits.
 - Files: <st>_wac_S000_JT00_2017.csv.gz, <st>_xwalk.csv.gz
 
+
+- Files shipped: SOURCES.txt, dc_wac_S000_JT00_2017.csv.gz, de_wac_S000_JT00_2017.csv.gz, pa_wac_S000_JT00_2017.csv.gz, va_wac_S000_JT00_2017.csv.gz, wv_wac_S000_JT00_2017.csv.gz, copied 2026-11-17 from Validation_2026/data/raw/lodes_wac_2017_extra (project-relative to VAE-SILO-MITO-MATSIM).

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""One ABIT run on the 2016 base population with an isolated copy of a coefficient set (stage 3 calibration / validation runs).
+"""One MAST run on the 2016 base population with an isolated copy of a coefficient set (stage 3 calibration / validation runs).
 
     python3 activity/run_activity_model.py <name> --coef DIR [--seed N] [--sample 0.1] [--threads 6] [--xmx 8g] [--year 2016] [--skims base]
 

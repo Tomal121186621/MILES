@@ -1,12 +1,19 @@
 parameter,article_section,article_label,coefficient,robust_se,p,coefficient_full_precision,note
-MU_size,Size,size coefficient mu,0.6788,0.0613,<0.001,0.6788215115145436,
-G_in_boundary_public,Size,"in-boundary public enrolment, log weight",4.215,0.4252,<0.001,4.214964291967456,
-G_private,Size,"private enrolment, log weight",0.2471,0.2737,0.366,0.2471284129456218,
-B_time,Car time,car time (min),-0.1044,0.0071,<0.001,-0.1043683830552908,
-B_other_county_x_public_share,Boundaries,other county x public share,-2.5167,0.3076,<0.001,-2.516728435635139,
+MU_size,Size,size coefficient mu,0.6637,0.0591,<0.001,0.6636904949560017,
+G_in_boundary_public,Size,"in-boundary public enrolment, log weight",4.2834,0.4414,<0.001,4.2834141307776985,
+,Size,"private enrolment, log weight",,,,,fixed at 0 (log weight 0: weight 1; p = 0.37 when estimated)
+B_time,Car time,car time (min),-0.1028,0.007,<0.001,-0.1028062992704785,
+B_other_county_x_public_share,Boundaries,other county x public share,-2.5892,0.2993,<0.001,-2.5892398053114434,
+B_charter_or_magnet_share,School zone,charter-or-magnet share,0.7409,0.1778,<0.001,0.7408609036863039,
+B_own_race_share,School zone,own-race share of the zone's enrolment,1.6429,0.2582,<0.001,1.6429126358559027,
 N,fit statistics (article),N,668.0,,,,model statistic
-K,fit statistics (article),K,5.0,,,,model statistic
+K,fit statistics (article),K,6.0,,,,model statistic
 alternatives,fit statistics (article),alternatives,719.0,,,,model statistic
-LL(0) (overview table),fit statistics (article),LL(0) (overview table),-4394.0,,,,model statistic
-"LL(beta), full set",fit statistics (article),"LL(beta), full set",-1243.3,,,,model statistic
-validation LL,fit statistics (article),validation LL,-1236.2,,,,model statistic
+LL(0),fit statistics (article),LL(0),-4394.0,,,,model statistic
+LL(beta),fit statistics (article),LL(beta),-1216.9605,,,,model statistic
+rho2,fit statistics (article),rho2,0.723,,,,model statistic
+AIC,fit statistics (article),AIC,2445.9,,,,model statistic
+BIC,fit statistics (article),BIC,2472.9,,,,model statistic
+hold-out N,fit statistics (article),hold-out N,667.0,,,,model statistic
+LL(holdout),fit statistics (article),LL(holdout),-1207.5317,,,,model statistic
+LL(holdout) without own-race share,fit statistics (article),LL(holdout) without own-race share,-1227.6335,,,,model statistic

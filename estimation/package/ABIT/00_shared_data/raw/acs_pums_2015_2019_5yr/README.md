@@ -7,3 +7,5 @@
 - Files: csv_pdc.zip, csv_pmd.zip, csv_pva.zip, csv_pwv.zip
 - Notes: Commute-mode shares by county group for the WESML weights of the work tour mode model.
 
+
+- Files shipped: csv_pdc.zip, csv_pmd.zip, csv_pva.zip, csv_pwv.zip, copied 2026-11-17 from inputs/pums_2019_5yr (project-relative to VAE-SILO-MITO-MATSIM).

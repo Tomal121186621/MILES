@@ -17,7 +17,7 @@ MILES is a chain of five components. Each component's output is the next one's i
 | 1 | Synthetic population (CVAE) | Census microdata | Households, persons, dwellings, jobs and workplaces of 2016 |
 | 2 | Land use (SILO) | The 2016 base | Persons, households, dwellings and jobs of every year to 2024 |
 | 3 | School location | Students of each year | The school of every student |
-| 4 | Activities (MILES-Day) | Population, jobs and schools of 2024 | One weekday plan per person: activities, locations, times, tour modes |
+| 4 | Activities (MAST) | Population, jobs and schools of 2024 | One weekday plan per person: activities, locations, times, tour modes |
 | 5 | Traffic assignment (MATSim) | Weekday plans | Routes, departure times, link volumes, travel times |
 
 ## Time line
@@ -62,9 +62,8 @@ Imposed
   incomes and school seats.
 
 Calibrated
-: A parameter is adjusted until a model output matches a target: the moving decision, the county constants of car
-  ownership, the District of Columbia workplace term, the workplaces of residents of Pennsylvania, Delaware and West
-  Virginia, and the rates of births, marriages, divorces and leaving home ([calibration](../calibration-validation/calibration.md)).
+: A parameter is adjusted until a model output matches a target: the moving decision, the workplaces of residents of
+  Pennsylvania, Delaware and West Virginia, and the rates of births, marriages, divorces and leaving home ([calibration](../calibration-validation/calibration.md)).
 
 Assumed
 : A value is set without estimation or calibration: the car skims, the rules for free speeds and capacities, the

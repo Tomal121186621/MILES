@@ -2,8 +2,9 @@ column,definition,unit,source
 [students] student,row number of the student,,
 "[students] person_id, household_id",RTS ids,,Regional Travel Survey 2017/18 (00_shared_data/rts_2017_18)
 [students] band,"enrolment band of the student (K-8: elementary for age <= 10, middle 11+)",,
-"[students] age, female, income_group, car0, carlow",age; woman; income group 1-4; no car; fewer cars than drivers,,Regional Travel Survey 2017/18 (00_shared_data/rts_2017_18)
+"[students] age, female, income_group, car0, carlow",age; woman; income group 1-4; no car; fewer cars than drivers (not in this model),,Regional Travel Survey 2017/18 (00_shared_data/rts_2017_18)
 "[students] g1, g3, g4, agec, a25","income <40k, 75-125k, 125k+; age - reference age; age >= 25",,sc_03_engine.pvar
+[students] race,"student race from the RTS person file: 0 white non-Hispanic, 1 Black non-Hispanic, 2 Hispanic, 3 other, -1 unknown (the RTS mixes two race codings by region; the coding is identified by home county)",,"school_choice_work/school_student_race.parquet (school_attributes_data.py, from rts_2017_18/RTS_raw_flat_data.csv)"
 "[students] home_zone_<h>, w_home_<h>","possible home zone h and its weight (location mixture; weights sum to 1; missing slot: zone -1, weight 0)",,school_choice_work/loc_home.parquet
 "[students] school_zone_<c>, w_school_<c>","possible school zone c and its weight (missing: -1, weight 0)",,school_choice_work/loc_school.parquet
 "[alternatives] student, home_slot, j, zone",one row per student x home slot x alternative (all zones with enrolment of the segment),,sc_03_engine.Design('full')
@@ -12,6 +13,10 @@ column,definition,unit,source
 [alternatives] intra,1 if same zone,,
 "[alternatives] cc, cs",1 if other county; 1 if other state,,
 [alternatives] ccpub,other county x public share of the zone's enrolment of the band (K-12 only),,
-"[alternatives] nk0, nk1, nk2","size components: nk0 public enrolment of the student's band outside the home's attendance boundary, nk1 inside it (SABS 2015-16), nk2 private enrolment",students,"school_choice_work/zone_size.parquet, sabs_home_school.parquet"
+[alternatives] cm,charter-or-magnet share: share of the zone's enrolment of the band in public charter or magnet schools (at most 1),share,charter: CCD 2024-25 directory 029 (CHARTER_TEXT); magnet: CCD 2017-18 school characteristics 129 (MAGNET_TEXT); school_choice_work/school_zone_attr.parquet
+[alternatives] qpub,"quality of the public part: (share of the zone's band enrolment in Maryland public schools with a score) x (enrolment-weighted mean % proficient of those schools - 38.3) / 10; 0 where no school has a score. % proficient = mean of ELA and math, PARCC 2016-17 (2018-19 for 13 schools without 2016-17) (tested; not in the final model)",per 10 points,EDFacts school assessments via the Urban Institute Education Data Portal (school_attributes_raw/msde_reportcard); school_choice_work/school_zone_attr.parquet
+[alternatives] qnone,"share of the zone's band enrolment in public schools without a score (outside Maryland, or no value) (tested; not in the final model)",share,as qpub
+[alternatives] own,own-race share: share of the zone's enrolment of the student's band (with race data) that is of the student's race; 0 for unknown race. In SILO recomputed every simulated year from the assigned students,share,"CCD 2024-25 membership 052 (public), PSS 2023-24 (private), IPEDS EF2023A (college); school_choice_work/school_zone_attr.parquet"
+"[alternatives] nk0, nk1, nk2","size components: nk0 public enrolment of the student's band outside the home's attendance boundary, nk1 inside it (SABS 2015-16), nk2 private enrolment (nk2 enters with weight 1: the private log weight is fixed at 0)",students,"school_choice_work/zone_size.parquet, sabs_home_school.parquet"
 [alternatives] av,1 if the zone has enrolment of the student's own band,,
 "[candidates] student, home_slot, school_slot, j, ...",the same variables at the student's possible school zone c (alternative j) for home slot h,,

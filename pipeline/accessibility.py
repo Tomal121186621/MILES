@@ -5,7 +5,7 @@
 
 Defaults: car skims 3_abit/skims (time) with the distance of 3_abit/skims, transit pipeline/test/skims/transit_2024, SILO
 microdata 2_silo/input/microData (<Y> = 2016) and 2_silo/input/schools_<Y>.csv; output data/accessibility_<Y>.csv.
-For a chain year pass the year's ABIT skim directory (3_abit/skims/<tag>/ or pipeline/runs/skims/...) and the SILO scenario's
+For a chain year pass the year's MAST skim directory (3_abit/skims/<tag>/ or pipeline/runs/skims/...) and the SILO scenario's
 microData/futureYears directory.
 
 Measures for origin zone i, segment s and purpose p (equations in 3_abit/destination_choice/ESTIMATION_REPORT.md, section 9):
@@ -14,8 +14,8 @@ Measures for origin zone i, segment s and purpose p (equations in 3_abit/destina
              biogeme_WORK_primary.csv): mu ln(1 + S_j) + impedance (piecewise-linear distance, car generalized time,
              interactions with the segment's income and car flags) + zone constants; the full set of 1,588 zones.
   A_usd      A / |beta_cost|, beta_cost = beta_cgt x 60 / VOT_s (utility per dollar; VOT_s = 30 $/h x the income factor of
-             ABIT's mode model for the segment's income): accessibility in dollars (only differences are meaningful).
-  A_ls       the same with the impedance of the logsum specification S9 of the search (lambda x ABIT mode-choice logsum
+             MAST's mode model for the segment's income): accessibility in dollars (only differences are meaningful).
+  A_ls       the same with the impedance of the logsum specification S9 of the search (lambda x MAST mode-choice logsum
              LS_ij^s = ln sum_m exp(V_ijm^s) of MarylandFullModeChoice: car with the year's car skim, bus_tt / rail_tt00 of
              the transit skims, walk / bike by distance) in place of the generalized time; lambda in the report.
   hansen     sum_j E_j^alpha exp(beta t_ij), E = all jobs, t = car minutes; alpha, beta estimated by maximum likelihood from

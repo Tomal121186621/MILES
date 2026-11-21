@@ -18,7 +18,7 @@ Estimation (ESTIMATION half; the validation half only for the check):
   q0  maximum likelihood (person weights) of the attendance of all usual-workplace workers of the model input (travellers and
       imputed non-travellers) given k;
   standard errors: household-cluster bootstrap (200 replications).
-In ABIT (MarylandTashaGenerator, tasha_params attendance.*): a worker who does not attend makes no
+In MAST (MarylandTashaGenerator, tasha_params attendance.*): a worker who does not attend makes no
 PW / SW episode that day; a worker who attends draws PW and SW from their frequency distributions conditional on at least one
 of them.  Persons in the model input: travellers and the imputed non-travelling workers (TASHA segments of
 build_distributions.py; an imputed worker is split over the workplace types by the age-band shares, and does not attend).

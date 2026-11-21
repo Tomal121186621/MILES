@@ -7,3 +7,5 @@
 - Files: output_events.xml.gz, output_network.xml.gz
 - Notes: Needed only to rebuild skims/mode_choice_periods/car_time_<P>.csv.gz (car_period_skims.py).
 
+
+- Files shipped: none (2026-11-17): the run folder Updated MATSim/I695_pricing_runs/FIT/R6 named by 3_abit/mode_choice/car_period_skims.py no longer exists in the project; the derived car_time_<P>.csv.gz are provided in 00_shared_data/skims/mode_choice_periods.

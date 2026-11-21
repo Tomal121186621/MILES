@@ -1,0 +1,15 @@
+parameter,value
+B_ln_market_size,0.839722499714645
+B_cartime_20_60,-0.033862801405757
+B_cartime_over60,-0.0086527312698212
+B_previous_migration_area,2.52671732026537
+B_bordering_previous_area,1.3296611160218714
+B_same_state,1.081998384087382
+B_commute_sum_ln1p_time,-1.7408424123519843
+B_crime_x_children,-1.1606897596137142
+B_ln_dwelling_density,-0.546647547702461
+B_own_race_share,2.075902376058804
+B_ln_density_x_single,0.169759658493763
+B_ln_density_x_oldest_under35,0.2445877399532
+B_ln_density_x_ln_income,-0.1152580776988421
+B_core_city_share,0.505513143600139

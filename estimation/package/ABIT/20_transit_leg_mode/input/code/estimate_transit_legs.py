@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mode of each trip (leg) within a transit tour (3 November 2026): ABIT chooses one mode per tour (MarylandTourNestedModeChoice)
+"""Mode of each trip (leg) within a transit tour (3 November 2026): MAST chooses one mode per tour (MarylandTourNestedModeChoice)
 and gave it to every leg; in the 2017/18 RTS only about 60 % of the linked trips of transit tours are by transit.  This script builds
 the legs of the observed transit tours, estimates a multinomial logit of the leg mode on the ESTIMATION half and tests it on the
 hold-out half.  Nothing is fitted to counts or ridership.
@@ -13,11 +13,11 @@ tour when any of its trips is by rail or bus (rts_common.MODE_MAP: private bus i
 are car passenger).  Both survey regions (BMC and TPB).
 Legs: the trips of the chain, linked around the change-mode activity (17): a trip that ends at activity 17 is joined with the
 following trip(s) into one linked trip with the main mode (transit > car driver > car passenger > bike > walk); a leg touching a
-work-based outing (tasha_distributions.subtours: to an outing stop, or from it back to the workplace) is left out, because ABIT gives
+work-based outing (tasha_distributions.subtours: to an outing stop, or from it back to the workplace) is left out, because MAST gives
 the outing legs their own model (MarylandTashaGenerator.outingModes).
 Dependent variable: TR (transit, the tour's transit mode), WK walk, CP car passenger, CD car driver, BK bike.
 
-Variables (all known to ABIT when the leg mode is drawn; zone skims of the tour mode choice, mc_common.los / mode_choice/export/los):
+Variables (all known to MAST when the leg mode is drawn; zone skims of the tour mode choice, mc_common.los / mode_choice/export/los):
   first, last          leg from home (first) / back home (last); base: intermediate leg (between two out-of-home activities)
   main                 the leg starts or ends at the main activity of the tour
   lnkm                 ln(1 + km), car-distance skim between the zones of the leg (intrazonal 0.5 sqrt(area))
@@ -30,7 +30,7 @@ Variables (all known to ABIT when the leg mode is drawn; zone skims of the tour 
 Availability: TR when the leg has a transit path (zones differ and the period skim or the prior has one); WK up to WALK_MAX km;
 BK up to BIKE_MAX km; CP always; CD only on the first and the last leg, with a licence, age 16+ and a household car (rule below).
 Car-driver rule (from the data, results/tleg_cd_pattern.csv): car-driver legs of transit tours are almost all the first or the last
-leg (the car is at home); in ABIT a car-driver first leg forces the last leg to car driver and vice versa (the car must come back)
+leg (the car is at home); in MAST a car-driver first leg forces the last leg to car driver and vice versa (the car must come back)
 when the drawn modes disagree -> see MarylandTashaGenerator.transitLegModes.
 """
 # COPY of Validation_2026/3_abit/tasha_estimation/estimate_transit_legs.py (manual-estimation package, 2026-11-13); only path constants changed (lines marked PATH).
@@ -88,7 +88,7 @@ def legs(half):
             else: mode = next(h for h in HIER if h in ms)
             r0, r1 = g[0][1], g[-1][1]
             pv = linked[q - 1][-1] if q > 0 else None
-            # from the main activity, or from the continuation of the main work episode after an outing (ABIT splits the work episode)
+            # from the main activity, or from the continuation of the main work episode after an outing (MAST splits the work episode)
             prev_main = pv is not None and (pv[0] == main_trip or (bool(pv[1].wbs_cont) and t.type in ("PW", "SW") and pv[1].dz == t.mz))
             to_main = g[-1][0] == main_trip
             # outing leg: to an outing stop, or from an outing stop (back to the workplace or to the next outing stop)

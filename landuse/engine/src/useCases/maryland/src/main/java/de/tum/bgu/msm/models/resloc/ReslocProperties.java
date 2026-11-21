@@ -29,6 +29,9 @@ import java.util.Properties;
  *   resloc.move.search.size       dwellings sampled per search, K in the log-sum ln K + ln mean exp(.) (default 20)
  *   resloc.tenure.file            years in the dwelling of the base-year households by age (age_from,age_to,dur_from,dur_to,share)
  *   resloc.iv.dwelling.sample     market dwellings per region for the dwelling inclusive value (default 200)
+ *   resloc.region.vacancy.availability  true: the region weight of the search and of the move-or-not expected utility is
+ *                                 multiplied by min(1, vacancy rate / structural vacancy rate of the region's stock) (2026-11-14,
+ *                                 ReslocModel.availability); false (default): the model of record
  *   accessibility.model           hansen (default: AccessibilityImpl) | logsum (AccessibilityLogsumMd)
  *   accessibility.logsum.file     path of the logsum accessibility file with {year} for the skim year, e.g.
  *                                 ../../../data/accessibility_{year}.csv (relative paths are relative to base.directory)

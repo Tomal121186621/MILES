@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Model 20: mode of each leg (linked trip) of a transit tour (not in the article; coefficients used by the 2024 runs:
-3_abit/coef_respec/tasha/tasha_transit_legs.csv, estimated by 3_abit/tasha_estimation/estimate_transit_legs.py).
+"""Model 20: mode of each leg (linked trip) of a transit tour (not in the article; coefficients used by MAST:
+3_abit/tasha_estimation/results/tasha_transit_legs_1120h.csv).
 
 Multinomial logit, alternatives 1 TR transit (reference, utility from its own terms only), 2 WK walk, 3 CP car passenger,
 4 CD car driver, 5 BK bike.  Availability av_*: TR always (no path -> no_transit_path dummy), WK up to 8 km, BK up to 30 km, CP
-always, CD only for a person with a licence, age 16+ and a household car (the estimation used only legs whose chosen mode is
-available).  Variables: see input/data/estimation/data_dictionary.csv.  Unweighted; robust (sandwich) standard errors.
+always, CD only for a person with a licence, age 16+, a household car and a household car free over the tour window (MAST's
+free-car rule, input/code/free_car.py); the estimation uses only legs whose chosen mode is available.
+The fewer-cars-than-drivers term is kept: the car allocation runs before the leg choice but covers only part of the effect, and
+the term stays significant under the free-car rule.
+Variables: see input/data/estimation/data_dictionary.csv.  Unweighted; robust (sandwich) standard errors.
 
     ~/.venvs/biogeme/bin/python estimate_transit_leg_mode.py                    # estimate (results in ../output)
     ~/.venvs/biogeme/bin/python estimate_transit_leg_mode.py --evaluate         # LL at the reference estimates, no estimation

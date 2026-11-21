@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Write the ABIT properties file for one chain year.  Usage: python3 activity/write_properties.py <name> <silo_scenario> <year> [sample_fraction] [skim_tag]
+"""Write the MAST properties file for one chain year.  Usage: python3 activity/write_properties.py <name> <silo_scenario> <year> [sample_fraction] [skim_tag]
 
 Inputs are taken from the rebuilt chain: SILO microdata of <year> (run/base/scenOutput/<silo_scenario>, files resolved across
 microData/ and microData/futureYears/), gzipped-CSV skims from <workspace>/3_abit/skims/<skim_tag>/ (default: the base skims in
 3_abit/skims/; later years use the MATSim-derived skims written by pipeline/skims_from_matsim.py), and the coefficient files of the
-ABIT Maryland use case.  Workplaces come from the SILO persons file (stage 1 assignment carried through the land-use model), so no
-workplace re-assignment file is set.  Output: 3_abit/run/<name>.properties; ABIT writes to 3_abit/run/<name>/output/.
+MAST Maryland use case.  Workplaces come from the SILO persons file (stage 1 assignment carried through the land-use model), so no
+workplace re-assignment file is set.  Output: 3_abit/run/<name>.properties; MAST writes to 3_abit/run/<name>/output/.
 Orchestration overrides (pipeline/run_chain.py, 2026-10-22), all optional environment variables:
   SILO_SCEN_DIR  the SILO scenario output directory (…/scenOutput/<scen>) when the run does not live under 2_silo/run/base
   ABIT_RUN_ROOT  directory that holds <name>.properties and <name>/ (default 3_abit/run)

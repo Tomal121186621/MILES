@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Smoke run of the re-specified ABIT models (coefficient set activity/parameters, formerly 3_abit/coef_respec, 2026-11-09) on the fin24 inputs: SILO 2024
+"""Smoke run of the re-specified MAST models (coefficient set activity/parameters, formerly 3_abit/coef_respec, 2026-11-09) on the fin24 inputs: SILO 2024
 population of seed 5 (persons and schools after the schools step), skims base_transit2024, base-year attendance (no telework
-input), ABIT seed 1, 1 % household sample.  Reference: the model of record (the fin24 snapshot final_2024/frozen: coef_tasha and
+input), MAST seed 1, 1 % household sample.  Reference: the model of record (the fin24 snapshot final_2024/frozen: coef_tasha and
 its classes) on the same 1 % sample and seed, and the fin24 runs (10 %, seeds 1-10, data/run_totals.csv, tables/fin24_tables.md).
 
     python3 activity/checks/smoke_test.py run       -> run_respec_smoke/smk_{tasha,respec}_s01 (legs/activities parquet, mc_tours.csv kept)

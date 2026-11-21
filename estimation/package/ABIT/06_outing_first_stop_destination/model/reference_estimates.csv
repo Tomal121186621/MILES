@@ -1,18 +1,15 @@
 parameter,project_name,article_group,article_label,coefficient,robust_se,p_value,article_coefficient,article_robust_se,article_p
-B_distance_0_1km,d_0_1,Distance and impedance,"distance 0--1\,km (per km)",-5.581303694705923,0.4575954855414313,3.223876891409388e-34,-5.5813,0.4576,<0.001
-B_distance_1_2km,d_1_2,Distance and impedance,"distance 1--2\,km",-1.190304886561412,0.2059989796813934,7.550057916864175e-09,-1.1903,0.206,<0.001
-B_distance_2_5km,d_2_5,Distance and impedance,"distance 2--5\,km",-0.3162248238125602,0.079369152843811,6.769976857814513e-05,-0.3162,0.0794,<0.001
-B_distance_5_10km,d_5_10,Distance and impedance,"distance 5--10\,km",-0.3256199312379322,0.0478174470210161,9.783856413606792e-12,-0.3256,0.0478,<0.001
-B_distance_10_20km,d_10_20,Distance and impedance,"distance 10--20\,km",-0.1041721146393062,0.0387237797102839,0.007142356407714316,-0.1042,0.0387,0.007
-B_distance_20_50km,d_20_50,Distance and impedance,"distance 20--50\,km",-0.0501519409591242,0.030277740968196,0.09764157087497284,-0.0502,0.0303,0.098
-B_car_generalised_time,cgt,Distance and impedance,car generalised time (min),-0.0716459466930595,0.0234813282368094,0.0022793781290427377,-0.0716,0.0235,0.002
-B_intrazonal_workplace_zone,intra,Same zone,intrazonal (destination = workplace zone),-0.241444564154814,0.1600086448389532,0.13131232826476658,-0.2414,0.16,0.131
-B_outside_workplace_county,xcounty,Boundaries,outside the workplace county,-1.3701299395815505,0.184163859447478,1.0088901726850659e-13,-1.3701,0.1842,<0.001
-THETA_population,theta_pop,Size,$\theta$ population (ln weight),-5.533392284183748,1.5768537229859174,0.0004495669772458841,-5.5334,1.5769,<0.001
-THETA_office_jobs,theta_off,Size,$\theta$ office jobs (ln weight),-2.5016082005636178,0.3190372240910344,4.465561227462868e-15,-2.5016,0.319,<0.001
-THETA_other_jobs,theta_oth,Size,$\theta$ other jobs (ln weight),-3.2305436796643723,0.805951814278498,6.114229614600692e-05,-3.2305,0.806,<0.001
-MU_size,mu_size,Size,"$\mu$, ln size",0.8515739428169516,0.061142262843109,4.2969990658787957e-44,0.8516,0.0611,<0.001
+B_distance_0_1km,d_0_1,Distance and impedance,"distance 0--1\,km (per km)",-5.949595131085174,0.4628137379343924,8.03458006297777e-38,-5.9496,0.4628,<0.001
+B_distance_1_2km,d_1_2,Distance and impedance,"distance 1--2\,km",-1.2190103292726504,0.2130460536101256,1.053913816654242e-08,-1.219,0.213,<0.001
+B_distance_2_5km,d_2_5,Distance and impedance,"distance 2--5\,km",-0.3562044853271993,0.081004145252406,1.0957491238594389e-05,-0.3562,0.081,<0.001
+B_distance_5_10km,d_5_10,Distance and impedance,"distance 5--10\,km",-0.3237323885454645,0.0483806256773071,2.2109956603095513e-11,-0.3237,0.0484,<0.001
+B_distance_10_20km,d_10_20,Distance and impedance,"distance 10--20\,km",-0.1093334428058532,0.0384246739794755,0.00443561356168223,-0.1093,0.0384,0.004
+B_distance_20_50km,d_20_50,Distance and impedance,"distance 20--50\,km",-0.0505321585244116,0.0303861328619184,0.0963123065406592,-0.0505,0.0304,0.096
+B_car_generalised_time,cgt,Distance and impedance,car generalised time (min),-0.0690713060986767,0.0238556456095594,0.0037869236039751487,-0.0691,0.0239,0.004
+B_intrazonal_workplace_zone,intra,Same zone,intrazonal (destination = workplace zone),-0.2151261352866101,0.15643352921171,0.16907193303494705,-0.2151,0.1564,0.169
+B_outside_workplace_county,xcounty,Boundaries,outside the workplace county,-1.3915436476864784,0.1828365845243114,2.7227804210890157e-14,-1.3915,0.1828,<0.001
+B_ln_retail_jobs,lnx_ret,Attraction,ln(1 + retail jobs),0.6934459936195302,0.0476312194735681,5.146820002493632e-48,0.6934,0.0476,<0.001
 LL0,,,LL(0): equal shares of the available alternatives (article Table 2),,,,-9260.1,,
-LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-3089.896437014436,,,-3089.9,,
+LL_beta,,,"LL at the estimates (article); coefficient: project output, full precision",-3112.2733009822778,,,-3112.3,,
 N,,,observations,,,,1180.0,,
-K,,,estimated parameters,,,,13.0,,
+K,,,estimated parameters,,,,10.0,,

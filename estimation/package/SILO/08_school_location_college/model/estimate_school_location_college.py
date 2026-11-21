@@ -13,6 +13,7 @@ estimator, sc_03_engine.Model.scores):
     log L_n = WeightedLogSumExp_{h,c}( V_hc - WeightedLogSumExp_j(V_hj; av_hj) ; w_h w_c )
 w_h: weight of possible home zone h (up to 3), w_c: weight of possible school zone c (up to 1); unused slots carry a copy of
 slot 0 and weight 0. V_hc is the utility of the school zone c from home zone h (columns c<var>_h_c of the candidates table).
+Variables (data_dictionary.csv): car time, ln(1+t), boundary terms, own-race share of the zone's enrolment (own).
 Bound as in the original estimator: mu >= 0.01. Start values = article estimates (Table est_school, column college).
 
 Memory / time: see README.md (the expression has 3 x 141 utilities).
@@ -33,15 +34,15 @@ DATA = f"{HERE}/../input/data/estimation/school_col_estimation"
 OUT = os.path.abspath(f"{HERE}/../output")
 
 START = {
-    'MU_size': 0.5362,
-    'G_private_4yr': -1.2928,
-    'G_2yr': -0.8526,
-    'B_time': -0.0385,
-    'B_ln1p_time': -1.163,
-    'B_other_county': -0.5675,
-    'B_other_state': -0.6713,
-    'B_time_x_income_under40k': -0.0218,
-    'B_time_x_income_125kplus': 0.0174,
+    'MU_size': 0.5456,
+    'G_private_4yr': -1.3251,
+    'G_2yr': -0.848,
+    'B_time': -0.0395,
+    'B_ln1p_time': -1.2011,
+    'B_other_county': -0.5639,
+    'B_other_state': -0.6885,
+    'B_time_x_income_125kplus': 0.0195,
+    'B_own_race_share': 1.3986,
 }
 SIZE_W = [None, 'G_private_4yr', 'G_2yr']          # size components nk0, nk1, nk2: None = reference (weight 1), else the log-weight parameter
 TERMS = {
@@ -49,8 +50,8 @@ TERMS = {
     'B_ln1p_time': ('lt', None),
     'B_other_county': ('cc', None),
     'B_other_state': ('cs', None),
-    'B_time_x_income_under40k': ('t', 'g1'),
     'B_time_x_income_125kplus': ('t', 'g4'),
+    'B_own_race_share': ('own', None),
 }           # parameter -> (alternative variable, person variable or None)
 ALTVARS = sorted({v for v, _ in TERMS.values()} | {"nk0", "nk1", "nk2"})
 

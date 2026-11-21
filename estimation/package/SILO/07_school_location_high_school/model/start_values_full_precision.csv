@@ -1,6 +1,7 @@
 parameter,value
-MU_size,0.6788215115145436
-G_in_boundary_public,4.214964291967456
-G_private,0.2471284129456218
-B_time,-0.1043683830552908
-B_other_county_x_public_share,-2.516728435635139
+MU_size,0.6636904949560017
+G_in_boundary_public,4.2834141307776985
+B_time,-0.1028062992704785
+B_other_county_x_public_share,-2.5892398053114434
+B_charter_or_magnet_share,0.7408609036863039
+B_own_race_share,1.6429126358559027

@@ -32,7 +32,7 @@
     <div class="mh-wrap mh-stats__grid">
       <div><b data-count="12.5" data-dec="1" data-suffix=" M">12.5 M</b><span>synthetic persons</span></div>
       <div><b data-count="1588">1,588</b><span>zones in six states</span></div>
-      <div><b data-count="28">28</b><span>estimated choice models</span></div>
+      <div><b data-count="27">27</b><span>estimated choice models</span></div>
       <div><b data-count="3946">3,946</b><span>activity distributions</span></div>
       <div><b data-count="2308">2,308</b><span>count stations tested</span></div>
     </div>
@@ -77,20 +77,20 @@
               ownership, with MILES's estimated residential-location, workplace and car-ownership models.</p>
             <dl>
               <dt>Engine</dt><dd>SILO, Java, yearly steps 2016 → 2024</dd>
-              <dt>Sensitive to</dt><dd>Car times and accessibility, housing prices and supply, jobs, incomes</dd>
+              <dt>Sensitive to</dt><dd>Car times and accessibility, housing costs, vacancies, jobs, incomes</dd>
               <dt>Produces</dt><dd>Population, dwellings and jobs of every year</dd>
             </dl>
             <p class="mh-links"><a href="{{ 'model-design/landuse/' | url }}">Model design</a><a href="{{ 'calibration-validation/estimates/landuse/' | url }}">Estimates</a><a href="{{ 'calibration-validation/validation/landuse/' | url }}">Validation</a></p>
           </div>
-          <aside class="mh-score"><h4>Tested on</h4><p>Movers 2019–21; ACS and Census 2021–24, years not used in calibration</p></aside>
+          <aside class="mh-score"><h4>Tested on</h4><p>Held-out ACS PUMS movers; ACS and Census 2021–24, years not used in calibration</p></aside>
         </article>
         <article class="mh-panel">
           <div>
             <h3>School location</h3>
-            <p>Every student is assigned a school after each SILO year with three multinomial logits, respecting
+            <p>Every student is assigned a school in each SILO year with three multinomial logits, respecting
               attendance boundaries, enrolment and capacity.</p>
             <dl>
-              <dt>Engine</dt><dd>Python, after every SILO year</dd>
+              <dt>Engine</dt><dd>Inside SILO, every simulated year</dd>
               <dt>Models</dt><dd>K–8, high school, college</dd>
               <dt>Produces</dt><dd>The school of every student</dd>
             </dl>
@@ -100,11 +100,11 @@
         </article>
         <article class="mh-panel">
           <div>
-            <h3>Activities: MILES-Day</h3>
+            <h3>Activities: MAST</h3>
             <p>Each person receives a full weekday: activities drawn from survey distributions, scheduled, located with
               estimated logit models, and tour modes chosen with household car allocation and joint tours.</p>
             <dl>
-              <dt>Engine</dt><dd>MILES-Day on the ABIT engine, Java</dd>
+              <dt>Engine</dt><dd>MAST, Java, built on the ABIT code base</dd>
               <dt>Estimated on</dt><dd>2017/18 Regional Travel Survey, estimation half</dd>
               <dt>Produces</dt><dd>One weekday plan per person: activities, locations, times, modes</dd>
             </dl>
@@ -141,7 +141,7 @@
         <div class="mh-reveal">{% include ".icons/material/home-city.svg" %}<h3>Land use that evolves</h3><p>Moves, job changes, births, deaths, marriages and car ownership update the population every year from 2016 to 2024.</p></div>
         <div class="mh-reveal">{% include ".icons/material/calendar-clock.svg" %}<h3>A full weekday for everyone</h3><p>Activities, schedules, locations and tour modes, with household car allocation and joint tours.</p></div>
         <div class="mh-reveal">{% include ".icons/material/road-variant.svg" %}<h3>Dynamic traffic</h3><p>Every trip routed in MATSim with departure-time shifts, transit timetables and income-based values of time.</p></div>
-        <div class="mh-reveal">{% include ".icons/material/check-decagram.svg" %}<h3>Estimated and tested, not tuned</h3><p>28 choice models estimated with Biogeme; every stage tested on data it never saw. Counts play no role in estimation or calibration.</p></div>
+        <div class="mh-reveal">{% include ".icons/material/check-decagram.svg" %}<h3>Estimated and tested, not tuned</h3><p>27 choice models estimated with Biogeme; every stage tested on data it never saw. Counts play no role in estimation or calibration.</p></div>
       </div>
     </div>
   </section>

@@ -2,7 +2,7 @@
 """Stop-location sequences of s_stops.py re-run with the mode-choice logsum of the RE-ESTIMATED mode models (2026-11-08).
 
 Where the old logsum came from: dc_model.features, variable "ls" (no cache: computed each time a chunk's utility variables are
-built), = dc_common.mode_logsum (ABIT MarylandFullModeChoice, coefficients 3_abit/coef_calibrated/modechoice_full_<purpose>.csv,
+built), = dc_common.mode_logsum (MAST MarylandFullModeChoice, coefficients 3_abit/coef_calibrated/modechoice_full_<purpose>.csv,
 one-way leg, car / bus / rail skims) of the stop's purpose, detour form
     ls = LS(a -> j) + LS(j -> b) - LS(a -> b)        a = previous location (home_idx of the configuration), b = next anchor.
 Here only that variable changes: LS = ../accessibility_new/mode_logsum_new.mode_logsum_new of the stop's purpose (shopping ->

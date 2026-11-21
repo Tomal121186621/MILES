@@ -263,7 +263,7 @@ def main(argv=None):
     s.add_argument("--rounds", default="4"); s.add_argument("--start-round", default="1"); s.add_argument("--tag", default="miles")
     s.add_argument("--heap"); s.add_argument("args", nargs=argparse.REMAINDER); s.set_defaults(f=cmd_landuse)
 
-    s = sub.add_parser("activity", help="activities (MILES-Day)")
+    s = sub.add_parser("activity", help="activities (MAST)")
     s.add_argument("step", choices=["parameters", "distributions", "run", "replications", "validate"])
     s.add_argument("--name"); s.add_argument("--year", default="2024"); s.add_argument("--seed", default="1")
     s.add_argument("--sample", default="0.1"); s.add_argument("--threads", default="6"); s.add_argument("--heap")

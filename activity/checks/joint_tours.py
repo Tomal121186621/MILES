@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Diagnostic of the joint-episode formation (2026-11-10, coef_respec): composition of the joint groups formed by ABIT
+"""Diagnostic of the joint-episode formation (2026-11-10, coef_respec): composition of the joint groups formed by MAST
 (MarylandTashaGenerator.household: household frequency, start, duration, number of participants P(k | type, household size),
 participants drawn by segment propensity) against the observed survey joint groups (build_distributions.episodes: same household,
 same purpose, same destination tract, arrival within the joint window).  Unit: a group of tours whose main activity is the same joint
-episode (observed: household + jgid of the main episode in mode_choice/work/tours_validation.parquet; ABIT: household + joint_id of
+episode (observed: household + jgid of the main episode in mode_choice/work/tours_validation.parquet; MAST: household + joint_id of
 mc_tours.csv), two or more tours.
     python3 activity/checks/joint_tours.py   -> respec_joint_diag.csv (composition), respec_joint_rates.csv (groups per household by type)"""
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
@@ -49,7 +49,7 @@ def main():
     pp = pd.read_csv(f"{O}/pp.csv"); hh = pd.read_csv(f"{O}/hh.csv").set_index("id")
     pa = pp.set_index("id"); pa["lic"] = pa.driversLicense.astype(str).str.lower().eq("true").astype(float)
     T = pd.DataFrame({"hh": t.household_id.values, "gid": t.jg.values, "person": t.person_id.map(pm.id).values, "purpose": t.purpose.values, "start": t.start.values, "w": t.w.values})
-    # households of the survey population: ABIT ids; observed groups keyed by the survey household -> map to the ABIT household of its persons
+    # households of the survey population: MAST ids; observed groups keyed by the survey household -> map to the MAST household of its persons
     T["hh"] = T.person.map(pa.hhID)
     for wc in (None, "w"): rows.append(describe(T, pa[["age", "lic"]], hh, "observed RTS hold-out", wc))
     types, hg = hh_type(pp, "hhID"); ht = pd.Series(types, index=hg.index)
@@ -58,7 +58,7 @@ def main():
         cnt = g.groupby(g.hh.map(ht)).size() / n_runs; tot = ht.value_counts()
         for k in tot.index: rates.append(dict(source=src, household_type=k, households=int(tot[k]), joint_groups_per_household=float(cnt.get(k, 0) / tot[k])))
     rate(T, ht, "observed RTS hold-out")
-    # ---- ABIT on the survey population (hold-out), 5 seeds
+    # ---- MAST on the survey population (hold-out), 5 seeds
     ab = []
     tours_w = CA.analyse("validation")[0].groupby("person_id").w.first(); rev = pm.reset_index().drop_duplicates("id").set_index("id").person_id
     for s in SEEDS:
@@ -69,7 +69,7 @@ def main():
     AB = pd.concat(ab)
     for wc in (None, "w"): rows.append(describe(AB, pa[["age", "lic"]], hh, "ABIT, survey population hold-out (5 seeds)", wc))
     rate(AB, ht, "ABIT, survey population hold-out (5 seeds)", n_runs=len(SEEDS))
-    # ---- ABIT on the SILO 2024 population, 1 % smoke
+    # ---- MAST on the SILO 2024 population, 1 % smoke
     import replications as F
     m = pd.read_csv(f"{SMOKE}/output/mc_tours.csv", usecols=["person_id", "household_id", "purpose", "start", "joint_id"])
     per = pd.read_parquet(f"{SMOKE}/output/persons.parquet"); hs = set(per.household_id)

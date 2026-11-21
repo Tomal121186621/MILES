@@ -107,7 +107,7 @@ public class RunBaltimore {
             config.scoring().addModeParams(mp);
         }
 
-        // --- replanning: route + departure-time choice only (modes FIXED — mode choice is upstream in ABIT) ---
+        // --- replanning: route + departure-time choice only (modes FIXED — mode choice is upstream in MAST) ---
         ReplanningConfigGroup strat = config.replanning();
         strat.setMaxAgentPlanMemorySize(5);
         strat.setFractionOfIterationsToDisableInnovation(0.8);

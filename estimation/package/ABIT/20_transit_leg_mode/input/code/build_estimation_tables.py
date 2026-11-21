@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Estimation table of model 20 (mode of the legs of transit tours), exactly as estimate_transit_legs.estimate() passed it to
-Biogeme: features(legs(half)) restricted to the legs whose chosen mode is available (chosen_av), for the estimation half
-(input/data/estimation) and the hold-out half (input/data/holdout).
+Biogeme: features(legs(half)) with the free-car rule of free_car.py in the car-driver availability, restricted to the legs whose
+chosen mode is available (chosen_av), for the estimation half (input/data/estimation) and the hold-out half (input/data/holdout).
 
     python3 build_estimation_tables.py        (any Python with numpy, pandas, pyarrow)
 
@@ -13,9 +13,10 @@ import os, sys
 sys.dont_write_bytecode = True
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import estimate_transit_legs as E      # noqa: E402  (copy)
+import free_car as F                   # noqa: E402  (free household car over the tour window)
 
 for half, sub in [("estimation", "estimation"), ("validation", "holdout")]:
-    X = E.features(E.legs(half)); X = X[X.chosen_av].reset_index(drop=True)
+    X = F.apply(E.features(E.legs(half)), half); X = X[X.chosen_av].reset_index(drop=True)
     od = f"{HERE}/../data/{sub}"; os.makedirs(od, exist_ok=True)
     X.to_parquet(f"{od}/estimation_table.parquet", index=False)
     print(half, X.shape)

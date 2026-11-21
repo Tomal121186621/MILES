@@ -6,3 +6,5 @@
 - How: As Validation_2026/data/raw/taz_tpb/SOURCES.txt: query layer 0 ('TAZ - TPB') as GeoJSON in EPSG:26918 with resultOffset 0, 1000, 2000, 3000.
 - Files: rest_layer0_off0.geojson, rest_layer0_off1000.geojson, rest_layer0_off2000.geojson, rest_layer0_off3000.geojson
 
+
+- Files shipped: SOURCES.txt, hub_layer1.zip, rest_layer0_off0.geojson, rest_layer0_off1000.geojson, rest_layer0_off2000.geojson, rest_layer0_off3000.geojson, copied 2026-11-17 from Validation_2026/data/raw/taz_tpb (project-relative to VAE-SILO-MITO-MATSIM).

@@ -2,9 +2,10 @@
 """Model 12: outings from the usual workplace, mode (walk against the mode of the work tour) (article table est_subtour (tab:est_subtour_mode)).
 
 Binary logit, y = 1: walk (0: the mode of the work tour); alternative 0 has utility 0.
-    V1 = ASC + ln(1 + km workplace -> first stop) + work tour as car driver / car passenger + more than one stop + workplace zone >= 10,000 jobs/km2 + no car / fewer cars than drivers
+    V1 = ASC + ln(1 + km workplace -> first stop) + work tour as car driver / car passenger + more than one stop + workplace zone >= 10,000 jobs/km2 + no car
+    The fewer-cars-than-drivers term is not included: it is not significant (likelihood-ratio test p = 0.34) and BIC is lower without it.
 Data: input/data/estimation/estimation_table.parquet (one row per observation, built by input/code/build_estimation_tables.py).
-The project estimated it with Biogeme 3.3.5 (estimate_subtours.biogeme_logit). Unweighted; robust (sandwich) standard errors are Biogeme's "Robust std err.".
+Estimated with Biogeme 3.3.5; coefficients used by MAST: 3_abit/tasha_estimation/results/tasha_subtour_1120i.csv (mode.*). Unweighted; robust (sandwich) standard errors are Biogeme's "Robust std err.".
 
     ~/.venvs/biogeme/bin/python estimate_outing_mode.py                    # estimate (results in ../output)
     ~/.venvs/biogeme/bin/python estimate_outing_mode.py --evaluate         # LL at the reference estimates, no estimation
@@ -28,7 +29,6 @@ TERMS = {'const': 'ASC_walk',
  'lnkm': 'B_ln_distance_workplace_first_stop',
  'cbd_w': 'B_workplace_zone_10000_jobs_per_km2',
  'car0': 'B_no_car',
- 'carshort': 'B_fewer_cars_than_drivers',
  'tm_cd': 'B_work_tour_car_driver',
  'tm_cp': 'B_work_tour_car_passenger',
  'multi': 'B_more_than_one_stop'}
