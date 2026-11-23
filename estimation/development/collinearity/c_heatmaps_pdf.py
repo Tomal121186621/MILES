@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """collinearity_heatmaps.pdf: one model per page, heatmap of the variable correlations left, of the estimate correlations
-(robust covariance) right, in the order of the chain (SILO, then MAST).  Pooled models: the left panel holds the per-purpose
+(robust covariance) right, in the order of the chain (SILO, then DAYMAP).  Pooled models: the left panel holds the per-purpose
 variable heatmaps (dp_pooled_var_corr.png, lp_edu_var_corr.png).  Images are downsampled to at most MAXPX pixels per side.
     python3 estimation/development/collinearity/c_heatmaps_pdf.py   ->  collinearity_heatmaps.pdf"""
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)

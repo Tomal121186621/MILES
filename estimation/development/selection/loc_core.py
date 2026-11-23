@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Location-choice engine of the MAST re-specification (2026-11-06): full choice set (1,588 zones), location mixture over the
+"""Location-choice engine of the DAYMAP re-specification (2026-11-06): full choice set (1,588 zones), location mixture over the
 survey's traffic zones (destinations) or tract-to-zone weights (other locations), chunked exact-gradient maximum likelihood,
 robust sandwich covariance, hold-out log-likelihood and trip-length distribution.  Reuses the data and utility variables of
 3_abit/tasha_estimation (records, configurations, dc_model.features), read only; adds the candidate zone attributes of

@@ -8,7 +8,7 @@
     | **Code** | `assignment/` |
     | **Road network** | OpenStreetMap via pt2matsim; 214,716 nodes, 474,037 links |
     | **Transit** | 18 GTFS feeds, one weekday, mapped with pt2matsim |
-    | **Demand** | MAST weekday plans, 10 % sample, modes fixed |
+    | **Demand** | DAYMAP (Daily Activity Model for Agent Plans) weekday plans, 10 % sample, modes fixed |
     | **Choices** | Route, departure time |
     | **Runs** | 100 iterations; three independent chains, seeds 1–3 |
 
@@ -35,7 +35,7 @@ changes its route or departure time. After 100 iterations the link volumes are r
 |---|---|---:|
 | Home | OSM residential building in the home zone<sup>a</sup> | all |
 | Other, inside the study area | OSM point of interest of the matching category in the chosen zone<sup>b</sup> | 590,509 |
-| Outside the study area | Coordinate from MAST | 82,891 |
+| Outside the study area | Coordinate from DAYMAP | 82,891 |
 
 <div class="tnote" markdown>
 
@@ -296,7 +296,7 @@ Plans kept per agent: 5. Innovation off after iteration 90. No mode choice.
 | Bike | 0 | — |
 
 Every travel minute loses only the performing rate (0.78 utils/h), so all minutes are valued alike, as in the
-generalised cost of the MAST work tour-mode model. Car operating cost: AAA 2017; the car passenger does not pay;
+generalised cost of the DAYMAP work tour-mode model. Car operating cost: AAA 2017; the car passenger does not pay;
 transit fares are flat per ride and do not affect the route. Mode constants are 0 (no mode choice).
 
 **Table 16.** Activity types.
@@ -341,7 +341,7 @@ Validation: [Traffic](../calibration-validation/validation/traffic.md),
 ```bash
 miles assignment network      # road networks 2024 and 2026
 miles assignment transit      # GTFS merge, conversion, mapping
-miles assignment plans        # MAST plans -> MATSim population
+miles assignment plans        # DAYMAP plans -> MATSim population
 miles assignment run          # one run
 miles assignment seeds        # several seeds
 miles assignment validate     # counts, screenlines, counters

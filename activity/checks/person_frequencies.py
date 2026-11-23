@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Discretionary (shopping + other) tour frequency and participation by person type and licence (2026-11-10): RTS hold-out tours
-(mode_choice/work/tours_validation.parquet; persons of survey_pop/validation), MAST on the hold-out survey population (seed 1) and the
+(mode_choice/work/tours_validation.parquet; persons of survey_pop/validation), DAYMAP on the hold-out survey population (seed 1) and the
 1 % SILO 2024 smoke (mc_tours.csv).  Types: child < 16; 16-64 worker; 16-64 non-worker; 65+; persons 16+ by licence.  Unweighted.
     python3 activity/checks/person_frequencies.py -> respec_person_freq.csv"""
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)

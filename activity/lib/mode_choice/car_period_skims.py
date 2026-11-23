@@ -10,7 +10,7 @@ Bridge open, 20 iterations): per car link and period the mean realised time of t
 without an entry keep the free-flow time; transit vehicles excluded; the pending entry is dropped at 'vehicle leaves traffic'), as
 pipeline/matsim_to_skim.py does for the AM peak.  Dijkstra between the zone nodes on each period's link times.
 
-The period skim keeps the level of the base car skim (3_abit/skims/traveltime_auto, the AM-peak skim every other MAST model
+The period skim keeps the level of the base car skim (3_abit/skims/traveltime_auto, the AM-peak skim every other DAYMAP model
 uses) and takes only the profile over the day from MATSim:
     t_p(i,j) = t_base(i,j) * clip(T_p(i,j) / T_AM(i,j), 0.5, 1.5)        both zones on the network (<= 4 km from a node)
     t_p(i,j) = t_base(i,j)                                                otherwise

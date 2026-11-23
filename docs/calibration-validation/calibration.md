@@ -35,7 +35,7 @@ District share of Maryland workers remains a test against the ACS.
 
 ## Not calibrated
 
-- MAST is applied without frequency factors or constant adjustments.
+- DAYMAP (Daily Activity Model for Agent Plans) is applied without frequency factors or constant adjustments.
 - None of the other choice models is calibrated. The Baltimore City term of car ownership is estimated with the other
   coefficients.
 - The choice-based weights of the work tour mode choice are part of its estimator.

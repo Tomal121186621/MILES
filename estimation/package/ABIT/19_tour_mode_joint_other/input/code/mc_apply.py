@@ -66,7 +66,7 @@ def tours(half, vot_share=0.5, t=None):
 
 
 def hh_terms(f, joint=None):
-    """household-structure terms (estimate_hh.py): joint (observed flag, or 0 as in MAST's person-level choice), short (fewer
+    """household-structure terms (estimate_hh.py): joint (observed flag, or 0 as in DAYMAP's person-level choice), short (fewer
     cars than licensed drivers, at least one car), acc / rec (purpose within the 'other' segment)"""
     f["joint"] = 0.0 if joint is None else np.asarray(joint, float)
     f["short"] = ((f.autos > 0) & (f.autos < f.drivers)).astype(float) if "drivers" in f else 0.0

@@ -240,7 +240,7 @@ public class RunBaltimoreToll {
         addMode(config, "car",  ascCar,   0.00, 0.0,       -0.000075);
         // pt: BUS-based, normalized (-1.80 + 0.78 = -1.02/h). fare $0.50/km.
         addMode(config, "pt",   ascPt,   -1.02, 0.0,       -0.0005);
-        // ride: passenger time valued AS CAR TIME (performing channel only), matching MAST's GC where
+        // ride: passenger time valued AS CAR TIME (performing channel only), matching DAYMAP's GC where
         // passenger time enters identically to driver time (VOT divides only the money term). The
         // earlier -1.11/h blend (bus-like published tables) made ride's time disutility 2.4x car's,
         // which under full-scale congestion crushed the switchable margin (measured: ride response to
@@ -261,7 +261,7 @@ public class RunBaltimoreToll {
         addMode(config, "walk", ascWalk, -4.40,  0.0,  0.0);
         addMode(config, "bike", ascBike, -2.345, 0.0,  0.0);
 
-        // 2026-11-16 -Dscoring=milesday: the travel terms of the MAST commute tour-mode model (estimates of the current models,
+        // 2026-11-16 -Dscoring=milesday: the travel terms of the DAYMAP commute tour-mode model (estimates of the current models,
         // estimation package 3_abit/mode_choice/mc_common.py), replacing the port of the earlier model above:
         //   generalised cost GC = minutes + 60 x cost / VOT, VOT = 0.5 x household income / 2,080 h (the usdot money utility of this
         //   runner), with every minute weighted alike: car, car passenger, transit door to door (walk access and egress, waits,
@@ -270,7 +270,7 @@ public class RunBaltimoreToll {
         //   money: car driver 0.1112 $/km (AAA 2017 fuel + maintenance, the estimation's operating cost), car passenger 0 (the
         //   driver pays), transit fares flat per ride (MTA $1.80, Metrobus $2.00) and so without effect on the route -> 0 per km;
         //   mode constants 0 (modes are fixed; a constant would only bias the access mode of transit trips).
-        // Walk and bike enter the MAST mode models by distance only, which matters for the choice of mode, not here (modes fixed).
+        // Walk and bike enter the DAYMAP mode models by distance only, which matters for the choice of mode, not here (modes fixed).
         if ("milesday".equals(System.getProperty("scoring"))) {
             // addModeParams replaces the parameter set of the same mode
             addMode(config, "car",  0.0, 0.0, 0.0, -0.0001112);
@@ -284,8 +284,8 @@ public class RunBaltimoreToll {
             // -utilityOfLineSwitch as the transfer cost when transferPenaltyCostPerTravelTimeHour = 0 (RaptorUtils), and costs travel time here
             // at performing = 0.78 utils/h, so -0.13 = 10 in-vehicle minutes (Open Berlin about 9 min; literature 5-20 min).
             config.scoring().setUtilityOfLineSwitch(Double.parseDouble(System.getProperty("pt.lineswitch", "0.0")));
-            // a transit trip of MAST stays a transit trip: the router does not replace it by a walk when a transit route exists
-            // (MAST's walk mode carries a distance penalty, not the minutes valued here)
+            // a transit trip of DAYMAP stays a transit trip: the router does not replace it by a walk when a transit route exists
+            // (DAYMAP's walk mode carries a distance penalty, not the minutes valued here)
             config.transitRouter().setDirectWalkFactor(Double.POSITIVE_INFINITY);
             // 2026-11-16 -Dpt.beeline: longest walk between two stops for a transfer (m; MATSim default 100, Open Berlin and the other VSP scenarios 300)
             if (System.getProperty("pt.beeline") != null)
@@ -306,7 +306,7 @@ public class RunBaltimoreToll {
         strat.setFractionOfIterationsToDisableInnovation(
                 Double.parseDouble(System.getProperty("innovoff", "0.8")));
 
-        // HYBRID design: mode choice is done by MAST in the OUTER loop (price-elastic, on tolled skims);
+        // HYBRID design: mode choice is done by DAYMAP in the OUTER loop (price-elastic, on tolled skims);
         // MATSim's INNER loop only does route + departure-time (modes FIXED from the input plans). So
         // SubtourModeChoice is OFF by default. Set -Dmodechoice=true to re-enable the inner-loop mode
         // choice (legacy scorer-calibration path).
@@ -406,10 +406,10 @@ public class RunBaltimoreToll {
         }
 
         // Set MATSim carAvail ("always"/"never") for SubtourModeChoice's considerCarAvailability.
-        // PRIMARY: seed from MAST's assigned mode -- any agent whose MAST plan has a "car" (CAR_DRIVER)
+        // PRIMARY: seed from DAYMAP's assigned mode -- any agent whose DAYMAP plan has a "car" (CAR_DRIVER)
         // leg demonstrably HAD a car for that trip, so carAvail=always. This guarantees MATSim can
-        // reproduce MAST's ~77% car-driver share and removes an artificial ceiling (the household
-        // autos+license attributes marked ~4.7% of MAST car-drivers as carless, e.g. autos=0 rounding or
+        // reproduce DAYMAP's ~77% car-driver share and removes an artificial ceiling (the household
+        // autos+license attributes marked ~4.7% of DAYMAP car-drivers as carless, e.g. autos=0 rounding or
         // a licensed 2nd driver in a 0-car record). FALLBACK for agents with no car leg: autos>0 & license.
         int carless = 0, seededByMode = 0;
         for (Person p : scenario.getPopulation().getPersons().values()) {
@@ -428,7 +428,7 @@ public class RunBaltimoreToll {
                         : (autosAttr != null ? parseIntSafe(autosAttr.toString()) : 1);
             boolean licensed = licenseAttr == null || Boolean.parseBoolean(licenseAttr.toString());
             boolean carAvail = hadCarLeg || (autos > 0 && licensed);
-            if (carAvail && !(autos > 0 && licensed)) seededByMode++;   // recovered by the MAST-mode seed
+            if (carAvail && !(autos > 0 && licensed)) seededByMode++;   // recovered by the DAYMAP-mode seed
             PersonUtils.setCarAvail(p, carAvail ? "always" : "never");
             if (autos > 0 && licensed) p.getAttributes().putAttribute("ptCarAccess", "true");   // intermodal car access filter
             if (!carAvail) carless++;
@@ -436,7 +436,7 @@ public class RunBaltimoreToll {
         int nPop = scenario.getPopulation().getPersons().size();
         System.out.println("[RunBaltimoreToll] carAvail=never for " + carless + " / " + nPop
                 + " residents (" + String.format("%.1f", 100.0 * (nPop - carless) / nPop)
-                + "% always; " + seededByMode + " recovered by MAST-mode seed)");
+                + "% always; " + seededByMode + " recovered by DAYMAP-mode seed)");
         System.out.println("[RunBaltimoreToll] ASCs  car=" + ascCar + " pt=" + ascPt + " ride=" + ascRide
                 + " walk=" + ascWalk + " bike=" + ascBike + "  toll=" + (toll ? tollFile : "NONE"));
 
@@ -448,21 +448,21 @@ public class RunBaltimoreToll {
         System.out.println("[RunBaltimoreToll] walk.maxdist=" + walkMaxDist + "m  bike.maxdist=" + bikeMaxDist + "m");
 
         // --- INCOME-DEPENDENT MONEY UTILITY (equity response; 2026-07-12) ---
-        // POWER FORM (2026-10-01, = the paper's Eq. votscale and MAST's MarylandFullModeChoice):
+        // POWER FORM (2026-10-01, = the paper's Eq. votscale and DAYMAP's MarylandFullModeChoice):
         //   VOT_n = VOT_ref * clamp((hhIncome_n / refIncome)^elasticity, 0.4, 2.5)
         //   marginalUtilityOfMoney(person) = base / that factor
         // elasticity 0.6 (-Dincome.vot.elasticity; 0 = uniform), refIncome = -Dincome.vot.median if given
-        // (MAST uses $84,216/yr = 7018/month), else the population median. -Dincome.vot.form=linear
+        // (DAYMAP uses $84,216/yr = 7018/month), else the population median. -Dincome.vot.form=linear
         // restores the earlier Bas Vicente & Cirillo linear-lambda form (kept for sensitivity only: it turns
         // negative above ~$210k and pinned 23% of residents on the clamp).
         final double votElast = Double.parseDouble(System.getProperty("income.vot.elasticity", "0.6"));
         final String votForm = System.getProperty("income.vot.form", "power");
         final double votMedianOverride = Double.parseDouble(System.getProperty("income.vot.median", "0"));
-        // USDOT FORM (2026-11-02, -Dincome.vot.form=usdot; validation study): the value of time of MAST's tour mode choice
+        // USDOT FORM (2026-11-02, -Dincome.vot.form=usdot; validation study): the value of time of DAYMAP's tour mode choice
         // (MarylandTourNestedModeChoice): VOT_n [$/h] = s x max(hhIncome_n, floor) / H, s = -Dvot.share (0.5, USDOT 2016 guidance for
         // local personal travel: 50 % of the hourly household income), H = -Dvot.hours (2,080 h/yr), floor = -Dvot.income.floor ($5,000/yr);
         // hhIncome = the person attribute 'hhIncome' (annual household income = 12 x sum over members of int(annual SILO income)/12, as
-        // MAST reads it; a missing attribute counts as 0 -> floor).  Car time costs the performing rate (car travel utility 0), so the
+        // DAYMAP reads it; a missing attribute counts as 0 -> floor).  Car time costs the performing rate (car travel utility 0), so the
         // person's marginal utility of money = performing [utils/h] / VOT_n [$/h]; elasticity, median and the [0.4, 2.5] clamp are not used.
         final boolean usdot = "usdot".equals(votForm);
         final double votShare = Double.parseDouble(System.getProperty("vot.share", "0.5"));
@@ -512,10 +512,10 @@ public class RunBaltimoreToll {
                 // park-and-ride tour rule for the intermodal car access (-Dpt.car.access): car access from home, car egress to home only
                 if (Boolean.getBoolean("pt.car.access")) {
                     bind(ch.sbb.matsim.routing.pt.raptor.RaptorIntermodalAccessEgress.class).toInstance(new HomeCarAccessEgress());
-                    // car access only for rail, metro and light rail (MAST's train alternative)
+                    // car access only for rail, metro and light rail (DAYMAP's train alternative)
                     addRoutingModuleBinding(TransportMode.pt).toProvider(RailOnlyCarAccessRouting.RoutingProvider.class);
                 }
-                // 2026-11-17 -Dpt.submodes=true: MAST's sub-mode kept (population converter --pt-submodes): leg mode bus routed on the
+                // 2026-11-17 -Dpt.submodes=true: DAYMAP's sub-mode kept (population converter --pt-submodes): leg mode bus routed on the
                 // bus routes only with walk access (BusOnlyRouting), leg mode train on the full schedule with car access to rail only, again on the rail routes when that rides no rail (TrainRouting)
                 // (RailOnlyCarAccessRouting); both produce pt and walk legs, simulated and scored as pt
                 if (Boolean.getBoolean("pt.submodes")) {
@@ -571,7 +571,7 @@ public class RunBaltimoreToll {
     }
 
     /** Person-specific money utility. DEFAULT since 2026-10-01 = power form (see main): VOT scales with
-     *  (hhIncome/reference)^0.6, clamped to [0.4, 2.5], identical to MAST and the paper. The base (median)
+     *  (hhIncome/reference)^0.6, clamped to [0.4, 2.5], identical to DAYMAP and the paper. The base (median)
      *  money utility 0.0245 utils/$ = $31.8/h is anchored to Lin, Spissu & Cirillo (2024, TR-A 182), a
      *  revealed-preference study of two Express Lanes in VIRGINIA ($26-28/h before the pandemic, no income data).
      *  LEGACY linear form (income.vot.form=linear), kept for sensitivity:
@@ -590,7 +590,7 @@ public class RunBaltimoreToll {
         // SILO incomes are maintained in 2016 dollars; the coefficients are scaled to the survey's
         // 2011 dollars -> deflate incomes before evaluating lambda (CPI 2011->2016 ~ +6.7%).
         static final double INCOME_2016_TO_2011 = 1.0 / 1.067;
-        static final double FACTOR_MIN = 0.4, FACTOR_MAX = 2.5;     // tail clamp = MAST precedent (VOT_FACTOR_MIN/MAX in MarylandFullModeChoice); 0.25 variant = sensitivity run
+        static final double FACTOR_MIN = 0.4, FACTOR_MAX = 2.5;     // tail clamp = DAYMAP precedent (VOT_FACTOR_MIN/MAX in MarylandFullModeChoice); 0.25 variant = sensitivity run
         private final Config config;
         private final double medianIncome, elasticity; private final String form;
         private double votShare, votHours, votFloor;   // usdot form only

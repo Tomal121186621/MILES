@@ -6,7 +6,7 @@ work last week, not working at home; carpools split as in t24common.acs_mode_sha
     python3 activity/lib/mode_choice/mc_t24.py       -> results/t24_commute_mode_county.csv, results/ntd_mta.csv, 5_reports/figures/fig_mc_t24_county.pdf
 
 Model: tours with a WORK main activity of employed persons of the 2024 observed population (setting acs2024: ACS 2024 PUMS
-households placed in zones) by home county, 10 replications (mean); mode as MAST writes it (car driver, car passenger, bus, train,
+households placed in zones) by home county, 10 replications (mean); mode as DAYMAP writes it (car driver, car passenger, bus, train,
 walk, bike).  Counties with fewer than 200 ACS commuter records are not shown."""
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))

@@ -22,7 +22,7 @@
   {
    "id": "mstm_skims_2016",
    "name": "Maryland Statewide Transportation Model (MSTM) 2016 skims, 1,588 SMZ/RMZ zones",
-   "provider": "Maryland Department of Transportation (MDOT SHA), via the project's MAST Maryland set-up (ABIT/input/mito_los/skims)",
+   "provider": "Maryland Department of Transportation (MDOT SHA), via the project's DAYMAP Maryland set-up (ABIT/input/mito_los/skims)",
    "url": "https://www.roads.maryland.gov/ (verify: MSTM data are provided by MDOT on request; no download page is documented)",
    "how": "Obtain the MSTM 2016 skims in OMX format (matrix mat1, lookups origins / destinations): traveltime_auto.omx (AM-peak car time, min), distance_auto.omx (car distance, m), bus_tt.omx (bus time, min; 1000 = no path, 5 intrazonal), rail_tt00.omx (rail time, min; 0 = no rail path). convert_mstm_skims.py turns them into the csv.gz files the models read.",
    "place_in": "00_shared_data/raw/mstm_skims_2016",
@@ -37,10 +37,10 @@
   },
   {
    "id": "mstm_zone_system",
-   "name": "MSTM zone system: SMZ/RMZ polygons, zone table, MAST zone attributes",
-   "provider": "MDOT (MSTM), via ABIT/input/mito_los/Zonal and 2_silo/input/zoneSystem.csv; ABIT/input/maryland/zone_attributes.csv (MAST Maryland set-up)",
+   "name": "MSTM zone system: SMZ/RMZ polygons, zone table, DAYMAP zone attributes",
+   "provider": "MDOT (MSTM), via ABIT/input/mito_los/Zonal and 2_silo/input/zoneSystem.csv; ABIT/input/maryland/zone_attributes.csv (DAYMAP Maryland set-up)",
    "url": "https://www.roads.maryland.gov/ (verify: provided with the MSTM)",
-   "how": "Zone polygons SMZ_RMZ_02152011inMSTM_EPSG26918.shp (+ .dbf .shx .prj; field id / SMZRMZ, 1,588 zones), zoneSystem.csv (ZoneId, COUNTYFIPS, ...), zone_attributes.csv (id, centroid x/y EPSG:26985, countyfips, region types, bbsr, area_km2; built for MAST from mstm_26985.shp and zoneSystem.csv, see 3_abit/coef_respec/PROVENANCE.md, script not in the project).",
+   "how": "Zone polygons SMZ_RMZ_02152011inMSTM_EPSG26918.shp (+ .dbf .shx .prj; field id / SMZRMZ, 1,588 zones), zoneSystem.csv (ZoneId, COUNTYFIPS, ...), zone_attributes.csv (id, centroid x/y EPSG:26985, countyfips, region types, bbsr, area_km2; built for DAYMAP from mstm_26985.shp and zoneSystem.csv, see 3_abit/coef_respec/PROVENANCE.md, script not in the project).",
    "place_in": "00_shared_data/raw/mstm_zone_system",
    "files": [
     "SMZ_RMZ_02152011inMSTM_EPSG26918.shp/.dbf/.shx/.prj",
@@ -257,7 +257,7 @@
   {
    "step": 5,
    "shared_step_id": "S04",
-   "what": "shared preparation S04: Survey population of both halves in the MAST input format (households, persons, dwellings, person map, workplaces)",
+   "what": "shared preparation S04: Survey population of both halves in the DAYMAP input format (households, persons, dwellings, person map, workplaces)",
    "cwd": "../00_shared_prep/code",
    "command": "PYTHONDONTWRITEBYTECODE=1 ~/.venvs/biogeme/bin/python build_survey_population.py   # uses the provided tract_zone.csv / zone_population_2016.csv; add --rebuild-zone-files for S03",
    "reads": [

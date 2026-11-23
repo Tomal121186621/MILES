@@ -1,6 +1,6 @@
-# MAST engine
+# DAYMAP engine
 
-MAST is built on the ABIT code base ([msmobility/abit](https://github.com/msmobility/abit)). Its own code is the
+DAYMAP (Daily Activity Model for Agent Plans) is built on the ABIT code base ([msmobility/abit](https://github.com/msmobility/abit)). Its own code is the
 package `abm.models.maryland` and the run class `abm.RunAbitMarylandLos`, in `activity/engine/ABIT/src/main/java`.
 
 ## Classes

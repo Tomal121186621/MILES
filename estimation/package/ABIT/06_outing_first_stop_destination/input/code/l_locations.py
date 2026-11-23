@@ -31,7 +31,7 @@ between home and the usual workplace, d(h,j) + d(j,w) - d(h,w); log distance in 
   11   log distance x person under 18, person 65+, household with children
   12   log distance x worker
   13   log distance x time of day of the arrival (AM 6-9, PM 15-19, evening 19-6)
-  14   impedance by mode: 14a car generalised time (time + cost / value of time), 14b mode-choice logsum (MAST mode model)
+  14   impedance by mode: 14a car generalised time (time + cost / value of time), 14b mode-choice logsum (DAYMAP mode model)
 Identification guards, fixed before estimation (small samples): a person / time-of-day flag enters only if at least 20 records
 have it and 20 do not; a zone dummy or boundary term only if at least 5 observed destinations (zone of the tract point) have it.
 

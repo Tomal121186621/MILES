@@ -13,6 +13,9 @@ CVAE
 : Conditional variational autoencoder: a neural network that learns a distribution of households conditional on
   PUMA and household size and generates new households from it.
 
+DAYMAP
+: Daily Activity Model for Agent Plans, the activity model of MILES, built on the ABIT code base.
+
 Episode
 : One activity of a person on the simulated day, with a type, start time, duration and location.
 
@@ -30,9 +33,6 @@ IPF, IPU
 
 LODES
 : Longitudinal Employer–Household Dynamics Origin–Destination Employment Statistics.
-
-MAST
-: Maryland Activity Scheduling and Travel model, the activity model of MILES, built on the ABIT code base.
 
 MATSim
 : Multi-Agent Transport Simulation, the assignment software.
@@ -59,7 +59,7 @@ SRMSE
 : Standardised root-mean-square error between two contingency tables.
 
 TASHA
-: Travel Activity Scheduler for Household Agents, whose scheduling approach MAST adopts.
+: Travel Activity Scheduler for Household Agents, whose scheduling approach DAYMAP adopts.
 
 TVD
 : Total variation distance between two distributions, in percentage points.

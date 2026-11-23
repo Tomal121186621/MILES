@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage 2b: school inventory for SILO and the activity model (MAST).
+"""Stage 2b: school inventory for SILO and the activity model (DAYMAP).
 
 Builds WORKSPACE/2_silo/input/schools.csv (one record per school and grade band) from the NCES Common Core of Data
 2024-25 (public K-12), the NCES Private School Survey 2023-24 (private K-12) and IPEDS 2024 (post-secondary), geocoded to the
@@ -44,11 +44,11 @@ RAW = f"{V}/data/raw"
 DATA = f"{V}/data"
 SILO_INPUT = f"{V}/2_silo/input"
 ZONE_SHP = f"{ABIT_HOME}/input/mito_los/Zonal/SMZ_RMZ_02152011inMSTM_EPSG26918.shp"
-CRS_SILO = 26918                      # NAD83 / UTM 18N, the CRS of 2_silo/input/zones.prj and of the MAST zone shapefile
+CRS_SILO = 26918                      # NAD83 / UTM 18N, the CRS of 2_silo/input/zones.prj and of the DAYMAP zone shapefile
 MSTM_STATES = {"24": "MD", "11": "DC", "10": "DE", "42": "PA", "51": "VA", "54": "WV"}   # states with MSTM zones
 HOME_STATE = "24"                     # schools of this state outside every zone polygon are snapped to the nearest zone
 
-# school day by grade band, seconds after midnight (SILO SchoolsWriter convention; MAST divides by 60).  Typical Maryland
+# school day by grade band, seconds after midnight (SILO SchoolsWriter convention; DAYMAP divides by 60).  Typical Maryland
 # bell schedules: high schools start earliest, elementary schools latest; to be calibrated against the 2023 survey in stage 3.
 # school day (start, duration in s): medians of the 2017/18 Regional Travel Survey school-trip arrivals and school-activity durations
 # by band (activity/lib/education_targets.py): elementary 08:35 / 7.0 h, middle 08:00 / 7.1 h, high 07:45 / 7.2 h, post-secondary 09:15 / 4.5 h
@@ -325,7 +325,7 @@ def main():
             "pk_enrollment", "lat", "lon", "enrollment_year", "zone_method"]
     inv = inv[cols]
     for c in ["name", "district", "county_name"]:
-        assert not inv[c].str.contains(",").any()       # SILO and MAST readers split lines on commas
+        assert not inv[c].str.contains(",").any()       # SILO and DAYMAP readers split lines on commas
     inv.to_csv(f"{SILO_INPUT}/schools.csv", index=False)
     print(f"wrote {SILO_INPUT}/schools.csv: {len(inv):,} records, capacity {inv.capacity.sum():,}")
     print(inv.groupby(["sector", "level"]).agg(records=("id", "size"), schools=("source_id", "nunique"),

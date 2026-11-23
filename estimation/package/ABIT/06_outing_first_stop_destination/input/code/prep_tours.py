@@ -10,7 +10,7 @@ home (the first chain of a day that begins away from home) or do not end at home
 episode (PW, SW, WB, WAHB, in this order), else the school episode, else the longest episode (MarylandTashaGenerator.mainOf).
 The tour has stops when it has more than one episode.
 
-Tour mode (main-mode hierarchy).  MAST gives one mode to every leg of a tour, so the survey tour gets the highest mode used on any
+Tour mode (main-mode hierarchy).  DAYMAP gives one mode to every leg of a tour, so the survey tour gets the highest mode used on any
 of its trips:  transit (rail or bus) > car driver > car passenger > bike > walk.  A transit tour is drive access when any of its
 transit trips has access or egress by park and ride, kiss and ride or taxi, or the tour also has a car-driver trip; else walk
 access.  Survey modes as rts_common.MODE_MAP (school bus, paratransit, taxi and ride hailing are car passenger); tours with an

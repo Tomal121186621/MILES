@@ -6,7 +6,7 @@ comparison uses the same definitions (t24common).
                                                                           temporal_2024/data/measures/obs_<source>.pkl
 
 Persons and weights
-  model acs2024   persons of pop_acs2024 (every copy weight 1), age and occupation as given to MAST
+  model acs2024   persons of pop_acs2024 (every copy weight 1), age and occupation as given to DAYMAP
   model silo2024  persons of the 5 % sample of the SILO 2024 microdata (weight 1), home county from the home zone
   model base      the RTS survey households of both halves (survey_population.py), person weight w (imputed members: the
                   household weight), the two half runs of one seed pooled

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Trip-level validation of the tour formation and scheduling (3 November 2026): MAST on the survey households (10 replications per
+"""Trip-level validation of the tour formation and scheduling (3 November 2026): DAYMAP on the survey households (10 replications per
 half) against the weighted 2017/18 RTS, before and after the work-based subtour model, the re-estimated return-home logit and the
 licence cells of the accompany frequency.
 
@@ -90,7 +90,7 @@ def measures(x, wsum, dm, npersons=None):
     c = x[cd & x.km.notna()]
     for b in [1, 2, 5]: r[f"cd_lt{b}mi"] = 100 * c.w[c.mi < b].sum() / c.w.sum()
     r["cd_mean_km"] = np.average(c.km, weights=c.w)
-    # own distance measure: survey = reported address-to-address miles; model = MAST leg distance (micro locations)
+    # own distance measure: survey = reported address-to-address miles; model = DAYMAP leg distance (micro locations)
     c2 = x[cd & np.isfinite(x.own_mi)]
     for b in [1, 2, 5]: r[f"cd_lt{b}mi_own"] = 100 * c2.w[c2.own_mi < b].sum() / c2.w.sum()
     r["cd_mean_km_own"] = np.average(c2.own_mi, weights=c2.w) / KM_MI

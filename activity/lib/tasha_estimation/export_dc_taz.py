@@ -7,7 +7,7 @@ Only the destination rows of dest_choice_mnl.csv change: the segments <PURPOSE>_
 and <PURPOSE>_seq_stop (results/dest_choice_stop_seq_tazr.csv) of the four discretionary purposes are replaced.  Everything else
 is the model-of-record copy, including the pooled-anchor <PURPOSE>_stop segments (used only to relocate joint stops), the
 work / education location segments and the calibration files.  coef_tasha and coef_tasha_cal are not touched.  Each variable
-name is checked against the parsing rules of MarylandDestinationChoice.loadMnl (an unknown name stops an MAST run).
+name is checked against the parsing rules of MarylandDestinationChoice.loadMnl (an unknown name stops an DAYMAP run).
 """
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../../..')))

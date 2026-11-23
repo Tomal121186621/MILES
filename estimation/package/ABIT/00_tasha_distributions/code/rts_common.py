@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Shared definitions of the stage-3 survey side (build_targets.py, validate_abit.py): how the 2017/18 Regional Travel
-Survey (ABIT/input/rts) is read, split, mapped onto the MAST purposes, modes and person types, and summarised.
+Survey (ABIT/input/rts) is read, split, mapped onto the DAYMAP purposes, modes and person types, and summarised.
 
 Survey facts that shape every definition (checked 2026-10-22):
   - rts_trips_clean.csv (163,290 trips of 41,914 persons in 21,788 households) and RTS_raw_flat_data.csv hold only persons
@@ -11,15 +11,15 @@ Survey facts that shape every definition (checked 2026-10-22):
     wttrdfin (trip; equal to wtperfin in the cleaned file).
   - distance = driving miles between the reported addresses (-9 missing, 0.3 % above 200 mi: airport/long-distance, capped).
 
-MAST purposes (abm.data.plans.Purpose) from the survey activity codes (codebook sheet Trip, O_/D_ACTIVITY):
+DAYMAP purposes (abm.data.plans.Purpose) from the survey activity codes (codebook sheet Trip, O_/D_ACTIVITY):
   WORK 2 Work | EDUCATION 4 School | SHOPPING 5 Shopping | ACCOMPANY 16 Drop off/pick up |
   RECREATION 7 Meal, 11 Socialize, 13 Exercise, 14 Recreation, 15 Entertainment |
   OTHER 3 Volunteer, 6 Meal (quick-stop), 8 Gas, 9 Health care, 10 Non-shopping errand, 12 Civic/Religious, 17 (change
   mode, 0.3 %), 18 Other.  HOME 1.
-MAST modes (schools README rule): 1 walk -> WALK, 2 bike -> BIKE, 3 motorcycle -> CAR_DRIVER, 4 auto driver -> CAR_DRIVER,
+DAYMAP modes (schools README rule): 1 walk -> WALK, 2 bike -> BIKE, 3 motorcycle -> CAR_DRIVER, 4 auto driver -> CAR_DRIVER,
   5 auto passenger -> CAR_PASSENGER, 6 school bus -> CAR_PASSENGER (MATSim `ride`, no vehicle on the network), 7 rail -> TRAIN,
   8 bus -> BUS, 9 private bus -> BUS, 10 paratransit / 11 taxi / 12 rideshare -> CAR_PASSENGER; 13-15 air, water, other dropped.
-Person types (the SILO occupations MAST sees: 1 EMPLOYED, 3 STUDENT, 4 RETIREE, 2 UNEMPLOYED; 0 TODDLER has no tours):
+Person types (the SILO occupations DAYMAP sees: 1 EMPLOYED, 3 STUDENT, 4 RETIREE, 2 UNEMPLOYED; 0 TODDLER has no tours):
   worker   employment_status 0 (worker incl. self-employed; a working student is a worker, as in SILO)
   student  student_status 1 and not a worker, by age band elementary 5-10, middle 11-13, high 14-17, postsec 18+
   retiree  employment_status 1
@@ -174,7 +174,7 @@ def load_trips():
 
 
 def load_tours():
-    """Home-based closed tours of the cleaned survey (rts_tours.csv) with the MAST purpose of the primary activity.
+    """Home-based closed tours of the cleaned survey (rts_tours.csv) with the DAYMAP purpose of the primary activity.
     Work-based subtours (purpose WBO, anchor work) are kept with purpose SUBTOUR; open (incomplete) tours are dropped."""
     tr = pd.read_csv(f"{RTS}/rts_tours.csv.gz")
     tr = tr[tr.anchor.isin(["home", "work"])].copy()
@@ -187,7 +187,7 @@ def load_tours():
 
 
 def tour_main_mode(tours, trips):
-    """Mode of the trip that arrives at the primary activity of each tour (tour-level mode for the MAST re-anchor
+    """Mode of the trip that arrives at the primary activity of each tour (tour-level mode for the DAYMAP re-anchor
     targets): matched on person and arrival minute; the first matching trip is taken."""
     key = trips[["person_id", "arr_min", "mode"]].drop_duplicates(["person_id", "arr_min"])
     m = tours[["person_id", "primary_arr"]].merge(key, left_on=["person_id", "primary_arr"], right_on=["person_id", "arr_min"], how="left")

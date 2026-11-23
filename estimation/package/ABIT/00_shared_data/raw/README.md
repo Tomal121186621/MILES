@@ -16,7 +16,7 @@ Put the raw data here, one folder per source (catalog: `../../00_shared_prep/DAT
 | `matsim_resident_run_2023/` | MATSim resident-only assignment of the chain (events and network), source of the car time profile by period | not shipped (run folder not found); project product |
 | `matsim_tools/` | MATSim 2024.0 run jar of the project and compiled TransitSkim classes | shipped (copy); project product |
 | `mstm_skims_2016/` | Maryland Statewide Transportation Model (MSTM) 2016 skims, 1,588 SMZ/RMZ zones | shipped (copy); verify (MDOT-provided) |
-| `mstm_zone_system/` | MSTM zone system: SMZ/RMZ polygons, zone table, MAST zone attributes | shipped (copy); verify (MDOT-provided) |
+| `mstm_zone_system/` | MSTM zone system: SMZ/RMZ polygons, zone table, DAYMAP (Daily Activity Model for Agent Plans) zone attributes | shipped (copy); verify (MDOT-provided) |
 | `osm/` | OpenStreetMap Maryland extract | shipped (copy); verify |
 | `rts_2017_18/` | 2017/18 Regional Travel Survey (Baltimore and Washington regions), household travel survey, weekday travel day | not copied here (provided in ../rts_2017_18/raw); verify (no public URL) |
 | `silo_workplace_work/` | SILO workplace-choice work files (RTS workers and the 2016 zone table of the workplace model) | shipped (copy); project product |
@@ -25,4 +25,4 @@ Put the raw data here, one folder per source (catalog: `../../00_shared_prep/DAT
 | `taz_tpb/` | TPB/MWCOG TAZ 3722 system (the TPB TAZ codes of the RTS) | shipped (copy); documented (downloaded 2026-10-27) |
 | `tiger_tracts_2010/` | TIGER/Line 2010 census tracts of DE, DC, MD, PA, VA, WV | shipped (copy); verify |
 
-Sources without a folder (constants in the code, or derived): AAA 2017 driving cost, transit fares, CPI-U (not used by the MAST likelihoods), paid-parking shares (from the survey).
+Sources without a folder (constants in the code, or derived): AAA 2017 driving cost, transit fares, CPI-U (not used by the DAYMAP likelihoods), paid-parking shares (from the survey).

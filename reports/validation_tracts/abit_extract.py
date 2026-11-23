@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Zone-level destinations and home->work flows of the MAST 2024 runs (fin24_tw_s01..s10, the current runs with the 2024 telework
+"""Zone-level destinations and home->work flows of the DAYMAP 2024 runs (fin24_tw_s01..s10, the current runs with the 2024 telework
 input), weekday = day 1 of activities_full.parquet (days 2-7 hold only the overnight home stay).  Each run is a 10 % household
 sample (sample.fraction = 0.1 in the properties) -> expansion factor 10.  Locations are unaffected by the latest component.
 

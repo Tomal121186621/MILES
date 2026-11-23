@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""MAST 2024 replications with the re-specified models (coefficient set activity/parameters, all switches of the set: TASHA car
+"""DAYMAP 2024 replications with the re-specified models (coefficient set activity/parameters, all switches of the set: TASHA car
 allocation, joint-tour representative with the group-level mode model, joint frequency / members / start by work or school that
 day, licence-split discretionary frequencies, allocation-consistent availability in estimation), on the re-estimated SILO
 population of the chosen seed (oos_respec_s1, persons and schools after the schools step).  Same set-up as the record runs
-(replications.py): ten replications (MAST seeds 1-10), 10 % household sample, skims base_transit2024, base-year attendance (no
+(replications.py): ten replications (DAYMAP seeds 1-10), 10 % household sample, skims base_transit2024, base-year attendance (no
 telework input), frozen snapshot of coefficients and classes, outputs reduced to parquet.
     python3 activity/run_replications.py snapshot
     python3 activity/run_replications.py run --jobs 2    -> <workspace>/3_abit/final_2024/run_respec/fin24_s01 ... s10

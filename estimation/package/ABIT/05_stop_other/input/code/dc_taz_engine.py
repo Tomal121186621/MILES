@@ -153,7 +153,7 @@ def bio_export(path, spec, rec, cfg, alts, lnc, logb, pur, sk, start):
 
 
 # ------------------------------------------------------------------------------------------------ merged distance pieces (2026-10-28)
-# MAST parses any d_<lo>_<hi> / dt_<lo>_<hi> as the piece clip(d - lo, 0, hi - lo) (MarylandDestinationChoice.loadMnl), so a merged
+# DAYMAP parses any d_<lo>_<hi> / dt_<lo>_<hi> as the piece clip(d - lo, 0, hi - lo) (MarylandDestinationChoice.loadMnl), so a merged
 # top piece (e.g. d_20_inf = d_20_50 + d_50_inf with one slope) needs no Java change; dc_model.features knows only the standard
 # knots, so the merged pieces are computed here and the rest is passed on unchanged.
 _feat_orig = M.features

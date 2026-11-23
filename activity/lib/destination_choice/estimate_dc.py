@@ -6,13 +6,13 @@
     python3 activity/lib/destination_choice/estimate_dc.py export                                      # coef_calibrated/dest_choice_mnl.csv + tables
 
 Segments: purpose (SHOPPING, RECREATION, ACCOMPANY, OTHER) x kind (primary destination of a home-based tour; intermediate stop),
-and WORK_primary (home -> usual workplace; for the accessibility measures, not used by MAST, whose workplaces come from SILO).
+and WORK_primary (home -> usual workplace; for the accessibility measures, not used by DAYMAP, whose workplaces come from SILO).
 Specification search (per segment, nested sequence, likelihood-ratio test against the previous model):
   S1 ln size (weights estimated) + linear distance;  S2 piecewise-linear distance (knots 1, 2, 5, 10, 20, 50 km; stops: detour,
   knots 1, 2, 5, 10, 20 km);  S3 + intrazonal (stops: in the zone of either anchor);  S4 + area dummies (Baltimore City, DC,
   Virginia, other states, central business districts);  S5 + land use (retail density, land-use mix);  S6 + county / state
   boundary;  S7 + ln-distance interactions with income, cars, children, age, worker (stops: + tour mode, tour purpose, inbound);
-  S8 + time of day x ln distance;  S9 + mode-choice logsum of MAST, S9t + car generalized time instead (non-nested, AIC),
+  S8 + time of day x ln distance;  S9 + mode-choice logsum of DAYMAP, S9t + car generalized time instead (non-nested, AIC),
   S9b + both (the best of S9 / S9t / S9b by AIC is carried on);
   S10 + transit availability for households without a car;  F final: backward elimination of the non-significant terms of
   S10 (|robust t| < 1.96; distance pieces and the size term are kept), size components with a zero weight dropped (LR test).

@@ -221,7 +221,7 @@ def location_from_util(util, av, choice, data, labels, fixed=None, sampled=False
 
 
 def location_from_at(M, files, labels, fixed=None, n_rows=600, n_zones=150, seed=1):
-    """MAST destination models (full choice set of 1,588 zones, location mixtures): chosen = the candidate zones of the
+    """DAYMAP destination models (full choice set of 1,588 zones, location mixtures): chosen = the candidate zones of the
     observed location (weights w_c x b_k), available = n_zones zones drawn at random per record (weight w_c / n_zones).
     Purpose-specific copies of a term (same label) apply to different records: their values are added."""
     import pyarrow.parquet as pq

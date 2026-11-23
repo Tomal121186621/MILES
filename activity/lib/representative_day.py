@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Shared single-representative-weekday extraction for MAST weekly diaries.
+"""Shared single-representative-weekday extraction for DAYMAP weekly diaries.
 
-MAST emits a WEEKLY continuous-time schedule: leg/activity times are WEEK-minutes
+DAYMAP emits a WEEKLY continuous-time schedule: leg/activity times are WEEK-minutes
 (0..10080+) that span multiple diary days. Day index = start_time_min // 1440
 (0=Mon, 1=Tue, ... 6=Sun); the activities_full/activities `day` column is the same
 index + 1 (1=Mon .. 7=Sun).

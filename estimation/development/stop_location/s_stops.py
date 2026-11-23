@@ -31,14 +31,14 @@ Block order (fixed before estimation; ln detour = ln(1 + detour)):
   13   ln detour x direction (inbound stop: on the way home)
   14   ln detour x time of day of the arrival (AM 6-9, PM 15-19, evening 19-6)
   15   impedance by mode: 15a car generalised detour time (time + cost / value of time), 15b mode-choice logsum of the detour
-       (MAST mode model), 15c both
+       (DAYMAP mode model), 15c both
   16   transit availability (bus door-to-door time from the previous location < 120 min) x household without a car
 (Second run, 2026-11-08: a first run, logs *_firstrun_extra_blocks.log, also carried the original search's person under 18,
 household with children, worker and work-tour interactions inside blocks 9, 11, 12 and 13; it was stopped before any decision
 was final and the household / person / tour blocks restricted to the list of the brief.)
 Identification guards, fixed before estimation: a person / tour / time-of-day flag enters only if at least 20 records have it
 and 20 do not; a zone dummy or boundary term only if at least 5 observed destinations (zone of the tract point) have it.
-All variables exist in the estimation records and are producible by the simulation chain (SILO persons and households, MAST
+All variables exist in the estimation records and are producible by the simulation chain (SILO persons and households, DAYMAP
 tours, zone data, skims); race is not used.
 
 Rule: a block is KEPT when the LR test against the current model is significant at 5 %, BIC falls and every sign-checked term

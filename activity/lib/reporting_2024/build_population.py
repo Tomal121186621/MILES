@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Observed 2024 population as MAST input (the design of Roorda, Miller & Habib 2008, section 5: the model is applied to the
+"""Observed 2024 population as DAYMAP input (the design of Roorda, Miller & Habib 2008, section 5: the model is applied to the
 observed population of the forecast year), built from the ACS 2024 1-year PUMS of Maryland.
 
     python3 -I activity/lib/reporting_2024/build_population.py [--silo oos_s1] [--frac 0.05] [--seed 2024]   -> temporal_2024/pop_acs2024/
 
-Households   housing units of the ACS 2024 1-year file (TYPEHUGQ 1, NP > 0; group quarters are not modelled by MAST or SILO).
+Households   housing units of the ACS 2024 1-year file (TYPEHUGQ 1, NP > 0; group quarters are not modelled by DAYMAP or SILO).
              Each record is copied floor(f WGTP) times plus once more with probability f WGTP - floor(f WGTP) (f = 0.05, seed
              2024), so that the copies are a 5 % sample of the weighted households, the sample rate of the synthetic runs.
 Home zone    drawn for every copy among the MSTM zones of its 2020 PUMA (zone representative point in the TIGER 2022 PUMA
@@ -12,7 +12,7 @@ Home zone    drawn for every copy among the MSTM zones of its 2020 PUMA (zone re
              microData/futureYears/dd_2024.csv: occupied dwellings).  The PUMA total is the ACS total; only the split inside the
              PUMA comes from SILO.
 Persons      the household's ACS persons.  Occupation (the rule of the population synthesis, Updated VAE preprocessing.py, coded
-             as MAST reads the SILO file): age < 6 toddler (0); ESR 1, 2, 4, 5 employed (1); SCHG present student (3);
+             as DAYMAP reads the SILO file): age < 6 toddler (0); ESR 1, 2, 4, 5 employed (1); SCHG present student (3);
              ESR 3 unemployed (2); age 62+ and ESR 6 retiree (4); else other (2).  Driver's licence: the same rule (age 16+ and
              not walking, cycling or 'other' to work).  Income: PINCP x ADJINC, in 2016 dollars (CPI-U 2024 / 2016 = 313.689 /
              240.007), the price base of the SILO incomes; negative -> 0.  Autos: VEH capped at 3 (as the SILO files).
@@ -21,7 +21,7 @@ Persons      the household's ACS persons.  Occupation (the rule of the populatio
 Workplace    commuters (at work, JWTRNS not 11) with a place of work in DC, DE, MD, PA, VA or WV: a zone drawn among the zones
              of their place-of-work PUMA (a county or a group of counties) with probability proportional to the LODES 2022
              jobs of the zone (bench_lodes.py).  Workers who worked at home, were not at work, or work outside the six states
-             get no workplace record, so that MAST's own fallback (its home-based work gravity) places them, as in the
+             get no workplace record, so that DAYMAP's own fallback (its home-based work gravity) places them, as in the
              survey-population runs.
 School       students (occupation 3) get a school record by the stage-2b rule (2_silo/schools/assign_students.py): schools of
              the band's type ranked by (band mismatch, car time from the home zone, -capacity, id), the first with a free seat,

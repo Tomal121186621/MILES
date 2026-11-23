@@ -1,7 +1,7 @@
 # Estimation package
 
 The estimation package lets anyone re-estimate every model of MILES with **Python Biogeme** and check the result
-against the published estimates. The folder `ABIT/` holds the models of MAST (named after the code base MAST is built
+against the published estimates. The folder `ABIT/` holds the models of DAYMAP, the Daily Activity Model for Agent Plans (named after the code base DAYMAP is built
 on). It lives in `estimation/package/`; the specification search behind each model is in `estimation/development/`.
 
 ## Layout
@@ -21,7 +21,7 @@ estimation/package/
 │   │   ├── model/                Biogeme script, published estimates
 │   │   └── output/               your results
 │   └── ...
-├── ABIT/                         MAST models: distributions and 20 models
+├── ABIT/                         DAYMAP models: distributions and 20 models
 │   ├── 00_tasha_distributions/   activity distributions (not a Biogeme model)
 │   ├── 01_primary_destination_pooled/
 │   └── ...

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Article-format tables and engine coefficient files of the MAST re-specification (2026-11-06).
+"""Article-format tables and engine coefficient files of the DAYMAP re-specification (2026-11-06).
 
     python3 estimation/development/selection/make_outputs.py      -> side_experiments/respec_2026-11/article_tables/est_dc_*_primary.tex, est_stop_*_stop.tex, est_loc_*.tex, est_subtour.tex,
                                     est_return.tex, est_mc_*.tex;  side_experiments/respec_2026-11/abit/*/..._respec.csv;  side_experiments/respec_2026-11/abit/summary_*.csv

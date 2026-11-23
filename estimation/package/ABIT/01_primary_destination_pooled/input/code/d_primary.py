@@ -28,7 +28,7 @@ Block order (fixed before estimation; "distance" = car distance from home, km; l
   13   ln distance x male, ln distance x one-person household
   14   ln distance x time of day of the arrival (AM 6-9, PM 15-19, evening 19-6)
   15   ln distance x tour with at least one stop
-  16   impedance: 16a car generalised time (time + cost / value of time), 16b mode-choice logsum (MAST mode model), 16c both
+  16   impedance: 16a car generalised time (time + cost / value of time), 16b mode-choice logsum (DAYMAP mode model), 16c both
   17   bus within 120 min of home x household without a car (original S10)
 Identification guards, fixed before estimation: a person / time-of-day / tour flag enters only if at least 20 records have it
 and 20 do not; a zone dummy or boundary term only if at least 5 observed destinations (survey traffic zone) have it.

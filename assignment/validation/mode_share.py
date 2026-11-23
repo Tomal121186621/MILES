@@ -2,7 +2,7 @@
 """Mode share of the MATSim stage against the survey (2026-11-04): executed trips of residents of the six Baltimore-region counties,
 by main mode, against the 2017/18 Regional Travel Survey (weighted, both halves, same residents), overall and by home county,
 trip purpose (to or from work), household cars and trip distance; plus transit boardings per transit trip.
-MATSim does not change modes (no mode-choice strategy; modes come from ABIT), so this tests the modes MAST gives to the 2024
+MATSim does not change modes (no mode-choice strategy; modes come from ABIT), so this tests the modes DAYMAP gives to the 2024
 population as executed on the network.  Nothing is fitted.
 Survey trips are linked across change-mode activities (activity 17), main mode transit > car driver > car passenger > bike > walk
 (as in 3_abit/tasha_estimation); transit = bus + rail.  Boardings per linked survey transit trip counts only transfers recorded

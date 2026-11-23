@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""MAST 2024 on the final land-use population (fin24): the model of record (behavioural set 3_abit/coef_tasha, TASHA-type
+"""DAYMAP 2024 on the final land-use population (fin24): the model of record (behavioural set 3_abit/coef_tasha, TASHA-type
 generation, destination models on traffic zones, tour mode choice with the corrected gender coding, USDOT value of time), no
 code or coefficient change.  One SILO population: seed 5 (choose_replication.py, closest to the five-seed mean), 2024 state after the
-schools step.  Ten replications (MAST seeds 1-10) in two forms:
+schools step.  Ten replications (DAYMAP seeds 1-10) in two forms:
     fin24     work attendance from the set's base-year table (frozen form)
     fin24_tw  attendance with the ACS 2024 work-at-home share by county (temporal_2024/telework/wfh_attendance_2024.csv)
-Skims 3_abit/skims/base_transit2024 (the chain's 'base' MAST skims), sample 10 % (the chain's production sample).
+Skims 3_abit/skims/base_transit2024 (the chain's 'base' DAYMAP skims), sample 10 % (the chain's production sample).
     python3 activity/lib/replications.py snapshot
     python3 activity/lib/replications.py run --jobs 2
-After a run, legs and activities are kept as parquet (all columns as text: legs_full / activities_full, rewritable to the MAST CSV)
+After a run, legs and activities are kept as parquet (all columns as text: legs_full / activities_full, rewritable to the DAYMAP CSV)
 plus persons.parquet; the CSVs and mc_tours.csv are deleted (13 GB free disk: one run at a time)."""
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
 _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '../..')))
@@ -60,7 +60,7 @@ def to_parquet(csvf, out, strings=True):
 
 
 def reduce(d, name):
-    """legs and activities -> parquet (all columns as text, rewritable to the MAST CSV), persons.parquet (person, household, home zone);
+    """legs and activities -> parquet (all columns as text, rewritable to the DAYMAP CSV), persons.parquet (person, household, home zone);
     the CSVs and mc_tours.csv are deleted (disk; mc_summary.csv is kept)."""
     o = f"{d}/output"; lf, af = f"{o}/legs_{name}.csv", f"{o}/activities_{name}.csv"
     a = pd.read_csv(af, usecols=["person_id", "household_id", "purpose", "zone"], engine="pyarrow")

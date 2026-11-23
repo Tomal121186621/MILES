@@ -7,7 +7,7 @@ Article
   fig_mode          tour mode share by one-way tour distance, six modes, observed tours of the held-out half (mode choice
                     alone): model mean and 5th-95th percentile of 10 replications against the survey
 Supplementary Material
-  fig_s_mode_purpose  model minus observed tour mode share by purpose (pp) in three settings: mode choice alone, tours MAST
+  fig_s_mode_purpose  model minus observed tour mode share by purpose (pp) in three settings: mode choice alone, tours DAYMAP
                       generates for the observed held-out population, chain test (synthetic population)
   fig_s_mode_cars     car-driver and car-passenger share by car sufficiency: mode choice alone and chain test
   fig_s_net_maps      mapped transit routes, network area and Baltimore

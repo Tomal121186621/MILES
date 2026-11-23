@@ -5,7 +5,7 @@ Binary logit, y = 1: walk (0: the mode of the work tour); alternative 0 has util
     V1 = ASC + ln(1 + km workplace -> first stop) + work tour as car driver / car passenger + more than one stop + workplace zone >= 10,000 jobs/km2 + no car
     The fewer-cars-than-drivers term is not included: it is not significant (likelihood-ratio test p = 0.34) and BIC is lower without it.
 Data: input/data/estimation/estimation_table.parquet (one row per observation, built by input/code/build_estimation_tables.py).
-Estimated with Biogeme 3.3.5; coefficients used by MAST: 3_abit/tasha_estimation/results/tasha_subtour_1120i.csv (mode.*). Unweighted; robust (sandwich) standard errors are Biogeme's "Robust std err.".
+Estimated with Biogeme 3.3.5; coefficients used by DAYMAP: 3_abit/tasha_estimation/results/tasha_subtour_1120i.csv (mode.*). Unweighted; robust (sandwich) standard errors are Biogeme's "Robust std err.".
 
     ~/.venvs/biogeme/bin/python estimate_outing_mode.py                    # estimate (results in ../output)
     ~/.venvs/biogeme/bin/python estimate_outing_mode.py --evaluate         # LL at the reference estimates, no estimation

@@ -23,13 +23,21 @@ source the script, then run the out-of-sample seeds:
   Columbia term is the estimate, without a calibration shift (`estimation/development/workplace_choice/w13_export_silo.py`).
 - School location inside SILO (`school_location_coefficients_{k8,hs,college}.csv`, data files written by
   `estimation/development/other_locations/l11_export_silo.py`), seats released when a student leaves school or the population.
+  Since 2026-11-22, the seats of band changers and school leavers are freed at the start of the year (`school.seat.release.yearstart`),
+  working students keep their seat (`education.working.students`), and the exit table is extended to age 63, with forced exit after
+  64 (`education_transitions_1122.csv`, an assumption).
 - Car ownership: `car_ownership_estimated_coefficients.csv` (persons-16+ dummies), Baltimore City term estimated
   (`car_ownership_county_constants.csv`); estimation in `estimation/package/SILO/04_car_ownership`, engine files by
   `coefficients/export_car_ownership.py`.
-- Other settings: Maryland driver's-licence targets (`drivers_license_targets_md.csv`), structural vacancy 2016
+- Driver's licences: Maryland targets by age and area (`drivers_license_targets_md.csv`). New licences in each area and age cell go to
+  employed persons first (`drivers.license.allocation = employed_first`, rule-based; 2026-11-22).
+- Other settings: structural vacancy 2016
   (`inputs/build_structural_vacancy.py`), population control at the end of the year, pricing after the control, gross in-migration
   rates 2014-18 (`inmigration_rate_2014_18.csv`), population and job controls and base-year microdata built by
-  `inputs/base_year/build_base_year.sh` (`SILO_MICRODATA=v8`).
+  `inputs/base_year/build_base_year.sh` (`SILO_MICRODATA=v8`). Since 2026-11-22 the runs read the variant `v8_1122` (`SILO_MICRODATA=v8_1122`, workspace
+  `2_silo/input_build/base_v8_1122/build_base_1122.py`). It re-assigns household cars to the ACS 2014-18 joint distribution of cars,
+  workers and persons 16+, keeping each county's car distribution. It also enrols 16-17-year-olds at the ACS 2014-18 shares by state and
+  employment, and assigns their schools with the base-year rule.
 - The engine switches `resloc.race.share.fixed2016` (robustness check, own-race share held at 2016) and `resloc.county.vacancy.factor`
   (tested, not adopted) are `false`.
 

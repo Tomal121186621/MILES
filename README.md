@@ -22,7 +22,7 @@ MILES chains five components:
 | Synthetic population, 2016 | Conditional variational autoencoder trained on ACS PUMS | Python, PyTorch |
 | Land use, 2016 → 2024 | Residential location, car ownership, workplace choice, demography | SILO, Java |
 | School location | Three school-location logits (K-8, high school, college), every year | SILO, Java |
-| Activities, weekday of 2024 | MAST: survey distributions, destination, stop, tour and mode models | MAST engine (built on the ABIT code base), Java |
+| Activities, weekday of 2024 | DAYMAP (Daily Activity Model for Agent Plans): survey distributions, destination, stop, tour and mode models | DAYMAP engine (built on the ABIT code base), Java |
 | Traffic assignment | Routes and departure times on the 2024 road and transit networks | MATSim, Java |
 
 27 choice models are estimated with Biogeme; each stage is tested on data it was not estimated on.
@@ -32,7 +32,7 @@ MILES chains five components:
 ```
 population/   synthetic population (CVAE) and post-processing
 landuse/      SILO inputs, engine changes, calibration, runs, school location
-activity/     MAST engine source, coefficients, runs
+activity/     DAYMAP engine source, coefficients, runs
 assignment/   MATSim runner, network and transit builders, count validation
 pipeline/     chain orchestration and plans converter
 estimation/   specification search and the Biogeme estimation package (notebooks per model)

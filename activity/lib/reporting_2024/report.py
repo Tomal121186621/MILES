@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tables and figures of the 2024 forecast validation of MAST in the form of Roorda, Miller & Habib (2008), section 5 and Table 2.
+"""Tables and figures of the 2024 forecast validation of DAYMAP in the form of Roorda, Miller & Habib (2008), section 5 and Table 2.
 
     python3 activity/lib/reporting_2024/report.py      -> temporal_2024/tables/*.md|*.tex|*.csv, temporal_2024/figures/fig_t24_*.pdf|png
                               (figures and LaTeX tables also copied to 5_reports/paper/figures and 5_reports/paper/sections/t24_tables)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write <folder>_estimation.ipynb in every SILO and MAST model folder (00_tasha_distributions.ipynb for the TASHA distributions): raw data -> data preparation -> estimation data -> descriptive
+"""Write <folder>_estimation.ipynb in every SILO and DAYMAP model folder (00_tasha_distributions.ipynb for the TASHA distributions): raw data -> data preparation -> estimation data -> descriptive
 statistics and correlation heatmaps -> model specification -> log-likelihood at the article values -> Biogeme
 estimation -> comparison with the article -> hold-out.
 
@@ -977,7 +977,7 @@ def tasha_notebook(R):
 
 {clean(R.get('purpose', ''))}
 
-Part of MAST (Maryland Activity Scheduling and Travel model), the activity-based model of the MILES platform, built on the ABIT code base. Not a Biogeme model: empirical distributions of the activity generator, built from the estimation half of the survey.
+Part of DAYMAP (Daily Activity Model for Agent Plans), the activity-based model of the MILES platform, built on the ABIT code base. Not a Biogeme model: empirical distributions of the activity generator, built from the estimation half of the survey.
 
 1. Raw data: survey files, half split
 2. Data preparation: trips to typed activity episodes, building the distributions, rebuild check

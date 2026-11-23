@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Free-car rule of the car-driver availability (the rule MAST applies when it draws the leg modes of a transit tour).
+"""Free-car rule of the car-driver availability (the rule DAYMAP applies when it draws the leg modes of a transit tour).
 
 Car driver is available only with a licence, age 16+, at least one household car, AND a free household car. A car is free when
 the number of the household's car-driver tours overlapping the transit tour's window (leave home .. arrive home) is below the

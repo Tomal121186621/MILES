@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Tables-only PDFs (SILO and MAST): the article's current estimation tables in order, with est_cars replaced by the re-specified car ownership
+"""Tables-only PDFs (SILO and DAYMAP): the article's current estimation tables in order, with est_cars replaced by the re-specified car ownership
 model (ESTIMATION_RESULTS/car_ownership/est_cars_new.tex).
 Usage: python3 estimation/development/reports/make_pdf.py   (build/ and the PDFs in <workspace>/side_experiments/respec_2026-11/final_tables)"""
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)

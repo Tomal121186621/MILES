@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """l_locations.py with the mode-choice logsum (block 14b, variable `ls`) of the RE-ESTIMATED tour mode models
-(../accessibility_new/mode_logsum_new.py) in place of the old MAST mode model (dc_common.mode_logsum, 3_abit/coef_calibrated,
+(../accessibility_new/mode_logsum_new.py) in place of the old DAYMAP mode model (dc_common.mode_logsum, 3_abit/coef_calibrated,
 called by dc_model.features; nothing cached, the variable is computed when the data of a model are built).  Everything else is
 l_locations.py, imported unchanged (same records, block order, rule, guards, final check, validation half).
 
@@ -85,7 +85,7 @@ def person_new(rec):
 
 
 def ls_old(rec, alts, purpose, sk):
-    """dc_model.features 'ls' (old MAST mode model), written out with the same legs"""
+    """dc_model.features 'ls' (old DAYMAP mode model), written out with the same legs"""
     mp = purpose if purpose in C.DISC + ["WORK"] else "OTHER"; p = M.person(rec); o = rec.home_idx.values
     f = lambda oo, dd, pp: C.mode_logsum(mp, oo, dd, pp, sk)
     if (rec.kind.values == "stop").all():

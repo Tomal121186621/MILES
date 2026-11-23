@@ -21,7 +21,7 @@ Segments (replace the distance-band model of MarylandTashaGenerator.bandLocation
                 retirees): from home
   EDUCATION_daycare  daycare / preschool of persons under 5: from home
 Records: the episodes of these types (te_common.episodes; types of tasha_distributions.py) whose destination tract and anchor
-zones lie in the zone system; chooser attributes as MAST sees them (destination_choice/prep_dc_data.people); time of day of the
+zones lie in the zone system; chooser attributes as DAYMAP sees them (destination_choice/prep_dc_data.people); time of day of the
 arrival.
 """
 # COPY of Validation_2026/3_abit/tasha_estimation/estimate_locations.py (manual-estimation package, 2026-11-13); only path constants changed (lines marked PATH).

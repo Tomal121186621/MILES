@@ -1,4 +1,4 @@
-"""Shared definitions of the 2024 temporal validation of MAST (3_abit/temporal_2024): paths, geography, the decoding of the
+"""Shared definitions of the 2024 temporal validation of DAYMAP (3_abit/temporal_2024): paths, geography, the decoding of the
 ACS journey-to-work variables, the episode-to-activity rule for the ATUS diaries and the activity measures computed in the
 same way for the model, the travel surveys and the time-use diaries.
 

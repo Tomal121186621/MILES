@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Schools step of the chain (between SILO and MAST): assigns every student of a SILO population to a school record with the estimated
+"""Schools step of the chain (between SILO and DAYMAP): assigns every student of a SILO population to a school record with the estimated
 school location choice (write_inputs.py -> apply/), with shadow prices per school record so that the students match the
 enrolment.  No SILO engine change; the original files are not modified, new files are written.
 
 Student alignment (--align 1, default; user decision 2026-10-29): before the assignment, each year, persons are flagged as students
 (occupation 3) at random within state x sex x age cells up to the ACS enrolment rate of the year (apply/school_enrolment_rates.csv):
 ages 5-17: every employed person under 18 is first recoded as a student (school first; the job record stays in the
-SILO files, MAST builds jobs only for occupation 1), then non-workers (occupation 0 or 2) are added, ages 18+ from non-workers (occupation 2 or 4) up
+SILO files, DAYMAP builds jobs only for occupation 1), then non-workers (occupation 0 or 2) are added, ages 18+ from non-workers (occupation 2 or 4) up
 to the ACS rate of enrolled NON-workers; a cell already above the rate is left as it is (reported in school_alignment_<year>.csv).
 Students and bands: SILO occupation 3 (STUDENT); band by age as SchoolDataMd.bandForAge / assign_base_students.py: < 11 elementary
 (younger students go with elementary), 11-13 middle, 14-17 high, 18+ post-secondary.  Model segment: elementary and middle -> k8 (size of
@@ -77,7 +77,7 @@ if a.align:   # student alignment to the ACS enrolment rates of the year (enrolm
     hz_ = zi.reindex(pp.hhID.map(hh.dwelling).map(dz).values).values; ok = ~np.isnan(hz_); pp["state"] = -1; pp.loc[ok, "state"] = ST[hz_[ok].astype(int)]
     ed = [18, 19, 20, 21, 22, 23, 24, 25, 30, 35, 45, 55, 65, 200]; lab = ["18", "19", "20", "21", "22", "23", "24", "25-29", "30-34", "35-44", "45-54", "55-64", "65+"]
     pp["cell"] = np.where(pp.age < 18, pp.age.astype(str), pd.cut(pp.age.clip(lower=18), ed, right=False, labels=lab).astype(str))
-    w18 = (pp.age < 18) & (pp.occupation == 1); pp.loc[w18, "occupation"] = 3; newstud.update(pp.id.values[w18.values])   # school first (user 2026-10-29): employed minors become students; their job record stays in the SILO files, MAST's reader (MarylandLosDataReader) builds a job only for occupation 1
+    w18 = (pp.age < 18) & (pp.occupation == 1); pp.loc[w18, "occupation"] = 3; newstud.update(pp.id.values[w18.values])   # school first (user 2026-10-29): employed minors become students; their job record stays in the SILO files, DAYMAP's reader (MarylandLosDataReader) builds a job only for occupation 1
     log(f"alignment: {int(w18.sum()):,} employed persons under 18 recoded as students")
     rng0 = np.random.default_rng(a.seed + 1000); al = []
     for (sta, sex, c), g in pp[(pp.age >= 5) & (pp.state > 0)].groupby(["state", "gender", "cell"]):
@@ -206,7 +206,7 @@ if a.write_pp:
           ids = ch.id.astype(np.int64); m = ids.isin(sid_of.index).values
           if "schoolId" not in ch: ch["schoolId"] = "-1"   # simulated years without the column: appended (SILO format, -1 = none)
           ch.loc[m, "schoolId"] = sid_of.reindex(ids[m]).values.astype(np.int64).astype(str)
-          if newstud: ch.loc[ids.isin(newstud).values, "occupation"] = "3"   # SILO Occupation.STUDENT = 3 (MAST PersonReader: Occupation.valueOf)
+          if newstud: ch.loc[ids.isin(newstud).values, "occupation"] = "3"   # SILO Occupation.STUDENT = 3 (DAYMAP PersonReader: Occupation.valueOf)
           ch.to_csv(fo, index=False, header=first); first = False
 pd.concat(LAM_OUT).to_csv(f"{a.out}/school_lambda_{a.year}.csv", index=False)
 occ = st.schoolId[st.schoolId > 0].value_counts(); s2 = pd.read_csv(a.schools_template or a.schools, dtype=str, keep_default_na=False)

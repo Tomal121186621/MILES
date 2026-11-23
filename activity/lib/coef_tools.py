@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage 3: the calibrated MAST coefficient set (3_abit/coef_calibrated) - how it is initialised from the pristine reference
+"""Stage 3: the calibrated DAYMAP coefficient set (3_abit/coef_calibrated) - how it is initialised from the pristine reference
 (ABIT/input/maryland/coef, never written) and the estimation-half targets, and the parameter update rules of calibrate_abit.py.
 
 Calibration parameters (file -> what it controls -> target of targets_estimation.csv):

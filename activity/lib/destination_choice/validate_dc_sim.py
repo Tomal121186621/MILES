@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Simulated validation of the destination choice: discretionary trips of MAST runs against the survey, before (calibrated
+"""Simulated validation of the destination choice: discretionary trips of DAYMAP runs against the survey, before (calibrated
 gravity form) and after (estimated MNL), ten seeds each.
 
     python3 validate_dc.py sim

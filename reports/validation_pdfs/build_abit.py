@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validation of the activity model (stage 3, MAST), in the structure of Roorda, Miller and Habib's validation of TASHA.
+"""Validation of the activity model (stage 3, DAYMAP), in the structure of Roorda, Miller and Habib's validation of TASHA.
 
     python3 reports/validation_pdfs/build_abit.py [--runs RUN ...] [--chosen RUN] [--run-dir DIR] [--verification SET] [--validation SET] [--chain SET]
                           [--survey-runs PREFIX] [--two-forms --runs-base RUN ...] [--out PDF] [--work DIR]

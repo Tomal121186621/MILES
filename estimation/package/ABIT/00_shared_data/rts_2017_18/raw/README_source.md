@@ -1,7 +1,7 @@
-# RTS data for MAST Maryland calibration
+# RTS data for DAYMAP Maryland calibration
 
 **Calibration source = the CLEANED RTS** (per project decision) — the same deduplicated dataset our
-tour-based MITO model was estimated & validated on, so MAST's Maryland calibration is consistent with
+tour-based MITO model was estimated & validated on, so the Maryland calibration of DAYMAP (Daily Activity Model for Agent Plans) is consistent with
 the rest of the pipeline.
 
 | file | use |
@@ -14,5 +14,5 @@ the rest of the pipeline.
 ## Calibration approach (next phase, after the hello-world run)
 Build Maryland RTS **targets** from the cleaned data — tour-frequency rates, mode shares by purpose,
 trip-length distributions, TOD profiles, stop rates — i.e. the same targets the tour-based model
-matched. Then use MAST's `abm/calibration/` module (`CalibrationMuc` → `CalibrationMd`) to calibrate the
+matched. Then use DAYMAP's `abm/calibration/` module (`CalibrationMuc` → `CalibrationMd`) to calibrate the
 Munich-transferred activity-generation / destination / mode-choice / subtour models to these targets.

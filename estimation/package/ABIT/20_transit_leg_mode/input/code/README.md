@@ -11,6 +11,6 @@ Copies (paths rewritten to `00_shared_data` and `../data`, lines marked `PATH`; 
 | dc_common.py | 3_abit/destination_choice/ | zones and skims |
 | mc_common.py, prep_tours.py | 3_abit/mode_choice/ | period skims, fares, tours (tours_<half>.parquet) |
 | estimate_transit_legs.py | 3_abit/tasha_estimation/ | legs(half), features(), the search and final estimate |
-| free_car.py | new | free-car rule of the car-driver availability (as in MAST's leg-mode draw) |
+| free_car.py | new | free-car rule of the car-driver availability (as in the leg-mode draw of DAYMAP, the Daily Activity Model for Agent Plans) |
 
 Checked: the tables written by this folder give the reference LL of both halves (estimation N 6,773, hold-out N 6,417).

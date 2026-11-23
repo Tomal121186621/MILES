@@ -9,7 +9,7 @@ network year, routed with MATSim's SwissRailRaptor (pipeline/java/TransitSkim.ja
      full schedule (ALL) and on the bus-only schedule (BUS); RAILSHARE = share of departures whose best path uses light rail,
      metro or MARC
   3. matrices in the conventions of the 2016 base skims: SILO transit_peak_time = ALL (1000 = no transit path, 5.0 intra-zonal);
-     MAST bus_tt = BUS (1000, 5.0); MAST rail_tt00 = ALL where the best path uses rail in at least half of the departures, else 0
+     DAYMAP bus_tt = BUS (1000, 5.0); DAYMAP rail_tt00 = ALL where the best path uses rail in at least half of the departures, else 0
      (0 = no rail path, 0 intra-zonal).  Pairs with an off-network endpoint keep the prior (the base skims); on-network pairs
      without a path are unreachable (1000 / 0) - the MTA feeds are the transit supply of the modelled region.
   4. output: <out_dir>/{transit_peak_time,bus_tt,rail_tt00}.csv.gz (FROM,TO,VALUE minutes; door to door), transit_peak_time_ivtwait.csv.gz

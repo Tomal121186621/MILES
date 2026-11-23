@@ -4,7 +4,7 @@
     ~/.venvs/biogeme/bin/python activity/lib/mode_choice/estimate_hh.py            -> results/hh_<segment>_<block>.csv / _cov.csv, results/hh_summary.csv
     ~/.venvs/biogeme/bin/python activity/lib/mode_choice/estimate_hh.py export     -> results/gc_<segment>_hh.csv (the selected models)
 
-Why.  Applied in MAST, the models of record give 5-6 pp too few car-driver tours on the survey's own households, although they
+Why.  Applied in DAYMAP, the models of record give 5-6 pp too few car-driver tours on the survey's own households, although they
 reproduce the shares on the observed tours.  Two causes are specification gaps that the household stage of the application then
 counts twice:
   joint   a tour whose main activity is a joint household episode.  The survey's joint tours are 18 % of the tours with 36 % car
@@ -18,7 +18,7 @@ counts twice:
 Blocks are added in this order to the model of record of each segment (estimate_gc.CHOSEN), each on the five non-reference
 modes (car passenger, walk, bike, bus, train), and kept when the likelihood-ratio test is significant at 5 % and BIC falls.
 Hold-out: log-likelihood of the validation half (gc_hold_<segment>_s50.parquet).
-Application (MarylandTourNestedModeChoice): joint and short are estimation controls; MAST applies them as 0, because the
+Application (MarylandTourNestedModeChoice): joint and short are estimation controls; DAYMAP applies them as 0, because the
 household stage generates the joint tours' passengers and the car shortages of the household explicitly.  acc and rec apply.
 """
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage 3: the survey metrics of rts_common / build_targets computed on one MAST run, with the same definitions.
+"""Stage 3: the survey metrics of rts_common / build_targets computed on one DAYMAP run, with the same definitions.
 
     python3 activity/lib/activity_metrics.py <run name> [--targets targets_estimation.csv] [--out metrics.csv]
 

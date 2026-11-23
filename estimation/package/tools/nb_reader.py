@@ -180,7 +180,7 @@ GLOSSARY = {
     "size term": "mu x ln(size of the zone): with mu = 1 the probability is proportional to the zone's jobs or enrolment.",
     "reference alternative": "The alternative whose utility is fixed at 0 (no car); the coefficients of the others are differences against it.",
     "zone": "A traffic analysis zone of the model (1,588 zones).",
-    "MAST": "Maryland Activity Scheduling and Travel model: the activity-based model of the MILES platform, built on the ABIT code base (Activity-Based Incremental Transport model).",
+    "DAYMAP": "Daily Activity Model for Agent Plans: the activity-based model of the MILES platform, built on the ABIT code base (Activity-Based Incremental Transport model).",
     "log-likelihood": "Sum over decision makers of ln(probability of the observed choice). Closer to 0 is better.",
     "BIC": "Bayesian information criterion: -2 log-likelihood + K ln N. Lower is better; it penalises extra parameters.",
     "hold-out": "The 20 % (residential, cars) or half (survey models) of the records not used for estimation. It was also used in the specification search, so its fit is not a fully independent test.",
@@ -475,7 +475,7 @@ HOW_INCOME = {"02_residential_dwelling": "How to read it: above zero the feature
                                      "where a band crosses zero the effect is not significant at that income."}
 
 
-# ================================================================================================ MAST (MAST folders)
+# ================================================================================================ DAYMAP (DAYMAP folders)
 _RTS = "Regional Travel Survey 2017/18 (Baltimore and Washington regions), estimation half"
 _Z = "the 1,588 zones of the model (full choice set)"
 _L = lambda what, who, unit, by="distance, attraction, area and land use, with distance effects that differ by person", traits=None: dict(
@@ -551,12 +551,12 @@ ABIT_NOTE = {
 
 def abit_answers_md(folder, R):
     S = ABIT_SPEC[folder]
-    return "\n".join([f"# {R.get('model', folder)}", "", "A model of MAST (Maryland Activity Scheduling and Travel model), the activity-based model of the MILES platform, built on the ABIT code base.", "", "## What this model answers", "", S["answers"], ""] + ([ABIT_NOTE[folder], ""] if folder in ABIT_NOTE else []) + [
+    return "\n".join([f"# {R.get('model', folder)}", "", "A model of DAYMAP (Daily Activity Model for Agent Plans), the activity-based model of the MILES platform, built on the ABIT code base.", "", "## What this model answers", "", S["answers"], ""] + ([ABIT_NOTE[folder], ""] if folder in ABIT_NOTE else []) + [
                       "| | |", "|---|---|", f"| Choice | {S['choice']} |", f"| Alternatives | {S['alts']} |", f"| Decision makers | {S['deciders']} |", f"| Data | {_RTS} |"])
 
 
 def abit_glossary_md(folder):
-    return "\n".join(["## Glossary", ""] + [f"- **{k}**: {GLOSSARY[k]}" for k in ["MAST"] + ABIT_GLOSS[ABIT_SPEC[folder]["kind"]]])
+    return "\n".join(["## Glossary", ""] + [f"- **{k}**: {GLOSSARY[k]}" for k in ["DAYMAP"] + ABIT_GLOSS[ABIT_SPEC[folder]["kind"]]])
 
 
 def abit_readings(rows):

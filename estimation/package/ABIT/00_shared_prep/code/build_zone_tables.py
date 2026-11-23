@@ -2,7 +2,7 @@
 """Zone tables of the location models.
 
     python3 build_zone_tables.py [--jobs-from-raw]
-      zones_model_attributes.csv   dc_common.zones(): MAST zone attributes + 2016 population, jobs by type (retail / office /
+      zones_model_attributes.csv   dc_common.zones(): DAYMAP zone attributes + 2016 population, jobs by type (retail / office /
                                    other), school enrolment, area dummies, retail density, land-use mix (the zone variables of
                                    every location model); reads 00_shared_data/zones (provided) or, with --jobs-from-raw, the jobs
                                    extract rebuilt from raw/synthetic_population_2016/jj_2016.csv

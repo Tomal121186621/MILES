@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""MAST validation figures in the set of Roorda, Miller & Habib (2008), "Validation of TASHA", TR-A 42:360-375, Figs. 2-8,
+"""DAYMAP validation figures in the set of Roorda, Miller & Habib (2008), "Validation of TASHA", TR-A 42:360-375, Figs. 2-8,
 for the behavioural model of record (ten replications) in the three settings.  Visual system: composite.py.
 
     python3 reports/composites/fig_abit_tasha.py [validation verification chain]

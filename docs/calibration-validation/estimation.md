@@ -41,7 +41,7 @@ Hold-out: log-likelihood per mover (residential location), \(\rho^2\) (car owner
 | K–8 (1,144 zones) | 1,509 | 13 | −2,885.6 | 0.721 | −1.953 |
 | High school (719 zones) | 668 | 6 | −1,217.0 | 0.722 | −1.810 |
 | College (141 zones) | 673 | 9 | −1,810.4 | 0.454 | −2.789 |
-| ***MAST: locations (1,588 zones)*** | | | | | |
+| ***DAYMAP (Daily Activity Model for Agent Plans): locations (1,588 zones)*** | | | | | |
 | Main activity, four purposes (pooled) | 14,341 | 62 | −49,427.4 | 0.532 | −3.370 |
 | Stop: shopping | 3,979 | 23 | −9,982.6 | 0.659 | −2.527 |
 | Stop: recreation | 5,064 | 20 | −15,874.9 | 0.574 | −3.205 |
@@ -52,7 +52,7 @@ Hold-out: log-likelihood per mover (residential location), \(\rho^2\) (car owner
 | Work business: other persons | 1,259 | 16 | −6,819.3 | 0.292 | −5.625 |
 | Work trips of home workers | 366 | 5 | −1,640.9 | 0.430 | −4.389 |
 | School without record; daycare (pooled) | 846 | 9 | −3,798.5 | 0.440 | −4.396 |
-| ***MAST: tour formation and mode*** | | | | | |
+| ***DAYMAP: tour formation and mode*** | | | | | |
 | Outing from the workplace (2) | 8,613 | 8 | −3,061.5 | 0.486 | −3,093.2 |
 | Mode of the outing (2) | 1,177 | 7 | −360.6 | 0.549 | −299.8 |
 | Return home (2) | 28,349 | 33 | −13,697.0 | 0.301 | −13,771.8 |
@@ -67,7 +67,7 @@ Hold-out: log-likelihood per mover (residential location), \(\rho^2\) (car owner
 <p class='estnote'>1. Weighted by the expected in-area share of origin and destination; inclusive value of the dwelling level with coefficient 1. 2. Full choice set of 1,587 zones with jobs. 3. Choice-based sample weights (weighted pseudo-log-likelihood). 4. Car driver available only with a household car that is free over the tour window.</p>
 
 The synthetic population (CVAE) is not a likelihood model; its fit is reported in [validation](validation/index.md). The activity
-distributions of MAST are 3,946 weighted relative frequencies of the estimation half.
+distributions of DAYMAP are 3,946 weighted relative frequencies of the estimation half.
 
 ## Linking logsums
 

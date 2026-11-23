@@ -17,14 +17,14 @@ subfolder per family under its original name (shown in brackets). Run a script f
   (= landuse/engine_inputs) and its check; w12_holdout_map.py: hold-out maps of the adopted model
 - accessibility (accessibility_new): accessibility and mode-choice logsums
 - other_locations (locations), primary_destination (dest_primary), stop_location (dest_stop), primary_destination_pooled (dest_pooled),
-  destination_checks (destination): MAST destination choice, school and stop locations. SILO school location: l07_school.py
+  destination_checks (destination): DAYMAP (Daily Activity Model for Agent Plans) destination choice, school and stop locations. SILO school location: l07_school.py
   (previous models), l09_school_data.py (school attributes: enrolment by race, charter, magnet, test scores, dormitory capacity),
   l09_school_ext.py (tests), l10_school.py (final models), l11_export_silo.py (engine files school_location_*.csv and the Java check)
-- tour_mode_choice (mode_choice), tour_mode_choice_pooled (mode_pooled): MAST tour mode choice (m01-m11)
+- tour_mode_choice (mode_choice), tour_mode_choice_pooled (mode_pooled): DAYMAP tour mode choice (m01-m11)
 - tour_formation (activity): outing, outing mode and return-home models
 - collinearity (collinearity): correlation of estimates; c_heatmaps_pdf.py builds collinearity_heatmaps.pdf
 - tables (tables_new) and run_logsum_chain.sh: table helpers, logsum chain
-- selection: MAST model selection (loc_*, mode_choice/mc_*, make_outputs.py, report_tables.py); results in
+- selection: DAYMAP model selection (loc_*, mode_choice/mc_*, make_outputs.py, report_tables.py); results in
   `<workspace>/side_experiments/respec_2026-11/abit`
 - reports/dev_tables.py, make_pdf.py, spec_summary.py and estimation_pdf_make_pdf.py: build estimation_tables_silo/abit.pdf,
   model_development.pdf and model_specification_summary.pdf in `<workspace>/side_experiments/respec_2026-11/final_tables`

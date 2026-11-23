@@ -216,7 +216,7 @@ def article_statistics(reference_csv):
     return s
 
 
-# ---------------------------------------------------------------- location models (MAST): zone-by-zone variables
+# ---------------------------------------------------------------- location models (DAYMAP): zone-by-zone variables
 def location_long(df, zones, n_records=300, seed=1):
     """Stack the zone variables of the first configuration (imp_0_<zone>, cgt_0_<zone>) of a sample of records with the
     zone attributes of each zone: one row per record x zone."""
@@ -580,7 +580,7 @@ def zone_map(values, label, ax=None, log=False, zoom="core", cmap="Greys", figsi
     return ax
 
 
-# ---------------------------------------------------------------- RTS 2017/18 survey (MAST): raw files and the half split
+# ---------------------------------------------------------------- RTS 2017/18 survey (DAYMAP): raw files and the half split
 ABIT_SHARED = os.path.join(_ME, "ABIT", "00_shared_data")
 ABIT_PREP = os.path.join(_ME, "ABIT", "00_shared_prep", "code")
 RTS_RAW = os.path.join(ABIT_SHARED, "rts_2017_18", "raw")

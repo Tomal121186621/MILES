@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Small-area validation of land use (SILO, five seeds) and destinations / commuting (MAST 2024, ten replications) in the six
+"""Small-area validation of land use (SILO, five seeds) and destinations / commuting (DAYMAP 2024, ten replications) in the six
 Baltimore-region counties.  Validation only: nothing is fitted or adjusted.
 
 Geography (see build_crosswalks.py):
@@ -295,7 +295,7 @@ dJ = F22.sub(silo("jobs_filled", 2016).reindex(Z6).fillna(0)[0], axis=0); dW = W
 add("A4 jobs 2022 vs LODES 2022", "filled jobs, change 2016->2022", "zone", len(Z6), "R2", r2, dJ, dW)
 pd.DataFrame({"lodes_2016": W16.C000, "lodes_2022": W22.C000, "silo_jobs_2022": J22.mean(axis=1), "silo_filled_2022": F22.mean(axis=1), "silo_filled_2016": silo("jobs_filled", 2016).reindex(Z6).fillna(0)[0]}).rename_axis("zone").to_csv(f"{D}/a4_zone_jobs.csv")
 
-# =================================================================== B1/B2  MAST destinations (zones in the study area), shares
+# =================================================================== B1/B2  DAYMAP destinations (zones in the study area), shares
 ad = pd.read_parquet(f"{C}/abit_dest.parquet")
 def abit(purpose, col="activities"):
     x = ad[ad.purpose == purpose].pivot_table(index="zone", columns="rep", values=col, aggfunc="sum"); return x.reindex(Z6).fillna(0)

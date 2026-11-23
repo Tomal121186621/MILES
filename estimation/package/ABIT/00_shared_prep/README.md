@@ -1,6 +1,6 @@
 # Shared preparation chain (raw data to 00_shared_data)
 
-This folder rebuilds the shared inputs of the MAST models (folder MAST) from the raw data. Everything it would produce already ships in `../00_shared_data`, so each step can be skipped.
+This folder rebuilds the shared inputs of the models of DAYMAP (Daily Activity Model for Agent Plans; folder ABIT) from the raw data. Everything it would produce already ships in `../00_shared_data`, so each step can be skipped.
 
 - `DATA_SOURCES.json`: every raw input, with provider, URL, what to download and where to put it (`../00_shared_data/raw/<folder>/`). Status `documented` means the URL is taken from the project's download logs or scripts. Status `verify` means no URL is documented, so the provider's landing page is given.
 - `SHARED_STEPS.json`: the steps in run order. Each has its command, inputs, outputs, runtime, memory and whether the output is provided. Commands are run from a model folder (`cwd` = `../00_shared_prep/code`).

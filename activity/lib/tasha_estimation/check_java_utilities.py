@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check that MAST's Java utilities of the new location segments equal the estimation utilities (dc_model.utility).
+"""Check that DAYMAP's Java utilities of the new location segments equal the estimation utilities (dc_model.utility).
     python3 activity/lib/tasha_estimation/check_java_utilities.py DEBUG_CSV HALF   (DEBUG_CSV: dest.mnl.debug.file of a survey-population run with
     dest.mnl.debug.segments = the new segments) -> results/java_utility_check.csv"""
 import sys, numpy as np, pandas as pd, torch

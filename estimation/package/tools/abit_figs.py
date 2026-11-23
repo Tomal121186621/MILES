@@ -1,4 +1,4 @@
-"""MAST models of the manual-estimation package: coefficient rows from model/reference_estimates.csv and hold-out
+"""DAYMAP models of the manual-estimation package: coefficient rows from model/reference_estimates.csv and hold-out
 predictions (probabilities of every alternative, by Biogeme simulation of the model's own log-likelihood with the choice set to
 each alternative in turn).  Shared by the estimation PDF (5_reports/estimation_pdfs/make_abit_figures.py) and the notebooks."""
 import importlib, os, re, sys, tempfile

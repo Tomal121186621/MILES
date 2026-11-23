@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Summary tables (markdown) of the MAST re-specification for REPORT.md, from the final_*.pkl files.
+"""Summary tables (markdown) of the DAYMAP re-specification for REPORT.md, from the final_*.pkl files.
 
     python3 estimation/development/selection/report_tables.py   -> report_tables.md (pasted into REPORT.md) and summary_*.csv
 """

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Selection and robustness of the MAST location models under one base specification (re-specification 2026-11-06).
+"""Selection and robustness of the DAYMAP location models under one base specification (re-specification 2026-11-06).
 
     TAZ_THREADS=5 python3 estimation/development/selection/loc_select.py select   SEG[,SEG..]   -> <folder>/work/sel_<SEG>.pkl, <folder>/selection_log_<SEG>.csv
     TAZ_THREADS=5 python3 estimation/development/selection/loc_select.py finalize SEG[,SEG..]   -> round 2 (candidates kept in another segment of the family),

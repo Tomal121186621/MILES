@@ -71,9 +71,9 @@ Written by `landuse/run/write_properties.py <scenario> <start> <end> [skim_years
 
     The levers are kept in `landuse/calibration/calibrated_parameters.json`.
 
-## Activities (MAST)
+## Activities (DAYMAP)
 
-Written by `activity/write_properties.py <name> <silo_scenario> <year> [sample] [skims]`; the switches of the
+Properties of DAYMAP (Daily Activity Model for Agent Plans), written by `activity/write_properties.py <name> <silo_scenario> <year> [sample] [skims]`; the switches of the
 coefficient set (`activity/parameters/run_params.csv`) are appended.
 
 | Key | Value | Meaning |

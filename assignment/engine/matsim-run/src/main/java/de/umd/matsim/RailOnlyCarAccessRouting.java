@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Car access to transit only for rail, as in MAST (drive access belongs to its train alternative; its bus alternative is walk
+ * Car access to transit only for rail, as in DAYMAP (drive access belongs to its train alternative; its bus alternative is walk
  * access): a SwissRailRaptor route with a car leg but no ride on rail, metro or light rail (the router may drive to a station lot and
  * walk to a bus stop there) is routed again without car access for that trip.
  */

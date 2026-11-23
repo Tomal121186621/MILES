@@ -1,6 +1,6 @@
 # Tour formation
 
-Binary logits that shape the tours of MAST: outings from the workplace, their mode, and returns home between episodes.
+Binary logits that shape the tours of DAYMAP (Daily Activity Model for Agent Plans): outings from the workplace, their mode, and returns home between episodes.
 
 !!! note "Reading the tables"
     Coefficient: maximum-likelihood estimate, with significance stars \*\*\* p < 0.01, \*\* p < 0.05, \* p < 0.10; robust (sandwich) standard error; two-sided p-value. N: observations; K: estimated parameters; LL(β̂): log-likelihood at the estimates; ρ̄²: adjusted rho-square. Hold-out: fit on the held-out half of the data, which was also used in the specification search. "Reference": the omitted category; "—": removed from the model.

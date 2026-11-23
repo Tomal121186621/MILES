@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """(TAZ variant, 2026-10-28: coefficients of coef_tasha_taz/dest_choice_mnl.csv; merged distance pieces via dc_taz_engine;
-results/java_utility_check_{os.environ.get('TAZ_COEF', 'coef_tasha_taz')}.csv.)  Check that MAST's Java utilities of the new location segments equal the estimation utilities (dc_model.utility).
+results/java_utility_check_{os.environ.get('TAZ_COEF', 'coef_tasha_taz')}.csv.)  Check that DAYMAP's Java utilities of the new location segments equal the estimation utilities (dc_model.utility).
     python3 check_java_utilities.py DEBUG_CSV HALF   (DEBUG_CSV: dest.mnl.debug.file of a survey-population run with
     dest.mnl.debug.segments = the new segments) -> results/java_utility_check_{os.environ.get('TAZ_COEF', 'coef_tasha_taz')}.csv"""
 import sys, numpy as np, pandas as pd, torch

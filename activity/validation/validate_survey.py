@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Stage 3: verification and validation of MAST in the design of Roorda, Miller & Habib (2008), Transportation Research Part A
+"""Stage 3: verification and validation of DAYMAP in the design of Roorda, Miller & Habib (2008), Transportation Research Part A
 42, 360-375 ("Validation of TASHA"): activity frequency and distance by activity type (their Tables 1-2), activity start-time
 distributions (Figs. 2, 6), activity durations by start time (Figs. 3, 7), trips per chain (Fig. 4) and distance by start
 time (Figs. 5, 8).
@@ -7,11 +7,11 @@ time (Figs. 5, 8).
     python3 activity/validation/validate_survey.py [--settings verification,validation,chain] [--figures-only]
 
 Settings (10 replications each, seeds 1-10; model = mean and standard deviation over the replications, ddof = 1)
-  verification  MAST on the observed population of the ESTIMATION half of the 2017/18 RTS (survey_population.py), compared
+  verification  DAYMAP on the observed population of the ESTIMATION half of the 2017/18 RTS (survey_population.py), compared
                 with the observed travel of these households (the data the calibration targets were built from).
-  validation    MAST on the observed population of the VALIDATION half, compared with the travel of these households (never
+  validation    DAYMAP on the observed population of the VALIDATION half, compared with the travel of these households (never
                 used by the calibration).
-  chain         the chain runs 3_abit/run/val_s01..10: MAST on a 5 % sample of the synthetic 2016 base population, compared with
+  chain         the chain runs 3_abit/run/val_s01..10: DAYMAP on a 5 % sample of the synthetic 2016 base population, compared with
                 the validation half of the survey (error of the activity model plus the error of the synthetic population).
   validation_mnl, chain_mnl   the same with the estimated destination MNL (3_abit/destination_choice, 2026-10-22): runs
                 svy_est_mnl_s01..10 (verification_mnl), svy_val_mnl_s01..10 and val_mnl_s01..10 (skims: base car, 2024 door-to-door transit, 3_abit/skims/base_transit2024).
@@ -27,8 +27,8 @@ survey's reported (address-to-address driving) distance is kept as a secondary c
 diff_km_pct_reported; observed_reported in the distance-by-hour curves).  Types (Roorda Table 1): work, school (EDUCATION), shopping, other (RECREATION, ACCOMPANY, OTHER and
 work-based subtour activities, also reported separately), return home.
 Exclusions (Roorda: trips external to the region, facilitate-passenger trips, children under 11):
-  base     persons under 5 (MAST does not schedule activities for children under 5) and survey trips with an end outside the
-           model zone system (tract point outside every zone); accompany trips are kept, since MAST generates them.
+  base     persons under 5 (DAYMAP does not schedule activities for children under 5) and survey trips with an end outside the
+           model zone system (tract point outside every zone); accompany trips are kept, since DAYMAP generates them.
   roorda   in addition persons under 11 and accompany (drop-off / pick-up) activities: the closest analogue of Roorda's rule.
 Weights and scale: survey trips carry the person weight; in the survey-population runs every model person carries the weight
 of the survey person it represents (imputed non-travellers: the household weight), so both sides estimate the same weighted
@@ -125,7 +125,7 @@ def ptype_of(occ, age):
 
 
 def atype(p):
-    """MAST purpose (or survey ACT_PURPOSE) -> (Roorda type, sub-type of 'other')."""
+    """DAYMAP purpose (or survey ACT_PURPOSE) -> (Roorda type, sub-type of 'other')."""
     p = pd.Series(p).astype(str)
     t = p.map({"WORK": "WORK", "EDUCATION": "SCHOOL", "SHOPPING": "SHOPPING", "HOME": "HOME"}).fillna("OTHER")
     s = np.where(t.eq("OTHER"), np.where(p.isin(["RECREATION", "ACCOMPANY"]), p, "OTHER_OTHER"), "")

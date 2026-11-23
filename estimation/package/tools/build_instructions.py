@@ -3,7 +3,7 @@
 
 Reads <stage>/<model>/RUN.json and <stage>/RUN_ORDER.json and writes
   <stage>/<model>/INSTRUCTIONS.pdf   one page (or two) per model folder
-  RUN_ORDER.pdf                      the run order of all folders, SILO then MAST
+  RUN_ORDER.pdf                      the run order of all folders, SILO then DAYMAP
 Usage: python3 tools/build_instructions.py        (from manual_estimation/; needs tectonic)
 """
 import json, os, re, subprocess, sys, tempfile, shutil
@@ -198,7 +198,7 @@ def order_doc(orders):
     out = [PREAMBLE, r"{\Large\bfseries Manual estimation: what to run, in which order}\par",
            r"Each folder holds one model with its own \texttt{INSTRUCTIONS.pdf}. Run the folders top to bottom; a folder needs only the folders listed before it. All commands use the Biogeme environment \texttt{\textasciitilde/.venvs/biogeme}. Your results go to each folder's \texttt{output/}; compare them with \texttt{model/reference\_estimates.csv}. The tables produced by Claude are in \texttt{CLAUDE\_TABLES/} (current article tables, and the Route B proposals in \texttt{route\_B\_2026-11-13/}, which are not in the model runs)."]
     for stage, items in orders:
-        out.append(r"\section*{" + {"SILO": "SILO (folder SILO)", "ABIT": "MAST, Maryland Activity Scheduling and Travel model (folder ABIT)"}.get(stage, stage) + "}")
+        out.append(r"\section*{" + {"SILO": "SILO (folder SILO)", "ABIT": "DAYMAP, Daily Activity Model for Agent Plans (folder ABIT)"}.get(stage, stage) + "}")
         out.append(r"\begin{longtable}{@{}r L{62mm} L{96mm}@{}}\toprule No. & Folder & Why at this point \\ \midrule")
         for i, it in enumerate(items, 1):
             f = it.get("folder", it) if isinstance(it, dict) else it

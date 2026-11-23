@@ -1,12 +1,12 @@
-# Activities (MAST)
+# Activities (DAYMAP)
 
-MAST is the Maryland Activity Scheduling and Travel model, the activity model of MILES.
+DAYMAP is the Daily Activity Model for Agent Plans, the activity model of MILES.
 
 !!! abstract "At a glance"
 
     | | |
     |---|---|
-    | **Engine** | MAST, Java, built on the ABIT code base |
+    | **Engine** | DAYMAP, Java, built on the ABIT code base |
     | **Code** | `activity/` (coefficients, run scripts, Java source) |
     | **Estimated on** | 2017/18 Regional Travel Survey, estimation half |
     | **Models** | 3,946 survey distributions, 13 location and tour-formation logits, 7 mode-choice models |
@@ -14,19 +14,19 @@ MAST is the Maryland Activity Scheduling and Travel model, the activity model of
     | **Produces** | One weekday plan per person: activities, locations, times, modes |
 
 
-**MAST** generates, schedules and locates the activity episodes of every person for one weekday and assigns
+**DAYMAP** generates, schedules and locates the activity episodes of every person for one weekday and assigns
 their tour modes. Work and school episodes go to the job and school the person holds in the land-use model; every
 other episode is located by an estimated model. All distributions and parameters come from the estimation half of
 the travel survey, and **no calibration factor is applied**.
 
 <figure markdown>
   ![](../assets/img/activity_flow.png)
-  <figcaption>How the estimated parts of MAST work together. Yellow: survey distributions; blue: estimated logit models; green: household rules; grey: inputs; red: output.</figcaption>
+  <figcaption>How the estimated parts of DAYMAP work together. Yellow: survey distributions; blue: estimated logit models; green: household rules; grey: inputs; red: output.</figcaption>
 </figure>
 
 ## Lineage
 
-MAST is built on the code base of the ABIT activity-based model of the Maryland set-up and adopts the scheduling
+DAYMAP is built on the code base of the ABIT activity-based model of the Maryland set-up and adopts the scheduling
 idea of TASHA. Against the original set-up it changes the following:
 
 | Part | What it does |
@@ -161,7 +161,7 @@ V_{nm} = \alpha_{sm} + \boldsymbol{\gamma}_{sm}^{\top}\mathbf{z}_n + f_{s}(T_{nm
 \(\mathbf z_n\) holds person, household and area-type variables, the paid-parking share at the destination and
 whether the tour has stops; \(d_n\) is the round-trip car distance. On work tours a dollar is worth 2.96 minutes for a
 household with an income of \$84,216. The tour models have no term for fewer cars than drivers, because cars are
-allocated in the household stage. Race is not used in any MAST model.
+allocated in the household stage. Race is not used in any DAYMAP model.
 
 ### Household stage
 

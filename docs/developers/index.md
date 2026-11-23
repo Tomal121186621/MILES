@@ -13,9 +13,9 @@ MILES adds or changes, how they are wired, and how to extend them.
 
     Residential location, car ownership and workplace choice in the engine.
 
--   :material-language-java: **[MAST engine](activity.md)**
+-   :material-language-java: **[DAYMAP engine](activity.md)**
 
-    The `abm.models.maryland` package: generation, destinations, mode choice.
+    DAYMAP (Daily Activity Model for Agent Plans), the activity model of MILES. The `abm.models.maryland` package: generation, destinations, mode choice.
 
 -   :material-language-java: **[MATSim runner](matsim.md)**
 

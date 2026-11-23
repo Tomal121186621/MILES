@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """School-tour mode-choice logsums by zone pair (the method of jobchoice/rts_02_logsum.py for the school segment).
 
-Model: the estimated MAST tour mode choice for school tours (3_abit/mode_choice, model of record 'mnl' for school: MNL, generalised
+Model: the estimated DAYMAP tour mode choice for school tours (3_abit/mode_choice, model of record 'mnl' for school: MNL, generalised
 cost GC = T + 60 C / VOT, VOT = 0.5 x household income / 2,080 h; coefficients results/gc_school_mnl.csv; LOS mc_common.tour_los2),
 evaluated with mc_apply.utilities (no calibration shift); logsum = ln sum_m exp(V_m) over the available modes.
 Segments: school segment (k8, hs, col) x car availability (0 = no car, 1 = fewer cars than drivers, 2 = at least as many) x land-use

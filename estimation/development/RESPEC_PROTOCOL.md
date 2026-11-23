@@ -2,7 +2,7 @@
 
 Author's request: the variable sets look unorganised and differ between similar models without a visible reason. Re-specify every
 model with ONE documented rule per model family, test other variables, make the models more robust, then update the
-article tables and the estimation-tables PDF. The chain (SILO calibration, MAST 20 runs, MATSim 5 seeds) is re-run AFTER the
+article tables and the estimation-tables PDF. The chain (SILO calibration, DAYMAP (Daily Activity Model for Agent Plans) 20 runs, MATSim 5 seeds) is re-run AFTER the
 author has reviewed the new estimates.
 
 **Status (2026-11-06): side experiment.** Folder `side_experiments/respec_2026-11/`. It does not change the modelling stack,
@@ -13,7 +13,7 @@ the article or the validation results. The author decides later whether to adopt
   (scripts, results, coefficient files in the engine's format, and article-format tables `respec/article_tables/<same name>.tex`).
 - Estimation data, samples and splits stay as they are: ACS PUMS (estimation 80 % / held out 20 % / 2019-21 out of time) and
   the RTS estimation half / hold-out half. Never fit to traffic counts or to validation targets.
-- Every variable must be one the chain can forecast for future years (produced by SILO, MAST, the skims or a fixed zone
+- Every variable must be one the chain can forecast for future years (produced by SILO, DAYMAP, the skims or a fixed zone
   attribute). No race or ethnicity. No endogenous composition proxies (e.g. share of young workers in the workplace zone).
 - Disk: about 2.4 GB free. Keep intermediate files small; do not write large caches; delete your own temp files.
 - At most the two estimation agents run at once; Biogeme is in `~/.venvs/biogeme`.

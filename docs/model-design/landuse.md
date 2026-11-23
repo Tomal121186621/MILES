@@ -107,6 +107,17 @@ From 2017 on, every job search uses this model among the vacant jobs.
 - **Partner matching** uses an assumed distance decay.
 - **Births, marriages, divorces, leaving home** use the SILO rates, scaled by calibrated factors.
 - **Deaths, incomes and job changes** follow the SILO engine and its inputs.
+- **Driver's licences** follow the Maryland licence rate by age and area (Baltimore City, the other five study counties, the rest
+  of Maryland) from the RTS 2017-18 estimation half. Each year, the number of new licences in an area and single year of age is the
+  number needed to move the cohort to the next age's rate. These licences go first to unlicensed persons who are employed, in random
+  order, and then to the others. In-migrants get a licence with min(1, P/e) if employed and max(0, (P − e)/(1 − e)) if not, where P is
+  the target rate and e is the employed share of their age and area. This is the same rule as an expected value. Nobody loses a licence.
+  This rule replaced an earlier draw that ignored employment. That draw lowered the licence rate of employed persons year by year,
+  while the survey shows 95 % of employed and 76 % of non-employed persons licensed.
+- **School enrolment** means holding a school seat. A student who takes a job keeps the seat. Each year, every seat holder can leave
+  school at the exit rate of their age. These rates come from ACS 2014-18 enrolment by age, extended to age 63; everyone leaves after
+  age 64, which is an assumption. Seats of students who change band (for example, middle to high school) or leave school are freed at
+  the start of the year, so that students who choose a school that year see the seats that will become free.
 
 Full estimates of all land-use models are in [Estimated models](../calibration-validation/estimates/landuse.md); the
 estimation code is in the [estimation package](../developers/estimation-package.md).

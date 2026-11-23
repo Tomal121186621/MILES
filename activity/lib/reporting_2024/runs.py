@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""MAST runs of the 2024 temporal validation, one MAST at a time (waits while any other RunAbit process is active; 8 GB heap).
+"""DAYMAP runs of the 2024 temporal validation, one DAYMAP at a time (waits while any other RunAbit process is active; 8 GB heap).
 
     python3 activity/lib/reporting_2024/runs.py snapshot                      # freeze the coefficient set and the compiled model (once, before the first run)
     python3 activity/lib/reporting_2024/runs.py acs2024  --seeds 1-10         # observed 2024 population (pop_acs2024, build_population.py)

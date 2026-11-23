@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""MAST runs with the estimated destination MNL (after), one at a time: waits while any other RunAbit process is active.
+"""DAYMAP runs with the estimated destination MNL (after), one at a time: waits while any other RunAbit process is active.
     python3 activity/lib/destination_choice/run_after.py   -> run_survey/svy_est_mnl_s01..10, svy_val_mnl_s01..10, run/val_mnl_s01..10
 Coefficient set destination_choice/coef_mnl_run (coef_calibrated + dest_choice_mnl.csv + dest.choice.model = mnl); skims
 3_abit/skims/base_transit2024 (base car time and distance, 2024 door-to-door transit: the skims of estimation)."""

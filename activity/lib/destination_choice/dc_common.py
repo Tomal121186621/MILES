@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""Shared definitions of the estimated destination choice (stage 3, 2026-10-22): zones, zone attributes, skims, the MAST
+"""Shared definitions of the estimated destination choice (stage 3, 2026-10-22): zones, zone attributes, skims, the DAYMAP
 mode-choice logsum and the variables of the destination utilities.  Used by prep_dc_data.py, estimate_dc.py, validate_dc.py
 and pipeline/accessibility.py; every variable here has a one-to-one counterpart in
 ABIT/src/main/java/abm/models/maryland/MarylandDestinationChoice.java (method `variable`), so that the utility of the
 application is the estimated one.
 
-Zone system: the 1,588 MSTM zones of MAST (ABIT/input/maryland/zone_attributes.csv), indexed 0..1587 in the order of the zone
-ids.  Zone attributes are those MAST reads in a 2016 run (MarylandLosDataReader):
-  pop   persons of the 2016 base population (3_abit/survey_pop/zone_population_2016.csv; in a synthetic run MAST uses the sampled
+Zone system: the 1,588 MSTM zones of DAYMAP (ABIT/input/maryland/zone_attributes.csv), indexed 0..1587 in the order of the zone
+ids.  Zone attributes are those DAYMAP reads in a 2016 run (MarylandLosDataReader):
+  pop   persons of the 2016 base population (3_abit/survey_pop/zone_population_2016.csv; in a synthetic run DAYMAP uses the sampled
         persons x 1/sample.fraction, the same quantity)
   ret, off, oth   jobs of the full SILO job file 2_silo/input/microData/jj_2016.csv by type (RET / OFF / other)
   stu   school occupancy of the stage-2b assignment (2_silo/input/schools_2016.csv, column occupancy) by zone
 Skims (minutes, km): car time and distance of the 2016 base (3_abit/skims), door-to-door transit of the 2024 schedule
 (pipeline/test/skims/transit_2024: bus_tt, rail_tt00, transit_peak_time; 1000 = not reachable).
-All skims are truncated to whole minutes and metres, as MAST's MitoBasedTravelTimes / MitoBasedTravelDistances return them.
+All skims are truncated to whole minutes and metres, as DAYMAP's MitoBasedTravelTimes / MitoBasedTravelDistances return them.
 Distance convention of the destination utilities: car-distance skim, intrazonal 0.5 sqrt(area) (the stage-3 metric convention,
-activity_metrics.dist_matrix).  The mode-choice logsum uses the skims exactly as MAST's mode model reads them (intrazonal distance
+activity_metrics.dist_matrix).  The mode-choice logsum uses the skims exactly as DAYMAP's mode model reads them (intrazonal distance
 = the skim diagonal, 1 km).
 """
 import os as _os, sys as _sys  # MILES: configured locations (miles.toml)
@@ -91,12 +91,12 @@ def _dense(f, scale=1.0, fill=np.nan):
 
 
 def skims(car_dir=SKIM_CAR, transit_dir=SKIM_TRANSIT):
-    """dict: t (car min), draw (car km as MAST's mode model reads it, diagonal = skim), d (car km, intrazonal 0.5 sqrt(area)),
+    """dict: t (car min), draw (car km as DAYMAP's mode model reads it, diagonal = skim), d (car km, intrazonal 0.5 sqrt(area)),
     bus (bus_tt min), rail (rail_tt00 min), pt (transit_peak_time min); unreachable transit >= 999."""
     key = ("sk", car_dir, transit_dir)
     if key in _cache: return _cache[key]
     z = zones()
-    # MAST reads skims through MitoBasedTravelTimes / MitoBasedTravelDistances, which truncate to whole minutes and metres
+    # DAYMAP reads skims through MitoBasedTravelTimes / MitoBasedTravelDistances, which truncate to whole minutes and metres
     t = np.floor(_dense(f"{car_dir}/traveltime_auto.csv.gz"))
     draw = np.floor(_dense(f"{car_dir}/distance_auto.csv.gz")) / 1000.0
     d = draw.copy(); np.fill_diagonal(d, z.intra_km.values.astype(np.float32))
@@ -109,7 +109,7 @@ def skims(car_dir=SKIM_CAR, transit_dir=SKIM_TRANSIT):
     return out
 
 
-# ------------------------------------------------------------------------------------------------ MAST mode-choice logsum
+# ------------------------------------------------------------------------------------------------ DAYMAP mode-choice logsum
 MC_NAME = ["CAR_DRIVER", "WALK", "BIKE", "CAR_PASSENGER", "SHARED_RIDE", "BUS", "TRAIN"]
 MC_SKIM = ["t", "t", "t", "t", "t", "bus", "rail"]                    # MarylandFullModeChoice.SKIM (walk/bike read the car skim)
 MC_VOT = np.array([30, 0, 0, 30, 40, 15, 15], float)
@@ -128,7 +128,7 @@ def mc_coef(purpose, coef_dir=COEF):
 
 
 def mode_logsum(purpose, orig, dest, person, sk, toll=0.0, coef_dir=COEF):
-    """ln sum_m exp(V_m) of MAST's mode model (MarylandFullModeChoice.probabilities) for origin indices `orig` (N) and
+    """ln sum_m exp(V_m) of DAYMAP's mode model (MarylandFullModeChoice.probabilities) for origin indices `orig` (N) and
     destination indices `dest` (N x J).  person: dict of arrays (N): age, male, lic, hhsize, autos, inc_month (household, USD)."""
     c = mc_coef(purpose, coef_dir); z = zones(); bb = z.bbsr.values[orig]
     o = orig[:, None]
@@ -151,7 +151,7 @@ def mode_logsum(purpose, orig, dest, person, sk, toll=0.0, coef_dir=COEF):
 
 
 def car_gt(orig, dest, inc_month, sk, toll=0.0):
-    """Car generalized time (min) of MAST's car-driver alternative: time + (0.12 $/km x distance + toll) x 60 / VOT_hh, VOT_hh =
+    """Car generalized time (min) of DAYMAP's car-driver alternative: time + (0.12 $/km x distance + toll) x 60 / VOT_hh, VOT_hh =
     30 $/h x the household's income factor (MarylandFullModeChoice).  orig (N), dest (N x J) indices; inc_month (N)."""
     vf = np.clip((np.maximum(1.0, inc_month) / VOT_REF) ** VOT_ELAST, VOT_MIN, VOT_MAX)[:, None]
     o = orig[:, None] if np.ndim(orig) == 1 else orig
@@ -159,7 +159,7 @@ def car_gt(orig, dest, inc_month, sk, toll=0.0):
 
 
 def mc_cost_coef(purpose, inc_month, coef_dir=COEF):
-    """d V_car / d $ of MAST's car-driver utility (gc coefficient x 60 / VOT) for a household income: the money scale of the
+    """d V_car / d $ of DAYMAP's car-driver utility (gc coefficient x 60 / VOT) for a household income: the money scale of the
     mode logsum (used for accessibility in money units)."""
     c = mc_coef(purpose, coef_dir)
     vf = np.clip((np.maximum(1.0, inc_month) / VOT_REF) ** VOT_ELAST, VOT_MIN, VOT_MAX)

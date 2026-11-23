@@ -25,7 +25,7 @@ Train or generate on their own: `miles population train --tag full`, `miles popu
 miles landuse coefficients      # residential location, car ownership, workplace, schools, zone attributes; then sync
 miles landuse base-workplaces   # 2016 workplaces with the estimated workplace model
 miles landuse check             # engine utilities against the Biogeme estimates
-miles activity parameters       # the MAST parameter set (activity/parameters)
+miles activity parameters       # the DAYMAP parameter set (activity/parameters)
 miles activity distributions    # survey distributions of frequency, start time and duration
 ```
 
@@ -50,7 +50,9 @@ miles landuse run --seed 1 --end 2024           # one run
 miles landuse schools --seeds 5                 # every year of every seed
 ```
 
-## 6. Activities (MAST, 2024)
+## 6. Activities (DAYMAP, 2024)
+
+DAYMAP (Daily Activity Model for Agent Plans) is the activity model of MILES.
 
 ```bash
 miles activity replications --seeds 1-10        # ten replications on 10 % of households; picks the one closest to the mean

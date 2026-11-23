@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Size weights of the MAST destination models (2026-11-16): model/size_weights.csv and a "## Size weights" section in
+"""Size weights of the DAYMAP destination models (2026-11-16): model/size_weights.csv and a "## Size weights" section in
 model/README.md of every folder with THETA parameters.
 S_j = base_j + sum_k exp(THETA_k) x_kj: THETA < 0 means one unit of component k attracts less than one unit of the base, not
 a negative effect (exp(THETA) > 0 always). The p-value of THETA tests exp(THETA) = 1 (same weight as the base), not "no effect".

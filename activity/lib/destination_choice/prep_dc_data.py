@@ -5,14 +5,14 @@
                                        #                work_records_<half>.parquet, tract_zone_overlay.parquet
 
 One record per observed discretionary destination (purposes SHOPPING, RECREATION, ACCOMPANY, OTHER of rts_common.ACT_PURPOSE):
-  primary   the primary activity of a home-based tour of the survey (rts_tours.csv, anchor home) whose MAST purpose is
+  primary   the primary activity of a home-based tour of the survey (rts_tours.csv, anchor home) whose DAYMAP purpose is
             discretionary; the trip that arrives at the primary activity (person, arrival minute = primary_arr) gives the
-            destination tract.  Origin = the home zone (MAST draws the primary destination from home).
+            destination tract.  Origin = the home zone (DAYMAP draws the primary destination from home).
   stop      every intermediate stop of a home-based tour (any tour purpose) with a discretionary activity: a trip inside the
             tour window (departure >= tour start, arrival <= tour end) that does not go home and arrives before the primary
             arrival (outbound) or departs at or after the primary departure (inbound), as build_targets.stop_purpose_split.
-            Anchors = the two tour anchors MAST uses for a stop (MarylandStopModel): home and the primary destination.
-Chooser attributes are those MAST sees for the same persons in the survey-population runs (3_abit/survey_pop/<half>/: hh.csv,
+            Anchors = the two tour anchors DAYMAP uses for a stop (MarylandStopModel): home and the primary destination.
+Chooser attributes are those DAYMAP sees for the same persons in the survey-population runs (3_abit/survey_pop/<half>/: hh.csv,
 pp.csv, persons_map.csv): household income (midpoint of the RTS class), size, persons under 18, cars, licensed drivers; person
 age, gender, licence, occupation; tour purpose and tour mode (stops), arrival hour at the primary activity (time of day).
 
@@ -62,7 +62,7 @@ def people(half):
     od = f"{OUTD}/{half}"
     hh = pd.read_csv(f"{od}/hh.csv").set_index("id"); pp = pd.read_csv(f"{od}/pp.csv"); pm = pd.read_csv(f"{od}/persons_map.csv")
     pp["lic"] = pp.driversLicense.astype(str).eq("True")
-    pp["inc_m"] = np.floor(pp.income / 12.0)      # MAST stores int(annual / 12) per person (MarylandLosDataReader)
+    pp["inc_m"] = np.floor(pp.income / 12.0)      # DAYMAP stores int(annual / 12) per person (MarylandLosDataReader)
     g = pp.groupby("hhID").agg(children=("age", lambda a: int((a < 18).sum())), drivers=("lic", "sum"), hhsize=("age", "size"), inc_month=("inc_m", "sum"))
     pm = pm[~pm.imputed].merge(pp[["id", "gender", "lic", "occupation"]], on="id")
     pm = pm.join(g, on="hhID").join(hh[["autos", "income"]], on="hhID")
@@ -75,7 +75,7 @@ def chooser_cols(df, P):
     df["age"] = p.age.values; df["male"] = (p.gender.values == 1).astype(float); df["lic"] = p.lic.values.astype(float)
     df["occ"] = p.occupation.values; df["hhsize"] = p.hhsize.values; df["children"] = p.children.values
     df["autos"] = p.autos.values; df["drivers"] = p.drivers.values; df["inc_month"] = p.inc_month.values
-    df["inc_year"] = df.inc_month * 12.0; df["home_idx"] = p.home_idx.values     # household income as MAST sums it
+    df["inc_year"] = df.inc_month * 12.0; df["home_idx"] = p.home_idx.values     # household income as DAYMAP sums it
     df["inc_cls"] = np.select([df.inc_year < 50000, df.inc_year < 100000], [0, 1], 2)
     df["car_cls"] = np.select([df.autos <= 0, df.autos < df.drivers], [0, 1], 2)          # 0 cars / cars < drivers / cars >= drivers
     return df

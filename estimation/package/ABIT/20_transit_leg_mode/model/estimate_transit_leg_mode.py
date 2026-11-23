@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Model 20: mode of each leg (linked trip) of a transit tour (not in the article; coefficients used by MAST:
+"""Model 20: mode of each leg (linked trip) of a transit tour (not in the article; coefficients used by DAYMAP:
 3_abit/tasha_estimation/results/tasha_transit_legs_1120h.csv).
 
 Multinomial logit, alternatives 1 TR transit (reference, utility from its own terms only), 2 WK walk, 3 CP car passenger,
 4 CD car driver, 5 BK bike.  Availability av_*: TR always (no path -> no_transit_path dummy), WK up to 8 km, BK up to 30 km, CP
-always, CD only for a person with a licence, age 16+, a household car and a household car free over the tour window (MAST's
+always, CD only for a person with a licence, age 16+, a household car and a household car free over the tour window (DAYMAP's
 free-car rule, input/code/free_car.py); the estimation uses only legs whose chosen mode is available.
 The fewer-cars-than-drivers term is kept: the car allocation runs before the leg choice but covers only part of the effect, and
 the term stays significant under the free-car rule.

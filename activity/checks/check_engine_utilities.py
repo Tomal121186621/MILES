@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Unit check of the re-specified MAST models in the engine (coefficient set activity/parameters, formerly 3_abit/coef_respec, 2026-11-09): the utilities the Java
+"""Unit check of the re-specified DAYMAP models in the engine (coefficient set activity/parameters, formerly 3_abit/coef_respec, 2026-11-09): the utilities the Java
 classes compute for choice situations of the survey population (estimation half; persons, households and zones of the estimation
 records) against the utilities of the estimation code (the Python / Biogeme definitions of side_experiments/respec_2026-11).
 
-    python3 activity/checks/check_engine_utilities.py run      MAST on the estimation-half survey population with a copy of coef_respec plus the debug
+    python3 activity/checks/check_engine_utilities.py run      DAYMAP on the estimation-half survey population with a copy of coef_respec plus the debug
                                           switches (dest.mnl.debug.*, mc.tours.full, tasha debug.file), skims base_transit2024
                                           -> run_survey/svy_est_respecchk_s01
     python3 activity/checks/check_engine_utilities.py check    -> respec_unit_check.csv (one row per model: situations, alternatives, max |dV|, max |dP|)

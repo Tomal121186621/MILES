@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Survey population of both halves (survey_population.build, unchanged): households, persons, dwellings and the person map of
-the RTS households in the MAST input format.
+the RTS households in the DAYMAP input format.
 
     python3 build_survey_population.py [--rebuild-zone-files]
         reads  raw survey files, the split (provided 00_shared_data/rts_2017_18/split), schools_2016.csv (00_shared_data/zones)

@@ -24,7 +24,7 @@ import org.matsim.pt.transitSchedule.api.TransitSchedule;
 import java.util.List;
 
 /**
- * 2026-11-17 (-Dpt.submodes=true): routing of MAST's train trips (leg mode train).  MAST's train alternative is a path that
+ * 2026-11-17 (-Dpt.submodes=true): routing of DAYMAP's train trips (leg mode train).  DAYMAP's train alternative is a path that
  * rides rail (the full-schedule path when it uses rail, else the drive-access rail path; 3_abit/mode_choice/mc_common.py), so a
  * train trip is routed on the full schedule with car access to rail (RailOnlyCarAccessRouting) and, when that route rides no rail,
  * metro or light rail, again on the rail routes only (walk access, and car access for persons with ptCarAccess); the full-schedule

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Trip and tour mode shares of the re-specified MAST 2024 replications (run_respec/fin24_s01-10) against the RTS 2017/18:
+"""Trip and tour mode shares of the re-specified DAYMAP 2024 replications (run_respec/fin24_s01-10) against the RTS 2017/18:
 Maryland residents 5+, weekday.  Trips: every leg (report_2024 Table F6 form; RTS rts_acts with person weights).  Tours: home-based
 chains of the legs; main activity = work, else school, else the discretionary activity with the longest stay; tour mode by the
 hierarchy of the survey tours (activity/lib/mode_choice/prep_tours.py: transit, car driver, car passenger, bike, walk); RTS: tours of both halves

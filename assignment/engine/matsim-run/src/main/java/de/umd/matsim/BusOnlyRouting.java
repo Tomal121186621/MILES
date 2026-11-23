@@ -33,8 +33,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 2026-11-17 (-Dpt.submodes=true): routing of MAST's bus trips (leg mode bus) on the bus routes of the schedule only (transport
- * mode bus: MTA local, LocalLink, commuter coaches and the other bus operators), with walk access and egress only, as MAST's bus
+ * 2026-11-17 (-Dpt.submodes=true): routing of DAYMAP's bus trips (leg mode bus) on the bus routes of the schedule only (transport
+ * mode bus: MTA local, LocalLink, commuter coaches and the other bus operators), with walk access and egress only, as DAYMAP's bus
  * alternative was defined (bus-only schedule skims of 3_abit/mode_choice, walk access).  Train trips (leg mode train) are routed on
  * the full schedule with car access to rail (RailOnlyCarAccessRouting), as its train alternative.  The legs of both are pt and walk
  * legs as for mode pt (simulated, scored and counted alike); the routing mode (bus / train) keeps the trip on its sub-mode in

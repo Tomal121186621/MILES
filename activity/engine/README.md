@@ -1,4 +1,6 @@
-# MAST Java source (ABIT code base)
+# DAYMAP Java source (ABIT code base)
+
+DAYMAP (Daily Activity Model for Agent Plans) is the activity model of MILES, built on the ABIT code base.
 Repo: `VAE-SILO-MITO-MATSIM/ABIT` (origin https://github.com/msmobility/abit.git), branch `maryland-2026`, HEAD 0af0df5.
 The last changes are uncommitted in the working tree: MarylandDestinationChoice, MarylandTashaGenerator, MarylandTourNestedModeChoice (package `abm.models.maryland`).
 - `ABIT/src/main/java`: the full source tree as used (including those changes) and `ABIT/pom.xml`; resources (22 MB of input data) are not copied.

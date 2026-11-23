@@ -17,7 +17,7 @@ MILES is a chain of five components. Each component's output is the next one's i
 | 1 | Synthetic population (CVAE) | Census microdata | Households, persons, dwellings, jobs and workplaces of 2016 |
 | 2 | Land use (SILO) | The 2016 base | Persons, households, dwellings and jobs of every year to 2024 |
 | 3 | School location | Students of each year | The school of every student |
-| 4 | Activities (MAST) | Population, jobs and schools of 2024 | One weekday plan per person: activities, locations, times, tour modes |
+| 4 | Activities: DAYMAP (Daily Activity Model for Agent Plans) | Population, jobs and schools of 2024 | One weekday plan per person: activities, locations, times, tour modes |
 | 5 | Traffic assignment (MATSim) | Weekday plans | Routes, departure times, link volumes, travel times |
 
 ## Time line
