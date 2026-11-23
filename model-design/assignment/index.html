@@ -871,7 +871,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MAST)
+    Activities (DAYMAP)
   
 
     
@@ -2742,7 +2742,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MAST engine
+    DAYMAP engine
   
 
     
@@ -3319,7 +3319,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </tr>
 <tr>
 <td><strong>Demand</strong></td>
-<td>MAST weekday plans, 10 % sample, modes fixed</td>
+<td>DAYMAP (Daily Activity Model for Agent Plans) weekday plans, 10 % sample, modes fixed</td>
 </tr>
 <tr>
 <td><strong>Choices</strong></td>
@@ -3396,7 +3396,7 @@ changes its route or departure time. After 100 iterations the link volumes are r
 </tr>
 <tr>
 <td>Outside the study area</td>
-<td>Coordinate from MAST</td>
+<td>Coordinate from DAYMAP</td>
 <td style="text-align: right;">82,891</td>
 </tr>
 </tbody>
@@ -4053,7 +4053,7 @@ Metrorail and ferries on artificial links.</p>
 </tbody>
 </table>
 <p>Every travel minute loses only the performing rate (0.78 utils/h), so all minutes are valued alike, as in the
-generalised cost of the MAST work tour-mode model. Car operating cost: AAA 2017; the car passenger does not pay;
+generalised cost of the DAYMAP work tour-mode model. Car operating cost: AAA 2017; the car passenger does not pay;
 transit fares are flat per ride and do not affect the route. Mode constants are 0 (no mode choice).</p>
 <p><strong>Table 16.</strong> Activity types.</p>
 <table>
@@ -4140,7 +4140,7 @@ transit fares are flat per ride and do not affect the route. Mode constants are 
 <h2 id="running">Running<a class="headerlink" href="#running" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>miles<span class="w"> </span>assignment<span class="w"> </span>network<span class="w">      </span><span class="c1"># road networks 2024 and 2026</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>miles<span class="w"> </span>assignment<span class="w"> </span>transit<span class="w">      </span><span class="c1"># GTFS merge, conversion, mapping</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>miles<span class="w"> </span>assignment<span class="w"> </span>plans<span class="w">        </span><span class="c1"># MAST plans -&gt; MATSim population</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>miles<span class="w"> </span>assignment<span class="w"> </span>plans<span class="w">        </span><span class="c1"># DAYMAP plans -&gt; MATSim population</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>miles<span class="w"> </span>assignment<span class="w"> </span>run<span class="w">          </span><span class="c1"># one run</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>miles<span class="w"> </span>assignment<span class="w"> </span>seeds<span class="w">        </span><span class="c1"># several seeds</span>
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>miles<span class="w"> </span>assignment<span class="w"> </span>validate<span class="w">     </span><span class="c1"># counts, screenlines, counters</span>
@@ -4182,7 +4182,7 @@ transit fares are flat per ride and do not affect the route. Mode constants are 
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../activity/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Activities (MAST)">
+          <a href="../activity/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Activities (DAYMAP)">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
@@ -4192,7 +4192,7 @@ transit fares are flat per ride and do not affect the route. Mode constants are 
                 Previous
               </span>
               <div class="md-ellipsis">
-                Activities (MAST)
+                Activities (DAYMAP)
               </div>
             </div>
           </a>

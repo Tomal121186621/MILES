@@ -753,10 +753,10 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-activities-mast-2024" class="md-nav__link">
+  <a href="#6-activities-daymap-2024" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Activities (MAST, 2024)
+        6. Activities (DAYMAP, 2024)
       
     </span>
   </a>
@@ -1017,7 +1017,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MAST)
+    Activities (DAYMAP)
   
 
     
@@ -2686,7 +2686,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MAST engine
+    DAYMAP engine
   
 
     
@@ -3067,10 +3067,10 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-activities-mast-2024" class="md-nav__link">
+  <a href="#6-activities-daymap-2024" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Activities (MAST, 2024)
+        6. Activities (DAYMAP, 2024)
       
     </span>
   </a>
@@ -3193,7 +3193,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>miles<span class="w"> </span>landuse<span class="w"> </span>coefficients<span class="w">      </span><span class="c1"># residential location, car ownership, workplace, schools, zone attributes; then sync</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>miles<span class="w"> </span>landuse<span class="w"> </span>base-workplaces<span class="w">   </span><span class="c1"># 2016 workplaces with the estimated workplace model</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>miles<span class="w"> </span>landuse<span class="w"> </span>check<span class="w">             </span><span class="c1"># engine utilities against the Biogeme estimates</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>miles<span class="w"> </span>activity<span class="w"> </span>parameters<span class="w">       </span><span class="c1"># the MAST parameter set (activity/parameters)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>miles<span class="w"> </span>activity<span class="w"> </span>parameters<span class="w">       </span><span class="c1"># the DAYMAP parameter set (activity/parameters)</span>
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>miles<span class="w"> </span>activity<span class="w"> </span>distributions<span class="w">    </span><span class="c1"># survey distributions of frequency, start time and duration</span>
 </code></pre></div>
 <h2 id="3-calibrate-the-land-use-model-20162020">3. Calibrate the land-use model (2016–2020)<a class="headerlink" href="#3-calibrate-the-land-use-model-20162020" title="Permanent link">¶</a></h2>
@@ -3207,7 +3207,8 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 <h2 id="5-school-location">5. School location<a class="headerlink" href="#5-school-location" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>miles<span class="w"> </span>landuse<span class="w"> </span>schools<span class="w"> </span>--seeds<span class="w"> </span><span class="m">5</span><span class="w">                 </span><span class="c1"># every year of every seed</span>
 </code></pre></div>
-<h2 id="6-activities-mast-2024">6. Activities (MAST, 2024)<a class="headerlink" href="#6-activities-mast-2024" title="Permanent link">¶</a></h2>
+<h2 id="6-activities-daymap-2024">6. Activities (DAYMAP, 2024)<a class="headerlink" href="#6-activities-daymap-2024" title="Permanent link">¶</a></h2>
+<p>DAYMAP (Daily Activity Model for Agent Plans) is the activity model of MILES.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>miles<span class="w"> </span>activity<span class="w"> </span>replications<span class="w"> </span>--seeds<span class="w"> </span><span class="m">1</span>-10<span class="w">        </span><span class="c1"># ten replications on 10 % of households; picks the one closest to the mean</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>miles<span class="w"> </span>activity<span class="w"> </span>run<span class="w"> </span>--seed<span class="w"> </span><span class="m">1</span><span class="w"> </span>--sample<span class="w"> </span><span class="m">0</span>.1<span class="w">        </span><span class="c1"># one run</span>
 </code></pre></div>

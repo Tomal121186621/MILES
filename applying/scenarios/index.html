@@ -866,7 +866,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MAST)
+    Activities (DAYMAP)
   
 
     
@@ -2631,7 +2631,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MAST engine
+    DAYMAP engine
   
 
     
@@ -3071,7 +3071,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 <h1 id="scenarios">Scenarios<a class="headerlink" href="#scenarios" title="Permanent link">¶</a></h1>
 <h2 id="1-pick-the-stage">1. Pick the stage<a class="headerlink" href="#1-pick-the-stage" title="Permanent link">¶</a></h2>
 <p>Short-run responses (route and departure time) need only the assignment. Responses in destination and mode need
-MAST with new skims; long-run responses in where people live and work need the land-use model too.</p>
+DAYMAP (Daily Activity Model for Agent Plans) with new skims; long-run responses in where people live and work need the land-use model too.</p>
 <table>
 <thead>
 <tr>
@@ -3086,11 +3086,11 @@ MAST with new skims; long-run responses in where people live and work need the l
 </tr>
 <tr>
 <td>Destination, mode, trip making</td>
-<td>MAST → MATSim</td>
+<td>DAYMAP → MATSim</td>
 </tr>
 <tr>
 <td>Residential and workplace location, car ownership</td>
-<td>SILO → schools → MAST → MATSim</td>
+<td>SILO → schools → DAYMAP → MATSim</td>
 </tr>
 </tbody>
 </table>
@@ -3118,7 +3118,7 @@ MAST with new skims; long-run responses in where people live and work need the l
 utility can be summarised by income decile or by area.</p>
 <h2 id="4-land-use-scenarios">4. Land-use scenarios<a class="headerlink" href="#4-land-use-scenarios" title="Permanent link">¶</a></h2>
 <p>Edit the land-use inputs (<code>development_*.csv</code> for building capacity, job control totals for employment), write a
-properties file with <code>landuse/run/write_properties.py</code>, and run SILO from 2016; then rerun schools, MAST and
+properties file with <code>landuse/run/write_properties.py</code>, and run SILO from 2016; then rerun schools, DAYMAP and
 MATSim on the scenario's 2024 population.</p>
 
 

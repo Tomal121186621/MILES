@@ -26,7 +26,7 @@
     
     
       
-        <title>Activities (MAST) - MILES</title>
+        <title>Activities (DAYMAP) - MILES</title>
       
     
     
@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#activities-mast" class="md-skip">
+        <a href="#activities-daymap" class="md-skip">
           Skip to content
         </a>
       
@@ -142,7 +142,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Activities (MAST)
+              Activities (DAYMAP)
             
           </span>
         </div>
@@ -880,7 +880,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MAST)
+    Activities (DAYMAP)
   
 
     
@@ -898,7 +898,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MAST)
+    Activities (DAYMAP)
   
 
     
@@ -2720,7 +2720,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MAST engine
+    DAYMAP engine
   
 
     
@@ -3246,8 +3246,8 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   
 
 
-<h1 id="activities-mast">Activities (MAST)<a class="headerlink" href="#activities-mast" title="Permanent link">¶</a></h1>
-<p>MAST is the Maryland Activity Scheduling and Travel model, the activity model of MILES.</p>
+<h1 id="activities-daymap">Activities (DAYMAP)<a class="headerlink" href="#activities-daymap" title="Permanent link">¶</a></h1>
+<p>DAYMAP is the Daily Activity Model for Agent Plans, the activity model of MILES.</p>
 <div class="admonition abstract">
 <p class="admonition-title">At a glance</p>
 <table>
@@ -3260,7 +3260,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 <tbody>
 <tr>
 <td><strong>Engine</strong></td>
-<td>MAST, Java, built on the ABIT code base</td>
+<td>DAYMAP, Java, built on the ABIT code base</td>
 </tr>
 <tr>
 <td><strong>Code</strong></td>
@@ -3285,17 +3285,17 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </tbody>
 </table>
 </div>
-<p><strong>MAST</strong> generates, schedules and locates the activity episodes of every person for one weekday and assigns
+<p><strong>DAYMAP</strong> generates, schedules and locates the activity episodes of every person for one weekday and assigns
 their tour modes. Work and school episodes go to the job and school the person holds in the land-use model; every
 other episode is located by an estimated model. All distributions and parameters come from the estimation half of
 the travel survey, and <strong>no calibration factor is applied</strong>.</p>
 <figure>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/img/activity_flow.png" data-desc-position="bottom"><img alt="" src="../../assets/img/activity_flow.png"></a>
   </p>
-<figcaption>How the estimated parts of MAST work together. Yellow: survey distributions; blue: estimated logit models; green: household rules; grey: inputs; red: output.</figcaption>
+<figcaption>How the estimated parts of DAYMAP work together. Yellow: survey distributions; blue: estimated logit models; green: household rules; grey: inputs; red: output.</figcaption>
 </figure>
 <h2 id="lineage">Lineage<a class="headerlink" href="#lineage" title="Permanent link">¶</a></h2>
-<p>MAST is built on the code base of the ABIT activity-based model of the Maryland set-up and adopts the scheduling
+<p>DAYMAP is built on the code base of the ABIT activity-based model of the Maryland set-up and adopts the scheduling
 idea of TASHA. Against the original set-up it changes the following:</p>
 <table>
 <thead>
@@ -3545,7 +3545,7 @@ V_{nm} = \alpha_{sm} + \boldsymbol{\gamma}_{sm}^{\top}\mathbf{z}_n + f_{s}(T_{nm
 <p><span class="arithmatex">\(\mathbf z_n\)</span> holds person, household and area-type variables, the paid-parking share at the destination and
 whether the tour has stops; <span class="arithmatex">\(d_n\)</span> is the round-trip car distance. On work tours a dollar is worth 2.96 minutes for a
 household with an income of $84,216. The tour models have no term for fewer cars than drivers, because cars are
-allocated in the household stage. Race is not used in any MAST model.</p>
+allocated in the household stage. Race is not used in any DAYMAP model.</p>
 <h3 id="household-stage">Household stage<a class="headerlink" href="#household-stage" title="Permanent link">¶</a></h3>
 <ul>
 <li><strong>Cars:</strong> car-driver tours whose times away from home overlap beyond the household's cars form a conflict set; the

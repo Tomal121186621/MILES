@@ -871,7 +871,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    Activities (MAST)
+    Activities (DAYMAP)
   
 
     
@@ -2642,7 +2642,7 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
   <span class="md-ellipsis">
     
   
-    MAST engine
+    DAYMAP engine
   
 
     
@@ -3123,12 +3123,12 @@ New: <a href="../../calibration-validation/estimates/">full result tables of all
 </tr>
 <tr>
 <td><strong>Mode</strong></td>
-<td>fixed by MAST; MATSim chooses the access, the stops, the lines and the departure</td>
+<td>fixed by DAYMAP (Daily Activity Model for Agent Plans); MATSim chooses the access, the stops, the lines and the departure</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>MAST decides who travels by transit. MATSim finds each transit trip a route through the timetable and
+<p>DAYMAP decides who travels by transit. MATSim finds each transit trip a route through the timetable and
 simulates the vehicles and their passengers. This page describes the transit network, how it is simulated, and why
 it is set up this way.</p>
 <h2 id="1-network">1. Network<a class="headerlink" href="#1-network" title="Permanent link">¶</a></h2>
@@ -3262,7 +3262,7 @@ Carroll, Charm City Circulator, Towson Loop. Feeds, calendars and the clip to th
 <tr>
 <td>Scoring of travel</td>
 <td>Every travel minute is valued alike (car, car passenger, transit door to door, drive access); money at the traveller's value of time (half the household income per working hour); car operating cost $0.1112/km (AAA 2017); transit fares are flat per ride and so do not affect the route.</td>
-<td>The generalised cost of the MAST work tour-mode model, so that MATSim routes travellers with the trade-offs MAST was estimated with</td>
+<td>The generalised cost of the DAYMAP work tour-mode model, so that MATSim routes travellers with the trade-offs DAYMAP was estimated with</td>
 </tr>
 <tr>
 <td>Transfer penalty</td>
@@ -3277,16 +3277,16 @@ Carroll, Charm City Circulator, Towson Loop. Feeds, calendars and the clip to th
 <tr>
 <td>Walk instead of transit</td>
 <td>Not allowed while a transit route exists.</td>
-<td>Modes are fixed by MAST</td>
+<td>Modes are fixed by DAYMAP</td>
 </tr>
 </tbody>
 </table>
-<p>Mode choice stays off: a transit trip of MAST remains a transit trip. Each iteration, 15 % of agents reroute
+<p>Mode choice stays off: a transit trip of DAYMAP remains a transit trip. Each iteration, 15 % of agents reroute
 (which may change the stops, the lines and the access mode) and 10 % shift departure times; plans are no longer changed
 after iteration 90.</p>
 <h2 id="3-park-and-ride-stops">3. Park-and-ride stops<a class="headerlink" href="#3-park-and-ride-stops" title="Permanent link">¶</a></h2>
 <p>A stop gets car access when it is served by MARC, Amtrak, Metro SubwayLink, Metrorail or Light RailLink and a
-park-and-ride lot lies within 400 m. Car access is limited to rail as in MAST, whose train alternative has drive access
+park-and-ride lot lies within 400 m. Car access is limited to rail as in DAYMAP, whose train alternative has drive access
 and whose bus alternative has walk access only; a route that drives to a station and then rides only buses is routed again
 without the car. The lots are those tagged <code>park_ride</code> in OpenStreetMap
 (273 lots in Maryland and the District of Columbia). Stations whose operator lot is not tagged in OpenStreetMap were
